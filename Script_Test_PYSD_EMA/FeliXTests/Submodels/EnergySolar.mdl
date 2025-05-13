@@ -1,0 +1,2813 @@
+{UTF-8}
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+		
+	|
+
+Solar Energy Production Indicator=
+	Solar Energy Production*Mtoe into EJ
+	~	EJ/Year
+	~		|
+
+Max Power Point GW=
+	Max Power Point/W into GW
+	~	GW
+	~	Solar Max Power Point measured in GW.
+	|
+
+Possible Solar Energy Production=
+	Solar Conversion Efficiency Factor*Sun Radiation*Solar Installed Capacity*Time FL*Solar Conversion Efficiency\
+		*kWh into Mtoe
+	~	Mtoe/Year
+	~	Potential solar energy production per year due to available production \
+		capability, weather conditions and technical developments.
+	|
+
+Solar Energy Price per kWh=
+	Solar Energy Price*kWh into Mtoe
+	~	$/(kW*Hour)
+	~	Actual solar energy price accounting for indicated solar energy price and \
+		effect of demand and supply measured in dollars per kWh.
+	|
+
+Total Solar Demand GW=
+	Total Solar Demand/kWh into Mtoe peak hour/kW into GW
+	~	GW/Year
+	~	Total demand for solar energy measured in GW.
+	|
+
+Time FL=
+	Weather Factor*Hours per Year
+	~	Hour/Year
+	~	Average time of sun availability.
+	|
+
+Solar Conversion Efficiency Factor=
+	Variable2 Solar
+	~	Dmnl
+	~		|
+
+Total Solar Demand=
+	Energy Demand*Market Share Solar
+	~	Mtoe/Year
+	~	Total demand for solar energy.
+	|
+
+Reference Cost of Solar Energy Production=
+	Variable14 Solar Cost
+	~	$/((m*m)*Year)
+	~	Reference cost of unit solar energy production per year.
+	|
+
+Cost of Solar Energy=
+	Unit Cost of Solar Capacity Installation+Unit Cost of Solar Energy Production
+	~	$/Mtoe
+	~	Cost of solar energy production assuming an impact of learning curve.
+	|
+
+Cumulative Solar Energy Produced= INTEG (
+	Solar Energy Production,
+		INIT Cumulative Solar Produced
+		)
+	~	Mtoe
+	~	Cumulative solar energy that has been produced.
+	|
+
+Delay Time ISETR=
+	Solar Energy Technology Development Time/3
+	~	Year
+	~		|
+
+Delay Time ISITR=
+	Solar Installation Technology Development Time/3
+	~	Year
+	~		|
+
+Desired Solar Energy Gross Margin=
+	0.2
+	~	Dmnl
+	~	Desired Gross Margin per unit of solar energy.
+	|
+
+Desired Solar Installed Capacity=
+	Total Solar Demand/Efficiency of Solar Installed Capacity
+	~	m*m
+	~	Desired Solar Installed Capacity accounting for Total Solar Demand and \
+		Efficiency of Solar Installed Capacity.
+	|
+
+Effect of Solar Energy Demand and Supply on Price=
+	(Total Solar Demand/Possible Solar Energy Production)^Sensitivity of Solar Energy Price to Supply and Demand
+	~	Dmnl
+	~	Effect of Solar Demand and Supply ratio on actual solar energy price.
+	|
+
+Effectiveness ISETR=
+	Effectiveness of Investment in Solar Energy Technology*Investment in Solar Energy Efficiency
+	~	1/Year
+	~		|
+
+Effectiveness ISITR=
+	Effectiveness of Investment in Solar Installation Technology*Investment in Solar Energy Installation
+	~	1/Year
+	~		|
+
+Effectiveness of Investment in Solar Energy Technology=
+	1e-09+STEP(Effectiveness of Investment in Renewable Energy Technology Variation-1e-09\
+		, 2020)
+	~	1/$
+	~	Effectivenes of resources dedicated to solar conversion efficiency \
+		technology development.
+	|
+
+Effectiveness of Investment in Solar Installation Technology=
+	1e-10+STEP(Effectiveness of Investment in Renewable Installation Technology Variation\
+		-1e-10, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to solar energy capacity efficiency \
+		technology development.
+	|
+
+Efficiency of Solar Installed Capacity=
+	Possible Solar Energy Production/Solar Installed Capacity
+	~	Mtoe/(Year*m*m)
+	~	Total production efficiency of Solar Installed Capacity for given weather \
+		conditions and technology developments.
+	|
+
+Fraction for Solar Learning Curve Strength=
+	0.2+STEP(Fraction for Wind and Solar Learning Curve Strength Variation-0.2, 2020)
+	~	1
+	~	Fraction for Solar Learning Curve Strength indicating by what percentage \
+		the solar energy cost will drop for each doubling of solar installed \
+		capacity.
+	|
+
+Fraction for Wind and Solar Learning Curve Strength Variation=
+	0.2
+	~	1
+	~		|
+
+Fraction Invested in Solar Energy Installation=
+	Table for FISEI(Solar Installation Efficiency)
+	~	Dmnl
+	~	Fraction of investments in solar energy technology dedicated to capacity.
+	|
+
+Fraction of Revenue Invested in Solar Technology=
+	RAMP(Solar Investment Fraction Slope, Solar Investment Fraction Start , Solar Investment Fraction Finish\
+		)
+	~	Dmnl
+	~	Parameter to take into account historical increase of the solar energy \
+		significance and over time greater resources dedicated to the technology \
+		development.
+	|
+
+Fraction of Revenue Invested in Solar Technology Ramp Investment Period Variation=
+	100
+	~	Year
+	~	Period of fractional investments in new energy technologies.
+	|
+
+Impact of Learning on Solar Unit Cost of Technology PC=
+	(Solar Installed Capacity/INIT SIC)^Solar Learning Curve Strength
+	~	1
+	~	Impact of learning curve on solar energy cost.
+	|
+
+Impact of Space on Capacity Installation=
+	MAX(0,(1-Solar Installed Capacity/Solar Available Area))
+	~	Dmnl
+	~	Ratio of currently installed solar capacity to total possible.
+	|
+
+Increase in Solar Energy Technology Ratio=
+	Outflow ISETLV3
+	~	1/Year
+	~	Increase in Solar Energy Technology Ratio due to investments in solar \
+		conversion efficiency technology and their productivity.
+	|
+
+Increase in Solar Energy Technology Ratio LV1= INTEG (
+	Inflow ISETLV1-Outflow ISETLV1,
+		Increase in Solar Energy Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Solar Energy Technology Ratio LV2= INTEG (
+	Inflow ISETLV2-Outflow ISETLV2,
+		Increase in Solar Energy Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Solar Energy Technology Ratio LV3= INTEG (
+	Inflow ISETLV3-Outflow ISETLV3,
+		Effectiveness ISETR*Delay Time ISETR)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Solar Installation Technology Ratio=
+	Outflow ISITRLV3
+	~	1/Year
+	~	Increase in Solar Installation Technology Ratio due to investments in \
+		solar energy installation  capacity.
+	|
+
+Increase in Solar Installation Technology Ratio LV1= INTEG (
+	Inflow ISITRLV1-Outflow ISITRLV1,
+		Increase in Solar Installation Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Solar Installation Technology Ratio LV2= INTEG (
+	Inflow ISITRLV2-Outflow ISITRLV2,
+		Increase in Solar Installation Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Solar Installation Technology Ratio LV3= INTEG (
+	Inflow ISITRLV3-Outflow ISITRLV3,
+		Effectiveness ISITR*Delay Time ISITR)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Indicated Solar Energy Price=
+	Cost of Solar Energy*(1+Desired Solar Energy Gross Margin)
+	~	$/Mtoe
+	~	Indicated solar energy price accounting for unit cost and gross margin.
+	|
+
+Inflow ISETLV1=
+	Effectiveness ISETR
+	~	1/Year
+	~		|
+
+Inflow ISETLV2=
+	Outflow ISETLV1
+	~	1/Year
+	~		|
+
+Inflow ISETLV3=
+	Outflow ISETLV2
+	~	1/Year
+	~		|
+
+Inflow ISITRLV1=
+	Effectiveness ISITR
+	~	1/Year
+	~		|
+
+Inflow ISITRLV2=
+	Outflow ISITRLV1
+	~	1/Year
+	~		|
+
+Inflow ISITRLV3=
+	Outflow ISITRLV2
+	~	1/Year
+	~		|
+
+INIT Cumulative Solar Produced=
+	0
+	~	
+	~		|
+
+INIT SETRN=
+	0
+	~	Dmnl
+	~	Initial Solar Energy Technology Ratio.
+	|
+
+INIT SIC=
+	400
+	~	m*m
+	~	Initial installed capacity to transform sun radiation into energy.
+	|
+
+INIT SITRN=
+	0
+	~	Dmnl
+	~	Initial Solar Installation Technology Ratio.
+	|
+
+INIT Unit Cost of Solar Capacity Installation=
+	2e+09
+	~	$/Mtoe
+	~	Initial unit cost per unit solar capacity installation.
+	|
+
+Installation of Solar Capacity Rate=
+	Productivity of Investment in Solar Capacity Installation*Solar Infrastructure Adjustment
+	~	m*m/Year
+	~	Rate of new solar capacity installation.
+	|
+
+Investment in Solar Capacity=
+	Installation of Solar Capacity Rate*Unit Cost of Solar Capacity Installation*Efficiency of Solar Installed Capacity\
+		*Solar Capacity Aging Time
+	~	$/Year
+	~	Amount of resources dedicated to solar energy capacity development.
+	|
+
+Investment in Solar Energy Efficiency=
+	Investment in Solar Energy Technology*(1-Fraction Invested in Solar Energy Installation\
+		)
+	~	$/Year
+	~	Total investments in solar conversion efficiency technology.
+	|
+
+Investment in Solar Energy Installation=
+	Investment in Solar Energy Technology*Fraction Invested in Solar Energy Installation
+	~	$/Year
+	~	Total investments in solar energy capacity.
+	|
+
+Investment in Solar Energy Technology=
+	Fraction of Revenue Invested in Solar Technology*Solar Energy Revenue
+	~	$/Year
+	~	Investments in development of solar conversion efficiency technology and \
+		production capability.
+	|
+
+Max Power Point=
+	Solar Conversion Efficiency*Standard Test Conditions*Solar Installed Capacity
+	~	W
+	~	Max Power Point measured at Standard Test Conditions for installed solar \
+		energy production capacity and current solar conversion efficiency.
+	|
+
+MINSCE=
+	0.13
+	~	Dmnl
+	~	Minimal and initial efficiency of solar radiation conversion.
+	|
+
+MINSIE=
+	0.01
+	~	Dmnl
+	~	Minimal and initial value of Solar Installation Efficiency factor.
+	|
+
+Outflow ISETLV1=
+	Increase in Solar Energy Technology Ratio LV1/Delay Time ISETR
+	~	1/Year
+	~		|
+
+Outflow ISETLV2=
+	Increase in Solar Energy Technology Ratio LV2/Delay Time ISETR
+	~	1/Year
+	~		|
+
+Outflow ISETLV3=
+	Increase in Solar Energy Technology Ratio LV3/Delay Time ISETR
+	~	1/Year
+	~		|
+
+Outflow ISITRLV1=
+	Increase in Solar Installation Technology Ratio LV1/Delay Time ISITR
+	~	1/Year
+	~		|
+
+Outflow ISITRLV2=
+	Increase in Solar Installation Technology Ratio LV2/Delay Time ISITR
+	~	1/Year
+	~		|
+
+Outflow ISITRLV3=
+	Increase in Solar Installation Technology Ratio LV3/Delay Time ISITR
+	~	1/Year
+	~		|
+
+Production to Installation Ratio=
+	Solar Energy Production/Solar Installed Capacity
+	~	Mtoe/(m*m*Year)
+	~	Ratio of solar energy production to available production capacity.
+	|
+
+Productivity of Investment in Solar Capacity Installation=
+	Impact of Space on Capacity Installation*Solar Installation Efficiency
+	~	Dmnl
+	~	Productivity of solar capacity installation taking into account the level \
+		of available capacities and technology development state.
+	|
+
+Ramp Investment Period=
+	100+STEP(Fraction of Revenue Invested in Solar Technology Ramp Investment Period Variation\
+		-100, 2020)
+	~	Year
+	~	Period of fractional investments in new energy technologies.
+	|
+
+SA S=
+	5e+11
+	~	m*m
+	~	Total area available for solar energy production capacities.
+	|
+
+SA Var S=
+	5e+11+SMOOTH(STEP(SA S-5e+11, 2020),1)
+	~	m*m
+	~	Total area available for solar energy production capacities.
+	|
+
+Sensitivity of Solar Energy Price to Supply and Demand=
+	0
+	~	Dmnl
+	~	Sensitivity of Solar Energy Price to Supply and Demand ratio.
+	|
+
+Solar Available Area=
+	SA Var S+SMOOTH(STEP(Solar Available Area Variation-SA Var S, 2020+E Var T),SSP Energy Production Variation Time\
+		)
+	~	m*m
+	~	Total area available for solar energy production capacities.
+	|
+
+Solar Available Area Variation=
+	5e+11
+	~	m*m
+	~	Total area available for solar energy production capacities.
+	|
+
+Solar Capacity Aging Rate=
+	Solar Installed Capacity/Solar Capacity Aging Time
+	~	m*m/Year
+	~	Aging rate of solar energy production capacities.
+	|
+
+Solar Capacity Aging Time=
+	20
+	~	Year
+	~	Average solar energy production capacity aging time.
+	|
+
+Solar Conversion Efficiency=
+	MINSCE+(MAXSCE-MINSCE)*(Solar Energy Technology Ratio/(Solar Energy Technology Ratio\
+		+1))
+	~	1
+	~	Parameter indicating efficiency of solar radiation conversion at the \
+		current state of technical developments.
+	|
+
+Solar Energy Demand to Supply Ratio=
+	Total Solar Demand/Possible Solar Energy Production
+	~	Dmnl
+	~	Solar Energy Demand to Supply Ratio.
+	|
+
+Solar Energy Price=
+	Indicated Solar Energy Price*Effect of Solar Energy Demand and Supply on Price
+	~	$/Mtoe
+	~	Actual solar energy price accounting for indicated solar energy price and \
+		effect of demand and supply.
+	|
+
+Solar Energy Production=
+	Solar Energy Production Rate
+	~	Mtoe/Year
+	~	Total solar energy production per year.
+	|
+
+Solar Energy Production Rate=
+	MIN(Possible Solar Energy Production,Total Solar Demand)
+	~	Mtoe/Year
+	~	Total solar energy production per year accounting for demand and potential \
+		production due to available production capability and technical \
+		developments.
+	|
+
+Solar Energy Revenue=
+	Solar Energy Production*Solar Energy Price
+	~	$/Year
+	~	Total revenue in solar energy market.
+	|
+
+Solar Energy Technology Development Time=
+	50+STEP(Renewable Energy Technology Development Time Variation-50, 2020)
+	~	Year
+	~	Average time required to turn investments into concrete solar conversion \
+		efficiency technology developments. Since the simulation starts in 1900 it \
+		is a significant time.
+	|
+
+Solar Energy Technology Ratio= INTEG (
+	Increase in Solar Energy Technology Ratio,
+		INIT SETRN)
+	~	Dmnl
+	~	Solar Energy Technology Ratio increased due to investments in solar \
+		conversion efficiency.
+	|
+
+Solar Final Investment=
+	0.03+STEP(Renewable Final Investment Fraction Variation-0.03, 2020)
+	~	Dmnl
+	~	Eventual average level of investments in solar energy technology.
+	|
+
+Solar Infrastructure Adjustment=
+	Solar Capacity Aging Rate+(Desired Solar Installed Capacity-Solar Installed Capacity\
+		)/Time to Adjust Solar Infrastructure
+	~	m*m/Year
+	~	Adjustment of Solar Infrastructure to the desired level over a specified \
+		adjustment time and accounting for constant infrastructure decrease due to \
+		aging process.
+	|
+
+Solar Initial Investment=
+	0
+	~	Dmnl
+	~	Initial level of fractional investments in solar energy technology.
+	|
+
+Solar Installation Efficiency=
+	MINSIE+(MAXSIE-MINSIE)*(Solar Installation Technology Ratio/(Solar Installation Technology Ratio\
+		+1))
+	~	1
+	~	Parameter indicating solar energy capacity installation efficiency at the \
+		current state of technical developments.
+	|
+
+Solar Installation Technology Development Time=
+	100+STEP(Renewable Installation Technology Development Time Variation-100, 2020)
+	~	Year
+	~	Average time required to turn investments into concrete solar energy \
+		production capacity. Since the simulation starts in 1900 it is a \
+		significant time.
+	|
+
+Solar Installation Technology Ratio= INTEG (
+	Increase in Solar Installation Technology Ratio,
+		INIT SITRN)
+	~	Dmnl
+	~	Solar Installation Technology Ratio increased due to investments in solar \
+		energy capacity installation efficiency.
+	|
+
+Solar Installed Capacity= INTEG (
+	Installation of Solar Capacity Rate-Solar Capacity Aging Rate,
+		INIT SIC)
+	~	m*m
+	~	Installed capacity to transform solar radiation into energy.
+	|
+
+Solar Investment Fraction Finish=
+	INITIAL TIME+Ramp Investment Period
+	~	Year
+	~	End of fractional investments in solar energy technology.
+	|
+
+Solar Investment Fraction Slope=
+	ABS(Solar Final Investment-Solar Initial Investment)/Ramp Investment Period
+	~	1/Year
+	~	Intensity of increase in investments in solar energy technology.
+	|
+
+Solar Investment Fraction Start=
+	INITIAL TIME
+	~	Year
+	~	Start of investments in solar energy technology.
+	|
+
+Solar Learning Curve Strength=
+	LN(1 - Fraction for Solar Learning Curve Strength)/LN(2)
+	~	1
+	~	Strength of learning curve with which the solar energy costs are \
+		influenced.
+	|
+
+Standard Test Conditions=
+	1000
+	~	W/(m*m)
+	~	Standard Test Conditions assuming irradiance of 1000 W/(m*m) to calculate \
+		Max Power Point.
+	|
+
+Sun Radiation=
+	0.5
+	~	kW/(m*m)
+	~	Average sun radiation in kW per sqr meter.
+	|
+
+Table for FISEI(
+	[(0,0)-(1,1)],(0,0.8),(0.2,0.8),(0.4,0.7),(0.6,0.5),(0.8,0.2),(1,0))
+	~	Dmnl
+	~	Table determining order by which technology investments are dedicated to \
+		energy and installation efficiency. For small Solar Installation \
+		Efficiency, in order to secure sufficient production capacity, more \
+		investments are directed to infrastructure. Once the Solar Installation \
+		Efficiency increases the investments are redirected to solar conversion \
+		efficiency technologies.
+	|
+
+Time to Adjust Solar Infrastructure=
+	5
+	~	Year
+	~	Time to adjust Solar Infrastructure to the desired level.
+	|
+
+Unit Cost of Solar Capacity Installation=
+	INIT Unit Cost of Solar Capacity Installation*Impact of Learning on Solar Unit Cost of Technology PC
+	~	$/Mtoe
+	~	Unit Cost of Solar Capacity Installation. Determined by Productivity of \
+		Investment in Solar Capacity Installation.
+	|
+
+Unit Cost of Solar Energy Production=
+	Reference Cost of Solar Energy Production/Production to Installation Ratio
+	~	$/Mtoe
+	~	Unit cost of solar capacity installation per energy unit.
+	|
+
+Weather Factor=
+	0.1
+	~	Dmnl
+	~	Percentage of total hours per year when solar energy can be produced.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Effectiveness of Investment in Renewable Energy Technology Variation=
+	1e-09
+	~	1/$
+	~		|
+
+Effectiveness of Investment in Renewable Installation Technology Variation=
+	1e-10
+	~	1/$
+	~		|
+
+Renewable Energy Technology Development Time Variation=
+	50
+	~	Year
+	~		|
+
+Renewable Final Investment Fraction Variation=
+	0.03
+	~	
+	~		|
+
+Renewable Installation Technology Development Time Variation=
+	100
+	~	Year
+	~		|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+MAXSCE=
+	0.4
+	~	Dmnl
+	~	Maximal efficiency of solar radiation conversion.
+	|
+
+MAXSIE=
+	1
+	~	Dmnl
+	~	Maximal value of Solar Installation Efficiency factor.
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+SSP Energy Production Variation Time=
+	5
+	~	Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_Solar
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,73,0
+10,1,Sun Radiation,875,-126,51,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Impact of Learning on Solar Unit Cost of Technology PC,756,-577,79,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,3,Solar Installed Capacity,731,298,64,30,3,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,4,48,450,295,10,8,0,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,5,7,3,4,0,0,22,0,0,0,-1--1--1,,1|(611,295)|
+1,6,7,4,100,0,0,22,0,0,0,-1--1--1,,1|(501,295)|
+11,7,0,549,295,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,8,Installation of Solar Capacity Rate,549,319,69,18,40,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,9,Time FL,875,-11,31,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,10,Weather Factor,981,-51,56,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,11,10,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,12,Solar Conversion Efficiency,1103,148,64,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,13,48,975,297,10,8,0,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,14,16,13,4,0,0,22,0,0,0,-1--1--1,,1|(924,297)|
+1,15,16,3,100,0,0,22,0,0,0,-1--1--1,,1|(833,297)|
+11,16,0,878,297,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,17,Solar Capacity Aging Rate,878,321,55,18,40,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,18,3,17,1,0,0,0,0,64,0,-1--1--1,,1|(822,338)|
+10,19,Solar Capacity Aging Time,963,381,55,18,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,20,19,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,21,Solar Energy Price,1273,-175,48,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,22,Solar Energy Revenue,1273,-78,48,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,23,21,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,24,INIT SIC,776,364,30,10,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,25,24,3,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,26,Solar Learning Curve Strength,574,-647,55,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,27,26,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,28,Fraction for Solar Learning Curve Strength,410,-647,64,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,28,26,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,30,48,475,-268,10,8,0,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,31,32,30,100,0,0,22,0,0,0,-1--1--1,,1|(526,-268)|
+11,32,0,574,-268,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,33,Solar Energy Production,574,-244,48,18,40,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Cumulative Solar Energy Produced,756,-269,58,29,3,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,35,32,34,4,0,0,22,0,0,0,-1--1--1,,1|(639,-268)|
+10,36,Solar Energy Technology Ratio,1266,146,58,35,3,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,37,48,1503,146,10,8,0,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,38,40,36,4,0,0,22,0,0,0,-1--1--1,,1|(1367,146)|
+1,39,40,37,100,0,0,22,0,0,0,-1--1--1,,1|(1458,146)|
+11,40,0,1417,146,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,41,Increase in Solar Energy Technology Ratio,1417,178,70,27,40,131,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,42,INIT SETRN,1266,195,44,10,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,43,Effectiveness of Investment in Solar Energy Technology,1330,262,70,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,44,Solar Energy Technology Development Time,1515,263,69,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,45,Investment in Solar Energy Technology,1806,280,70,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,46,Fraction of Revenue Invested in Solar Technology,1806,394,73,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,47,46,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,48,Cost of Solar Energy,1151,-378,48,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,49,Desired Solar Energy Gross Margin,1373,-378,78,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,50,Indicated Solar Energy Price,1273,-280,55,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,51,49,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,52,48,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,53,42,36,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,54,MINSCE,1176,207,33,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,55,MAXSCE,1176,69,37,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,56,54,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,57,55,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,58,36,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,59,Impact of Space on Capacity Installation,731,486,73,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,60,3,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,61,Total Solar Demand,429,-11,40,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,62,Desired Solar Installed Capacity,429,130,65,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,63,61,62,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,64,Efficiency of Solar Installed Capacity,613,130,66,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,65,3,64,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,66,64,62,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,67,Possible Solar Energy Production,731,-11,68,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,68,12,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,69,3,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,70,1,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,71,9,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,72,33,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,73,67,64,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,74,Investment in Solar Capacity,333,402,55,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,75,Unit Cost of Solar Capacity Installation,987,-577,73,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,76,Effect of Solar Energy Demand and Supply on Price,1448,-175,85,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,77,Sensitivity of Solar Energy Price to Supply and Demand,1448,-272,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,78,77,76,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,79,Solar Energy Demand to Supply Ratio,1736,-175,68,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,80,Total Solar Demand,1610,-246,45,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,81,Possible Solar Energy Production,1610,-114,72,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,82,80,76,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,83,80,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,84,81,76,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,85,81,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,86,50,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,87,Solar Infrastructure Adjustment,244,130,68,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,88,62,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,89,3,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,90,Solar Installed Capacity,574,-512,56,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,91,90,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,92,INIT SIC,574,-577,39,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,93,Solar Capacity Aging Rate,72,256,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,94,93,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,95,Solar Energy Production Rate,574,-126,59,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,96,67,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,97,61,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,98,95,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,Production to Installation Ratio,574,-378,60,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,100,Unit Cost of Solar Energy Production,987,-378,68,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,101,99,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,102,Solar Energy Price per kWh,1125,-175,53,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,103,21,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,104,Total Solar Demand GW,429,-176,48,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,105,61,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,106,Max Power Point,868,207,42,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,107,12,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,108,3,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,109,Standard Test Conditions,959,262,52,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,110,109,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,111,Max Power Point GW,804,148,42,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,112,106,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,113,Solar Installation Efficiency,1103,425,60,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,114,Solar Installation Technology Ratio,1266,424,58,35,3,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,115,48,1503,424,10,8,0,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,116,118,114,4,0,0,22,0,0,0,-1--1--1,,1|(1367,424)|
+1,117,118,115,100,0,0,22,0,0,0,-1--1--1,,1|(1458,424)|
+11,118,0,1417,424,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,119,Increase in Solar Installation Technology Ratio,1417,456,82,27,40,131,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,120,INIT SITRN,1266,473,40,10,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,121,Solar Installation Technology Development Time,1515,541,69,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,122,120,114,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,123,MINSIE,1176,540,28,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,124,MAXSIE,1176,347,32,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,125,123,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,126,124,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,127,114,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,128,Investment in Solar Energy Efficiency,1630,178,69,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,129,Investment in Solar Energy Installation,1631,456,69,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,130,45,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,131,45,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,132,Fraction Invested in Solar Energy Installation,1806,548,71,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,133,Table for FISEI,1806,644,54,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,134,113,132,1,0,0,0,0,64,0,-1--1--1,,1|(1234,550)|
+1,135,133,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,136,132,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,137,132,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,138,Solar Energy Revenue,1806,179,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,139,138,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,140,Solar Investment Fraction Finish,1981,394,60,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,140,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,142,Solar Investment Fraction Slope,1981,279,60,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,143,142,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,144,Solar Investment Fraction Start,1981,476,60,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,145,144,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,146,INITIAL TIME,2158,476,56,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,147,146,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,148,146,140,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,149,Ramp Investment Period,2158,394,66,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,150,149,140,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,151,Solar Initial Investment,2158,247,41,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,152,Solar Final Investment,2158,312,40,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,153,151,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,154,152,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,155,149,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,156,87,8,1,0,0,0,0,64,0,-1--1--1,,1|(339,273)|
+10,157,Reference Cost of Solar Energy Production,987,-462,67,27,8,3,0,38,0,0,0,0,0-0-0,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+1,158,157,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,159,Productivity of Investment in Solar Capacity Installation,548,486,73,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,160,59,159,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,161,113,159,1,0,0,0,0,64,0,-1--1--1,,1|(793,658)|
+1,162,159,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,163,92,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,164,INIT Unit Cost of Solar Capacity Installation,987,-647,80,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,165,8,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,2,75,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,167,164,75,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,168,Unit Cost of Solar Capacity Installation,333,486,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,169,168,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,170,75,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,171,33,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,172,90,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,173,100,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,174,76,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,175,Efficiency of Solar Installed Capacity,156,402,71,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,176,Solar Capacity Aging Time,156,486,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,177,175,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,178,176,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,179,Time to Adjust Solar Infrastructure,81,129,68,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,180,179,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,181,Solar Available Area,731,576,56,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,182,181,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,183,Effectiveness of Investment in Solar Installation Technology,1346,542,82,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,184,Solar Conversion Efficiency Factor,1012,50,64,18,8,3,0,38,0,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+1,185,184,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,186,Solar Energy Production Indicator,367,-312,73,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,187,33,186,1,0,0,0,0,128,0,-1--1--1,,1|(473,-244)|
+10,188,Effectiveness of Investment in Renewable Energy Technology Variation,1329,331,98,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,189,Effectiveness of Investment in Renewable Installation Technology Variation,1311,653,98,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,190,Renewable Energy Technology Development Time Variation,1550,334,92,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,191,Renewable Installation Technology Development Time Variation,1558,660,92,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,192,188,43,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,193,190,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,194,189,183,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,195,191,121,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,196,Renewable Final Investment Fraction Variation,2316,309,71,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,197,196,152,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,198,Fraction for Wind and Solar Learning Curve Strength Variation,218,-632,79,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,199,198,28,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,200,Solar Available Area Variation,876,613,56,18,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,201,200,181,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,202,Fraction of Revenue Invested in Solar Technology Ramp Investment Period Variation,2339,386,105,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,203,202,149,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,204,INIT Cumulative Solar Produced,879,-271,58,18,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,205,204,34,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,206,SSP Energy Production Variation Time,701,663,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,207,206,181,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,208,E Var T,840,571,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,209,SA Var S,803,543,35,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,210,SA S,866,515,21,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,211,210,209,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,212,209,181,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,213,208,181,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,214,Increase in Solar Installation Technology Ratio LV3,1333,776,90,19,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||0-0-0,0,0,0,0,0,0
+10,215,Increase in Solar Installation Technology Ratio LV2,1330,878,90,20,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||0-0-0,0,0,0,0,0,0
+10,216,Increase in Solar Installation Technology Ratio LV1,1334,976,90,18,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||0-0-0,0,0,0,0,0,0
+12,217,48,1119,773,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,218,220,217,100,16,0,22,0,192,0,-1--1--1,,1|(1153,773)|
+1,219,220,214,4,16,0,22,0,192,0,-1--1--1,,1|(1216,773)|
+11,220,0,1184,773,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,221,Inflow ISITRLV3,1184,803,56,10,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,222,48,1554,777,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,223,225,214,100,16,0,22,0,192,0,-1--1--1,,1|(1447,777)|
+1,224,225,222,4,16,0,22,0,192,0,-1--1--1,,1|(1514,777)|
+11,225,0,1478,777,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,226,Outflow ISITRLV3,1478,807,35,18,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,227,48,1111,876,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,228,230,227,100,16,0,22,0,192,0,-1--1--1,,1|(1148,876)|
+1,229,230,215,4,16,0,22,0,192,0,-1--1--1,,1|(1213,876)|
+11,230,0,1181,876,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,231,Inflow ISITRLV2,1181,906,56,10,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,232,48,1556,875,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,233,235,215,100,16,0,22,0,192,0,-1--1--1,,1|(1448,875)|
+1,234,235,232,4,16,0,22,0,192,0,-1--1--1,,1|(1517,875)|
+11,235,0,1482,875,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,236,Outflow ISITRLV2,1482,905,35,18,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,237,48,1114,976,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,238,240,237,100,16,0,22,0,192,0,-1--1--1,,1|(1144,976)|
+1,239,240,216,4,16,0,22,0,192,0,-1--1--1,,1|(1210,976)|
+11,240,0,1170,976,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,241,Inflow ISITRLV1,1170,1006,56,10,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,242,48,1554,976,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,243,245,216,100,16,0,22,0,192,0,-1--1--1,,1|(1442,976)|
+1,244,245,242,4,16,0,22,0,192,0,-1--1--1,,1|(1508,976)|
+11,245,0,1466,976,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,246,Outflow ISITRLV1,1466,1006,35,18,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,247,Delay Time ISITR,1757,882,42,18,8,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,248,Effectiveness ISITR,1001,870,49,18,8,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,249,Solar Installation Technology Development Time,1925,875,74,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,250,Effectiveness of Investment in Solar Installation Technology,822,832,86,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,251,Investment in Solar Energy Installation,831,925,73,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,252,250,248,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,253,251,248,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,254,249,247,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,255,248,214,1,16,0,0,0,192,1,-1--1--1,,1|(1166,705)|
+1,256,248,241,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,257,214,215,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,258,214,216,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,259,216,246,1,16,0,0,0,192,0,-1--1--1,,1|(1386,1042)|
+1,260,247,226,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,261,247,236,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,262,247,246,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,263,247,214,1,16,0,0,0,192,1,-1--1--1,,1|(1530,733)|
+1,264,215,236,1,16,0,0,0,192,0,-1--1--1,,1|(1398,931)|
+1,265,214,226,1,16,0,0,0,192,0,-1--1--1,,1|(1407,820)|
+1,266,246,231,1,16,0,0,0,192,0,-1--1--1,,1|(1350,925)|
+1,267,236,221,1,16,0,0,0,192,0,-1--1--1,,1|(1383,833)|
+1,268,226,119,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,269,Increase in Solar Energy Technology Ratio LV1,2017,-81,158,13,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||0-0-0,0,0,0,0,0,0
+10,270,Increase in Solar Energy Technology Ratio LV2,2007,4,159,13,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||0-0-0,0,0,0,0,0,0
+10,271,Increase in Solar Energy Technology Ratio LV3,2004,89,154,15,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||0-0-0,0,0,0,0,0,0
+12,272,48,2267,-82,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,273,275,272,100,16,0,22,0,192,0,-1--1--1,,1|(2239,-82)|
+1,274,275,269,4,16,0,22,0,192,0,-1--1--1,,1|(2192,-82)|
+11,275,0,2216,-82,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,276,Inflow ISETLV1,2216,-52,55,10,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,277,48,1717,-81,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,278,280,269,100,16,0,22,0,192,0,-1--1--1,,1|(1841,-81)|
+1,279,280,277,4,16,0,22,0,192,0,-1--1--1,,1|(1769,-81)|
+11,280,0,1817,-81,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,281,Outflow ISETLV1,1817,-61,34,18,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,282,48,2274,6,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,283,285,282,100,16,0,22,0,192,0,-1--1--1,,1|(2242,6)|
+1,284,285,270,4,16,0,22,0,192,0,-1--1--1,,1|(2187,6)|
+11,285,0,2215,6,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,286,Inflow ISETLV2,2215,36,55,10,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,287,48,1708,4,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,288,290,270,100,16,0,22,0,192,0,-1--1--1,,1|(1831,4)|
+1,289,290,287,4,16,0,22,0,192,0,-1--1--1,,1|(1760,4)|
+11,290,0,1808,4,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,291,Outflow ISETLV2,1808,27,34,18,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,292,48,2282,90,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,293,295,292,100,16,0,22,0,192,0,-1--1--1,,1|(2252,90)|
+1,294,295,271,4,16,0,22,0,192,0,-1--1--1,,1|(2189,90)|
+11,295,0,2226,90,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,296,Inflow ISETLV3,2226,120,55,10,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,297,48,1708,84,10,8,0,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,298,300,271,100,16,0,22,0,192,0,-1--1--1,,1|(1835,84)|
+1,299,300,297,4,16,0,22,0,192,0,-1--1--1,,1|(1763,84)|
+11,300,0,1815,84,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,301,Outflow ISETLV3,1815,110,34,18,40,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,302,Effectiveness ISETR,2387,-1,49,18,8,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,303,Delay Time ISETR,1519,-6,42,18,8,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,304,Solar Energy Technology Development Time,1384,-8,74,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,305,Investment in Solar Energy Efficiency,2541,-48,73,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,306,Effectiveness of Investment in Solar Energy Technology,2558,40,74,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+1,307,306,302,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,308,305,302,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,309,302,276,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,310,302,271,1,16,0,0,0,192,1,-1--1--1,,1|(2332,157)|
+1,311,271,269,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,312,271,270,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,313,269,281,1,16,0,0,0,192,0,-1--1--1,,1|(1862,-120)|
+1,314,281,286,1,16,0,0,0,192,0,-1--1--1,,1|(2119,-32)|
+1,315,304,303,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,316,303,281,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,317,303,291,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,318,303,301,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,319,303,271,1,16,0,0,0,192,1,-1--1--1,,1|(1714,145)|
+1,320,270,291,1,16,0,0,0,192,0,-1--1--1,,1|(1894,-25)|
+1,321,291,296,1,16,0,0,0,192,0,-1--1--1,,1|(2064,42)|
+1,322,271,301,1,16,0,0,0,192,0,-1--1--1,,1|(1910,46)|
+1,323,301,41,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,324,Variable2 Solar,1167,10,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,325,324,184,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,326,Energy Demand,282,9,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,327,326,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,328,Market Share Solar,282,-50,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,329,328,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,330,Variable14 Solar Cost,801,-459,46,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,331,330,157,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,332,Hours per Year,1022,-13,41,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,333,332,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,334,kW into GW,360,-115,53,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,335,334,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,336,kWh into Mtoe,1062,-245,37,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,337,336,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,338,kWh into Mtoe,586,4,37,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,339,338,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,340,kWh into Mtoe peak hour,288,-171,57,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,341,340,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,342,W into GW,811,84,49,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,343,342,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,344,Mtoe into EJ,367,-378,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,345,344,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Solar Installed Capacity
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:73,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

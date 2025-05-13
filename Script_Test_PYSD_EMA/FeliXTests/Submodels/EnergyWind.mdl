@@ -1,0 +1,2744 @@
+{UTF-8}
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Wind Energy Production Indicator=
+	Wind Energy Production*Mtoe into EJ
+	~	EJ/Year
+	~		|
+
+Total Wind Demand GW=
+	Total Wind Demand/kWh into Mtoe peak hour/kW into GW
+	~	GW/Year
+	~	Total demand for wind energy measured in GW.
+	|
+
+Wind Energy Price per kWh=
+	Wind Energy Price*kWh into Mtoe
+	~	$/(kW*Hour)
+	~	Actual wind energy price accounting for indicated wind energy price and \
+		effect of demand and supply measured in dollars per kWh.
+	|
+
+Potential Wind Energy Production=
+	Wind Installed Capacity*Average Capacity per SqMeter*Wind Capacity Factor*Hours per Year\
+		*kWh into Mtoe
+	~	Mtoe/Year
+	~	Potential solar energy production per year due to available production \
+		capability and technical developments.
+	|
+
+Max Wind Power Point TW=
+	Max Wind Power Point/kW into TW
+	~	TW
+	~	Wind Max Power Point measured in TW.
+	|
+
+Max Wind Power Point GW=
+	Max Wind Power Point/kW into GW
+	~	GW
+	~	Wind Max Power Point measured in GW.
+	|
+
+Average Capacity per SqMeter=
+	Variable3 Wind
+	~	kW/(m*m)
+	~	Average wind energy production from one sqr meter of wind installed \
+		capacity.
+	|
+
+Wind Investment Fraction Slope=
+	ABS(Wind Final Investment-Wind Initial Investment)/Ramp Investment Period
+	~	1/Year
+	~	Intensity of increase in investments in wind energy technology.
+	|
+
+Reference Cost of Wind Energy Production=
+	Variable15 Wind Cost
+	~	$/((m*m)*Year)
+	~	Reference cost of unit wind energy production per year.
+	|
+
+Total Wind Demand=
+	Energy Demand*Market Share Wind
+	~	Mtoe/Year
+	~	Total demand for wind energy.
+	|
+
+Wind Investment Fraction Finish=
+	INITIAL TIME+Ramp Investment Period
+	~	Year
+	~	End of fractional investments in wind energy technology.
+	|
+
+Cost of Wind Energy=
+	Unit Cost of Wind Capacity Installation+Unit Cost of Wind Energy Production
+	~	$/Mtoe
+	~	Cost of wind energy production assuming an impact of learning curve.
+	|
+
+Cumulative Wind Energy Produced= INTEG (
+	Wind Energy Production,
+		INIT Cumulative Wind Produced
+		)
+	~	Mtoe
+	~	Cumulative wind energy that has been produced.
+	|
+
+Delay Time IWETR=
+	Wind Energy Technology Development Time/3
+	~	Year
+	~		|
+
+Delay Time IWIR=
+	Wind Installation Technology Development Time/3
+	~	Year
+	~		|
+
+Desired Wind Energy Gross Margin=
+	0.2
+	~	Dmnl
+	~	Desired Gross Margin per unit of wind energy.
+	|
+
+Desired Wind Installed Capacity=
+	Total Wind Demand/Efficiency of Wind Installed Capacity
+	~	m*m
+	~	Desired Wind Installed Capacity accounting for Total Wind Demand and \
+		Efficiency of Wind Installed Capacity.
+	|
+
+Effect of Wind Energy Demand and Supply on Price=
+	(Total Wind Demand/Potential Wind Energy Production)^Sensitivity of Wind Energy Price to Supply and Demand
+	~	Dmnl
+	~	Effect of Wind Demand and Supply ratio on actual wind energy price.
+	|
+
+Effectiveness IWETR=
+	Investment in Wind Energy Efficiency*Effectiveness of Investment in Wind Energy Technology
+	~	1/Year
+	~		|
+
+Effectiveness IWITR=
+	Investment in Wind Energy Installation*Effectiveness of Investment in Wind Installation Technology
+	~	1/Year
+	~		|
+
+Effectiveness of Investment in Wind Energy Technology=
+	1e-09+STEP(Effectiveness of Investment in Renewable Energy Technology Variation-1e-09\
+		, 2020)
+	~	1/$
+	~	Effectivenes of resources dedicated to wind conversion efficiency \
+		technology development.
+	|
+
+Effectiveness of Investment in Wind Installation Technology=
+	1e-10+STEP(Effectiveness of Investment in Renewable Installation Technology Variation\
+		-1e-10, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to wind energy capacity efficiency \
+		technology development.
+	|
+
+Efficiency of Wind Installed Capacity=
+	ZIDZ(Potential Wind Energy Production,Wind Installed Capacity)
+	~	Mtoe/(Year*m*m)
+	~	Total production efficiency of Wind Installed Capacity for given \
+		technology developments.
+	|
+
+Fraction for Wind Learning Curve Strength=
+	0.2+STEP(Fraction for Wind and Solar Learning Curve Strength Variation-0.2, 2020)
+	~	1
+	~	Fraction for Wind Learning Curve Strength indicating by what percentage \
+		the wind energy cost will drop for each doubling of wind installed \
+		capacity.
+	|
+
+Fraction Invested in Wind Energy Installation=
+	Table for FIWEI(Wind Installation Efficiency)
+	~	Dmnl
+	~	Fraction of investments in wind energy technology dedicated to capacity.
+	|
+
+Fraction of Revenue Invested in Wind Technology=
+	RAMP(Wind Investment Fraction Slope, Wind Investment Fraction Start , Wind Investment Fraction Finish\
+		)
+	~	Dmnl
+	~	Parameter to take into account historical increase of the wind energy \
+		significance and over time greater resources dedicated to the technology \
+		development.
+	|
+
+Impact of Learning on Wind Unit Cost of Technology=
+	(Wind Installed Capacity/INIT WIC)^Wind Learning Curve Strength
+	~	1
+	~	Impact of learning curve on wind energy cost.
+	|
+
+Impact of Space on Wind Capacity Installation=
+	MAX(0,(1-Wind Installed Capacity/Wind Available Area))
+	~	1
+	~	Ratio of currently installed wind capacity to total possible.
+	|
+
+Increase in Wind Energy Technology Ratio=
+	Outflow IWETRLV3
+	~	1/Year
+	~	Increase in Wind Energy Technology Ratio due to investments in wind \
+		conversion efficiency technology and their productivity.
+	|
+
+Increase in Wind Energy Technology Ratio LV1= INTEG (
+	Inflow IWETRLV1-Outflow IWETRLV1,
+		Increase in Wind Energy Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Wind Energy Technology Ratio LV2= INTEG (
+	Inflow IWETRLV2-Outflow IWETRLV2,
+		Increase in Wind Energy Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Wind Energy Technology Ratio LV3= INTEG (
+	Inflow IWETRLV3-Outflow IWETRLV3,
+		Effectiveness IWETR*Delay Time IWETR)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Wind Installation Technology Ratio=
+	Outflow IWITRLV3
+	~	1/Year
+	~	Increase in Wind Installation Technology Ratio due to investments in wind \
+		energy installation  capacity.
+	|
+
+Increase in Wind Installation Technology Ratio LV1= INTEG (
+	Inflow IWITRLV1-Outflow IWITRLV1,
+		Increase in Wind Installation Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Wind Installation Technology Ratio LV2= INTEG (
+	Inflow IWITRLV2-Ourflow IWITRLV2,
+		Increase in Wind Installation Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Wind Installation Technology Ratio LV3= INTEG (
+	Inflow IWITRLV3-Outflow IWITRLV3,
+		Effectiveness IWITR*Delay Time IWIR)
+	~	
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Indicated Wind Energy Price=
+	Cost of Wind Energy*(1+Desired Wind Energy Gross Margin)
+	~	$/Mtoe
+	~	Indicated wind energy price accounting for unit cost and gross margin.
+	|
+
+Inflow IWETRLV1=
+	Effectiveness IWETR
+	~	1/Year
+	~		|
+
+Inflow IWETRLV2=
+	Outflow IWETRLV1
+	~	1/Year
+	~		|
+
+Inflow IWETRLV3=
+	Outflow IWETRLV2
+	~	1/Year
+	~		|
+
+Inflow IWITRLV1=
+	Effectiveness IWITR
+	~	1/Year
+	~		|
+
+Inflow IWITRLV2=
+	Outflow IWITRLV1
+	~	1/Year
+	~		|
+
+Inflow IWITRLV3=
+	Ourflow IWITRLV2
+	~	1/Year
+	~		|
+
+INIT Cumulative Wind Produced=
+	0
+	~	
+	~		|
+
+INIT Unit Cost of Wind Capacity Installation=
+	2e+09
+	~	$/Mtoe
+	~	Initial unit cost per unit wind capacity installation.
+	|
+
+INIT WETRN=
+	0
+	~	Dmnl
+	~	Initial Wind Energy Technology Ratio.
+	|
+
+INIT WIC=
+	4000
+	~	m*m
+	~	Initial installed capacity to transform wind into energy.
+	|
+
+INIT WITRN=
+	0
+	~	Dmnl
+	~	Initial Wind Installation Technology Ratio.
+	|
+
+Installation of Wind Capacity Rate=
+	Productivity of Investment in Wind Capacity Installation*Wind Infrastructure Adjustment
+	~	m*m/Year
+	~	Rate of new wind capacity installation.
+	|
+
+Investment in Wind Capacity=
+	Installation of Wind Capacity Rate*Unit Cost of Wind Capacity Installation*Efficiency of Wind Installed Capacity\
+		*Wind Aging Time
+	~	$/Year
+	~	Amount of resources dedicated to wind energy capacity development.
+	|
+
+Investment in Wind Energy Efficiency=
+	Investment in Wind Energy Technology*(1-Fraction Invested in Wind Energy Installation\
+		)
+	~	$/Year
+	~	Total investments in wind conversion efficiency technology.
+	|
+
+Investment in Wind Energy Installation=
+	Investment in Wind Energy Technology*Fraction Invested in Wind Energy Installation
+	~	$/Year
+	~	Total investments in wind energy capacity.
+	|
+
+Investment in Wind Energy Technology=
+	Fraction of Revenue Invested in Wind Technology*Wind Energy Revenue
+	~	$/Year
+	~	Investments in development of wind conversion efficiency technology and \
+		production capability.
+	|
+
+Max Wind Power Point=
+	Wind Installed Capacity*Average Capacity per SqMeter*Wind Capacity Factor
+	~	kW
+	~	Max Power Point measured at Standard Test Conditions for installed wind \
+		energy production capacity and current wind conversion efficiency.
+	|
+
+MINWCF=
+	0.2
+	~	Dmnl
+	~	Minimal and initial wind capacity factor.
+	|
+
+MINWIE=
+	0.01
+	~	Dmnl
+	~	Minimal and initial value of Wind Installation Efficiency factor.
+	|
+
+Ourflow IWITRLV2=
+	Increase in Wind Installation Technology Ratio LV2/Delay Time IWIR
+	~	1/Year
+	~		|
+
+Outflow IWETRLV1=
+	Increase in Wind Energy Technology Ratio LV1/Delay Time IWETR
+	~	1/Year
+	~		|
+
+Outflow IWETRLV2=
+	Increase in Wind Energy Technology Ratio LV2/Delay Time IWETR
+	~	1/Year
+	~		|
+
+Outflow IWETRLV3=
+	Increase in Wind Energy Technology Ratio LV3/Delay Time IWETR
+	~	1/Year
+	~		|
+
+Outflow IWITRLV1=
+	Increase in Wind Installation Technology Ratio LV1/Delay Time IWIR
+	~	1/Year
+	~		|
+
+Outflow IWITRLV3=
+	Increase in Wind Installation Technology Ratio LV3/Delay Time IWIR
+	~	1/Year
+	~		|
+
+Productivity of Investment in Wind Capacity Installation=
+	Impact of Space on Wind Capacity Installation*Wind Installation Efficiency
+	~	Dmnl
+	~	Productivity of wind capacity installation taking into account the level \
+		of remaining possible capacities and technology development state.
+	|
+
+Sensitivity of Wind Energy Price to Supply and Demand=
+	0
+	~	Dmnl
+	~	Sensitivity of Wind Energy Price to Supply and Demand ratio.
+	|
+
+Table for FIWEI(
+	[(0,0)-(1,1)],(0,0.8),(0.2,0.8),(0.4,0.7),(0.6,0.5),(0.8,0.2),(1,0))
+	~	Dmnl
+	~	Table determining order by which technology investments are dedicated to \
+		energy and installation efficiency. For small Wind Installation \
+		Efficiency, in order to secure sufficient production capacity, more \
+		investments are directed to infrastructure. Once the Wind Installation \
+		Efficiency increases the investments are redirected to solar conversion \
+		efficiency technologies.
+	|
+
+Time to Adjust Wind Infrastructure=
+	5
+	~	Year
+	~	Time to adjust Wind Infrastructure to the desired level.
+	|
+
+Unit Cost of Wind Capacity Installation=
+	INIT Unit Cost of Wind Capacity Installation*Impact of Learning on Wind Unit Cost of Technology
+	~	$/Mtoe
+	~	Unit Cost of Wind Capacity Installation. Determined by Productivity of \
+		Investment in Wind Capacity Installation.
+	|
+
+Unit Cost of Wind Energy Production=
+	Reference Cost of Wind Energy Production/Wind Production to Installation Ratio
+	~	$/Mtoe
+	~	Unit cost of wind capacity installation per energy unit.
+	|
+
+Wind Aging Time=
+	20
+	~	Year
+	~	Average wind energy production capacity aging time.
+	|
+
+Wind Available Area=
+	8e+12+STEP(Wind Available Area Variation-8e+12, 2020)
+	~	m*m
+	~	Total area available for wind energy production capacities.
+	|
+
+Wind Available Area Variation=
+	8e+12
+	~	m*m
+	~	Total area available for wind energy production capacities.
+	|
+
+Wind Capacity Aging Rate=
+	Wind Installed Capacity/Wind Aging Time
+	~	m*m/Year
+	~	Aging rate of wind energy production capacities.
+	|
+
+Wind Capacity Factor=
+	MINWCF+(MAXWCF-MINWCF)*(Wind Energy Technology Ratio/(Wind Energy Technology Ratio+1\
+		))
+	~	1
+	~	Parameter indicating what fraction of average wind capacity per sqr meter \
+		it is possible to realize with the current state of technical developments.
+	|
+
+Wind Energy Demand to Supply Ratio=
+	Total Wind Demand/Potential Wind Energy Production
+	~	Dmnl
+	~	Wind Energy Demand to Supply Ratio.
+	|
+
+Wind Energy Price=
+	Indicated Wind Energy Price*Effect of Wind Energy Demand and Supply on Price
+	~	$/Mtoe
+	~	Actual wind energy price accounting for indicated  wind energy price and \
+		effect of demand and supply.
+	|
+
+Wind Energy Production=
+	Wind Energy Production Rate
+	~	Mtoe/Year
+	~	Total wind energy production per year.
+	|
+
+Wind Energy Production Rate=
+	MIN(Potential Wind Energy Production,Total Wind Demand)
+	~	Mtoe/Year
+	~	Total wind energy production per year accounting for demand and potential \
+		production due to available production capability and technical \
+		developments.
+	|
+
+Wind Energy Revenue=
+	Wind Energy Production*Wind Energy Price
+	~	$/Year
+	~	Total revenue in wind energy market.
+	|
+
+Wind Energy Technology Development Time=
+	50+STEP(Renewable Energy Technology Development Time Variation-50, 2020)
+	~	Year
+	~	Average time required to turn investments into concrete wind conversion \
+		efficiency technology developments. Since the simulation starts in 1900 it \
+		is a significant time.
+	|
+
+Wind Energy Technology Ratio= INTEG (
+	Increase in Wind Energy Technology Ratio,
+		INIT WETRN)
+	~	Dmnl
+	~	Wind Energy Technology Ratio increased due to investments in wind \
+		conversion efficiency.
+	|
+
+Wind Final Investment=
+	0.03+STEP(Renewable Final Investment Fraction Variation-0.03, 2020)
+	~	Dmnl
+	~	Eventual average level of investments in wind energy technology.
+	|
+
+Wind Infrastructure Adjustment=
+	Wind Capacity Aging Rate+(Desired Wind Installed Capacity-Wind Installed Capacity)/Time to Adjust Wind Infrastructure
+	~	m*m/Year
+	~	Adjustment of Wind Infrastructure to the desired level over a specified \
+		adjustment time and accounting for constant infrastructure decrease due to \
+		aging process.
+	|
+
+Wind Initial Investment=
+	0
+	~	Dmnl
+	~	Initial level of fractional investments in wind energy technology.
+	|
+
+Wind Installation Efficiency=
+	MINWIE+(MAXWIE-MINWIE)*(Wind Installation Technology Ratio/(Wind Installation Technology Ratio\
+		+1))
+	~	1
+	~	Parameter indicating wind energy capacity installation efficiency at the \
+		current state of technical developments.
+	|
+
+Wind Installation Technology Development Time=
+	100+STEP(Renewable Installation Technology Development Time Variation-100, 2020)
+	~	Year
+	~	Average time required to turn investments into concrete wind energy \
+		production capacity. Since the simulation starts in 1900 it is a \
+		significant time.
+	|
+
+Wind Installation Technology Ratio= INTEG (
+	Increase in Wind Installation Technology Ratio,
+		INIT WITRN)
+	~	Dmnl
+	~	Wind Installation Technology Ratio increased due to investments in wind \
+		energy capacity installation efficiency.
+	|
+
+Wind Installed Capacity= INTEG (
+	Installation of Wind Capacity Rate-Wind Capacity Aging Rate,
+		INIT WIC)
+	~	m*m
+	~	Installed capacity to transform wind into energy.
+	|
+
+Wind Investment Fraction Start=
+	INITIAL TIME
+	~	Year
+	~	Start of investments in wind energy technology.
+	|
+
+Wind Learning Curve Strength=
+	LN(1 - Fraction for Wind Learning Curve Strength)/LN(2)
+	~	1
+	~	Strength of learning curve with which the wind energy costs are influenced.
+	|
+
+Wind Production to Installation Ratio=
+	Wind Energy Production/Wind Installed Capacity
+	~	Mtoe/(m*m*Year)
+	~	Ratio of wind energy production to available production capacity.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Fraction for Wind and Solar Learning Curve Strength Variation=
+	0.2
+	~	1
+	~		|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Effectiveness of Investment in Renewable Energy Technology Variation=
+	1e-09
+	~	1/$
+	~		|
+
+Effectiveness of Investment in Renewable Installation Technology Variation=
+	1e-10
+	~	1/$
+	~		|
+
+Renewable Energy Technology Development Time Variation=
+	50
+	~	Year
+	~		|
+
+Renewable Final Investment Fraction Variation=
+	0.03
+	~	
+	~		|
+
+Renewable Installation Technology Development Time Variation=
+	100
+	~	Year
+	~		|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+MAXWCF=
+	0.5
+	~	Dmnl
+	~	Maximal wind capacity factor.
+	|
+
+MAXWIE=
+	1
+	~	Dmnl
+	~	Maximal value of Wind Installation Efficiency factor.
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_Wind
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,62,0
+10,1,Impact of Learning on Wind Unit Cost of Technology,891,120,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Wind Installed Capacity,866,977,64,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,3,48,585,974,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,4,6,2,4,0,0,22,0,0,0,-1--1--1,,1|(746,974)|
+1,5,6,3,100,0,0,22,0,0,0,-1--1--1,,1|(636,974)|
+11,6,0,684,974,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,7,Installation of Wind Capacity Rate,684,998,68,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,Wind Capacity Factor,1263,827,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,9,48,1110,976,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,10,12,9,4,0,0,22,0,0,0,-1--1--1,,1|(1059,976)|
+1,11,12,2,100,0,0,22,0,0,0,-1--1--1,,1|(968,976)|
+11,12,0,1013,976,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,13,Wind Capacity Aging Rate,1013,1000,54,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,14,2,13,1,0,0,0,0,64,0,-1--1--1,,1|(957,1017)|
+10,15,Wind Aging Time,1098,1060,43,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,16,15,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,17,Wind Energy Price,1408,504,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,18,Wind Energy Revenue,1408,601,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,19,17,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,20,INIT WIC,911,1043,32,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,21,20,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,22,Wind Learning Curve Strength,709,49,55,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,23,22,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,24,Fraction for Wind Learning Curve Strength,545,48,63,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,25,24,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,26,48,610,411,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,27,28,26,100,0,0,22,0,0,0,-1--1--1,,1|(661,411)|
+11,28,0,709,411,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,29,Wind Energy Production,709,435,47,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,30,Cumulative Wind Energy Produced,891,410,58,29,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,31,28,30,4,0,0,22,0,0,0,-1--1--1,,1|(774,411)|
+10,32,Wind Energy Technology Ratio,1426,825,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,33,48,1663,825,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,34,36,32,4,0,0,22,0,0,0,-1--1--1,,1|(1527,825)|
+1,35,36,33,100,0,0,22,0,0,0,-1--1--1,,1|(1618,825)|
+11,36,0,1577,825,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,37,Increase in Wind Energy Technology Ratio,1577,857,70,27,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,38,INIT WETRN,1426,874,46,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,39,Effectiveness of Investment in Wind Energy Technology,1490,941,70,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,40,Wind Energy Technology Development Time,1675,942,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,41,Cost of Wind Energy,1286,301,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,42,Desired Wind Energy Gross Margin,1508,301,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,43,Indicated Wind Energy Price,1408,399,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,44,42,43,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,45,41,43,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,46,38,32,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,47,MINWCF,1336,886,34,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,48,MAXWCF,1336,748,38,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,49,47,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,50,48,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,51,32,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,52,Impact of Space on Wind Capacity Installation,866,1165,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,53,2,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,54,Total Wind Demand,564,668,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,55,Desired Wind Installed Capacity,564,809,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,56,54,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,57,Efficiency of Wind Installed Capacity,748,809,66,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,58,2,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,59,57,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,60,Potential Wind Energy Production,866,668,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,61,8,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,62,2,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,63,29,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,64,60,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,65,Investment in Wind Capacity,408,1111,54,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,66,Productivity of Investment in Wind Capacity Installation,684,1165,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,67,Unit Cost of Wind Capacity Installation,1109,120,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,68,52,66,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,69,Effect of Wind Energy Demand and Supply on Price,1583,504,85,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,Sensitivity of Wind Energy Price to Supply and Demand,1583,407,83,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,71,70,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,72,Wind Energy Demand to Supply Ratio,1871,504,68,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,73,Total Wind Demand,1745,433,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,74,Potential Wind Energy Production,1745,565,72,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,75,73,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,76,73,72,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,77,74,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,78,74,72,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,79,43,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,80,Wind Infrastructure Adjustment,379,809,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,81,55,80,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,82,2,80,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,83,Wind Installed Capacity,709,214,56,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,84,83,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,85,INIT WIC,709,119,41,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,86,85,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,87,Wind Capacity Aging Rate,207,935,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,88,87,80,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,89,Wind Energy Production Rate,709,553,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,90,60,89,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,91,54,89,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,92,89,29,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,93,Unit Cost of Wind Capacity Installation,408,1200,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,94,Wind Production to Installation Ratio,709,301,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,95,83,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,96,28,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,97,Wind Energy Price per kWh,1260,504,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,98,17,97,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,Total Wind Demand GW,564,503,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,100,54,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,101,Max Wind Power Point,1017,884,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,102,8,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,103,2,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,104,Max Wind Power Point TW,926,827,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,105,101,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,106,Average Capacity per SqMeter,1017,668,66,18,8,3,0,36,0,0,0,0,0-0-0,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+1,107,106,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,108,106,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,109,Max Wind Power Point GW,1138,935,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,110,101,109,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,111,Investment in Wind Energy Technology,1967,959,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,112,Fraction of Revenue Invested in Wind Technology,1967,1073,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,113,112,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,114,Wind Installation Efficiency,1264,1104,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,115,Wind Installation Technology Ratio,1427,1103,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,116,48,1664,1103,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,119,115,4,0,0,22,0,0,0,-1--1--1,,1|(1528,1103)|
+1,118,119,116,100,0,0,22,0,0,0,-1--1--1,,1|(1619,1103)|
+11,119,0,1578,1103,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,120,Increase in Wind Installation Technology Ratio,1578,1135,82,27,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,121,INIT WITRN,1427,1152,42,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,122,Wind Installation Technology Development Time,1676,1220,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,123,121,115,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,124,MINWIE,1337,1219,30,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,125,MAXWIE,1335,1026,34,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,126,124,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,127,125,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,128,115,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,129,Investment in Wind Energy Efficiency,1791,857,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,130,Investment in Wind Energy Installation,1792,1135,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,131,111,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,132,111,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,133,Fraction Invested in Wind Energy Installation,1967,1227,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,134,Table for FIWEI,1967,1323,56,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,135,114,133,1,0,0,0,0,64,0,-1--1--1,,1|(1395,1229)|
+1,136,134,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,137,133,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,138,133,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,139,Wind Investment Fraction Finish,2142,1073,60,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,140,139,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,141,Wind Investment Fraction Slope,2142,958,60,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,142,141,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,143,Wind Investment Fraction Start,2142,1155,60,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,144,143,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,145,INITIAL TIME,2319,1155,56,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,146,145,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,147,145,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,148,Wind Initial Investment,2319,926,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,149,Wind Final Investment,2319,991,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,150,148,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,151,149,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,152,Wind Energy Revenue,1966,858,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,153,152,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,154,114,66,1,0,0,0,0,64,0,-1--1--1,,1|(1084,1270)|
+1,155,66,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,156,80,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,7,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,158,INIT Unit Cost of Wind Capacity Installation,1109,49,80,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,159,93,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,160,67,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,161,1,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,162,158,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,163,Reference Cost of Wind Energy Production,1109,211,67,27,8,3,0,36,0,0,0,0,0-0-0,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,164,Unit Cost of Wind Energy Production,1109,301,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,165,94,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,163,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,167,164,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,168,69,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,169,Efficiency of Wind Installed Capacity,232,1111,70,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,170,Wind Aging Time,232,1200,48,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,171,169,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,172,170,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,173,Wind Available Area,866,1244,55,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,174,173,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,175,Time to Adjust Wind Infrastructure,216,809,68,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,176,175,80,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,177,Effectiveness of Investment in Wind Installation Technology,1515,1219,82,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,178,Wind Energy Production Indicator,511,366,73,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,179,29,178,1,0,0,0,0,128,0,-1--1--1,,1|(595,428)|
+10,180,Effectiveness of Investment in Renewable Energy Technology Variation,1464,1007,103,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,181,Effectiveness of Investment in Renewable Installation Technology Variation,1431,1303,103,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,182,Renewable Energy Technology Development Time Variation,1667,1023,92,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,183,Renewable Installation Technology Development Time Variation,1700,1308,92,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,184,180,39,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,185,182,40,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,186,181,177,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,187,183,122,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,188,Renewable Final Investment Fraction Variation,2465,993,71,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,189,188,149,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,190,Fraction for Wind and Solar Learning Curve Strength Variation,354,43,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,191,190,24,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,192,Wind Available Area Variation,985,1243,55,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,193,192,173,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,194,INIT Cumulative Wind Produced,1027,412,57,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,195,194,30,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,196,Increase in Wind Installation Technology Ratio LV3,1600,1434,94,16,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,197,Increase in Wind Installation Technology Ratio LV2,1603,1523,98,19,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,198,Increase in Wind Installation Technology Ratio LV1,1606,1619,97,17,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,199,48,1803,1432,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,200,202,199,100,16,0,22,0,192,0,-1--1--1,,1|(1766,1432)|
+1,201,202,196,4,16,0,22,0,192,0,-1--1--1,,1|(1710,1432)|
+11,202,0,1733,1432,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,203,Inflow IWITRLV3,1733,1462,58,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,204,48,1386,1434,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,205,207,196,100,16,0,22,0,192,0,-1--1--1,,1|(1481,1434)|
+1,206,207,204,4,16,0,22,0,192,0,-1--1--1,,1|(1420,1434)|
+11,207,0,1451,1434,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,208,Outflow IWITRLV3,1451,1464,37,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,209,48,1803,1526,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,210,212,209,100,16,0,22,0,192,0,-1--1--1,,1|(1773,1526)|
+1,211,212,197,4,16,0,22,0,192,0,-1--1--1,,1|(1721,1526)|
+11,212,0,1747,1526,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,213,Inflow IWITRLV2,1747,1556,58,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,214,48,1380,1523,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,215,217,197,100,16,0,22,0,192,0,-1--1--1,,1|(1479,1523)|
+1,216,217,214,4,16,0,22,0,192,0,-1--1--1,,1|(1415,1523)|
+11,217,0,1447,1523,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,218,Ourflow IWITRLV2,1447,1553,37,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,219,48,1807,1620,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,220,222,219,100,16,0,22,0,192,0,-1--1--1,,1|(1776,1620)|
+1,221,222,198,4,16,0,22,0,192,0,-1--1--1,,1|(1723,1620)|
+11,222,0,1750,1620,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,223,Inflow IWITRLV1,1750,1650,58,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,224,48,1378,1619,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,225,227,198,100,16,0,22,0,192,0,-1--1--1,,1|(1481,1619)|
+1,226,227,224,4,16,0,22,0,192,0,-1--1--1,,1|(1415,1619)|
+11,227,0,1448,1619,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,228,Outflow IWITRLV1,1448,1649,37,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,229,Delay Time IWIR,1178,1517,60,10,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,230,122,229,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,231,229,196,1,16,0,0,0,192,1,-1--1--1,,1|(1458,1378)|
+1,232,229,208,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,233,229,218,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,234,229,228,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,235,196,197,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,236,196,198,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,237,196,208,1,16,0,0,0,192,0,-1--1--1,,1|(1540,1469)|
+1,238,198,228,1,16,0,0,0,192,0,-1--1--1,,1|(1548,1672)|
+10,239,Effectiveness IWITR,1936,1505,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,240,Effectiveness of Investment in Wind Installation Technology,2052,1441,86,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,241,Investment in Wind Energy Installation,2074,1558,73,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,242,241,239,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,243,240,239,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,244,239,196,1,16,0,0,0,192,1,-1--1--1,,1|(1832,1369)|
+1,245,239,223,1,16,0,0,0,192,0,-1--1--1,,1|(1907,1637)|
+1,246,228,213,1,16,0,0,0,192,0,-1--1--1,,1|(1554,1574)|
+1,247,218,203,1,16,0,0,0,192,0,-1--1--1,,1|(1548,1481)|
+1,248,197,218,1,16,0,0,0,192,0,-1--1--1,,1|(1514,1570)|
+1,249,208,120,1,16,0,0,0,192,0,-1--1--1,,1|(1607,1272)|
+10,250,Increase in Wind Energy Technology Ratio LV1,1827,631,85,17,3,3,16,54,-1,0,0,0,0-0-0,9-81-45,Arial||B|255-255-255,0,0,0,0,0,0
+10,251,Increase in Wind Energy Technology Ratio LV2,1829,695,88,19,3,3,16,54,-1,0,0,0,0-0-0,9-81-45,Arial||B|255-255-255,0,0,0,0,0,0
+10,252,Increase in Wind Energy Technology Ratio LV3,1829,764,84,19,3,3,16,54,-1,0,0,0,0-0-0,9-81-45,Arial||B|255-255-255,0,0,0,0,0,0
+12,253,48,2000,630,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,254,256,253,100,16,0,22,0,192,0,-1--1--1,,1|(1973,630)|
+1,255,256,250,4,16,0,22,0,192,0,-1--1--1,,1|(1928,630)|
+11,256,0,1951,630,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,257,Inflow IWETRLV1,1951,660,42,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,258,48,1627,631,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,259,261,250,100,16,0,22,0,192,0,-1--1--1,,1|(1718,631)|
+1,260,261,258,4,16,0,22,0,192,0,-1--1--1,,1|(1660,631)|
+11,261,0,1689,631,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,262,Outflow IWETRLV1,1689,661,42,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,263,48,2010,694,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,264,266,263,100,16,0,22,0,192,0,-1--1--1,,1|(1982,694)|
+1,265,266,251,4,16,0,22,0,192,0,-1--1--1,,1|(1934,694)|
+11,266,0,1958,694,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,267,Inflow IWETRLV2,1958,724,42,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,268,48,1623,695,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,269,271,251,100,16,0,22,0,192,0,-1--1--1,,1|(1717,695)|
+1,270,271,268,4,16,0,22,0,192,0,-1--1--1,,1|(1657,695)|
+11,271,0,1687,695,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,272,Outflow IWETRLV2,1687,725,42,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,273,48,2030,766,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,274,276,273,100,16,0,22,0,192,0,-1--1--1,,1|(1996,766)|
+1,275,276,252,4,16,0,22,0,192,0,-1--1--1,,1|(1936,766)|
+11,276,0,1966,766,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,277,Inflow IWETRLV3,1966,796,42,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,278,48,1620,764,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,279,281,252,100,16,0,22,0,192,0,-1--1--1,,1|(1719,764)|
+1,280,281,278,4,16,0,22,0,192,0,-1--1--1,,1|(1655,764)|
+11,281,0,1687,764,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,282,Outflow IWETRLV3,1687,794,42,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,283,Delay Time IWETR,1488,682,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,284,40,283,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,285,Effectiveness IWETR,2148,683,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,286,Effectiveness of Investment in Wind Energy Technology,2272,638,74,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,287,Investment in Wind Energy Efficiency,2282,726,73,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,288,286,285,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,289,287,285,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,290,250,262,1,16,0,0,0,192,0,-1--1--1,,1|(1734,596)|
+1,291,283,282,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,292,283,272,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,293,283,262,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,294,283,252,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,295,251,272,1,16,0,0,0,192,0,-1--1--1,,1|(1739,667)|
+1,296,252,282,1,16,0,0,0,192,0,-1--1--1,,1|(1771,728)|
+1,297,252,251,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,298,252,250,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,299,285,252,1,16,0,0,0,192,1,-1--1--1,,1|(2067,807)|
+1,300,285,257,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,301,262,267,1,16,0,0,0,192,0,-1--1--1,,1|(1884,662)|
+1,302,272,277,1,16,0,0,0,192,0,-1--1--1,,1|(1883,727)|
+1,303,282,37,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,304,Variable15 Wind Cost,931,207,46,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,305,304,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,306,Ramp Investment Period,2340,1072,68,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,307,306,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,308,Energy Demand,380,701,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,309,308,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,310,Market Share Wind,380,624,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,311,310,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,312,Variable3 Wind,1185,668,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,313,312,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,314,Ramp Investment Period,2142,994,68,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,315,314,141,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,316,306,141,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,317,Hours per Year,986,598,41,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,318,317,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,319,kW into TW,931,758,51,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,320,319,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,321,kW into GW,420,512,53,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,322,321,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,323,kW into GW,1214,988,53,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,324,323,109,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,325,kWh into Mtoe,717,704,37,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,326,325,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,327,kWh into Mtoe,1197,426,37,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,328,327,97,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,329,kWh into Mtoe peak hour,564,539,57,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,330,329,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,331,Mtoe into EJ,357,409,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,332,331,178,1,0,0,0,0,64,0,-1--1--1,,1|(421,383)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Mtoe into EJ
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:62,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:ClimateDamage.mdl
+83:Climate.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

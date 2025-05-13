@@ -1,0 +1,2697 @@
+{UTF-8}
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+		
+	|
+
+Average Wind Capacity per SqMeter Final Change Rate Variation=
+	0.35
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Biomass Conversion Efficiency Final Change Rate Variation=
+	3.17e-07
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Change Rate Finish=
+	Ramp Start+Ramp Period
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish1=
+	Ramp Start1+Ramp Period1
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish10=
+	Ramp Start10+Ramp Period10
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish11=
+	Ramp Start11+Ramp Period11
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish12=
+	Ramp Start12+Ramp Period12
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish13=
+	Ramp Start13+Ramp Period13
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish14=
+	Ramp Start14+Ramp Period14
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish15=
+	Ramp Start15+Ramp Period15
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish16=
+	Ramp Start16+Ramp Period16
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish2=
+	Ramp Start2+Ramp Period2
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish3=
+	Ramp Start3+Ramp Period3
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish4=
+	Ramp Start4+Ramp Period4
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish5=
+	Ramp Start5+Ramp Period5
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish6=
+	Ramp Start6+Ramp Period6
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish7=
+	Ramp Start7+Ramp Period7
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish8=
+	Ramp Start8+Ramp Period8
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Finish9=
+	Ramp Start9+Ramp Period9
+	~	Year
+	~	End of fractional investments in Educational Attainment.
+	|
+
+Change Rate Slope=
+	ABS(Final Change Rate-Initial Change Rate)/Ramp Period
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope1=
+	ABS(Final Change Rate1-Initial Change Rate1)/Ramp Period1
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope10=
+	(Final Change Rate10-Initial Change Rate10)/Ramp Period10
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope11=
+	(Final Change Rate11-Initial Change Rate11)/Ramp Period11
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope12=
+	ABS(Final Change Rate12-Initial Change Rate12)/Ramp Period12
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope13=
+	(Final Change Rate13-Initial Change Rate13)/Ramp Period13
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope14=
+	(Final Change Rate14-Initial Change Rate14)/Ramp Period14
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope15=
+	(Final Change Rate15-Initial Change Rate15)/Ramp Period15
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope16=
+	ABS(Final Change Rate16-Initial Change Rate16)/Ramp Period16
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope2=
+	ABS(Final Change Rate2-Initial Change Rate2)/Ramp Period2
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope3=
+	ABS(Final Change Rate3-Initial Change Rate3)/Ramp Period3
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope4=
+	(Reduced Carbon Emissions of Oil-Normal Carbon Emissions of Oil)/Ramp Period4
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope5=
+	(Reduced C Emissions of Gas-Normal Carbon Emissions of Gas)/Ramp Period5
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope6=
+	(Reduced C Emissions of Coal-Normal Carbon Emissions of Coal)/Ramp Period6
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope7=
+	ABS(Final Change Rate7-Initial Change Rate7)/Ramp Period7
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope8=
+	ABS(Final Change Rate8-Initial Change Rate8)/Ramp Period8
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Slope9=
+	ABS(Final Change Rate9-Initial Change Rate9)/Ramp Period9
+	~	1/(Year*Year)
+	~	Intensity of Educational Attainment Change Rate.
+	|
+
+Change Rate Start=
+	Ramp Start
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start1=
+	Ramp Start1
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start10=
+	Ramp Start10
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start11=
+	Ramp Start11
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start12=
+	Ramp Start12
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start13=
+	Ramp Start13
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start14=
+	Ramp Start14
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start15=
+	Ramp Start15
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start16=
+	Ramp Start16
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start2=
+	Ramp Start2
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start3=
+	Ramp Start3
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start4=
+	Ramp Start4
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start5=
+	Ramp Start5
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start6=
+	Ramp Start6
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start7=
+	Ramp Start7
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start8=
+	Ramp Start8
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+Change Rate Start9=
+	Ramp Start9
+	~	Year
+	~	Start of increased investments in Educational Attainment.
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+Effect of GDP on Cropland Management Practices Increment Final Change Rate Variation=
+	10
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Effect of GDP on Cropland Management Practices Increment Ramp Period Variation=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Effect of GDP on Forest Management Practices Increment Final Change Rate Variation=
+	1.5
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Effect of GDP on Forest Management Practices Increment Ramp Period Variation=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Final Change Rate=
+	2
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate1=
+	3.17e-07+STEP(Biomass Conversion Efficiency Final Change Rate Variation-3.17e-07, 2020\
+		)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate10=
+	2e+12
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate11=
+	120
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate12=
+	0.2
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate13=
+	RCB Var S+SMOOTH(STEP(Reference Cost of Biomass Energy Production Final Change Rate Variation\
+		-RCB Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate14=
+	RCS Var S+SMOOTH(STEP(Reference Cost of Solar Energy Production Final Change Rate Variation\
+		-RCS Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate15=
+	RCW Var S+SMOOTH(STEP(Reference Cost of Wind Energy Production Final Change Rate Variation\
+		-RCW Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate16=
+	6+STEP(Other Technology Steepness Final Change Rate Variation-6, 2020)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate2=
+	SC Var S+SMOOTH(STEP(Solar Conversion Efficiency Factor Final Change Rate Variation-\
+		SC Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate3=
+	WC Var S+SMOOTH(STEP(Average Wind Capacity per SqMeter Final Change Rate Variation-WC Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate7=
+	1.5+STEP(Effect of GDP on Forest Management Practices Increment Final Change Rate Variation\
+		-1.5, 2020)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate8=
+	10+STEP(Effect of GDP on Cropland Management Practices Increment Final Change Rate Variation\
+		-10, 2020)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Final Change Rate9=
+	40
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Initial Change Rate=
+	1
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate1=
+	4.17e-07
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate10=
+	3e+12
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate11=
+	140
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate12=
+	0.1
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate13=
+	5e+07
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate14=
+	40
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate15=
+	12
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate16=
+	3
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate2=
+	1
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate3=
+	0.009
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate7=
+	1.2
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate8=
+	7
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Initial Change Rate9=
+	30
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+Normal Carbon Emissions of Coal=
+	1.08e+06
+	~	TonC/Mtoe
+	~	Felix1: 640000
+		IPCC: med: 9.5366e+006 min:8606200
+		Brian Felix 1.08e+006
+	|
+
+Normal Carbon Emissions of Gas=
+	640000
+	~	TonC/Mtoe
+	~	Felix1: 1.08e+006
+		IPCC: med: 5.6987e+006 min:4768300
+		Felix Brian: 640000
+	|
+
+Normal Carbon Emissions of Oil=
+	836500
+	~	TonC/Mtoe
+	~	Felix1: 836500
+		IPCC: 9.04814e+006 co2
+	|
+
+Other Technology Steepness Final Change Rate Variation=
+	6
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Other Technology Steepness Ramp Period Variation=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period1=
+	50+STEP(Renewable Cost Reduction and Technology Improvement Ramp Period Variation-50\
+		, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period10=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period11=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period12=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period13=
+	50+STEP(Renewable Cost Reduction and Technology Improvement Ramp Period Variation-50\
+		, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period14=
+	50+STEP(Renewable Cost Reduction and Technology Improvement Ramp Period Variation-50\
+		, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period15=
+	50+STEP(Renewable Cost Reduction and Technology Improvement Ramp Period Variation-50\
+		, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period16=
+	50+STEP(Other Technology Steepness Ramp Period Variation-50, 2020 )
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period2=
+	50+STEP(Renewable Cost Reduction and Technology Improvement Ramp Period Variation-50\
+		, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period3=
+	50+STEP(Renewable Cost Reduction and Technology Improvement Ramp Period Variation-50\
+		, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period4=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period5=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period6=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period7=
+	50+STEP(Effect of GDP on Forest Management Practices Increment Ramp Period Variation\
+		-50, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period8=
+	50+STEP(Effect of GDP on Cropland Management Practices Increment Ramp Period Variation\
+		-50, 2020)
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Period9=
+	50
+	~	Year
+	~	Period of increasing investments in Educational Attainment.
+	|
+
+Ramp Start=
+	2020
+	~	
+	~		|
+
+Ramp Start1=
+	2020
+	~	
+	~		|
+
+Ramp Start10=
+	2020
+	~	
+	~		|
+
+Ramp Start11=
+	2020
+	~	
+	~		|
+
+Ramp Start12=
+	2020
+	~	
+	~		|
+
+Ramp Start13=
+	2020
+	~	
+	~		|
+
+Ramp Start14=
+	2020
+	~	
+	~		|
+
+Ramp Start15=
+	2020
+	~	
+	~		|
+
+Ramp Start16=
+	2020
+	~	
+	~		|
+
+Ramp Start2=
+	2020
+	~	
+	~		|
+
+Ramp Start3=
+	2020
+	~	
+	~		|
+
+Ramp Start4=
+	2020
+	~	
+	~		|
+
+Ramp Start5=
+	2020
+	~	
+	~		|
+
+Ramp Start6=
+	2020
+	~	
+	~		|
+
+Ramp Start7=
+	2020
+	~	
+	~		|
+
+Ramp Start8=
+	2020
+	~	
+	~		|
+
+Ramp Start9=
+	2020
+	~	
+	~		|
+
+RCB S=
+	3e+07
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+RCB Var S=
+	3e+07+SMOOTH(STEP(RCB S-3e+07, 2020),1
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+RCS S=
+	10
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+RCS Var S=
+	10+SMOOTH(STEP(RCS S-10, 2020),1
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+RCW S=
+	7
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+RCW Var S=
+	7+SMOOTH(STEP(RCW S-7, 2020),1
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Reduced C Emissions of Coal=
+	953660
+	~	TonC/Mtoe
+	~	64000
+	|
+
+Reduced C Emissions of Gas=
+	569870
+	~	TonC/Mtoe
+	~	Erlier Felix;108000
+	|
+
+Reduced Carbon Emissions of Oil=
+	904814
+	~	TonC/Mtoe
+	~	83650
+	|
+
+Reference Cost of Biomass Energy Production Final Change Rate Variation=
+	3e+07
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Reference Cost of Solar Energy Production Final Change Rate Variation=
+	10
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Reference Cost of Wind Energy Production Final Change Rate Variation=
+	7
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+Renewable Cost Reduction and Technology Improvement Ramp Period Variation=
+	50
+	~	Year
+	~		|
+
+SC S=
+	2
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+SC Var S=
+	2+SMOOTH(STEP(SC S-2, 2020),1
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+SCENARIO ON=
+	STEP(1, 2010)
+	~	Dmnl [0,1,1]
+	~	Scenario is on to consider the impact on GDP
+	|
+
+Solar Conversion Efficiency Factor Final Change Rate Variation=
+	2
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+SSP Energy Technology Variation Time=
+	5
+	~	Year
+	~		|
+
+Technological Improvement Scenario Switch Variation=
+	IF THEN ELSE(0 <= Technological Improvement Scenario Variation :AND: Technological Improvement Scenario Variation\
+		 < 1, 0 , 0) + 
+	
+	IF THEN ELSE(1 <= Technological Improvement Scenario Variation :AND: Technological Improvement Scenario Variation\
+		  < 2, 1 , 0)
+	~	
+	~		|
+
+Technological Improvement Scenario Variation=
+	1
+	~	
+	~		|
+
+Variable=
+	Initial Change Rate+RAMP(Change Rate Slope, Change Rate Start, Change Rate Finish)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable1 Biomass=
+	Initial Change Rate1+SCENARIO ON*RAMP(Change Rate Slope1, Change Rate Start1, Change Rate Finish1\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable10 Industrial Water=
+	Initial Change Rate10+SCENARIO ON*RAMP(Change Rate Slope10, Change Rate Start10, Change Rate Finish10\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable11 Domestic Water=
+	Initial Change Rate11+SCENARIO ON*RAMP(Change Rate Slope11, Change Rate Start11, Change Rate Finish11\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable12 Water Recovery=
+	Initial Change Rate12+SCENARIO ON*RAMP(Change Rate Slope12, Change Rate Start12, Change Rate Finish12\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable13 Biomas Cost=
+	Initial Change Rate13+SCENARIO ON*RAMP(Change Rate Slope13, Change Rate Start13, Change Rate Finish13\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable14 Solar Cost=
+	Initial Change Rate14+SCENARIO ON*RAMP(Change Rate Slope14, Change Rate Start14, Change Rate Finish14\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable15 Wind Cost=
+	Initial Change Rate15+SCENARIO ON*RAMP(Change Rate Slope15, Change Rate Start15, Change Rate Finish15\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable16 Technology=
+	Initial Change Rate16+SCENARIO ON*RAMP(Change Rate Slope16, Change Rate Start16, Change Rate Finish16\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable2 Solar=
+	Initial Change Rate2+SCENARIO ON*RAMP(Change Rate Slope2, Change Rate Start2, Change Rate Finish2\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable3 Wind=
+	Initial Change Rate3+SCENARIO ON*RAMP(Change Rate Slope3, Change Rate Start3, Change Rate Finish3\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable7 Forest MP=
+	Initial Change Rate7+SCENARIO ON*RAMP(Change Rate Slope7, Change Rate Start7, Change Rate Finish7\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable8 Cropland MP=
+	Initial Change Rate8+SCENARIO ON*RAMP(Change Rate Slope8, Change Rate Start8, Change Rate Finish8\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Variable9 Food land MP=
+	Initial Change Rate9+SCENARIO ON*RAMP(Change Rate Slope9, Change Rate Start9, Change Rate Finish9\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+WC S=
+	0.35
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+WC Var S=
+	0.35+SMOOTH(STEP(WC S-0.35, 2020),1
+	)
+	~	1/Year
+	~	Final Educational Attainment Change Rate
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*constants_Scenarios
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,68,0
+10,1,Variable,276,-116,32,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Change Rate Finish,484,-116,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,3,Change Rate Slope,484,-214,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,4,Change Rate Start,484,-44,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,5,Ramp Period,661,-116,49,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,6,5,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,7,Initial Change Rate,661,-246,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,Final Change Rate,661,-181,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,9,7,3,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,10,8,3,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,11,5,3,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,12,3,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,13,2,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,14,4,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,15,Ramp Start,661,-44,42,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,16,15,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,17,15,4,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,18,7,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,19,Variable1 Biomass,280,167,36,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,20,Change Rate Finish1,488,167,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,21,Change Rate Slope1,488,69,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,22,Change Rate Start1,488,239,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,23,Ramp Period1,665,167,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,24,23,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,25,Initial Change Rate1,665,37,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,26,Final Change Rate1,665,102,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,27,25,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,28,26,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,29,23,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,30,21,19,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,31,20,19,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,32,22,19,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,33,Ramp Start1,665,239,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,34,33,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,35,33,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,36,25,19,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,37,Variable2 Solar,294,474,57,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,38,Change Rate Finish2,502,474,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,39,Change Rate Slope2,502,376,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,40,Change Rate Start2,502,546,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,41,Ramp Period2,679,474,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,42,41,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,43,Initial Change Rate2,679,344,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,44,Final Change Rate2,679,409,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,45,43,39,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,46,44,39,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,47,41,39,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,48,39,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,49,38,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,50,40,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,51,Ramp Start2,679,546,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,52,51,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,53,51,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,54,43,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,55,Variable3 Wind,298,770,56,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,56,Change Rate Finish3,506,770,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,57,Change Rate Slope3,506,672,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,58,Change Rate Start3,506,842,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,59,Ramp Period3,683,770,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,60,59,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,61,Initial Change Rate3,683,640,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,62,Final Change Rate3,683,705,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,63,61,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,64,62,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,65,59,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,66,57,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,67,56,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,68,58,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,69,Ramp Start3,683,842,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,70,69,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,71,69,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,72,61,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,73,Change Rate Finish4,1297,166,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,74,Change Rate Slope4,1297,68,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,75,Change Rate Start4,1297,238,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,76,Ramp Period4,1474,166,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,77,76,73,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,78,Normal Carbon Emissions of Oil,1486,39,60,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,Reduced Carbon Emissions of Oil,1474,101,63,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,80,78,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,81,79,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,82,76,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,83,Ramp Start4,1474,238,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,84,83,73,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,85,83,75,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,86,Change Rate Finish5,1303,480,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,87,Change Rate Slope5,1303,382,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,88,Change Rate Start5,1303,552,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,89,Ramp Period5,1480,480,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,90,89,86,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,91,Normal Carbon Emissions of Gas,1498,344,65,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,92,Reduced C Emissions of Gas,1496,408,65,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,93,91,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,94,92,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,95,89,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,96,Ramp Start5,1480,552,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,97,96,86,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,98,96,88,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,Change Rate Finish6,1320,779,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,100,Change Rate Slope6,1320,681,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,101,Change Rate Start6,1320,851,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,102,Ramp Period6,1497,779,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,103,102,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,104,Normal Carbon Emissions of Coal,1508,652,67,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,105,Reduced C Emissions of Coal,1508,721,67,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,106,104,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,107,105,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,108,102,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,109,Ramp Start6,1497,851,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,110,109,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,111,109,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,112,Variable7 Forest MP,1787,170,39,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,113,Change Rate Finish7,1995,170,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,114,Change Rate Slope7,1995,72,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,115,Change Rate Start7,1995,242,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,116,Ramp Period7,2172,170,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,116,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,118,Initial Change Rate7,2172,40,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,119,Final Change Rate7,2172,105,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,120,118,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,121,119,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,116,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,123,114,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,124,113,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,125,115,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,126,Ramp Start7,2172,242,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,127,126,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,128,126,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,129,118,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,130,Variable8 Cropland MP,1786,487,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,131,Change Rate Finish8,1994,487,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,132,Change Rate Slope8,1994,389,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,133,Change Rate Start8,1994,559,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,134,Ramp Period8,2171,487,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,135,134,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,136,Initial Change Rate8,2171,357,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,137,Final Change Rate8,2171,422,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,138,136,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,139,137,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,140,134,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,141,132,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,142,131,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,143,133,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,144,Ramp Start8,2171,559,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,145,144,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,146,144,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,147,136,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,148,Variable9 Food land MP,1799,787,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,149,Change Rate Finish9,2007,787,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,150,Change Rate Slope9,2007,689,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,151,Change Rate Start9,2007,859,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,152,Ramp Period9,2184,787,53,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,153,152,149,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,154,Initial Change Rate9,2184,657,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,155,Final Change Rate9,2184,722,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,156,154,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,155,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,158,152,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,159,150,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,160,149,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,161,151,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,162,Ramp Start9,2184,859,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,163,162,149,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,164,162,151,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,165,154,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,166,Variable10 Industrial Water,2495,175,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,167,Change Rate Finish10,2703,175,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,168,Change Rate Slope10,2703,77,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,169,Change Rate Start10,2703,247,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,170,Ramp Period10,2880,175,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,171,170,167,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Initial Change Rate10,2880,45,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,173,Final Change Rate10,2880,110,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,174,172,168,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,175,173,168,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,176,170,168,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,177,168,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,178,167,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,179,169,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,180,Ramp Start10,2880,247,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,181,180,167,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,182,180,169,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,183,172,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,184,Variable11 Domestic Water,2494,488,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,185,Change Rate Finish11,2702,488,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,186,Change Rate Slope11,2702,390,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,187,Change Rate Start11,2702,560,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,188,Ramp Period11,2879,488,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,189,188,185,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,190,Initial Change Rate11,2879,358,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,191,Final Change Rate11,2879,423,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,192,190,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,193,191,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,194,188,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,195,186,184,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,196,185,184,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,197,187,184,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,198,Ramp Start11,2879,560,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,199,198,185,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,200,198,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,201,190,184,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,202,Variable12 Water Recovery,2509,800,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,203,Change Rate Finish12,2717,800,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,204,Change Rate Slope12,2717,702,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,205,Change Rate Start12,2717,872,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,206,Ramp Period12,2894,800,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,207,206,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,208,Initial Change Rate12,2894,670,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,209,Final Change Rate12,2894,735,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,210,208,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,211,209,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,212,206,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,213,204,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,214,203,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,215,205,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,216,Ramp Start12,2894,872,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,217,216,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,218,216,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,219,208,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,220,SCENARIO ON,104,494,57,10,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,221,220,19,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,222,220,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,223,220,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,224,SCENARIO ON,1038,344,48,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,225,SCENARIO ON,1628,512,48,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,226,225,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,227,225,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,228,225,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,229,Variable13 Biomas Cost,3226,177,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,230,Change Rate Finish13,3434,177,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,231,Change Rate Slope13,3434,79,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,232,Change Rate Start13,3434,249,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,233,Ramp Period13,3611,177,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,234,233,230,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,235,Initial Change Rate13,3611,47,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,236,Final Change Rate13,3611,112,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,237,235,231,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,238,236,231,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,239,233,231,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,240,231,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,241,230,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,242,232,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,243,Ramp Start13,3611,249,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,244,243,230,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,245,243,232,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,246,235,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,247,Variable14 Solar Cost,3236,485,41,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,248,Change Rate Finish14,3444,485,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,249,Change Rate Slope14,3444,387,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,250,Change Rate Start14,3444,557,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,251,Ramp Period14,3621,485,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,252,251,248,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,253,Initial Change Rate14,3621,355,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,254,Final Change Rate14,3598,422,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,255,253,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,256,254,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,257,251,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,258,249,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,259,248,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,260,250,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,261,Ramp Start14,3621,557,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,262,261,248,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,263,261,250,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,264,253,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,265,Variable15 Wind Cost,3241,807,41,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,266,Change Rate Finish15,3449,807,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,267,Change Rate Slope15,3449,709,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,268,Change Rate Start15,3449,879,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,269,Ramp Period15,3626,807,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,270,269,266,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,271,Initial Change Rate15,3626,677,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,272,Final Change Rate15,3626,742,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,273,271,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,274,272,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,275,269,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,276,267,265,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,277,266,265,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,278,268,265,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,279,Ramp Start15,3626,879,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,280,279,266,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,281,279,268,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,282,271,265,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,283,SCENARIO ON,2332,508,48,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,284,283,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,285,283,184,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,286,283,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,287,SCENARIO ON,3067,515,48,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,288,287,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,289,287,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,290,287,265,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,291,Variable16 Technology,1094,-139,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,292,Change Rate Finish16,1302,-139,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,293,Change Rate Slope16,1302,-237,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,294,Change Rate Start16,1302,-67,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,295,Ramp Period16,1479,-139,58,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,296,295,292,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,297,Initial Change Rate16,1479,-269,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,298,Final Change Rate16,1479,-204,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,299,297,293,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,300,298,293,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,301,295,293,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,302,293,291,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,303,292,291,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,304,294,291,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,305,Ramp Start16,1479,-67,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,306,305,292,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,307,305,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,308,297,291,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,309,224,291,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,310,0,238,404,75,24,8,7,0,38,-1,0,0,0,-1--1--1,192-192-192,Arial|||255-0-255,0,0,0,0,0,0
+This scenario needs to be on for SSP calibration
+10,311,Renewable Cost Reduction and Technology Improvement Ramp Period Variation,3800,492,106,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,312,311,251,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,313,Renewable Cost Reduction and Technology Improvement Ramp Period Variation,943,491,106,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,314,313,41,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,315,313,59,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,316,313,23,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,317,311,233,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,318,311,269,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,319,Other Technology Steepness Final Change Rate Variation,1685,-207,91,27,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,320,319,298,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,321,Other Technology Steepness Ramp Period Variation,1692,-135,64,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,322,321,295,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,323,Reference Cost of Solar Energy Production Final Change Rate Variation,3876,402,88,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,324,323,254,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,325,Solar Conversion Efficiency Factor Final Change Rate Variation,904,368,84,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,326,325,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,327,Reference Cost of Wind Energy Production Final Change Rate Variation,3850,738,87,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,328,327,272,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,329,Reference Cost of Biomass Energy Production Final Change Rate Variation,3851,121,101,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,330,329,236,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,331,Average Wind Capacity per SqMeter Final Change Rate Variation,920,655,97,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,332,331,62,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,333,Biomass Conversion Efficiency Final Change Rate Variation,816,106,86,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,334,333,26,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,335,Effect of GDP on Forest Management Practices Increment Ramp Period Variation,2322,138,87,36,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,336,Effect of GDP on Forest Management Practices Increment Final Change Rate Variation,2341,46,106,36,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,337,Effect of GDP on Cropland Management Practices Increment Ramp Period Variation,2318,427,97,36,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,338,Effect of GDP on Cropland Management Practices Increment Final Change Rate Variation,2303,334,106,36,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,339,336,119,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,340,335,116,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,341,338,137,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,342,337,134,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,343,Technological Improvement Scenario Variation,100,262,82,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,344,Technological Improvement Scenario Switch Variation,80,353,82,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,345,343,344,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,346,SSP Energy Technology Variation Time,859,431,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,347,346,44,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,348,SSP Energy Technology Variation Time,850,764,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,349,348,62,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,350,SSP Energy Technology Variation Time,3844,181,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,351,350,236,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,352,SSP Energy Technology Variation Time,3997,459,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,353,352,254,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,354,SSP Energy Technology Variation Time,3677,835,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,355,354,272,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,356,E Var T,846,707,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,357,WC Var S,849,599,38,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,358,WC S,946,587,23,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,359,356,62,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,360,358,357,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,361,357,62,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,362,E Var T,730,357,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,363,362,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,364,SC Var S,799,349,36,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,365,SC S,842,314,21,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,366,364,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,367,365,364,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,368,RCS Var S,3837,345,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,369,RCS S,3789,291,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,370,RCB Var S,3784,63,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,371,RCB S,3762,10,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,372,RCW Var S,3843,793,43,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,373,RCW S,3817,849,29,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,374,E Var T,3764,204,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,375,E Var T,3681,378,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,376,E Var T,3725,701,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,377,376,272,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,378,373,372,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,379,372,272,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,380,375,254,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,381,369,368,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,382,368,254,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,383,371,370,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,384,370,236,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,385,374,236,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+4:Time
+5:Average Wind Capacity per SqMeter Final Change Rate Variation
+9:x
+19:68,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1

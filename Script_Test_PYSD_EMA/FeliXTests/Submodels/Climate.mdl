@@ -1,0 +1,3683 @@
+{UTF-8}
+********************************************************
+	.climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Heat to 700m J=
+	Heat to 700m*J per W Year*(Area*(1-Land Area Fraction))+Offset 700m Heat
+	~	Je22
+	~	Heat to 700 m in Joules*1e22 for the area covered by water. Source of Historical \
+		Data:
+		NOAA – Ocean heat content anomalies; 
+		http://www.nodc.noaa.gov/OC5/3M_HEAT_CONTENT/
+		Levitus S., J. I. Antonov, T. P. Boyer, R. A. Locarnini, H. E. Garcia, and \
+		A. V. Mishonov, 2009. Global ocean heat content 1955-2008 in light of \
+		recently revealed instrumentation problems GRL, 36, L07608, \
+		doi:10.1029/2008GL037155.
+	|
+
+Heat to 2000m J=
+	Heat to 2000m*J per W Year*(Area*(1-Land Area Fraction))
+	~	Je22
+	~	Heat to 2000m in Joules*1e22 for the area covered by water.
+	|
+
+Volumetric Heat Capacity=
+	Mass Heat Capacity*Watt per J s/sec per Year*Density
+	~	Year*W/(Meter*Meter*Meter*DegreesC)
+	~	Volumetric heat capacity of water, i.e., amount of heat in watt*year \
+		required to raise 1 cubic meter of water by one degree C.
+	|
+
+Heat Transfer Coefficient 4=
+	((Heat Transfer Rate*Mean Depth of Adjacent 3 4 Layers)*(Heat Diffusion Covar*(Eddy diff coeff 3 4\
+		/Eddy diff coeff mean 3 4
+	)+(1-Heat Diffusion Covar)))
+	~	W/(Meter*DegreesC)
+	~	The ratio of the actual to the mean of the heat transfer coefficient, \
+		which controls the movement of heat through the climate sector.
+	|
+
+CO2 Radiative Forcing=
+	CO2 Radiative Forcing Coefficient*LN(C in Atmosphere/Preindustrial C in Atmosphere)
+	~	W/(Meter*Meter)
+	~	Radiative forcing from CO2 in the atmosphere. Source of Historical Data:
+		IIASA RCP Database
+		https://tntcat.iiasa.ac.at:8743/RcpDb/dsd?Action=htmlpage&page=welcome
+	|
+
+Heat Transfer Coefficient 1=
+	((Heat Transfer Rate*Mean Depth of Adjacent M 1 Layers)*(Heat Diffusion Covar*(Eddy diff coeff M 1\
+		/Eddy diff coeff mean M 1
+	)+(1-Heat Diffusion Covar)))
+	~	W/(Meter*DegreesC)
+	~	The ratio of the actual to the mean of the heat transfer coefficient, \
+		which controls the movement of heat through the climate sector.
+	|
+
+Heat Transfer Coefficient 2=
+	((Heat Transfer Rate*Mean Depth of Adjacent 1 2 Layers)*(Heat Diffusion Covar*(Eddy diff coeff 1 2\
+		/Eddy diff coeff mean 1 2
+	)+(1-Heat Diffusion Covar)))
+	~	W/(Meter*DegreesC)
+	~	The ratio of the actual to the mean of the heat transfer coefficient, \
+		which controls the movement of heat through the climate sector.
+	|
+
+Heat Transfer Coefficient 3=
+	((Heat Transfer Rate*Mean Depth of Adjacent 2 3 Layers)*(Heat Diffusion Covar*(Eddy diff coeff 2 3\
+		/Eddy diff coeff mean 2 3
+	)+(1-Heat Diffusion Covar)))
+	~	W/(Meter*DegreesC)
+	~	The ratio of the actual to the mean of the heat transfer coefficient, \
+		which controls the movement of heat through the climate sector.
+	|
+
+R=
+	C in Atmosphere/Preindustrial C in Atmosphere
+	~	Dmnl
+	~	Ratio of the current carbon in atmosphere to its preindustrial content.
+	|
+
+"2xCO2 Forcing"=
+	CO2 Radiative Forcing Coefficient*LN(2)
+	~	W/(Meter*Meter)
+	~	Radiative forcing at 2x CO2 equivalent.
+	|
+
+Area=
+	5.1e+14
+	~	Meter*Meter
+	~	Global surface area.
+	|
+
+Atmospheric and Upper Ocean Heat Capacity=
+	Upper Layer Volume Vu*Volumetric Heat Capacity/Area
+	~	Year*W/(Meter*Meter*DegreesC)
+	~	Volumetric heat capacity for the land, atmosphere, and, upper ocean layer.
+	|
+
+CH4 Radiative Forcing=
+	IF THEN ELSE(Time<=2010,CH4 Radiative Forcing History,
+	IF THEN ELSE(RCP Scenario=0, CH4 Radiative Forcing RCP19,
+	IF THEN ELSE(RCP Scenario=1,CH4 Radiative Forcing RCP26,
+	IF THEN ELSE(RCP Scenario=2,CH4 Radiative Forcing RCP34,
+	IF THEN ELSE(RCP Scenario=3, CH4 Radiative Forcing RCP45, 
+	IF THEN ELSE(RCP Scenario=4, CH4 Radiative Forcing RCP60, 
+	CH4 Radiative Forcing RCP85
+	))))))
+	~	W/(Meter*Meter)
+	~	Radiative forcing from CH4 in the atmosphere.
+	|
+
+CH4 Radiative Forcing History=
+	TABLE CH4 Radiative Forcing(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Historical data for radiative forcing from CH4 in the atmosphere.
+	|
+
+CH4 Radiative Forcing RCP19=
+	TABLE CH4 Radiative Forcing SSP2 RCP19(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 1.9).
+	|
+
+CH4 Radiative Forcing RCP26=
+	TABLE CH4 Radiative Forcing SSP2 RCP26(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 2.6).
+	|
+
+CH4 Radiative Forcing RCP34=
+	TABLE CH4 Radiative Forcing SSP2 RCP34(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+CH4 Radiative Forcing RCP45=
+	TABLE CH4 Radiative Forcing SSP2 RCP45(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 4.5).
+	|
+
+CH4 Radiative Forcing RCP60=
+	TABLE CH4 Radiative Forcing SSP2 RCP60(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 6.0).
+	|
+
+CH4 Radiative Forcing RCP85=
+	TABLE CH4 Radiative Forcing SSP2 RCP85(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+Climate Feedback Parameter=
+	"2xCO2 Forcing"/Climate Sensitivity to 2xCO2
+	~	Watt/(Meter*Meter)/DegreesC
+	~	Determines feedback effect from temperature increase.
+	|
+
+Climate Sensitivity to 2xCO2=
+	3
+	~	DegreesC
+	~	Equilibrium temperature change in response to a 2xCO2 equivalent change in \
+		radiative forcing. Deterministic = 3,  Low=2, High =4.5.
+	|
+
+CO2 Radiative Forcing AIM RCP60=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of CO2 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by AIM (RCP 6.0).
+	|
+
+CO2 Radiative Forcing Coefficient=
+	5.35
+	~	W/(m*m)
+	~	Coefficient to calculate forcing due to atmospheric gas using first-order \
+		approximation expression for carbon dioxide.
+	|
+
+CO2 Radiative Forcing IMAGE RCP26=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of CO2 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by IMAGE (RCP \
+		2.6).
+	|
+
+CO2 Radiative Forcing Indicator=
+	CO2 Radiative Forcing
+	~	W/(Meter*Meter)
+	~		|
+
+CO2 Radiative Forcing MESSAGE RCP85=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of CO2 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+CO2 Radiative Forcing MiniCAM RCP45=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of CO2 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MiniCAM (RCP \
+		4.5).
+	|
+
+Deep Ocean 1 Heat Capacity=
+	Lower Layer Volume Vu 1*Volumetric Heat Capacity/Area
+	~	Year*W/(Meter*Meter*DegreesC)
+	~	Volumetric heat capacity for the first layer of the deep ocean.
+	|
+
+Deep Ocean 2 Heat Capacity=
+	Lower Layer Volume Vu 2*Volumetric Heat Capacity/Area
+	~	Year*W/(Meter*Meter*DegreesC)
+	~	Volumetric heat capacity for the second layer of the deep ocean.
+	|
+
+Deep Ocean 3 Heat Capacity=
+	Lower Layer Volume Vu 3*Volumetric Heat Capacity/Area
+	~	Year*W/(Meter*Meter*DegreesC)
+	~	Volumetric heat capacity for the third layer of the deep ocean.
+	|
+
+Deep Ocean 4 Heat Capacity=
+	Lower Layer Volume Vu 4*Volumetric Heat Capacity/Area
+	~	Year*W/(Meter*Meter*DegreesC)
+	~	Volumetric heat capacity for the fourth layer of the deep ocean.
+	|
+
+Density=
+	1000
+	~	kg/(m*m*m)
+	~	Density of water, i.e., mass per volume of water.
+	|
+
+Dimensionless Time=
+	1
+	~	1/Year
+	~	Parameter to make table data dimensionless.
+	|
+
+Effective Radiative Forcing=
+	Total Radiative Forcing
+	~	W/(Meter*Meter)
+	~	Total radiative forcing from various factors in the atmosphere.
+	|
+
+Equilibrium Temperature=
+	CO2 Radiative Forcing/(Climate Feedback Parameter*LN(2))
+	~	DegreesC
+	~	Ratio of Radiative Forcing to the Climate Feedback Parameter
+	|
+
+F Gases Radiative Forcing=
+	IF THEN ELSE(Time<=2010,F Gases Radiative Forcing History,
+	IF THEN ELSE(RCP Scenario=0, F Gases Radiative Forcing RCP19,
+	IF THEN ELSE(RCP Scenario=1,F Gases Radiative Forcing RCP26,
+	IF THEN ELSE(RCP Scenario=2,F Gases Radiative Forcing RCP34,
+	IF THEN ELSE(RCP Scenario=3, F Gases Radiative Forcing RCP45, 
+	IF THEN ELSE(RCP Scenario=4, F Gases Radiative Forcing RCP60, 
+	F Gases Radiative Forcing RCP85
+	))))))
+	~	W/(Meter*Meter)
+	~	Radiative forcing from F-gases (HFC and others) in the atmosphere.
+	|
+
+F Gases Radiative Forcing History=
+	TABLE F Gases Radiative Forcing(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Historical data for radiative forcing from CH4 in the atmosphere.
+	|
+
+F Gases Radiative Forcing RCP19=
+	TABLE F Gases Radiative Forcing SSP2 RCP19(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of f-gases radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 1.9).
+	|
+
+F Gases Radiative Forcing RCP26=
+	TABLE F Gases Radiative Forcing SSP2 RCP26(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of f-gases radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 2.6).
+	|
+
+F Gases Radiative Forcing RCP34=
+	TABLE F Gases Radiative Forcing SSP2 RCP34(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of f gases radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+F Gases Radiative Forcing RCP45=
+	TABLE F Gases Radiative Forcing SSP2 RCP45(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of f gases radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 4.5).
+	|
+
+F Gases Radiative Forcing RCP60=
+	TABLE F Gases Radiative Forcing SSP2 RCP60(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CH4 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 6.0).
+	|
+
+F Gases Radiative Forcing RCP85=
+	TABLE F Gases Radiative Forcing SSP2 RCP85(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of f gases radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+Feedback Cooling=
+	Temperature Change from Preindustrial*Climate Feedback Parameter
+	~	Watt/(Meter*Meter)
+	~	Feedback cooling of atmosphere/upper ocean system due to blackbody \
+		radiation.
+	|
+
+Heat Diffusion Covar=
+	1
+	~	Dmnl
+	~	Heat transfer coefficient parameter.
+	|
+
+Heat in Atmosphere and Upper Ocean= INTEG (
+	Effective Radiative Forcing-Feedback Cooling-Heat Transfer 1,
+		INIT Atmospheric and Upper Ocean Temperature*Atmospheric and Upper Ocean Heat Capacity\
+		)
+	~	Year*Watt/(Meter*Meter)
+	~	Temperature of the atmosphere and the mixed ocean layer.
+	|
+
+Heat in Deep Ocean 1= INTEG (
+	Heat Transfer 1-Heat Transfer 2,
+		INIT Deep Ocean 1 Temperature*Deep Ocean 1 Heat Capacity)
+	~	Year*Watt/(Meter*Meter)
+	~	Heat content of the first layer of the deep ocean.
+	|
+
+Heat in Deep Ocean 2= INTEG (
+	Heat Transfer 2-Heat Transfer 3,
+		INIT Deep Ocean 2 Temperature*Deep Ocean 2 Heat Capacity)
+	~	Year*Watt/(Meter*Meter)
+	~	Heat content of the second layer of the deep ocean.
+	|
+
+Heat in Deep Ocean 3= INTEG (
+	Heat Transfer 3-Heat Transfer 4,
+		INIT Deep Ocean 3 Temperature*Deep Ocean 3 Heat Capacity)
+	~	Year*Watt/(Meter*Meter)
+	~	Heat content of the third layer of the deep ocean.
+	|
+
+Heat in Deep Ocean 4= INTEG (
+	Heat Transfer 4,
+		INIT Deep Ocean 4 Temperature*Deep Ocean 4 Heat Capacity)
+	~	Year*Watt/(Meter*Meter)
+	~	Heat content of the fourth layer of the deep ocean.
+	|
+
+Heat to 2000m=
+	Heat to 700m+Heat in Deep Ocean 3
+	~	Year*W/(Meter*Meter)
+	~	Heat to 2000m in deep ocean. Assumes default layer thicknesses, i.e., 100 \
+		m for the mixed ocean, 300 m each for layers 1 and 2, and 1300 m for layer \
+		3.
+	|
+
+Heat to 700m=
+	Heat in Atmosphere and Upper Ocean*(1-Land Area Fraction)+Heat in Deep Ocean 1+Heat in Deep Ocean 2
+	~	Year*W/(Meter*Meter)
+	~	Sum of the heat in the atmosphere and upper ocean and that in the top two \
+		layers of the deep ocean. Assumes default layer thicknesses, i.e., 100 m \
+		for the mixed ocean and 300 m each for layers 1 and 2.
+	|
+
+Heat Transfer 1=
+	(Temperature Change from Preindustrial-Relative Deep 1 Ocean Temperature)*Heat Transfer Coefficient 1\
+		/Mean Depth of Adjacent M 1 Layers
+	~	Watt/(Meter*Meter)
+	~	Heat transfer from the atmosphere & upper ocean to the first layer of the \
+		deep ocean.
+	|
+
+Heat Transfer 2=
+	(Relative Deep 1 Ocean Temperature-Relative Deep 2 Ocean Temperature)*Heat Transfer Coefficient 2\
+		/Mean Depth of Adjacent 1 2 Layers
+	~	W/(Meter*Meter)
+	~	Heat transfer from the first to the second layer of the deep ocean.
+	|
+
+Heat Transfer 3=
+	(Relative Deep 2 Ocean Temperature-Relative Deep 3 Ocean Temperature)*Heat Transfer Coefficient 3\
+		/Mean Depth of Adjacent 2 3 Layers
+	~	W/(Meter*Meter)
+	~	Heat transfer from the second to the third layer of the deep ocean.
+	|
+
+Heat Transfer 4=
+	(Relative Deep 3 Ocean Temperature-Relative Deep 4 Ocean Temperature)*Heat Transfer Coefficient 4\
+		/Mean Depth of Adjacent 3 4 Layers
+	~	W/(Meter*Meter)
+	~	Heat transfer from the third to the fourth layer of the deep ocean.
+	|
+
+Heat Transfer Rate=
+	1.23
+	~	Watt/(Meter*Meter)/DegreesC
+	~	Rate of heat transfer between the surface and deep ocean.
+	|
+
+HFC Radiative Forcing=
+	IF THEN ELSE(Time<2005,HFC Radiative Forcing History,
+	IF THEN ELSE(RCP Scenario=1,HFC Radiative Forcing IMAGE RCP26,
+	IF THEN ELSE(RCP Scenario=2,HFC Radiative Forcing MiniCAM RCP45,
+	IF THEN ELSE(RCP Scenario=3, HFC Radiative Forcing AIM RCP60, 
+	IF THEN ELSE(RCP Scenario=4, HFC Radiative Forcing MESSAGE RCP85, 
+	HFC Radiative Forcing AIM RCP7
+	)))))
+	~	W/(Meter*Meter)
+	~	Radiative forcing from HFC in the atmosphere.
+	|
+
+HFC Radiative Forcing AIM RCP60=
+	TABLE HFC Radiative Forcing AIM RCP60(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of HFC radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by AIM (RCP 6.0).
+	|
+
+HFC Radiative Forcing AIM RCP7=
+	TABLE HFC Radiative Forcing AIM SSP3 RCP7(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CO2 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+HFC Radiative Forcing History=
+	TABLE HFC Radiative Forcing(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Historical data for radiative forcing from HFC in the atmosphere.
+	|
+
+HFC Radiative Forcing IMAGE RCP26=
+	TABLE HFC Radiative Forcing IMAGE RCP26(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of HFC radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by IMAGE (RCP \
+		2.6).
+	|
+
+HFC Radiative Forcing MESSAGE RCP85=
+	TABLE HFC Radiative Forcing MESSAGE RCP85(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of CO2 radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+HFC Radiative Forcing MiniCAM RCP45=
+	TABLE HFC Radiative Forcing MiniCAM RCP45(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of HFC radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MiniCAM (RCP \
+		4.5).
+	|
+
+INIT Atmospheric and Upper Ocean Temperature=
+	0
+	~	DegreesC
+	~	Initial value of Atmospheric and Upper Ocean Temperature.
+	|
+
+INIT Deep Ocean 1 Temperature=
+	0
+	~	DegreesC
+	~	Initial value of temperature in the first layer of deep ocean.
+	|
+
+INIT Deep Ocean 2 Temperature=
+	0
+	~	DegreesC
+	~	Initial value of temperature in the second layer of deep ocean.
+	|
+
+INIT Deep Ocean 3 Temperature=
+	0
+	~	DegreesC
+	~	Initial value of temperature in the third layer of deep ocean.
+	|
+
+INIT Deep Ocean 4 Temperature=
+	0
+	~	DegreesC
+	~	Initial value of temperature in the fourth layer of deep ocean.
+	|
+
+Land Area Fraction=
+	0.292
+	~	Dmnl
+	~	Fraction of global surface area that is land.
+	|
+
+Land Thickness=
+	8.4
+	~	Meter
+	~	Effective land area heat capacity, expressed as equivalent water layer \
+		thickness.
+	|
+
+Lower Layer Volume Vu 1=
+	Area*(1-Land Area Fraction)*Layer Depth 1
+	~	Meter*Meter*Meter
+	~	Water equivalent volume of the first layer of deep ocean.
+	|
+
+Lower Layer Volume Vu 2=
+	Area*(1-Land Area Fraction)*Layer Depth 2
+	~	Meter*Meter*Meter
+	~	Water equivalent volume of the second layer of deep ocean.
+	|
+
+Lower Layer Volume Vu 3=
+	Area*(1-Land Area Fraction)*Layer Depth 3
+	~	Meter*Meter*Meter
+	~	Water equivalent volume of the third layer of deep ocean.
+	|
+
+Lower Layer Volume Vu 4=
+	Area*(1-Land Area Fraction)*Layer Depth 4
+	~	Meter*Meter*Meter
+	~	Water equivalent volume of the fourth layer of deep ocean.
+	|
+
+Mass Heat Capacity=
+	4186
+	~	J/kg/DegreesC
+	~	Specific heat of water, i.e., amount of heat in Joules per kg water \
+		required to raise the temperature by one C degree.
+	|
+
+N2O Radiative Forcing=
+	IF THEN ELSE(Time<=2010,N2O Radiative Forcing History,
+	IF THEN ELSE(RCP Scenario=0, N2O Radiative Forcing RCP19,
+	IF THEN ELSE(RCP Scenario=1, N2O Radiative Forcing RCP26,
+	IF THEN ELSE(RCP Scenario=2, N2O Radiative Forcing RCP34,
+	IF THEN ELSE(RCP Scenario=3, N2O Radiative Forcing RCP45,
+	IF THEN ELSE(RCP Scenario=4, N2O Radiative Forcing RCP60,  
+	N2O Radiative Forcing RCP85))))))
+	~	W/(Meter*Meter)
+	~	Radiative forcing from N2O in the atmosphere.
+	|
+
+N2O Radiative Forcing History=
+	TABLE N2O Radiative Forcing(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Historical data for radiative forcing from N2O in the atmosphere.
+	|
+
+N2O Radiative Forcing RCP19=
+	TABLE N2O Radiative Forcing SSP2 RCP19(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of N2O radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 1.9).
+	|
+
+N2O Radiative Forcing RCP26=
+	TABLE N2O Radiative Forcing SSP2 RCP26(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of N2O radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 2.6).
+	|
+
+N2O Radiative Forcing RCP34=
+	TABLE N2O Radiative Forcing SSP2 RCP34(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of N2O radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (SSP2 RCP 3.4).
+	|
+
+N2O Radiative Forcing RCP45=
+	TABLE N2O Radiative Forcing SSP2 RCP45(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of N2O radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 4.5).
+	|
+
+N2O Radiative Forcing RCP60=
+	TABLE N2O Radiative Forcing SSP2 RCP60(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of N2O radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by \
+		MESSAGE-GLOBIOM (RCP 6.0).
+	|
+
+N2O Radiative Forcing RCP85=
+	TABLE N2O Radiative Forcing SSP2 RCP85(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of N2O radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+Offset 700m Heat=
+	-16
+	~	Je22
+	~	Calibration offset.
+	|
+
+Other Anhtropogenic Radiative Forcing RCP60=
+	TABLE Other Anthropogenic Radiative Forcing SSP2 RCP60(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~		|
+
+Other Anthropogenic Radiative Forcing=
+	IF THEN ELSE(Time<=2010,Other Anthropogenic Radiative Forcing History,
+	IF THEN ELSE(RCP Scenario=0, Other Anthropogenic Radiative Forcing RCP19,
+	IF THEN ELSE(RCP Scenario=1,Other Anthropogenic Radiative Forcing RCP26,
+	IF THEN ELSE(RCP Scenario=2,Other Anthropogenic Radiative Forcing RCP34,
+	IF THEN ELSE(RCP Scenario=3, Other Anthropogenic Radiative Forcing RCP45, 
+	IF THEN ELSE(RCP Scenario=4, Other Anhtropogenic Radiative Forcing RCP60, 
+	Other Anthropogenic Radiative Forcing RCP85
+	))))))
+	~	W/(Meter*Meter)
+	~	Radiative forcing from other anthropogenic gases in the atmosphere. \
+		Calculated fro mthe SSP2 database as total forcing - (forcing from C02, \
+		CH4, N2O, F-Gases)
+	|
+
+Other Anthropogenic Radiative Forcing History=
+	TABLE Other Anthropogenic Radiative Forcing(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Historical data for radiative forcing from CH4 in the atmosphere.
+	|
+
+Other Anthropogenic Radiative Forcing RCP19=
+	TABLE Other Anthropogenic Radiative Forcing SSP2 RCP19(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	MESSAGE-GLOBIOM (RCP 1.9).
+	|
+
+Other Anthropogenic Radiative Forcing RCP26=
+	TABLE Other Anthropogenic Radiative Forcing SSP2 RCP26(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~		|
+
+Other Anthropogenic Radiative Forcing RCP34=
+	TABLE Other Anthropogenic Radiative Forcing SSP2 RCP34(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~		|
+
+Other Anthropogenic Radiative Forcing RCP45=
+	TABLE Other Anthropogenic Radiative Forcing SSP2 RCP45(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~		|
+
+Other Anthropogenic Radiative Forcing RCP85=
+	TABLE Other Anthropogenic Radiative Forcing SSP2 RCP85(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~		|
+
+Other Forcings=
+	CH4 Radiative Forcing+N2O Radiative Forcing+F Gases Radiative Forcing+Other Anthropogenic Radiative Forcing
+	~	W/(Meter*Meter)
+	~	Radiative forcing from factors other than CO2 in the atmosphere.
+	|
+
+Other Radiative Forcing=
+	IF THEN ELSE(Time<2000,Other Radiative Forcing History,
+	IF THEN ELSE(RCP Scenario=1,Other Radiative Forcing IMAGE RCP26,
+	IF THEN ELSE(RCP Scenario=2,Other Radiative Forcing MiniCAM RCP45,
+	IF THEN ELSE(RCP Scenario=3, Other Radiative Forcing AIM RCP60,
+	IF THEN ELSE(RCP Scenario=4, Other Radiative Forcing MESSAGE RCP85,
+	Other Radiative Forcing AIM RCP7)))))
+	~	W/(Meter*Meter)
+	~	Radiative forcing from other factors than CO2, CH4, N2O and HFC in the \
+		atmosphere.
+	|
+
+Other Radiative Forcing AIM RCP60=
+	TABLE Other Radiative Forcing AIM RCP60(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of other radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by AIM (RCP 6.0).
+	|
+
+Other Radiative Forcing AIM RCP7=
+	TABLE Other Radiative Forcing AIM SSP3 RCP7(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of other radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+Other Radiative Forcing History=
+	TABLE Other Radiative Forcing(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Historical data for radiative forcing from other factors in the atmosphere.
+	|
+
+Other Radiative Forcing IMAGE RCP26=
+	TABLE Other Radiative Forcing IMAGE RCP26(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of other radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by IMAGE (RCP \
+		2.6).
+	|
+
+Other Radiative Forcing MESSAGE RCP85=
+	TABLE Other Radiative Forcing MESSAGE RCP85(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of other radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+Other Radiative Forcing MiniCAM RCP45=
+	TABLE Other Radiative Forcing MiniCAM RCP45(Time*Dimensionless Time)
+	~	W/(Meter*Meter)
+	~	Future projections of other radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MiniCAM (RCP \
+		4.5).
+	|
+
+RCP Scenario=
+	3
+	~	Dmnl [1,4,1]
+	~	Trigger for Representative Concentration Pathways scenarios.
+		RCP Scenario=0, RCP1.9
+		RCP Scenario=1,RCP2.6,
+		RCP Scenario=2,RCP3.4,
+		RCP Scenario=3, RCP 4.5,
+		RCP Scenario=4, RCP 6,
+		RCP Scenario=5, RCP 8.5
+	|
+
+Relative Deep 1 Ocean Temperature=
+	Heat in Deep Ocean 1/Deep Ocean 1 Heat Capacity
+	~	DegreesC
+	~	Temperature of the first layer of the deep ocean.
+	|
+
+Relative Deep 2 Ocean Temperature=
+	Heat in Deep Ocean 2/Deep Ocean 2 Heat Capacity
+	~	DegreesC
+	~	Temperature of the second layer of the deep ocean.
+	|
+
+Relative Deep 3 Ocean Temperature=
+	Heat in Deep Ocean 3/Deep Ocean 3 Heat Capacity
+	~	DegreesC
+	~	Temperature of the third layer of the deep ocean.
+	|
+
+Relative Deep 4 Ocean Temperature=
+	Heat in Deep Ocean 4/Deep Ocean 4 Heat Capacity
+	~	DegreesC
+	~	Temperature of the fourth layer of the deep ocean.
+	|
+
+TABLE CH4 Radiative Forcing(
+	[(1900,0)-(2005,0.5)],(1900,0.097),(1910,0.121),(1920,0.15),(1930,0.179),(1940,0.205\
+		),(1950,0.233),(1960,0.28),(1970,0.342),(1980,0.409),(1990,0.465),(2000,0.485),(2005\
+		,0.562305),(2010,0.588276))
+	~	W/(Meter*Meter)
+	~	Data series for historical data of CH4 radiative forcing. Pre-2000 From \
+		AR5, 2005 AND 2010 from the SSP database, SSP2 Message-GLOBIOM (marker).
+	|
+
+TABLE CH4 Radiative Forcing SSP2 RCP19(
+	[(2005,0)-(2100,1)],(2010,0.588276),(2020,0.61707),(2030,0.58715),(2040,0.509574),(2050\
+		,0.435621),(2060,0.380312),(2070,0.338259),(2080,0.301909),(2090,0.271782),(2100,0.249517\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of CH4 radiative forcing by \
+		Message-GLOBIOM (SSP2 marker model) in RCP 1.9.
+	|
+
+TABLE CH4 Radiative Forcing SSP2 RCP26(
+	[(2005,0)-(2100,1)],(2010,0.588276),(2020,0.617437),(2030,0.60655),(2040,0.559263),(\
+		2050,0.496306),(2060,0.449361),(2070,0.420164),(2080,0.395895),(2090,0.366439),(2100\
+		,0.33553))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of CH4 radiative forcing by \
+		Message-GLOBIOM (SSP2 marker model) in RCP 2.6.
+	|
+
+TABLE CH4 Radiative Forcing SSP2 RCP34(
+	[(0,0)-(10,10)],(2010,0.588276),(2020,0.618688),(2030,0.621345),(2040,0.592793),(2050\
+		,0.537515),(2060,0.488544),(2070,0.459203),(2080,0.441564),(2090,0.425481),(2100,0.405663\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of CH4 radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 3.4).
+	|
+
+TABLE CH4 Radiative Forcing SSP2 RCP45(
+	[(0,0)-(10,10)],(2010,0.588276),(2020,0.619873),(2030,0.627489),(2040,0.614632),(2050\
+		,0.578009),(2060,0.532435),(2070,0.499299),(2080,0.477175),(2090,0.46059),(2100,0.449891\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of CH4 radiative forcing by \
+		MESSAGE-GLOBIOM in SSP2 RCP 4.5.
+	|
+
+TABLE CH4 Radiative Forcing SSP2 RCP60(
+	[(0,0)-(10,10)],(2020,0.621315),(2030,0.636997),(2040,0.6457),(2050,0.637477),(2060,\
+		0.614447),(2070,0.590103),(2080,0.56345),(2090,0.535615),(2100,0.507884))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of CH4 radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 6.0).
+	|
+
+TABLE CH4 Radiative Forcing SSP2 RCP85(
+	[(0,0)-(10,10)],(2010,0.588276),(2020,0.624748),(2030,0.647046),(2040,0.664906),(2050\
+		,0.676129),(2060,0.685959),(2070,0.695531),(2080,0.699882),(2090,0.698119),(2100,0.688933\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of CH4 radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 8.5).
+	|
+
+TABLE F Gases Radiative Forcing(
+	[(0,0)-(10,10)],(1900,0),(1950,1e-05),(2005,0.021105),(2010,0.0311024))
+	~	W/(Meter*Meter)
+	~	Data series for historical data of F-gases radiative forcing. Pre-2000 \
+		From AR5, 2005 AND 2010 from the SSP database, SSP2 Message-GLOBIOM \
+		(marker).
+	|
+
+TABLE F Gases Radiative Forcing SSP2 RCP19(
+	[(0,0)-(10,10)],(2010,0.0311024),(2020,0.0613296),(2030,0.0770876),(2040,0.0756992),\
+		(2050,0.0766076),(2060,0.0793937),(2070,0.0825332),(2080,0.0849748),(2090,0.0865851\
+		),(2100,0.0877894))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of f-gases radiative forcing by \
+		Message-GLOBIOM (SSP2 marker model) in RCP 1.9.
+	|
+
+TABLE F Gases Radiative Forcing SSP2 RCP26(
+	[(0,0)-(10,10)],(2010,0.0311024),(2020,0.061264),(2030,0.0782927),(2040,0.080345),(2050\
+		,0.0847037),(2060,0.0891935),(2070,0.0927838),(2080,0.0960691),(2090,0.0987984),(2100\
+		,0.101286))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of f-gases radiative forcing by \
+		Message-GLOBIOM (SSP2 marker model) in RCP 2.6.
+	|
+
+TABLE F Gases Radiative Forcing SSP2 RCP34(
+	[(0,0)-(10,10)],(2010,0.0311024),(2020,0.0612598),(2030,0.0836687),(2040,0.0909787),\
+		(2050,0.0942257),(2060,0.0980601),(2070,0.103224),(2080,0.106661),(2090,0.108445),(\
+		2100,0.110579))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of f-gases radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 3.4).
+	|
+
+TABLE F Gases Radiative Forcing SSP2 RCP45(
+	[(0,0)-(10,10)],(2010,0.0311024),(2020,0.0612728),(2030,0.0871134),(2040,0.0987915),\
+		(2050,0.101803),(2060,0.103702),(2070,0.108015),(2080,0.112576),(2090,0.116856),(2100\
+		,0.119682))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of f-gases radiative forcing by \
+		MESSAGE-GLOBIOM in SSP2 RCP 4.5.
+	|
+
+TABLE F Gases Radiative Forcing SSP2 RCP60(
+	[(0,0)-(10,10)],(2010,0.0311024),(2020,0.061275),(2030,0.091407),(2040,0.119426),(2050\
+		,0.148527),(2060,0.173135),(2070,0.183224),(2080,0.17176),(2090,0.157098),(2100,0.151042\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of f gases radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 6.0).
+	|
+
+TABLE F Gases Radiative Forcing SSP2 RCP85(
+	[(0,0)-(10,10)],(2010,0.0311024),(2020,0.061417),(2030,0.0930176),(2040,0.122854),(2050\
+		,0.156046),(2060,0.192871),(2070,0.23523),(2080,0.283043),(2090,0.334059),(2100,0.386994\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of f-gases radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 8.5).
+	|
+
+TABLE HFC Radiative Forcing(
+	[(1900,0)-(2005,1)],(1900,0.001),(1910,0.001),(1920,0.001),(1930,0.002),(1940,0.003)\
+		,(1950,0.008),(1960,0.022),(1970,0.069),(1980,0.174),(1990,0.288),(2000,0.332),(2005\
+		,0.34))
+	~	W/(Meter*Meter)
+	~	Data series for historical data of HFC radiative forcing.
+	|
+
+TABLE HFC Radiative Forcing AIM RCP60(
+	[(2000,0)-(2100,1)],(2005,0.34),(2010,0.344),(2020,0.346),(2030,0.339),(2040,0.316),\
+		(2050,0.272),(2060,0.236),(2070,0.211),(2080,0.194),(2090,0.18),(2100,0.168))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of HFC radiative forcing by AIM (RCP \
+		6.0).
+	|
+
+TABLE HFC Radiative Forcing AIM SSP3 RCP7(
+	[(2000,0)-(2100,0.3)],(2005,0.021),(2010,0.031),(2020,0.061),(2030,0.096),(2040,0.129\
+		),(2050,0.16),(2060,0.188),(2070,0.211),(2080,0.231),(2090,0.251),(2100,0.27))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of HFC radiative forcing by AIM (RCP 7).
+	|
+
+TABLE HFC Radiative Forcing IMAGE RCP26(
+	[(2000,0)-(2100,1)],(2005,0.34),(2010,0.344),(2020,0.346),(2030,0.329),(2040,0.301),\
+		(2050,0.273),(2060,0.253),(2070,0.243),(2080,0.236),(2090,0.229),(2100,0.22))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of HFC radiative forcing by IMAGE (RCP \
+		2.6).
+	|
+
+TABLE HFC Radiative Forcing MESSAGE RCP85(
+	[(2000,0)-(2100,1)],(2005,0.34),(2010,0.345),(2020,0.36),(2030,0.371),(2040,0.366),(\
+		2050,0.339),(2060,0.316),(2070,0.303),(2080,0.297),(2090,0.294),(2100,0.294))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of HFC radiative forcing by MESSAGE \
+		(RCP 8.5).
+	|
+
+TABLE HFC Radiative Forcing MiniCAM RCP45(
+	[(2000,0)-(2100,1)],(2005,0.34),(2010,0.344),(2020,0.348),(2030,0.344),(2040,0.323),\
+		(2050,0.279),(2060,0.242),(2070,0.215),(2080,0.197),(2090,0.188),(2100,0.183))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of HFC radiative forcing by MiniCAM \
+		(RCP 4.5).
+	|
+
+TABLE N2O Radiative Forcing(
+	[(1900,0)-(2005,1)],(1900,0.025),(1910,0.029),(1920,0.036),(1930,0.043),(1940,0.048)\
+		,(1950,0.056),(1960,0.064),(1970,0.077),(1980,0.098),(1990,0.124),(2000,0.145),(2005\
+		,0.155711),(2010,0.167804))
+	~	W/(Meter*Meter)
+	~	Data series for historical data of N2O radiative forcing.
+	|
+
+TABLE N2O Radiative Forcing SSP2 RCP19(
+	[(0,0)-(10,10)],(2010,0.167804),(2020,0.190979),(2030,0.212475),(2040,0.22977),(2050\
+		,0.240821),(2060,0.246385),(2070,0.248219),(2080,0.247229),(2090,0.244504),(2100,0.240289\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of N2O radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 1.9).
+	|
+
+TABLE N2O Radiative Forcing SSP2 RCP26(
+	[(0,0)-(10,10)],(2010,0.167804),(2020,0.190994),(2030,0.213422),(2040,0.233756),(2050\
+		,0.249976),(2060,0.262045),(2070,0.270751),(2080,0.275577),(2090,0.277001),(2100,0.27603\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of N2O radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 2.6).
+	|
+
+TABLE N2O Radiative Forcing SSP2 RCP34(
+	[(0,0)-(10,10)],(2010,0.167804),(2020,0.191089),(2030,0.214084),(2040,0.235924),(2050\
+		,0.254871),(2060,0.270427),(2070,0.282841),(2080,0.291311),(2090,0.29594),(2100,0.298074\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of N2O radiative forcing by \
+		MESSAGE-GLOBIOM (SSP 2 RCP 34).
+	|
+
+TABLE N2O Radiative Forcing SSP2 RCP45(
+	[(0,0)-(10,10)],(2010,0.167804),(2020,0.191135),(2030,0.21432),(2040,0.236786),(2050\
+		,0.257099),(2060,0.274837),(2070,0.289969),(2080,0.301271),(2090,0.308584),(2100,0.312947\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of N2O radiative forcing by \
+		MESSAGE-GLOBIOM (SSP2 RCP 4.5).
+	|
+
+TABLE N2O Radiative Forcing SSP2 RCP60(
+	[(0,0)-(10,10)],(2010,0.167804),(2020,0.191189),(2030,0.214542),(2040,0.237486),(2050\
+		,0.258855),(2060,0.278363),(2070,0.296147),(2080,0.311316),(2090,0.324115),(2100,0.335382\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of N2O radiative forcing by \
+		MESSAGE-GLOBIOM (SSP2 RCP 6.0).
+	|
+
+TABLE N2O Radiative Forcing SSP2 RCP85(
+	[(0,0)-(10,10)],(2010,0.167804),(2020,0.191292),(2030,0.215286),(2040,0.239765),(2050\
+		,0.263741),(2060,0.286982),(2070,0.30948),(2080,0.331141),(2090,0.352599),(2100,0.374267\
+		))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of N2O radiative forcing by \
+		MESSAGE-GLOBIOM (SSP2 RCP 8.5).
+	|
+
+TABLE Other Anthropogenic Radiative Forcing(
+	[(0,0)-(10,10)],(1900,0),(2005,-0.557989))
+	~	W/(Meter*Meter)
+	~	Data series for historical data of other radiative forcing. 2005 AND 2010 from the \
+		SSP database, SSP2 Message-GLOBIOM (marker).
+		Calculated as (total forcing) - (CO2, CH4, N2O and F-Gases forcings)
+	|
+
+TABLE Other Anthropogenic Radiative Forcing SSP2 RCP19(
+	[(0,0)-(10,10)],(2005,-0.557989),(2010,-0.487374),(2020,-0.397824),(2030,-0.230515),\
+		(2040,-0.210926),(2050,-0.27021),(2060,-0.319045),(2070,-0.350269),(2080,-0.372422)\
+		,(2090,-0.388618),(2100,-0.39696))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other radiative forcing by \
+		Message-GLOBIOM (SSP2 marker model) in RCP 1.9.
+	|
+
+TABLE Other Anthropogenic Radiative Forcing SSP2 RCP26(
+	[(0,0)-(10,10)],(2005,-0.557989),(2010,-0.487232),(2020,-0.399799),(2030,-0.306337),\
+		(2040,-0.244383),(2050,-0.274545),(2060,-0.331504),(2070,-0.375821),(2080,-0.401136\
+		),(2090,-0.411268),(2100,-0.411342))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other radiative forcing by \
+		Message-GLOBIOM (SSP2 marker model) in RCP 2.6.
+	|
+
+TABLE Other Anthropogenic Radiative Forcing SSP2 RCP34(
+	[(0,0)-(10,10)],(2005,-0.557989),(2010,-0.487367),(2020,-0.405055),(2030,-0.362333),\
+		(2040,-0.311911),(2050,-0.331126),(2060,-0.356647),(2070,-0.378118),(2080,-0.400985\
+		),(2090,-0.420509),(2100,-0.426015))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 3.4).
+	|
+
+TABLE Other Anthropogenic Radiative Forcing SSP2 RCP45(
+	[(0,0)-(10,10)],(2005,-0.557989),(2010,-0.487489),(2020,-0.40917),(2030,-0.40208),(2040\
+		,-0.36824),(2050,-0.38091),(2060,-0.404117),(2070,-0.425465),(2080,-0.437686),(2090\
+		,-0.43453),(2100,-0.434378))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other radiative forcing by \
+		MESSAGE-GLOBIOM in SSP2 RCP 4.5.
+	|
+
+TABLE Other Anthropogenic Radiative Forcing SSP2 RCP60(
+	[(0,0)-(10,10)],(2005,-0.557989),(2010,-0.487543),(2020,-0.411289),(2030,-0.431191),\
+		(2040,-0.416421),(2050,-0.435845),(2060,-0.461476),(2070,-0.470064),(2080,-0.486857\
+		),(2090,-0.499783),(2100,-0.500466))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 6.0).
+	|
+
+TABLE Other Anthropogenic Radiative Forcing SSP2 RCP85(
+	[(0,0)-(10,10)],(2005,-0.557989),(2010,-0.48777),(2020,-0.415208),(2030,-0.439654),(\
+		2040,-0.432948),(2050,-0.454012),(2060,-0.477328),(2070,-0.486185),(2080,-0.499955)\
+		,(2090,-0.503879),(2100,-0.497409))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other radiative forcing by \
+		MESSAGE-GLOBIOM (RCP 8.5).
+	|
+
+TABLE Other Radiative Forcing(
+	[(1900,-1)-(2005,1)],(1900,-0.234),(1910,-0.282),(1920,-0.287),(1930,-0.301),(1940,-\
+		0.301),(1950,-0.369),(1960,-0.461),(1970,-0.523),(1980,-0.618),(1990,-0.681),(2000,\
+		-0.781),(2005,-0.766))
+	~	W/(Meter*Meter)
+	~	Data series for historical data of other factors radiative forcing.
+	|
+
+TABLE Other Radiative Forcing AIM RCP60(
+	[(2000,-1)-(2100,1)],(2000,-0.781),(2010,-0.751),(2020,-0.671),(2030,-0.573),(2040,-\
+		0.575),(2050,-0.521),(2060,-0.509),(2070,-0.386),(2080,-0.32),(2090,-0.322),(2100,-\
+		0.328))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other factors radiative forcing by \
+		AIM (RCP 6.0).
+	|
+
+TABLE Other Radiative Forcing AIM SSP3 RCP7(
+	[(2000,-1.5)-(2100,1)],(2005,-1.115),(2010,-1.06),(2020,-1.088),(2030,-1.09),(2040,-\
+		1.079),(2050,-1.081),(2060,-1.069),(2070,-1.057),(2080,-1.043),(2090,-1.017),(2100,\
+		-0.983))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other factors radiative forcing by \
+		AIM (RCP 7).
+	|
+
+TABLE Other Radiative Forcing IMAGE RCP26(
+	[(2000,-1)-(2100,1)],(2000,-0.781),(2010,-0.717),(2020,-0.577),(2030,-0.489),(2040,-\
+		0.427),(2050,-0.413),(2060,-0.432),(2070,-0.418),(2080,-0.382),(2090,-0.353),(2100,\
+		-0.323))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other factors radiative forcing by \
+		IMAGE (RCP 2.6).
+	|
+
+TABLE Other Radiative Forcing MESSAGE RCP85(
+	[(2000,-1)-(2100,1)],(2000,-0.781),(2010,-0.696),(2020,-0.648),(2030,-0.573),(2040,-\
+		0.452),(2050,-0.341),(2060,-0.274),(2070,-0.226),(2080,-0.189),(2090,-0.121),(2100,\
+		-0.088))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other factors radiative forcing by \
+		MESSAGE (RCP 8.5).
+	|
+
+TABLE Other Radiative Forcing MiniCAM RCP45(
+	[(2000,-1)-(2100,1)],(2000,-0.781),(2010,-0.713),(2020,-0.605),(2030,-0.518),(2040,-\
+		0.431),(2050,-0.344),(2060,-0.296),(2070,-0.257),(2080,-0.226),(2090,-0.227),(2100,\
+		-0.224))
+	~	W/(Meter*Meter)
+	~	Data series for future projections of other factors radiative forcing by \
+		MiniCAM (RCP 4.5).
+	|
+
+Temperature Anomalies GISS v Preindustrial=
+	Temperature Change from Preindustrial
+	~	DegreesC
+	~	Historical values of temperature anomalies of the Atmosphere and Upper \
+		Ocean as by GISS. Source: NASA Goddard Institute for Space Studies, \
+		http://data.giss.nasa.gov/gistemp/graphs_v3/
+	|
+
+Temperature Anomalies HadCRUT4 v Preindustrial=
+	Temperature Change from Preindustrial
+	~	DegreesC
+	~	Historical values of temperature anomalies of the Atmosphere and Upper \
+		Ocean as by HadCRUT4. Source: Met Office Hadley Centre \
+		http://www.metoffice.gov.uk/hadobs/hadcrut4/data/versions/HadCRUT.4.1.1.0_r\
+		elease_notes.html
+	|
+
+Temperature Change from Preindustrial=
+	Heat in Atmosphere and Upper Ocean/Atmospheric and Upper Ocean Heat Capacity
+	~	DegreesC
+	~	Temperature of the Atmosphere and Upper Ocean and how it has changed from \
+		preindustrial period.
+	|
+
+Total Radiative Forcing=
+	CO2 Radiative Forcing+Other Forcings
+	~	W/(m*m)
+	~	Radiative forcing from various factors in the atmosphere. Source of Historical Data:
+		IIASA RCP Database
+		https://tntcat.iiasa.ac.at:8743/RcpDb/dsd?Action=htmlpage&page=welcome
+	|
+
+Total Radiative Forcing AIM RCP60=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of total radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by AIM (RCP 6.0).
+	|
+
+Total Radiative Forcing IMAGE RCP26=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of total radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by IMAGE (RCP \
+		2.6).
+	|
+
+Total Radiative Forcing MESSAGE RCP85=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of total radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MESSAGE (RCP \
+		8.5).
+	|
+
+Total Radiative Forcing MiniCAM RCP45=
+	0
+	~	W/(Meter*Meter)
+	~	Future projections of total radiative forcing from Representative \
+		Concentration Pathways prepared for the Fifth Assessment Report of the \
+		United Nations Intergovernmental Panel on Climate Change by MiniCAM (RCP \
+		4.5).
+	|
+
+Upper Layer Volume Vu=
+	Area*(Land Area Fraction*Land Thickness+(1-Land Area Fraction)*Mixed Layer Depth)
+	~	Meter*Meter*Meter
+	~	Water equivalent volume of the upper box, which is a weighted combination \
+		of land, atmosphere,and upper ocean volumes.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Eddy diff coeff mean 1 2=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Eddy diff coeff mean 2 3=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Eddy diff coeff mean 3 4=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Eddy diff coeff mean M 1=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Layer Depth 1=
+	300
+	~	Meter
+	~	Depth of the first ocean layer.
+	|
+
+Layer Depth 2=
+	300
+	~	Meter
+	~	Depth of the second ocean layer.
+	|
+
+Layer Depth 3=
+	1300
+	~	Meter
+	~	Depth of the third ocean layer.
+	|
+
+Layer Depth 4=
+	1800
+	~	Meter
+	~	Depth of the fourth ocean layer.
+	|
+
+Mean Depth of Adjacent 1 2 Layers=
+	(Layer Depth 1+Layer Depth 2)/2
+	~	Meter
+	~	Mean depth of the first and the second ocean layers.
+	|
+
+Mean Depth of Adjacent 2 3 Layers=
+	(Layer Depth 2+Layer Depth 3)/2
+	~	Meter
+	~	Mean depth of the second and the third ocean layers.
+	|
+
+Mean Depth of Adjacent 3 4 Layers=
+	(Layer Depth 3+Layer Depth 4)/2
+	~	Meter
+	~	Mean depth of the third and the fourth ocean layers.
+	|
+
+Mean Depth of Adjacent M 1 Layers=
+	(Mixed Layer Depth+Layer Depth 1)/2
+	~	Meter
+	~	Mean depth of mixed and the first ocean layers.
+	|
+
+Mixed Layer Depth=
+	100
+	~	Meter
+	~	Mixed ocean layer depth.
+	|
+
+Preindustrial C in Atmosphere=
+	5.9e+11
+	~	TonC
+	~	Preindustrial carbon content of atmosphere.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Climate
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,38,0
+10,1,Heat in Atmosphere and Upper Ocean,1687,416,52,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Heat in Deep Ocean 1,1682,582,52,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,3,48,1686,206,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,4,6,3,4,0,0,22,0,0,0,-1--1--1,,1|(1686,243)|
+1,5,6,1,100,0,0,22,0,0,0,-1--1--1,,1|(1686,335)|
+11,6,0,1686,278,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,7,Feedback Cooling,1754,278,38,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,8,48,1914,413,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,9,11,1,4,0,0,22,0,0,0,-1--1--1,,1|(1783,413)|
+1,10,11,8,100,0,0,22,0,0,0,-1--1--1,,1|(1871,413)|
+11,11,0,1833,413,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,12,Effective Radiative Forcing,1833,437,65,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,13,15,2,4,0,0,22,0,0,0,-1--1--1,,1|(1687,526)|
+1,14,15,1,100,0,0,22,0,0,0,-1--1--1,,1|(1687,467)|
+11,15,0,1687,494,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,16,Heat Transfer 1,1745,494,56,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,17,Heat Transfer Coefficient 1,1997,494,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,18,Deep Ocean 1 Heat Capacity,1254,582,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,19,INIT Deep Ocean 1 Temperature,1434,644,70,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial||B|0-0-0,0,0,0,0,0,0
+10,20,INIT Atmospheric and Upper Ocean Temperature,1434,490,78,27,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial||B|0-0-0,0,0,0,0,0,0
+10,21,Atmospheric and Upper Ocean Heat Capacity,1254,416,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,22,Relative Deep 1 Ocean Temperature,1434,582,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,23,18,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,24,19,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,25,18,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,26,2,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,27,22,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,28,Temperature Change from Preindustrial,1407,367,48,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,21,28,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,30,28,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,31,1,28,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,32,28,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,33,Climate Feedback Parameter,1793,184,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,34,21,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,35,20,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,36,Heat Transfer Rate,1997,548,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,37,Heat Diffusion Covar,2154,548,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,38,Area,406,783,19,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,39,Land Area Fraction,406,638,39,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,40,Land Thickness,406,572,57,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,41,Heat in Deep Ocean 2,1687,748,52,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,42,Heat in Deep Ocean 3,1687,914,52,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,43,Heat in Deep Ocean 4,1687,1082,52,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,44,46,41,4,0,0,22,0,0,0,-1--1--1,,1|(1687,695)|
+1,45,46,2,100,0,0,22,0,0,0,-1--1--1,,1|(1687,636)|
+11,46,0,1687,665,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,47,Heat Transfer 2,1745,665,56,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,48,50,42,4,0,0,22,0,0,0,-1--1--1,,1|(1687,860)|
+1,49,50,41,100,0,0,22,0,0,0,-1--1--1,,1|(1687,801)|
+11,50,0,1687,831,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,51,Heat Transfer 3,1745,831,56,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,52,54,43,4,0,0,22,0,0,0,-1--1--1,,1|(1687,1028)|
+1,53,54,42,100,0,0,22,0,0,0,-1--1--1,,1|(1687,968)|
+11,54,0,1687,998,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,55,Heat Transfer 4,1745,998,56,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,56,INIT Deep Ocean 2 Temperature,1434,800,70,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,57,INIT Deep Ocean 3 Temperature,1434,968,70,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,58,INIT Deep Ocean 4 Temperature,1434,1134,70,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,59,Deep Ocean 2 Heat Capacity,1254,748,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,60,Deep Ocean 3 Heat Capacity,1254,914,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,61,Deep Ocean 4 Heat Capacity,1254,1082,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,62,56,41,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,63,59,41,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,64,57,42,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,65,60,42,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,66,58,43,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,67,61,43,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,68,Relative Deep 2 Ocean Temperature,1434,748,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,69,Relative Deep 3 Ocean Temperature,1434,914,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,Relative Deep 4 Ocean Temperature,1434,1082,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,71,41,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,72,59,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,73,42,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,74,60,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,75,43,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,76,61,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,77,Mean Depth of Adjacent M 1 Layers,1833,548,80,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,78,77,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,79,17,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,80,33,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,81,"2xCO2 Forcing",1948,82,55,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,82,Climate Sensitivity to 2xCO2,1793,82,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,83,81,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,84,82,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,85,Mean Depth of Adjacent 1 2 Layers,1833,718,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,86,Mean Depth of Adjacent 2 3 Layers,1833,886,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,87,Mean Depth of Adjacent 3 4 Layers,1833,1058,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,88,36,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,89,77,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,90,37,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,91,Eddy diff coeff mean M 1,2154,493,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,92,91,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,93,Heat Transfer Coefficient 2,1997,665,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,94,Heat Transfer Coefficient 3,1997,831,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,95,Heat Transfer Coefficient 4,1997,998,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,96,Eddy diff coeff mean 1 2,2154,663,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,97,Eddy diff coeff mean 2 3,2154,831,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,98,Eddy diff coeff mean 3 4,2154,998,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,99,85,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,100,86,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,101,87,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,102,93,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,103,94,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,104,95,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,105,85,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,106,86,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,107,87,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,108,Heat Transfer Rate,1997,718,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,109,Heat Transfer Rate,1997,886,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,110,Heat Transfer Rate,1997,1058,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,111,Heat Diffusion Covar,2154,718,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,112,Heat Diffusion Covar,2154,886,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,113,Heat Diffusion Covar,2154,1058,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,114,108,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,115,109,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,116,110,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,117,113,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,118,112,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,119,111,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,120,96,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,121,97,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,98,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,123,Upper Layer Volume Vu,578,572,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,124,Lower Layer Volume Vu 1,578,638,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,125,Volumetric Heat Capacity,578,366,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,126,38,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,127,39,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,128,40,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,129,Mixed Layer Depth,749,572,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,130,129,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,131,Lower Layer Volume Vu 2,578,716,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,132,Lower Layer Volume Vu 3,578,783,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,133,Lower Layer Volume Vu 4,578,853,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,134,38,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,135,Layer Depth 1,749,636,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,136,Layer Depth 2,749,717,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,137,Layer Depth 3,749,782,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,138,Layer Depth 4,749,852,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,139,39,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,140,39,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,141,39,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,142,39,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,143,38,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,144,38,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,145,38,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,146,135,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,147,136,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,148,137,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,149,138,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,150,Mass Heat Capacity,406,308,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,151,Density,406,444,28,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,152,150,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,153,151,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,154,22,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,155,68,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,156,68,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,69,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,158,69,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,159,70,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,160,CO2 Radiative Forcing Coefficient,2141,82,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,161,160,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,162,Total Radiative Forcing,1948,328,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,163,CO2 Radiative Forcing,2141,184,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,164,Other Forcings,2141,328,54,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,165,163,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,164,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,167,Preindustrial C in Atmosphere,2353,148,68,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,168,160,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,169,167,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,170,162,11,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,171,Equilibrium Temperature,1948,184,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,172,33,171,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,173,163,171,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,174,Temperature Anomalies GISS v Preindustrial,1396,230,67,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,175,Temperature Anomalies HadCRUT4 v Preindustrial,1509,307,88,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,176,Heat to 700m,578,970,49,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,177,Heat to 2000m,578,1177,54,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,178,176,177,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,179,Heat to 700m J,406,970,55,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,180,Heat to 2000m J,406,1177,60,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,181,176,179,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,182,177,180,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,183,Land Area Fraction,488,1079,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,184,183,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,185,Offset 700m Heat,249,970,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,186,183,179,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,187,Area,326,1079,28,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,188,185,179,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,189,187,179,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,190,28,174,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,191,28,175,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,192,Total Radiative Forcing AIM RCP60,3008,409,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,193,Total Radiative Forcing MiniCAM RCP45,3008,321,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,194,Total Radiative Forcing IMAGE RCP26,3008,241,57,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,195,Total Radiative Forcing MESSAGE RCP85,3008,499,72,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,196,CO2 Radiative Forcing AIM RCP60,3008,995,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,197,CO2 Radiative Forcing MiniCAM RCP45,3008,915,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,198,CO2 Radiative Forcing IMAGE RCP26,3008,827,57,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,199,CO2 Radiative Forcing MESSAGE RCP85,3008,1077,72,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,200,CH4 Radiative Forcing History,3697,169,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,201,CH4 Radiative Forcing RCP60,3698,541,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,202,CH4 Radiative Forcing RCP45,3698,453,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,203,CH4 Radiative Forcing RCP26,3699,322,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,204,CH4 Radiative Forcing RCP85,3698,631,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,205,N2O Radiative Forcing History,4480,169,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,206,N2O Radiative Forcing RCP60,4495,533,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,207,N2O Radiative Forcing RCP45,4495,445,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,208,N2O Radiative Forcing RCP26,4486,311,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,209,N2O Radiative Forcing RCP85,4495,623,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,210,HFC Radiative Forcing History,3742,1369,56,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,211,HFC Radiative Forcing AIM RCP60,3745,1733,74,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,212,HFC Radiative Forcing MiniCAM RCP45,3745,1653,65,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,213,HFC Radiative Forcing IMAGE RCP26,3746,1513,57,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,214,HFC Radiative Forcing MESSAGE RCP85,3745,1815,72,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,215,Other Radiative Forcing History,4525,1369,57,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,216,Other Radiative Forcing AIM RCP60,4525,1617,74,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,217,Other Radiative Forcing MiniCAM RCP45,4525,1537,65,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,218,Other Radiative Forcing IMAGE RCP26,4525,1449,57,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,219,Other Radiative Forcing MESSAGE RCP85,4525,1699,72,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,220,TABLE CH4 Radiative Forcing,3914,169,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,221,TABLE CH4 Radiative Forcing SSP2 RCP60,3915,541,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,222,Time,3499,402,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,223,TABLE CH4 Radiative Forcing SSP2 RCP45,3915,453,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,224,TABLE CH4 Radiative Forcing SSP2 RCP26,3916,322,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,225,TABLE CH4 Radiative Forcing SSP2 RCP85,3915,631,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,226,TABLE N2O Radiative Forcing,4697,169,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,227,TABLE N2O Radiative Forcing SSP2 RCP60,4712,533,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,228,TABLE N2O Radiative Forcing SSP2 RCP45,4712,445,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,229,TABLE N2O Radiative Forcing SSP2 RCP26,4703,311,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,230,TABLE N2O Radiative Forcing SSP2 RCP85,4712,623,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,231,TABLE HFC Radiative Forcing,3959,1369,65,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,232,TABLE HFC Radiative Forcing AIM RCP60,3962,1733,81,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,233,TABLE HFC Radiative Forcing MiniCAM RCP45,3962,1653,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,234,TABLE HFC Radiative Forcing IMAGE RCP26,3963,1513,86,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,235,TABLE HFC Radiative Forcing MESSAGE RCP85,3962,1815,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,236,TABLE Other Radiative Forcing,4742,1369,65,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,237,TABLE Other Radiative Forcing AIM RCP60,4742,1617,81,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,238,TABLE Other Radiative Forcing MiniCAM RCP45,4742,1537,86,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,239,TABLE Other Radiative Forcing IMAGE RCP26,4742,1449,65,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,240,TABLE Other Radiative Forcing MESSAGE RCP85,4742,1699,86,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+1,241,220,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,242,224,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,243,223,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,244,221,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,245,225,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,246,222,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,247,222,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,248,222,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,249,222,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,250,222,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,251,RCP Scenario,3335,175,53,10,8,3,0,36,0,0,0,0,0-0-0,131-106-162,Arial|||0-0-0,0,0,0,0,0,0
+10,252,CH4 Radiative Forcing,3497,170,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,253,200,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,254,203,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,255,202,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,256,201,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,257,204,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,258,251,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,259,222,252,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,260,226,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,261,229,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,262,228,207,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,263,227,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,264,230,209,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,265,RCP Scenario,4140,169,39,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,266,Time,4309,321,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,267,N2O Radiative Forcing,4310,170,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,268,266,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,269,266,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,270,266,207,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,271,266,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,272,266,209,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,273,265,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,274,205,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,275,208,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,276,207,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,277,206,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,278,209,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,279,Time,4355,1536,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,280,Time,3542,1537,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,281,RCP Scenario,3388,1369,39,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,282,RCP Scenario,4185,1369,39,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,283,HFC Radiative Forcing,3542,1369,55,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,284,Other Radiative Forcing,4355,1369,57,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+1,285,282,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,286,281,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,287,280,210,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,288,266,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,289,280,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,290,279,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,291,279,215,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,292,279,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,293,279,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,294,279,216,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,295,279,219,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,296,280,213,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,297,280,212,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,298,280,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,299,280,214,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,300,210,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,301,213,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,302,212,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,303,211,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,304,214,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,305,231,210,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,306,234,213,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,307,233,212,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,308,232,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,309,235,214,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,310,215,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,311,218,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,312,217,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,313,216,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,314,219,284,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,315,236,215,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,316,239,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,317,238,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,318,237,216,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,319,240,219,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,320,CH4 Radiative Forcing,2353,257,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,321,HFC Radiative Forcing,2353,404,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,322,N2O Radiative Forcing,2353,306,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,323,Other Radiative Forcing,2353,355,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,324,320,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,325,322,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,326,Heat in Atmosphere and Upper Ocean,749,970,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,327,Heat in Deep Ocean 1,749,1039,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,328,Heat in Deep Ocean 2,749,1108,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,329,Heat in Deep Ocean 3,749,1177,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,330,329,177,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,331,326,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,332,327,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,333,328,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,334,Volumetric Heat Capacity,1067,523,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,335,Volumetric Heat Capacity,1067,688,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,336,Volumetric Heat Capacity,1067,854,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,337,Volumetric Heat Capacity,1067,1022,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,338,334,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,339,335,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,340,336,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,341,337,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,342,Area,1067,634,28,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,343,Area,1067,799,28,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,344,Area,1067,965,28,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,345,Area,1067,1141,28,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,346,345,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,347,344,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,348,343,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,349,342,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,350,Area,1067,467,28,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,351,350,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,352,Volumetric Heat Capacity,1067,356,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,353,352,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,354,Upper Layer Volume Vu,1067,415,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,355,354,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,356,Lower Layer Volume Vu 1,1067,582,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,357,Lower Layer Volume Vu 2,1067,747,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,358,Lower Layer Volume Vu 3,1067,913,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,359,Lower Layer Volume Vu 4,1067,1081,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,360,359,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,361,358,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,362,357,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,363,356,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,364,183,180,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,365,187,180,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,366,Dimensionless Time,3499,490,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,367,366,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,368,366,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,369,366,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,370,366,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,371,366,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,372,Dimensionless Time,3542,1617,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,373,Dimensionless Time,4309,409,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,374,Dimensionless Time,4354,1617,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+1,375,373,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,376,373,209,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,377,373,207,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,378,373,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,379,373,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,380,372,210,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,381,372,213,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,382,372,212,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,383,372,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,384,372,214,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,385,374,215,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,386,374,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,387,374,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,388,374,216,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,389,374,219,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,390,R,2485,174,8,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,391,167,390,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,392,CO2 Radiative Forcing Indicator,2282,62,61,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,393,163,392,1,0,0,0,0,128,0,-1--1--1,,1|(2279,34)|
+10,394,TABLE CH4 Radiative Forcing SSP2 RCP34,3915,366,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,395,CH4 Radiative Forcing RCP34,3699,368,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,396,TABLE HFC Radiative Forcing AIM SSP3 RCP7,3969,1579,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,397,HFC Radiative Forcing AIM RCP7,3756,1574,69,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,398,TABLE Other Radiative Forcing AIM SSP3 RCP7,4744,1772,86,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,399,Other Radiative Forcing AIM RCP7,4539,1786,69,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,400,TABLE N2O Radiative Forcing SSP2 RCP34,4710,385,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,401,N2O Radiative Forcing RCP34,4491,379,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,402,366,395,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,403,Time,3699,408,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,404,403,395,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,405,Time,3739,1617,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+1,406,405,397,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,407,Time,4539,1826,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+1,408,407,399,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,409,Time,4540,412,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,410,409,401,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,411,372,397,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,412,396,397,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,413,394,395,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,414,373,401,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,415,400,401,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,416,374,399,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,417,398,399,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,418,397,283,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,419,395,252,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,420,401,267,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,421,399,284,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,422,CH4 Radiative Forcing RCP19,3703,236,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,423,TABLE CH4 Radiative Forcing SSP2 RCP19,3920,236,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,424,423,422,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,425,366,422,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,426,Time,3703,268,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,427,426,422,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,428,422,252,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,429,N2O Radiative Forcing RCP19,4488,245,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,430,TABLE N2O Radiative Forcing SSP2 RCP19,4705,245,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,431,430,429,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,432,Time,4488,285,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,433,432,429,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,434,373,429,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,435,429,267,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,436,F Gases Radiative Forcing History,3692,776,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,437,F Gases Radiative Forcing RCP60,3693,1148,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,438,F Gases Radiative Forcing RCP45,3693,1060,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,439,F Gases Radiative Forcing RCP26,3694,929,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,440,F Gases Radiative Forcing RCP85,3693,1238,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,441,TABLE F Gases Radiative Forcing,3909,776,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,442,TABLE F Gases Radiative Forcing SSP2 RCP60,3910,1148,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,443,Time,3494,1009,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,444,TABLE F Gases Radiative Forcing SSP2 RCP45,3910,1060,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,445,TABLE F Gases Radiative Forcing SSP2 RCP26,3911,929,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,446,TABLE F Gases Radiative Forcing SSP2 RCP85,3910,1238,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,447,441,436,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,448,445,439,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,449,444,438,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,450,442,437,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,451,446,440,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,452,443,440,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,453,443,437,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,454,443,438,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,455,443,439,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,456,443,436,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,457,F Gases Radiative Forcing,3493,788,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,458,436,457,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,459,439,457,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,460,438,457,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,461,437,457,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,462,440,457,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,463,443,457,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,464,TABLE F Gases Radiative Forcing SSP2 RCP34,3910,973,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,465,F Gases Radiative Forcing RCP34,3694,975,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,466,Time,3694,1015,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,467,466,465,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,468,464,465,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,469,465,457,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,470,F Gases Radiative Forcing RCP19,3698,843,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,471,TABLE F Gases Radiative Forcing SSP2 RCP19,3915,843,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,472,471,470,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,473,Time,3698,875,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,474,473,470,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,475,470,457,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,476,RCP Scenario,3290,786,39,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,477,476,457,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,478,Dimensionless Time,3468,1086,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,479,478,436,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,480,478,470,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,481,478,439,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,482,478,465,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,483,478,438,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,484,478,437,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,485,478,440,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,486,Time,3746,1480,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||192-192-192,0,0,0,0,0,0
+10,487,Other Anthropogenic Radiative Forcing History,4632,795,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,488,Other Anhtropogenic Radiative Forcing RCP60,4625,1154,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,489,Other Anthropogenic Radiative Forcing RCP45,4625,1066,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,490,Other Anthropogenic Radiative Forcing RCP26,4626,920,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,491,Other Anthropogenic Radiative Forcing RCP85,4625,1244,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,492,TABLE Other Anthropogenic Radiative Forcing,4841,782,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,493,TABLE Other Anthropogenic Radiative Forcing SSP2 RCP60,4842,1154,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,494,TABLE Other Anthropogenic Radiative Forcing SSP2 RCP45,4842,1066,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,495,TABLE Other Anthropogenic Radiative Forcing SSP2 RCP26,4861,915,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,496,TABLE Other Anthropogenic Radiative Forcing SSP2 RCP85,4842,1244,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,497,492,487,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,498,495,490,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,499,494,489,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,500,493,488,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,501,496,491,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,502,Other Anthropogenic Radiative Forcing,4413,775,75,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,503,487,502,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,504,490,502,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,505,489,502,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,506,488,502,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,507,491,502,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,508,TABLE Other Anthropogenic Radiative Forcing SSP2 RCP34,4842,979,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,509,Other Anthropogenic Radiative Forcing RCP34,4626,981,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,510,Time,4626,1021,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,511,510,509,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,512,508,509,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,513,509,502,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,514,Other Anthropogenic Radiative Forcing RCP19,4630,849,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,515,TABLE Other Anthropogenic Radiative Forcing SSP2 RCP19,4847,849,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,516,515,514,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,517,Time,4630,881,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,518,517,514,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,519,514,502,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,520,Time,4661,722,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,521,520,487,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,522,Time,4625,1170,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,523,522,488,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,524,Time,4625,1082,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,525,524,489,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,526,Time,4732,907,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,527,526,490,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,528,Time,4625,1260,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,529,528,491,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,530,Time,4380,861,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,531,530,502,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,532,Dimensionless Time,4402,1017,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,533,532,487,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,534,532,514,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,535,532,490,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,536,532,509,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,537,532,489,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,538,532,488,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,539,532,491,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,540,RCP Scenario,4270,787,39,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,541,540,502,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,542,F Gases Radiative Forcing,2382,482,70,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,543,Other Anthropogenic Radiative Forcing,2370,544,70,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,544,542,164,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,545,543,164,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,546,Eddy diff coeff 3 4,2160,942,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,547,546,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,548,Eddy diff coeff 2 3,2156,771,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,549,548,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,550,Eddy diff coeff 1 2,2163,615,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,551,550,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,552,Eddy diff coeff M 1,2149,446,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,553,552,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,554,C in Atmosphere,2347,197,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,555,554,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,556,C in Atmosphere,2485,202,50,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,557,556,390,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,558,554,390,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,559,sec per Year,390,392,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,560,559,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,561,Watt per J s,409,361,53,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,562,561,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,563,J per W Year,211,1072,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,564,563,180,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,565,563,179,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Heat in Atmosphere and Upper Ocean
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:38,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

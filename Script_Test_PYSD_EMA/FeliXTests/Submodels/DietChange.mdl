@@ -1,0 +1,5005 @@
+{UTF-8}
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Average Kcal Intake per Person SHIFT[FoodCategories]=
+	Annual Caloric Demand SHIFT[FoodCategories]/(Population*Days in Year*kcal to Mkcal)
+	~	kcal/(Person*Day)
+	~		|
+
+Annual Caloric Demand WRI[FoodCategories]=
+	Average Kcal Intake per Person WRI[FoodCategories]*Population*kcal to Mkcal*Days in Year
+	~	Mkcal/Year
+	~		|
+
+Annual Kcal Intake SHIFT[FoodCategories,Gender,Cohorts]=
+	Days in Year*kcal to Mkcal*
+	(Average calorie intake in meat diet[FoodCategories,Gender,Cohorts] * sum("Meat-based Diet Followers"\
+		[Gender,Cohorts,Education
+	!]) +
+	
+	Average calorie intake in vegetarian diet[FoodCategories,Gender,Cohorts] * sum(Lactoovo Vegetarian Diet Followers\
+		[Gender
+	,Cohorts,Education!]) 
+	)
+	~	Mkcal/Year
+	~		|
+
+Annual Caloric Demand FAO[FoodCategories]=
+	Average Kcal Intake per Person FAO[FoodCategories]*Population*kcal to Mkcal*Days in Year
+	~	Mkcal/Year
+	~		|
+
+Annual Caloric Demand FLEX[FoodCategories]=
+	Average Kcal Intake per Person FLEX[FoodCategories]*Population*kcal to Mkcal*Days in Year
+	~	Mkcal/Year
+	~		|
+
+Average Daily Calorie Demand per Capita=
+	Global Total Calorie Demand SHIFT/Population/kcal to Mkcal/Days in Year
+	~	kcal/(Person*Day)
+	~		|
+
+Average Kcal Intake per Person[FoodCategories]=
+	Annual Caloric Demand[FoodCategories]/(Population*Days in Year*kcal to Mkcal)
+	~	kcal/(Person*Day)
+	~		|
+
+Previous population[Gender,Cohorts,Education]= DELAY FIXED (
+	Population wrt Education[Gender,Cohorts,Education], 1, Initial Pop Ed[Gender,Cohorts\
+		,Education])
+	~	People
+	~		|
+
+Attitude multiplier for diet change[Education]=
+	L risk attitude/
+	(1+EXP(-k risk attitude*( Perceived Risk[Education] -x0 risk attitude) ) )
+	~	Dmnl
+	~	( L events risk / 
+		(1+( EXP(-k events risk*(Climate Events in Memory-x0 events risk) ) )) 
+		-(L events risk / 2))+0.5
+	|
+
+Ratio Young=
+	Young population/Population
+	~	Dmnl
+	~		|
+
+Percentage of vegetarians[Gender,Cohorts,Education]=
+	ZIDZ(Lactoovo Vegetarian Diet Followers[Gender,Cohorts,Education], Population wrt Education\
+		[Gender,Cohorts,Education])
+	~	Dmnl
+	~		|
+
+"Meat-based Diet Followers"[Gender,Cohorts,Education]=
+	MAX(0, Population wrt Education[Gender,Cohorts,Education]-Lactoovo Vegetarian Diet Followers\
+		[Gender,Cohorts,Education])
+	+(0 * "Shift from meat-based to vegetarian"[Gender,Cohorts,Education])
+	+(0 * "Shift from vegetarian to meat-based"[Gender,Cohorts,Education])
+	~	People
+	~		|
+
+Initial Pop Ed[Gender,Cohorts,Education]= INITIAL(
+	Population wrt Education[Gender,Cohorts,Education])
+	~	People
+	~		|
+
+"Percentage of meat-based diet followers"=
+	Total Meat Eaters/Population
+	~	Dmnl
+	~		|
+
+Percentage of vegetarian diet followers=
+	Total Vegetarians/Population
+	~	Dmnl
+	~		|
+
+Relative GWP per Capita=
+	Smoothed GWP per Capita/Reference GWP per Capita
+	~	Dmnl
+	~		|
+
+Population increase rate[Gender,Cohorts,Education]=
+	(Population wrt Education[Gender,Cohorts,Education]-Previous population[Gender,Cohorts\
+		,Education])*Percentage of vegetarians
+	[Gender,Cohorts,Education]
+	~	People/Year
+	~		|
+
+Young population=
+	sum(Population Cohorts[Gender!,Young!])
+	~	People
+	~		|
+
+AllButYoungest:
+	"5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54"\
+		, "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", "95-99", \
+		"100+"
+	~	
+	~		|
+
+Animal Calories Consumption Indicator=
+	Percentage of animal calories
+	~	Dmnl
+	~		|
+
+Animal Food Caloric Intake Indicator=
+	sum(Average Kcal Intake per Person[AnimalFood!])
+	~	kcal/(Person*Day)
+	~		|
+
+AnimalFood:
+	PasMeat,CropMeat,Dairy,Eggs
+	~	
+	~		|
+
+Annual Caloric Demand[FoodCategories]=
+	IF THEN ELSE(Diet Composition Switch=1, 
+	Annual Caloric Demand SHIFT[FoodCategories]+Smooth Diet Switch Fnc*(Annual Caloric Demand FLEX\
+		[FoodCategories]-Annual Caloric Demand SHIFT[FoodCategories]),
+	Annual Caloric Demand SHIFT[FoodCategories] )
+	~	Mkcal/Year
+	~	This variable can be changed according to which diet composition is used.
+	|
+
+Annual Caloric Demand SHIFT[FoodCategories]=
+	sum(Annual Kcal Intake SHIFT[FoodCategories,Gender!,Cohorts!])
+	~	Mkcal/Year
+	~		|
+
+Average calorie intake in meat diet[FoodCategories,Gender,Cohorts]=
+	Average Total Daily Calorie Intake*Meat diet composition multipliers[FoodCategories,\
+		Gender,Cohorts]
+	~	kcal/(Person*Day)
+	~		|
+
+Average calorie intake in vegetarian diet[FoodCategories,Gender,Cohorts]=
+	Average Total Daily Calorie Intake*Vegetarian diet composition multipliers[FoodCategories\
+		,Gender,Cohorts]
+	~	kcal/(Person*Day)
+	~		|
+
+Average Kcal Intake per Person FAO[FoodCategories]=
+	Average Total Daily Calorie Intake*Global Average Diet Composition FAO[FoodCategories\
+		]/100
+	~	kcal/(Person*Day)
+	~		|
+
+Average Kcal Intake per Person FLEX[FoodCategories]=
+	Average Total Daily Calorie Intake*Global Average Diet Composition FLEX[FoodCategories\
+		]/100
+	~	kcal/(Person*Day)
+	~		|
+
+Average Kcal Intake per Person WRI[FoodCategories]=
+	Average Total Daily Calorie Intake*Global Average Diet Composition WRI[FoodCategories\
+		]/100
+	~	kcal/(Person*Day)
+	~		|
+
+Average Total Daily Calorie Intake=
+	Reference Daily Caloric Intake*Effect of GWP on Daily Caloric Intake
+	~	kcal/(Person*Day)
+	~		|
+
+Childhood:
+	"0-4","5-9","10-14"
+	~	
+	~		|
+
+CI S=
+	1672.6
+	~	kcal/(Person*Day)
+	~	1961 World average, from FAO data - 2194 kcal
+		Calibrated 1672.6 kcal
+		1970 value, when gdp effect=1:2325
+	|
+
+CI Var S=
+	1672.6+SMOOTH(STEP(CI S-1672.6, 2020),1)
+	~	kcal/(Person*Day)
+	~	1961 World average, from FAO data - 2194 kcal
+		Calibrated 1672.6 kcal
+		1970 value, when gdp effect=1:2325
+	|
+
+Diet Composition Percentage[FoodCategories]=
+	Average Kcal Intake per Person[FoodCategories]/sum(Average Kcal Intake per Person[FoodCategories\
+		!])
+	~	Dmnl
+	~		|
+
+Diet Composition Switch=
+	0 + STEP(Diet Composition Switch Variation, 2020)
+	~	Dmnl
+	~	0: Reference meat and vegetarian diets
+		1: Everyone is flexitarian from 2020 on
+		2: Meat-eaters eat 'Healthy', vegetarians eat 'Reference' veg diet
+		3: Meat-eaters eat 'Healthy', vegetarians eat 'Vegan' diet
+		4: Meat-eaters eat 'Flexitarian', vegetarians eat vegan
+	|
+
+Diet Composition Switch Variation=
+	IF THEN ELSE(0 <= Diet Composition Variation :AND: Diet Composition Variation < 1, 0\
+		 , 0)
+	
+	+ IF THEN ELSE(1 <= Diet Composition Variation :AND: Diet Composition Variation < 2,\
+		 1 , 0)
+	
+	+ IF THEN ELSE(2 <= Diet Composition Variation :AND: Diet Composition Variation < 3,\
+		 2 , 0)
+	
+	+ IF THEN ELSE(3 <= Diet Composition Variation :AND: Diet Composition Variation < 4,\
+		 3 , 0)
+	
+	+ IF THEN ELSE(4 <= Diet Composition Variation :AND: Diet Composition Variation < 5,\
+		 4 , 0)
+	~	Dmnl
+	~	0: Reference meat and vegetarian diets
+		1: Everyone is flexitarian from 2020 on
+		2: Meat-eaters eat 'Healthy', vegetarians eat 'Reference' veg diet
+		3: Meat-eaters eat 'Healthy', vegetarians eat 'Vegan' diet
+		4: Meat-eaters eat 'Flexitarian', vegetarians eat vegan
+	|
+
+Diet Composition Variation=
+	0
+	~	Dmnl
+	~	0: Reference meat and vegetarian diets
+		1: Everyone is flexitarian from 2020 on
+		2: Meat-eaters eat 'Healthy', vegetarians eat 'Reference' veg diet
+		3: Meat-eaters eat 'Healthy', vegetarians eat 'Vegan' diet
+		4: Meat-eaters eat 'Flexitarian', vegetarians eat vegan
+	|
+
+Effect of GWP on Calorie Intake Lookup(
+	[(0,0)-(4,2)],(0,0.4),(0.5,0.52),(1,1),(1.5,1.15),(2,1.26),(2.5,1.33),(3,1.38),(3.5,\
+		1.4),(4,1.42))
+	~	Dmnl
+	~		|
+
+Effect of GWP on Daily Caloric Intake=
+	Effect of GWP on Calorie Intake Lookup(Relative GWP per Capita)
+	~	Dmnl
+	~	See FAOSTAT_..DailyCaloriesOverTime.xlsx
+		GWP scenario: \
+		[(0,0)-(2.5,1.5)],(0,0.5),(0.25,0.55),(0.5,0.62),(0.75,0.75),(1,1),(1.25,1.\
+		12),(1.5,1.2),(1.75,1.26),(2,1.3),(2.25,1.33),(2.5,1.35) )
+		BAU Scenario: \
+		([(0,0)-(4,1.5)],(0,0.4),(0.5,0.52),(1,1),(1.5,1.15),(2,1.26),(2.5,1.33),(3\
+		,1.38),(3.5,1.4),(4,1.42) )
+	|
+
+Effect of GWP on Meat Consumption= WITH LOOKUP (
+	Relative GWP per Capita,
+		([(0,0)-(3,2)],(0,0.4),(0.25,0.47),(0.5,0.57),(0.75,0.76),(1,1),(1.25,1.24),(1.5,1.43\
+		),(1.75,1.53),(2,1.67),(2.25,1.82),(2.5,1.87),(2.75,1.9),(3,1.92) ))
+	~	1/Year
+	~	See FAOSTAT_...meatpercapita.xlsx forhow I derived the lookup.
+	|
+
+Flexitarian diet decomposition multiplier[FoodCategories,male,Cohorts]=
+	Flexitarian diet decomposition multiplier male[FoodCategories,Cohorts] ~~|
+Flexitarian diet decomposition multiplier[FoodCategories,female,Cohorts]=
+	Flexitarian diet decomposition multiplier female[FoodCategories,Cohorts]
+	~	Dmnl
+	~	Modified by Q. Ye in June 2024
+	|
+
+Flexitarian diet decomposition multiplier female[PasMeat,Cohorts]=
+	0.0026121,
+	0.00330866,
+	0.00417936,
+	0.00444057,
+	0.00478885,
+	0.0043535,
+	0.0043535,
+	0.0043535,
+	0.0043535,
+	0.0043535,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815,
+	0.00391815 ~~|
+Flexitarian diet decomposition multiplier female[CropMeat,Cohorts]=
+	0.0146278,
+	0.0185285,
+	0.0234044,
+	0.0248672,
+	0.0268176,
+	0.0243796,
+	0.0243796,
+	0.0243796,
+	0.0243796,
+	0.0243796,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416,
+	0.0219416 ~~|
+Flexitarian diet decomposition multiplier female[Dairy,Cohorts]=
+	0.0463213,
+	0.0586736,
+	0.074114,
+	0.0787461,
+	0.0849223,
+	0.0772021,
+	0.0772021,
+	0.0772021,
+	0.0772021,
+	0.0772021,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819,
+	0.0694819 ~~|
+Flexitarian diet decomposition multiplier female[Eggs,Cohorts]=
+	0.00441155,
+	0.00558796,
+	0.00705848,
+	0.00749963,
+	0.00808784,
+	0.00735258,
+	0.00735258,
+	0.00735258,
+	0.00735258,
+	0.00735258,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732,
+	0.00661732 ~~|
+Flexitarian diet decomposition multiplier female[Pulses,Cohorts]=
+	0.040981,
+	0.0519092,
+	0.0655695,
+	0.0696676,
+	0.0751318,
+	0.0683016,
+	0.0683016,
+	0.0683016,
+	0.0683016,
+	0.0683016,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714,
+	0.0614714 ~~|
+Flexitarian diet decomposition multiplier female[Grains,Cohorts]=
+	0.17407,
+	0.220489,
+	0.278513,
+	0.29592,
+	0.319129,
+	0.290117,
+	0.290117,
+	0.290117,
+	0.290117,
+	0.290117,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106,
+	0.261106 ~~|
+Flexitarian diet decomposition multiplier female[VegFruits,Cohorts]=
+	0.0700159,
+	0.0886868,
+	0.112025,
+	0.119027,
+	0.128363,
+	0.116693,
+	0.116693,
+	0.116693,
+	0.116693,
+	0.116693,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024,
+	0.105024 ~~|
+Flexitarian diet decomposition multiplier female[OtherCrops,Cohorts]=
+	0.223073,
+	0.28256,
+	0.356917,
+	0.379225,
+	0.408968,
+	0.371789,
+	0.371789,
+	0.371789,
+	0.371789,
+	0.371789,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461,
+	0.33461
+	~	
+	~	Data please see the excel file 'New_DietData.xlsx' , 'Model Input' , 'y22'
+		
+		Added by Q. Ye
+	|
+
+Flexitarian diet decomposition multiplier male[PasMeat,Cohorts]=
+	0.00275722,
+	0.0034828,
+	0.00461471,
+	0.00600783,
+	0.0060949,
+	0.00565955,
+	0.00565955,
+	0.00565955,
+	0.00565955,
+	0.0052242,
+	0.0052242,
+	0.0052242,
+	0.0052242,
+	0.00478885,
+	0.00478885,
+	0.00478885,
+	0.00478885,
+	0.00478885,
+	0.00478885,
+	0.00478885,
+	0.00478885 ~~|
+Flexitarian diet decomposition multiplier male[CropMeat,Cohorts]=
+	0.0154404,
+	0.0195037,
+	0.0258424,
+	0.0336439,
+	0.0341314,
+	0.0316935,
+	0.0316935,
+	0.0316935,
+	0.0316935,
+	0.0292555,
+	0.0292555,
+	0.0292555,
+	0.0292555,
+	0.0268176,
+	0.0268176,
+	0.0268176,
+	0.0268176,
+	0.0268176,
+	0.0268176,
+	0.0268176,
+	0.0268176 ~~|
+Flexitarian diet decomposition multiplier male[Dairy,Cohorts]=
+	0.0488947,
+	0.0617617,
+	0.0818342,
+	0.106539,
+	0.108083,
+	0.100363,
+	0.100363,
+	0.100363,
+	0.100363,
+	0.0926425,
+	0.0926425,
+	0.0926425,
+	0.0926425,
+	0.0849223,
+	0.0849223,
+	0.0849223,
+	0.0849223,
+	0.0849223,
+	0.0849223,
+	0.0849223,
+	0.0849223 ~~|
+Flexitarian diet decomposition multiplier male[Eggs,Cohorts]=
+	0.00465663,
+	0.00588206,
+	0.00779373,
+	0.0101466,
+	0.0102936,
+	0.00955835,
+	0.00955835,
+	0.00955835,
+	0.00955835,
+	0.0088231,
+	0.0088231,
+	0.0088231,
+	0.0088231,
+	0.00808784,
+	0.00808784,
+	0.00808784,
+	0.00808784,
+	0.00808784,
+	0.00808784,
+	0.00808784,
+	0.00808784 ~~|
+Flexitarian diet decomposition multiplier male[Pulses,Cohorts]=
+	0.0432577,
+	0.0546413,
+	0.0723997,
+	0.0942562,
+	0.0956222,
+	0.0887921,
+	0.0887921,
+	0.0887921,
+	0.0887921,
+	0.0819619,
+	0.0819619,
+	0.0819619,
+	0.0819619,
+	0.0751318,
+	0.0751318,
+	0.0751318,
+	0.0751318,
+	0.0751318,
+	0.0751318,
+	0.0751318,
+	0.0751318 ~~|
+Flexitarian diet decomposition multiplier male[Grains,Cohorts]=
+	0.183741,
+	0.232094,
+	0.307524,
+	0.400362,
+	0.406164,
+	0.377153,
+	0.377153,
+	0.377153,
+	0.377153,
+	0.348141,
+	0.348141,
+	0.348141,
+	0.348141,
+	0.319129,
+	0.319129,
+	0.319129,
+	0.319129,
+	0.319129,
+	0.319129,
+	0.319129,
+	0.319129 ~~|
+Flexitarian diet decomposition multiplier male[VegFruits,Cohorts]=
+	0.0739057,
+	0.0933545,
+	0.123695,
+	0.161037,
+	0.16337,
+	0.151701,
+	0.151701,
+	0.151701,
+	0.151701,
+	0.140032,
+	0.140032,
+	0.140032,
+	0.140032,
+	0.128363,
+	0.128363,
+	0.128363,
+	0.128363,
+	0.128363,
+	0.128363,
+	0.128363,
+	0.128363 ~~|
+Flexitarian diet decomposition multiplier male[OtherCrops,Cohorts]=
+	0.235466,
+	0.297431,
+	0.394096,
+	0.513069,
+	0.520505,
+	0.483326,
+	0.483326,
+	0.483326,
+	0.483326,
+	0.446147,
+	0.446147,
+	0.446147,
+	0.446147,
+	0.408968,
+	0.408968,
+	0.408968,
+	0.408968,
+	0.408968,
+	0.408968,
+	0.408968,
+	0.408968
+	~	
+	~	Data please see the excel file 'New_DietData.xlsx' , 'Model Input' , 'y22'
+		
+		Added by Q. Ye
+	|
+
+Fraction intended to change diet[Cohorts,Gender,Education]=
+	SMOOTH(Indicative fraction intended to change diet[Cohorts,Gender,Education],Intention Delay\
+		)
+	~	Dmnl
+	~		|
+
+Global Average Diet Composition FAO[FoodCategories]=
+	1.77,
+	7.54,
+	6.92,
+	1.25,
+	2.36,
+	46.11,
+	12.77,
+	20.4
+	~	Dmnl
+	~	Wordl reference: m4
+		Flexitarian : y4
+	|
+
+Global Average Diet Composition FLEX[FoodCategories]=
+	0.45,
+	2.52,
+	7.98,
+	0.76,
+	7.06,
+	29.988,
+	12.062,
+	38.43
+	~	Dmnl
+	~	Wordl reference: m4
+		Flexitarian : y4
+	|
+
+Global Average Diet Composition WRI[FoodCategories]=
+	1.8,
+	5.7,
+	6.8,
+	1.2,
+	2.3,
+	48,
+	8.2,
+	26
+	~	Dmnl
+	~	Wordl reference: m4
+		Flexitarian : y4
+	|
+
+Global Total Calorie Demand FAO=
+	sum(Annual Caloric Demand FAO[FoodCategories!])
+	~	Mkcal/Year
+	~		|
+
+Global Total Calorie Demand FLEX=
+	sum(Annual Caloric Demand FLEX[FoodCategories!])
+	~	Mkcal/Year
+	~		|
+
+Global Total Calorie Demand SHIFT=
+	sum(Annual Caloric Demand SHIFT[FoodCategories!])
+	~	Mkcal/Year
+	~		|
+
+Global Total Calorie Demand WRI=
+	sum(Annual Caloric Demand WRI[FoodCategories!])
+	~	Mkcal/Year
+	~		|
+
+Healthy diet decomposition multiplier[FoodCategories,male,Cohorts]=
+	Healthy diet decomposition multiplier male[FoodCategories,Cohorts] ~~|
+Healthy diet decomposition multiplier[FoodCategories,female,Cohorts]=
+	Healthy diet decomposition multiplier female[FoodCategories,Cohorts]
+	~	Dmnl
+	~		|
+
+Healthy diet decomposition multiplier female[PasMeat,Cohorts]=
+	0.00777826,
+	0.00985246,
+	0.0124452,
+	0.013223,
+	0.0142601,
+	0.0129638,
+	0.0129638,
+	0.0129638,
+	0.0129638,
+	0.0129638,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674,
+	0.0116674 ~~|
+Healthy diet decomposition multiplier female[CropMeat,Cohorts]=
+	0.0237411,
+	0.0300721,
+	0.0379857,
+	0.0403599,
+	0.0435253,
+	0.0395685,
+	0.0395685,
+	0.0395685,
+	0.0395685,
+	0.0395685,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116,
+	0.0356116 ~~|
+Healthy diet decomposition multiplier female[Dairy,Cohorts]=
+	0.0451603,
+	0.0572031,
+	0.0722565,
+	0.0767725,
+	0.0827939,
+	0.0752672,
+	0.0752672,
+	0.0752672,
+	0.0752672,
+	0.0752672,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405,
+	0.0677405 ~~|
+Healthy diet decomposition multiplier female[Eggs,Cohorts]=
+	0.00429545,
+	0.00544091,
+	0.00687273,
+	0.00730227,
+	0.007875,
+	0.00715909,
+	0.00715909,
+	0.00715909,
+	0.00715909,
+	0.00715909,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318,
+	0.00644318 ~~|
+Healthy diet decomposition multiplier female[Pulses,Cohorts]=
+	0.0399361,
+	0.0505858,
+	0.0638978,
+	0.0678914,
+	0.0732162,
+	0.0665602,
+	0.0665602,
+	0.0665602,
+	0.0665602,
+	0.0665602,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042,
+	0.0599042 ~~|
+Healthy diet decomposition multiplier female[Grains,Cohorts]=
+	0.169679,
+	0.214927,
+	0.271487,
+	0.288455,
+	0.311078,
+	0.282799,
+	0.282799,
+	0.282799,
+	0.282799,
+	0.282799,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519,
+	0.254519 ~~|
+Healthy diet decomposition multiplier female[VegFruits,Cohorts]=
+	0.0682542,
+	0.0864553,
+	0.109207,
+	0.116032,
+	0.125133,
+	0.113757,
+	0.113757,
+	0.113757,
+	0.113757,
+	0.113757,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381,
+	0.102381 ~~|
+Healthy diet decomposition multiplier female[OtherCrops,Cohorts]=
+	0.217385,
+	0.275354,
+	0.347816,
+	0.369554,
+	0.398539,
+	0.362308,
+	0.362308,
+	0.362308,
+	0.362308,
+	0.362308,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077,
+	0.326077
+	~	
+	~	Original data please see the excel file New_DietData, sheet Model Input, B74
+		
+		add by Q. Ye in June 2024
+	|
+
+Healthy diet decomposition multiplier male[PasMeat,Cohorts]=
+	0.00821038,
+	0.010371,
+	0.0137416,
+	0.01789,
+	0.0181493,
+	0.0168529,
+	0.0168529,
+	0.0168529,
+	0.0168529,
+	0.0155565,
+	0.0155565,
+	0.0155565,
+	0.0155565,
+	0.0142601,
+	0.0142601,
+	0.0142601,
+	0.0142601,
+	0.0142601,
+	0.0142601,
+	0.0142601,
+	0.0142601 ~~|
+Healthy diet decomposition multiplier male[CropMeat,Cohorts]=
+	0.02506,
+	0.0316548,
+	0.0419426,
+	0.0546045,
+	0.0553959,
+	0.051439,
+	0.051439,
+	0.051439,
+	0.051439,
+	0.0474822,
+	0.0474822,
+	0.0474822,
+	0.0474822,
+	0.0435253,
+	0.0435253,
+	0.0435253,
+	0.0435253,
+	0.0435253,
+	0.0435253,
+	0.0435253,
+	0.0435253 ~~|
+Healthy diet decomposition multiplier male[Dairy,Cohorts]=
+	0.0476692,
+	0.0602138,
+	0.0797832,
+	0.103869,
+	0.105374,
+	0.0978474,
+	0.0978474,
+	0.0978474,
+	0.0978474,
+	0.0903206,
+	0.0903206,
+	0.0903206,
+	0.0903206,
+	0.0827939,
+	0.0827939,
+	0.0827939,
+	0.0827939,
+	0.0827939,
+	0.0827939,
+	0.0827939,
+	0.0827939 ~~|
+Healthy diet decomposition multiplier male[Eggs,Cohorts]=
+	0.00453409,
+	0.00572727,
+	0.00758864,
+	0.00987955,
+	0.0100227,
+	0.00930682,
+	0.00930682,
+	0.00930682,
+	0.00930682,
+	0.00859091,
+	0.00859091,
+	0.00859091,
+	0.00859091,
+	0.007875,
+	0.007875,
+	0.007875,
+	0.007875,
+	0.007875,
+	0.007875,
+	0.007875,
+	0.007875 ~~|
+Healthy diet decomposition multiplier male[Pulses,Cohorts]=
+	0.0421548,
+	0.0532482,
+	0.0705538,
+	0.0918531,
+	0.0931843,
+	0.0865283,
+	0.0865283,
+	0.0865283,
+	0.0865283,
+	0.0798722,
+	0.0798722,
+	0.0798722,
+	0.0798722,
+	0.0732162,
+	0.0732162,
+	0.0732162,
+	0.0732162,
+	0.0732162,
+	0.0732162,
+	0.0732162,
+	0.0732162 ~~|
+Healthy diet decomposition multiplier male[Grains,Cohorts]=
+	0.179106,
+	0.226239,
+	0.299767,
+	0.390262,
+	0.395918,
+	0.367638,
+	0.367638,
+	0.367638,
+	0.367638,
+	0.339358,
+	0.339358,
+	0.339358,
+	0.339358,
+	0.311078,
+	0.311078,
+	0.311078,
+	0.311078,
+	0.311078,
+	0.311078,
+	0.311078,
+	0.311078 ~~|
+Healthy diet decomposition multiplier male[VegFruits,Cohorts]=
+	0.0720461,
+	0.0910056,
+	0.120582,
+	0.156985,
+	0.15926,
+	0.147884,
+	0.147884,
+	0.147884,
+	0.147884,
+	0.136508,
+	0.136508,
+	0.136508,
+	0.136508,
+	0.125133,
+	0.125133,
+	0.125133,
+	0.125133,
+	0.125133,
+	0.125133,
+	0.125133,
+	0.125133 ~~|
+Healthy diet decomposition multiplier male[OtherCrops,Cohorts]=
+	0.229462,
+	0.289846,
+	0.384047,
+	0.499985,
+	0.507231,
+	0.471,
+	0.471,
+	0.471,
+	0.471,
+	0.43477,
+	0.43477,
+	0.43477,
+	0.43477,
+	0.398539,
+	0.398539,
+	0.398539,
+	0.398539,
+	0.398539,
+	0.398539,
+	0.398539,
+	0.398539
+	~	
+	~	Original data please see the excel file New_DietData, sheet Model Input, B74
+		
+		add by Q. Ye in June 2024
+	|
+
+Indicative fraction intended to change diet[Cohorts,Gender,Education]=
+	Self efficacy multiplier[Gender]*
+	Subjective norm multiplier for diet change[Gender,Cohorts,Education]*
+	Attitude multiplier for diet change[Education]*
+	Normal fraction intended to change diet stepped
+	~	1/Year
+	~		|
+
+Inflow PVA[Gender,Cohorts,Education]=
+	"Meat-based Diet Followers"[Gender,Cohorts,Education]
+	~	People
+	~		|
+
+"Initial Meat-based Diet Followers Female"[noEd,Cohorts]=
+	9.1885e+07,
+	8.00404e+07,
+	5.91789e+07,
+	4.27795e+07,
+	3.40475e+07,
+	2.9006e+07,
+	2.4711e+07,
+	2.05249e+07,
+	1.65649e+07,
+	1.29426e+07,
+	9.75216e+06,
+	7.05763e+06,
+	4.65308e+06,
+	2.46278e+06,
+	1.12046e+06,
+	431770,
+	152535,
+	41282,
+	11172,
+	2540,
+	517 ~~|
+"Initial Meat-based Diet Followers Female"[primary,Cohorts]=
+	1,
+	1,
+	1.19116e+07,
+	1.05796e+07,
+	9.21584e+06,
+	7.85123e+06,
+	6.68868e+06,
+	5.5556e+06,
+	4.48371e+06,
+	3.50326e+06,
+	2.63968e+06,
+	1.91033e+06,
+	1.25948e+06,
+	666617,
+	303281,
+	116870,
+	41288,
+	11174,
+	3024,
+	688,
+	140 ~~|
+"Initial Meat-based Diet Followers Female"[secondary,Cohorts]=
+	1,
+	1,
+	1,
+	1.12297e+07,
+	9.78214e+06,
+	8.33368e+06,
+	7.09969e+06,
+	5.89699e+06,
+	4.75923e+06,
+	3.71854e+06,
+	2.80188e+06,
+	2.02772e+06,
+	1.33687e+06,
+	707579,
+	321918,
+	124052,
+	43825,
+	11861,
+	3210,
+	730,
+	149 ~~|
+"Initial Meat-based Diet Followers Female"[tertiary,Cohorts]=
+	1,
+	1,
+	1,
+	1,
+	1.95643e+06,
+	1.66674e+06,
+	1.41994e+06,
+	1.1794e+06,
+	951846,
+	743707,
+	560377,
+	405544,
+	267374,
+	141516,
+	64384,
+	24811,
+	8765,
+	2372,
+	642,
+	146,
+	30
+	~	
+	~	For original data, please see the excel file 'InitialValues.xlsx','Diet','I3'
+		
+		Added by Q. Ye in June 2024
+	|
+
+"Initial Meat-based Diet Followers Male"[noEd,Cohorts]=
+	9.28938e+07,
+	8.09191e+07,
+	5.45859e+07,
+	3.71262e+07,
+	2.86053e+07,
+	2.43696e+07,
+	2.07612e+07,
+	1.72442e+07,
+	1.39171e+07,
+	1.08739e+07,
+	8.19336e+06,
+	5.92953e+06,
+	3.90932e+06,
+	2.06913e+06,
+	941365,
+	362756,
+	128154,
+	34683,
+	9386,
+	2135,
+	434 ~~|
+"Initial Meat-based Diet Followers Male"[primary,Cohorts]=
+	1,
+	1,
+	1.7285e+07,
+	1.53523e+07,
+	1.33732e+07,
+	1.1393e+07,
+	9.70604e+06,
+	8.06182e+06,
+	6.50638e+06,
+	5.08364e+06,
+	3.83048e+06,
+	2.77211e+06,
+	1.82764e+06,
+	967337,
+	440096,
+	169592,
+	59913,
+	16215,
+	4389,
+	998,
+	203 ~~|
+"Initial Meat-based Diet Followers Male"[secondary,Cohorts]=
+	1,
+	1,
+	1,
+	1.30365e+07,
+	1.1356e+07,
+	9.67449e+06,
+	8.24197e+06,
+	6.84576e+06,
+	5.52495e+06,
+	4.31682e+06,
+	3.25268e+06,
+	2.35396e+06,
+	1.55196e+06,
+	821423,
+	373712,
+	144011,
+	50876,
+	13769,
+	3726,
+	848,
+	172 ~~|
+"Initial Meat-based Diet Followers Male"[tertiary,Cohorts]=
+	1,
+	1,
+	1,
+	1,
+	2.2712e+06,
+	1.9349e+06,
+	1.64839e+06,
+	1.36915e+06,
+	1.10499e+06,
+	863363,
+	650536,
+	470793,
+	310392,
+	164285,
+	74742,
+	28802,
+	10175,
+	2753,
+	745,
+	170,
+	34
+	~	
+	~	For original data, please see the excel file 'InitialValues.xlsx','Diet','C3'
+		
+		Added by Q. Ye in June 2024
+	|
+
+"Initial Meat-based Diet Followers"[male,Cohorts,Education]=
+	"Initial Meat-based Diet Followers Male"[Education,Cohorts] ~~|
+"Initial Meat-based Diet Followers"[female,Cohorts,Education]=
+	"Initial Meat-based Diet Followers Female"[Education,Cohorts]
+	~	People
+	~	these are 1900 values.
+	|
+
+Initial Vegetarian Diet Followers[male,Cohorts,Education]=
+	Initial Vegetarian Diet Followers Male[Education,Cohorts] ~~|
+Initial Vegetarian Diet Followers[female,Cohorts,Education]=
+	Initial Vegetarian Diet Followers Female[Education,Cohorts]
+	~	People
+	~	these are the 2010 population values, with the assumption that \
+		meat-vegetarioan ratio is 1-2.
+	|
+
+Initial Vegetarian Diet Followers Female[noEd,Cohorts]=
+	2.5615e+07,
+	2.2313e+07,
+	1.64974e+07,
+	1.19257e+07,
+	9.4915e+06,
+	8.08607e+06,
+	6.88874e+06,
+	5.72178e+06,
+	4.61782e+06,
+	3.60805e+06,
+	2.71863e+06,
+	1.96747e+06,
+	1.29715e+06,
+	686556,
+	312353,
+	120366,
+	42523,
+	11508,
+	3115,
+	708,
+	144 ~~|
+Initial Vegetarian Diet Followers Female[primary,Cohorts]=
+	1,
+	1,
+	3.32061e+06,
+	2.94931e+06,
+	2.56912e+06,
+	2.18871e+06,
+	1.86462e+06,
+	1.54875e+06,
+	1.24994e+06,
+	976614,
+	735869,
+	532548,
+	351107,
+	185834,
+	84547,
+	32580,
+	11510,
+	3115,
+	843,
+	192,
+	39 ~~|
+Initial Vegetarian Diet Followers Female[secondary,Cohorts]=
+	1,
+	1,
+	1,
+	3.13054e+06,
+	2.72699e+06,
+	2.3232e+06,
+	1.9792e+06,
+	1.64392e+06,
+	1.32674e+06,
+	1.03662e+06,
+	781087,
+	565272,
+	372682,
+	197254,
+	89742,
+	34582,
+	12217,
+	3306,
+	895,
+	204,
+	41 ~~|
+Initial Vegetarian Diet Followers Female[tertiary,Cohorts]=
+	1,
+	1,
+	1,
+	1,
+	545398,
+	464640,
+	395839,
+	328783,
+	265348,
+	207325,
+	156217,
+	113054,
+	74536,
+	39451,
+	17948,
+	6916,
+	2443,
+	661,
+	179,
+	41,
+	8
+	~	
+	~	Original data please see the excel file 'InitialValues.xlsx','Diet','I26'
+		
+		Added by Q. Ye in June 2024
+	|
+
+Initial Vegetarian Diet Followers Male[noEd,Cohorts]=
+	2.58962e+07,
+	2.2558e+07,
+	1.5217e+07,
+	1.03498e+07,
+	7.97436e+06,
+	6.79358e+06,
+	5.78764e+06,
+	4.8072e+06,
+	3.8797e+06,
+	3.03134e+06,
+	2.28408e+06,
+	1.65299e+06,
+	1.08981e+06,
+	576816,
+	262426,
+	101126,
+	35726,
+	9669,
+	2617,
+	595,
+	121 ~~|
+Initial Vegetarian Diet Followers Male[primary,Cohorts]=
+	1,
+	1,
+	4.81859e+06,
+	4.27979e+06,
+	3.72809e+06,
+	3.17606e+06,
+	2.70578e+06,
+	2.24741e+06,
+	1.8138e+06,
+	1.41718e+06,
+	1.06783e+06,
+	772788,
+	509497,
+	269667,
+	122687,
+	47277,
+	16702,
+	4520,
+	1223,
+	278,
+	57 ~~|
+Initial Vegetarian Diet Followers Male[secondary,Cohorts]=
+	1,
+	1,
+	1,
+	3.63422e+06,
+	3.16574e+06,
+	2.69698e+06,
+	2.29763e+06,
+	1.90841e+06,
+	1.5402e+06,
+	1.20341e+06,
+	906758,
+	656220,
+	432644,
+	228990,
+	104180,
+	40146,
+	14183,
+	3838,
+	1039,
+	236,
+	48 ~~|
+Initial Vegetarian Diet Followers Male[tertiary,Cohorts]=
+	1,
+	1,
+	1,
+	1,
+	633148,
+	539397,
+	459527,
+	381682,
+	308041,
+	240682,
+	181352,
+	131244,
+	86529,
+	45798,
+	20836,
+	8029,
+	2837,
+	768,
+	208,
+	47,
+	10
+	~	
+	~	Original data please see the excel file 'InitialValues.xlsx','Diet','C26'
+		
+		Added by Q. Ye in June 2024
+	|
+
+Intention Delay=
+	3
+	~	Year
+	~		|
+
+k risk attitude=
+	0.9+ STEP(SA k risk attitude-0.9, 2020)
+	~	Dmnl
+	~	.5
+	|
+
+k social norm[Childhood]=
+	5 + STEP(SA k social norm["10-14"]-5, 2020) ~~|
+k social norm[Young]=
+	8+ STEP(SA k social norm["20-24"]-8, 2020) ~~|
+k social norm[MiddleAged]=
+	8 + STEP(SA k social norm["40-44"]-8, 2020) ~~|
+k social norm[OldAge]=
+	5 + STEP(SA k social norm["80-84"]-5, 2020)
+	~	Dmnl
+	~		|
+
+L risk attitude=
+	2 + STEP(SA L risk attitude-2, 2020)
+	~	Dmnl
+	~		|
+
+L social norm[Childhood]=
+	1.2 + STEP (SA L social norm["10-14"] - 1.2, 2020) ~~|
+L social norm[Young]=
+	1.5 + STEP(SA L social norm["20-24"]-1.5, 2020) ~~|
+L social norm[MiddleAged]=
+	1.5 + STEP (SA L social norm["40-44"] - 1.5, 2020) ~~|
+L social norm[OldAge]=
+	1.2 + STEP(SA L social norm["80-84"]-1.2, 2020)
+	~	Dmnl
+	~		|
+
+L Var T=
+	0
+	~	Year
+	~		|
+
+Lactoovo Vegetarian Diet Followers[Gender,Cohorts,Education]= INTEG (
+	"Shift from meat-based to vegetarian"[Gender,Cohorts,Education]-"Shift from vegetarian to meat-based"\
+		[Gender,Cohorts,Education]+Population increase rate[Gender,Cohorts,Education],
+		Initial Vegetarian Diet Followers[Gender,Cohorts,Education])
+	~	People
+	~		|
+
+Meat Based Diet Followers Indicator=
+	MAX(0, "Percentage of meat-based diet followers")
+	~	Dmnl
+	~		|
+
+Meat diet composition multiplier Sc2[FoodCategories,Gender,Cohorts]=
+	Reference meat diet decomposition multiplier[FoodCategories,Gender,Cohorts] +
+	Smooth Diet Switch Fnc* (Healthy diet decomposition multiplier[FoodCategories,Gender\
+		,Cohorts]-Reference meat diet decomposition multiplier[FoodCategories,Gender,Cohorts\
+		])
+	~	Dmnl
+	~		|
+
+Meat diet composition multiplier Sc4[FoodCategories,Gender,Cohorts]=
+	Reference meat diet decomposition multiplier[FoodCategories,Gender,Cohorts] + 
+	Smooth Diet Switch Fnc*(Flexitarian diet decomposition multiplier[FoodCategories,Gender\
+		,Cohorts]-Reference meat diet decomposition multiplier[FoodCategories,Gender,Cohorts\
+		])
+	~	Dmnl
+	~		|
+
+Meat diet composition multipliers[FoodCategories,Gender,Cohorts]=
+	IF THEN ELSE(Diet Composition Switch=0 :OR: Diet Composition Switch=1, 
+	Reference meat diet decomposition multiplier[FoodCategories,Gender,Cohorts],
+	IF THEN ELSE(Diet Composition Switch=2 :OR: Diet Composition Switch=3,
+	Meat diet composition multiplier Sc2[FoodCategories,Gender,Cohorts],
+	Meat diet composition multiplier Sc4[FoodCategories,Gender,Cohorts]))
+	~	Dmnl
+	~		|
+
+MiddleAged:
+	"45-49","50-54","55-59","60-64","65-69"
+	~	
+	~		|
+
+Normal fraction intended to change diet=
+	0.04+ STEP(Normal Fraction Intended to Change Diet Variation-0.04, 2020)
+	~	1/Year
+	~	BaseRun: 0.04
+		HigherIntention: 0.08
+	|
+
+Normal fraction intended to change diet stepped=
+	0 + STEP(Normal fraction intended to change diet, 2010 )
+	~	1/Year
+	~		|
+
+Normal Fraction Intended to Change Diet Variation=
+	0.04
+	~	Dmnl
+	~		|
+
+Normal shift fraction from meat to vegetarianism=
+	0.003+SMOOTH(STEP(Normal Shift Fraction from Meat to Vegetarianism Variation-0.003, \
+		2020),SSP Food and Diet Variation Time)
+	~	1/Year
+	~		|
+
+Normal Shift Fraction from Meat to Vegetarianism Variation=
+	0.003
+	~	1/Year
+	~		|
+
+Normal Shift Fraction from Vegetarianism to Meat=
+	VM Var S+SMOOTH(STEP(Normal Shift Fraction from Vegetarianism to Meat Variation-VM Var S\
+		, 2020+L Var T),SSP Food and Diet Variation Time
+	)
+	~	1/Year
+	~		|
+
+Normal Shift Fraction from Vegetarianism to Meat Variation=
+	0.01
+	~	1/Year
+	~		|
+
+OldAge:
+	"75-79","80-84","70-74","85-89","90-94","95-99","100+"
+	~	
+	~		|
+
+Outflow PVA[Gender,Cohorts,Education]=
+	Potential Vegetarians Accumulative[Gender,Cohorts,Education]/1
+	~	People
+	~		|
+
+Percentage of animal calories=
+	sum(Diet Composition Percentage[AnimalFood!])
+	~	Dmnl
+	~		|
+
+Plant Based Diet Followers Indicator=
+	MAX(0, Percentage of vegetarian diet followers)
+	~	Dmnl
+	~		|
+
+Plant Based Food Caloric Intake per Person=
+	Average Kcal Intake per Person[Pulses]+Average Kcal Intake per Person[Grains]+Average Kcal Intake per Person\
+		[VegFruits]+Average Kcal Intake per Person[OtherCrops]
+	~	kcal/(Person*Day)
+	~		|
+
+Potential vegetarians[Gender,Cohorts,Education]=
+	Outflow PVA[Gender,Cohorts,Education]
+	~	People
+	~		|
+
+Potential Vegetarians Accumulative[Gender,Cohorts,Education]= INTEG (
+	Inflow PVA[Gender,Cohorts,Education]-Outflow PVA[Gender,Cohorts,Education],
+		"Initial Meat-based Diet Followers"[Gender,Cohorts,Education])
+	~	People
+	~	For coverting DELAY1I function only. Added by Q Ye in July 2024
+	|
+
+PreviousCohort:
+	"0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49"\
+		, "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", \
+		"95-99" -> AllButYoungest
+	~	
+	~		|
+
+Reference Daily Caloric Intake=
+	CI S + RAMP((Reference Daily Caloric Intake Variation-CI S)/78,2022,2100)
+	~	kcal/(Person*Day)
+	~	1961 World average, from FAO data - 2194 kcal
+		Calibrated 1672.6 kcal
+		1970 value, when gdp effect=1:2325
+	|
+
+Reference Daily Caloric Intake Variation=
+	1672.6
+	~	kcal/(Person*Day)
+	~	1961 World average, from FAO data - 2194 kcal
+		Calibrated 1672.6 kcal
+		1970 value, when gdp effect=1:2325
+	|
+
+Reference GWP per Capita=
+	4000
+	~	$/(Year*Person)
+	~	GWP per capita in 1961. (Felix model, matches the historical data 1980-2010 well.) \
+		3342.7
+		Calibrated: 4000
+	|
+
+Reference meat diet decomposition multiplier[FoodCategories,male,Cohorts]=
+	Reference meat diet decomposition multiplier male[FoodCategories,Cohorts] ~~|
+Reference meat diet decomposition multiplier[FoodCategories,female,Cohorts]=
+	Reference meat diet decomposition multiplier female[FoodCategories,Cohorts]
+	~	Dmnl
+	~		|
+
+Reference meat diet decomposition multiplier female[PasMeat,Cohorts]=
+	0.0133507,
+	0.0169109,
+	0.0213612,
+	0.0226963,
+	0.0244764,
+	0.0222512,
+	0.0222512,
+	0.0222512,
+	0.0222512,
+	0.0222512,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261,
+	0.0200261 ~~|
+Reference meat diet decomposition multiplier female[CropMeat,Cohorts]=
+	0.0417936,
+	0.0529386,
+	0.0668698,
+	0.0710491,
+	0.0766216,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904,
+	0.0626904 ~~|
+Reference meat diet decomposition multiplier female[Dairy,Cohorts]=
+	0.0388913,
+	0.0492623,
+	0.062226,
+	0.0661152,
+	0.0713007,
+	0.0648188,
+	0.0648188,
+	0.0648188,
+	0.0648188,
+	0.0648188,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369,
+	0.0583369 ~~|
+Reference meat diet decomposition multiplier female[Eggs,Cohorts]=
+	0.00580467,
+	0.00735258,
+	0.00928747,
+	0.00986794,
+	0.0106419,
+	0.00967445,
+	0.00967445,
+	0.00967445,
+	0.00967445,
+	0.00967445,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707,
+	0.008707 ~~|
+Reference meat diet decomposition multiplier female[Pulses,Cohorts]=
+	0.0116093,
+	0.0147052,
+	0.0185749,
+	0.0197359,
+	0.0212838,
+	0.0193489,
+	0.0193489,
+	0.0193489,
+	0.0193489,
+	0.0193489,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414 ~~|
+Reference meat diet decomposition multiplier female[Grains,Cohorts]=
+	0.271658,
+	0.344101,
+	0.434654,
+	0.461819,
+	0.498041,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488,
+	0.407488 ~~|
+Reference meat diet decomposition multiplier female[VegFruits,Cohorts]=
+	0.0464373,
+	0.0588206,
+	0.0742998,
+	0.0789435,
+	0.0851351,
+	0.0773956,
+	0.0773956,
+	0.0773956,
+	0.0773956,
+	0.0773956,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656,
+	0.069656 ~~|
+Reference meat diet decomposition multiplier female[OtherCrops,Cohorts]=
+	0.150921,
+	0.191167,
+	0.241474,
+	0.256566,
+	0.276689,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382
+	~	
+	~	Original data please see the excel file 'New_DietData.xlsx' , 'Model Input' , 'b22'
+		
+		added by Q. Ye in June 2024
+	|
+
+Reference meat diet decomposition multiplier male[PasMeat,Cohorts]=
+	0.0140924,
+	0.017801,
+	0.0235863,
+	0.0307067,
+	0.0311517,
+	0.0289266,
+	0.0289266,
+	0.0289266,
+	0.0289266,
+	0.0267015,
+	0.0267015,
+	0.0267015,
+	0.0267015,
+	0.0244764,
+	0.0244764,
+	0.0244764,
+	0.0244764,
+	0.0244764,
+	0.0244764,
+	0.0244764,
+	0.0244764 ~~|
+Reference meat diet decomposition multiplier male[CropMeat,Cohorts]=
+	0.0441155,
+	0.0557248,
+	0.0738354,
+	0.0961253,
+	0.0975184,
+	0.0905528,
+	0.0905528,
+	0.0905528,
+	0.0905528,
+	0.0835872,
+	0.0835872,
+	0.0835872,
+	0.0835872,
+	0.0766216,
+	0.0766216,
+	0.0766216,
+	0.0766216,
+	0.0766216,
+	0.0766216,
+	0.0766216,
+	0.0766216 ~~|
+Reference meat diet decomposition multiplier male[Dairy,Cohorts]=
+	0.0410519,
+	0.051855,
+	0.0687079,
+	0.0894499,
+	0.0907463,
+	0.0842644,
+	0.0842644,
+	0.0842644,
+	0.0842644,
+	0.0777826,
+	0.0777826,
+	0.0777826,
+	0.0777826,
+	0.0713007,
+	0.0713007,
+	0.0713007,
+	0.0713007,
+	0.0713007,
+	0.0713007,
+	0.0713007,
+	0.0713007 ~~|
+Reference meat diet decomposition multiplier male[Eggs,Cohorts]=
+	0.00612715,
+	0.00773956,
+	0.0102549,
+	0.0133507,
+	0.0135442,
+	0.0125768,
+	0.0125768,
+	0.0125768,
+	0.0125768,
+	0.0116093,
+	0.0116093,
+	0.0116093,
+	0.0116093,
+	0.0106419,
+	0.0106419,
+	0.0106419,
+	0.0106419,
+	0.0106419,
+	0.0106419,
+	0.0106419,
+	0.0106419 ~~|
+Reference meat diet decomposition multiplier male[Pulses,Cohorts]=
+	0.0122543,
+	0.0154791,
+	0.0205098,
+	0.0267015,
+	0.0270885,
+	0.0251536,
+	0.0251536,
+	0.0251536,
+	0.0251536,
+	0.0232187,
+	0.0232187,
+	0.0232187,
+	0.0232187,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838 ~~|
+Reference meat diet decomposition multiplier male[Grains,Cohorts]=
+	0.286751,
+	0.362211,
+	0.47993,
+	0.624815,
+	0.63387,
+	0.588593,
+	0.588593,
+	0.588593,
+	0.588593,
+	0.543317,
+	0.543317,
+	0.543317,
+	0.543317,
+	0.498041,
+	0.498041,
+	0.498041,
+	0.498041,
+	0.498041,
+	0.498041,
+	0.498041,
+	0.498041 ~~|
+Reference meat diet decomposition multiplier male[VegFruits,Cohorts]=
+	0.0490172,
+	0.0619165,
+	0.0820393,
+	0.106806,
+	0.108354,
+	0.100614,
+	0.100614,
+	0.100614,
+	0.100614,
+	0.0928747,
+	0.0928747,
+	0.0928747,
+	0.0928747,
+	0.0851351,
+	0.0851351,
+	0.0851351,
+	0.0851351,
+	0.0851351,
+	0.0851351,
+	0.0851351,
+	0.0851351 ~~|
+Reference meat diet decomposition multiplier male[OtherCrops,Cohorts]=
+	0.159306,
+	0.201228,
+	0.266628,
+	0.347119,
+	0.35215,
+	0.326996,
+	0.326996,
+	0.326996,
+	0.326996,
+	0.301843,
+	0.301843,
+	0.301843,
+	0.301843,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689
+	~	
+	~	Original data please see the excel file 'New_DietData.xlsx' , 'Model Input' , 'b22'
+		
+		added by Q. Ye in June 2024
+	|
+
+Reference vegetarian diet decomposition multiplier[FoodCategories,male,Cohorts]=
+	Reference vegetarian diet decomposition multiplier male[FoodCategories,Cohorts] ~~|
+Reference vegetarian diet decomposition multiplier[FoodCategories,female,Cohorts]=
+	Reference vegetarian diet decomposition multiplier female[FoodCategories,Cohorts]
+	~	Dmnl
+	~		|
+
+Reference vegetarian diet decomposition multiplier female[PasMeat,Cohorts]=
+	0 ~~|
+Reference vegetarian diet decomposition multiplier female[CropMeat,Cohorts]=
+	0 ~~|
+Reference vegetarian diet decomposition multiplier female[Dairy,Cohorts]=
+	0.0406327,
+	0.0514681,
+	0.0650123,
+	0.0690756,
+	0.0744932,
+	0.0677211,
+	0.0677211,
+	0.0677211,
+	0.0677211,
+	0.0677211,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949,
+	0.060949 ~~|
+Reference vegetarian diet decomposition multiplier female[Eggs,Cohorts]=
+	0.0116093,
+	0.0147052,
+	0.0185749,
+	0.0197359,
+	0.0212838,
+	0.0193489,
+	0.0193489,
+	0.0193489,
+	0.0193489,
+	0.0193489,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414,
+	0.017414 ~~|
+Reference vegetarian diet decomposition multiplier female[Pulses,Cohorts]=
+	0.0220577,
+	0.0279398,
+	0.0352924,
+	0.0374982,
+	0.0404392,
+	0.0367629,
+	0.0367629,
+	0.0367629,
+	0.0367629,
+	0.0367629,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866,
+	0.0330866 ~~|
+Reference vegetarian diet decomposition multiplier female[Grains,Cohorts]=
+	0.301843,
+	0.382334,
+	0.482948,
+	0.513133,
+	0.553378,
+	0.503071,
+	0.503071,
+	0.503071,
+	0.503071,
+	0.503071,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764,
+	0.452764 ~~|
+Reference vegetarian diet decomposition multiplier female[VegFruits,Cohorts]=
+	0.0534029,
+	0.0676437,
+	0.0854447,
+	0.090785,
+	0.0979054,
+	0.0890049,
+	0.0890049,
+	0.0890049,
+	0.0890049,
+	0.0890049,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044,
+	0.0801044 ~~|
+Reference vegetarian diet decomposition multiplier female[OtherCrops,Cohorts]=
+	0.150921,
+	0.191167,
+	0.241474,
+	0.256566,
+	0.276689,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382,
+	0.226382
+	~	
+	~	Original data please see the excel file 'New_DietData.xlsx'  , 'Model Input' ,  'b48'
+		
+		Added by Q. Ye in June 2024
+	|
+
+Reference vegetarian diet decomposition multiplier male[PasMeat,Cohorts]=
+	0 ~~|
+Reference vegetarian diet decomposition multiplier male[CropMeat,Cohorts]=
+	0 ~~|
+Reference vegetarian diet decomposition multiplier male[Dairy,Cohorts]=
+	0.04289,
+	0.0541769,
+	0.0717844,
+	0.0934552,
+	0.0948096,
+	0.0880375,
+	0.0880375,
+	0.0880375,
+	0.0880375,
+	0.0812654,
+	0.0812654,
+	0.0812654,
+	0.0812654,
+	0.0744932,
+	0.0744932,
+	0.0744932,
+	0.0744932,
+	0.0744932,
+	0.0744932,
+	0.0744932,
+	0.0744932 ~~|
+Reference vegetarian diet decomposition multiplier male[Eggs,Cohorts]=
+	0.0122543,
+	0.0154791,
+	0.0205098,
+	0.0267015,
+	0.0270885,
+	0.0251536,
+	0.0251536,
+	0.0251536,
+	0.0251536,
+	0.0232187,
+	0.0232187,
+	0.0232187,
+	0.0232187,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838,
+	0.0212838 ~~|
+Reference vegetarian diet decomposition multiplier male[Pulses,Cohorts]=
+	0.0232832,
+	0.0294103,
+	0.0389687,
+	0.0507328,
+	0.0514681,
+	0.0477918,
+	0.0477918,
+	0.0477918,
+	0.0477918,
+	0.0441155,
+	0.0441155,
+	0.0441155,
+	0.0441155,
+	0.0404392,
+	0.0404392,
+	0.0404392,
+	0.0404392,
+	0.0404392,
+	0.0404392,
+	0.0404392,
+	0.0404392 ~~|
+Reference vegetarian diet decomposition multiplier male[Grains,Cohorts]=
+	0.318612,
+	0.402457,
+	0.533256,
+	0.694238,
+	0.7043,
+	0.653993,
+	0.653993,
+	0.653993,
+	0.653993,
+	0.603685,
+	0.603685,
+	0.603685,
+	0.603685,
+	0.553378,
+	0.553378,
+	0.553378,
+	0.553378,
+	0.553378,
+	0.553378,
+	0.553378,
+	0.553378 ~~|
+Reference vegetarian diet decomposition multiplier male[VegFruits,Cohorts]=
+	0.0563698,
+	0.0712039,
+	0.0943452,
+	0.122827,
+	0.124607,
+	0.115706,
+	0.115706,
+	0.115706,
+	0.115706,
+	0.106806,
+	0.106806,
+	0.106806,
+	0.106806,
+	0.0979054,
+	0.0979054,
+	0.0979054,
+	0.0979054,
+	0.0979054,
+	0.0979054,
+	0.0979054,
+	0.0979054 ~~|
+Reference vegetarian diet decomposition multiplier male[OtherCrops,Cohorts]=
+	0.159306,
+	0.201228,
+	0.266628,
+	0.347119,
+	0.35215,
+	0.326996,
+	0.326996,
+	0.326996,
+	0.326996,
+	0.301843,
+	0.301843,
+	0.301843,
+	0.301843,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689,
+	0.276689
+	~	
+	~	Original data please see the excel file 'New_DietData.xlsx'  , 'Model Input' ,  'b48'
+		
+		Added by Q. Ye in June 2024
+	|
+
+Response efficacy multiplier[noEd]=
+	0.8 + STEP(Response Efficacy Multiplier NoEd Variation-0.8, 2020) ~~|
+Response efficacy multiplier[primary]=
+	0.9 + STEP(Response Efficacy Multiplier Primary Variation-0.9, 2020) ~~|
+Response efficacy multiplier[secondary]=
+	1 + STEP(Response Efficacy Multiplier Secondary Variation-1, 2020) ~~|
+Response efficacy multiplier[tertiary]=
+	1.2 + STEP(Response Efficacy Multiplier Tertiary Variation-1.2, 2020)
+	~	Dmnl
+	~	Base: 0.8, 0.9, 1, 1.2
+	|
+
+Response Efficacy Multiplier NoEd Variation=
+	0.8
+	~	Dmnl
+	~	Base: 0.8, 0.9, 1, 1.2
+	|
+
+Response Efficacy Multiplier Primary Variation=
+	0.9
+	~	Dmnl
+	~	Base: 0.8, 0.9, 1, 1.2
+	|
+
+Response Efficacy Multiplier Secondary Variation=
+	1
+	~	Dmnl
+	~	Base: 0.8, 0.9, 1, 1.2
+	|
+
+Response Efficacy Multiplier Tertiary Variation=
+	1.2
+	~	Dmnl
+	~	Base: 0.8, 0.9, 1, 1.2
+	|
+
+Response Efficacy Multiplier Variation[Education]=
+	0.8, 0.9, 1, 1.2
+	~	Dmnl
+	~	Base: 0.8, 0.9, 1, 1.2
+	|
+
+SA k risk attitude=
+	0.9
+	~	Dmnl
+	~		|
+
+SA k social norm["10-14"]=
+	5 ~~|
+SA k social norm["20-24"]=
+	8 ~~|
+SA k social norm["40-44"]=
+	8 ~~|
+SA k social norm["80-84"]=
+	5
+	~	Dmnl
+	~		|
+
+SA L risk attitude=
+	2
+	~	Dmnl
+	~		|
+
+SA L social norm["10-14"]=
+	1.2 ~~|
+SA L social norm["20-24"]=
+	1.5 ~~|
+SA L social norm["40-44"]=
+	1.5 ~~|
+SA L social norm["80-84"]=
+	1.2
+	~	Dmnl
+	~	1.7
+	|
+
+SA x0 risk attitude=
+	5
+	~	Dmnl
+	~		|
+
+SA x0 social norm["10-14"]=
+	0.6 ~~|
+SA x0 social norm["20-24"]=
+	0.45 ~~|
+SA x0 social norm["40-44"]=
+	0.55 ~~|
+SA x0 social norm["80-84"]=
+	0.7
+	~	Dmnl
+	~	20-24: .35
+		40-44 : .5
+	|
+
+Self efficacy multiplier[male]=
+	0.8 + STEP(Self Efficacy Multiplier Male Variation-0.8, 2020) ~~|
+Self efficacy multiplier[female]=
+	1.2 + STEP(Self Efficacy Multiplier Female Variation-1.2, 2020)
+	~	Dmnl
+	~	Is it also dependent on age?
+	|
+
+Self Efficacy Multiplier Female Variation=
+	1.2
+	~	Dmnl
+	~	Is it also dependent on age?
+	|
+
+Self Efficacy Multiplier Male Variation=
+	0.8
+	~	Dmnl
+	~	Is it also dependent on age?
+	|
+
+Self Efficacy Multiplier Variation[Gender]=
+	0.8, 1.2
+	~	Dmnl
+	~	Is it also dependent on age?
+	|
+
+Shift fraction of meat eaters to vegetarianism[Gender,Cohorts,Education]=
+	Normal shift fraction from meat to vegetarianism+Fraction intended to change diet[Cohorts\
+		,Gender,Education]*Response efficacy multiplier
+	[Education]*Self efficacy multiplier[Gender]
+	~	1/Year
+	~	*Personal willingness multiplier for diet \
+		shift[Gender,Cohorts,Education]*Social impact multiplier for diet \
+		shift[Gender,Cohorts,Education]
+	|
+
+Shift Fraction Vegetarians to Meat=
+	Normal Shift Fraction from Vegetarianism to Meat*Effect of GWP on Meat Consumption
+	~	1/Year
+	~		|
+
+"Shift from meat-based to vegetarian"[Gender,Cohorts,Education]=
+	Potential vegetarians[Gender,Cohorts,Education]*Shift fraction of meat eaters to vegetarianism\
+		[Gender,Cohorts,Education]
+	~	People/Year
+	~		|
+
+"Shift from vegetarian to meat-based"[Gender,Cohorts,Education]=
+	Shift Fraction Vegetarians to Meat*Lactoovo Vegetarian Diet Followers[Gender,Cohorts\
+		,Education]
+	~	People/Year
+	~		|
+
+Smooth Diet Switch Fnc= WITH LOOKUP (
+	Time,
+		([(2020,0)-(2050,1)],(2020,0),(2023,0.02),(2026,0.05),(2029,0.15),(2032,0.3),(2035,\
+		0.5),(2038,0.7),(2041,0.85),(2044,0.95),(2047,0.98),(2050,1) ))
+	~	
+	~		|
+
+SSP Food and Diet Variation Time=
+	5
+	~	Year
+	~		|
+
+Subjective norm multiplier for diet change[Gender,Cohorts,Education]=
+	L social norm[Cohorts]/
+	(1+EXP(-k social norm[Cohorts]*( Percentage of vegetarians[Gender,Cohorts,Education]\
+		 -x0 social norm[Cohorts]) ) )
+	~	Dmnl
+	~		|
+
+Sum of diet followers=
+	Total Vegetarians+Total Meat Eaters
+	~	People
+	~		|
+
+Total eater value cohort[Gender,Cohorts,Education]=
+	Lactoovo Vegetarian Diet Followers[Gender,Cohorts,Education]+"Meat-based Diet Followers"\
+		[Gender,Cohorts,Education]
+	~	People
+	~		|
+
+Total Meat Eaters=
+	sum(Total Meat Eaters by Gender[Gender!])
+	~	People
+	~		|
+
+Total Meat Eaters by Gender[Gender]=
+	sum("Meat-based Diet Followers"[Gender,Cohorts!,Education!])
+	~	People
+	~		|
+
+"Total shift from meat-based to vegetarian diet"=
+	sum("Shift from meat-based to vegetarian"[Gender!,Cohorts!,Education!])
+	~	People/Year
+	~		|
+
+Total Vegetarians=
+	sum(Total Vegetarians by Gender[Gender!])
+	~	People
+	~		|
+
+Total Vegetarians by Gender[Gender]=
+	sum(Lactoovo Vegetarian Diet Followers[Gender,Cohorts!,Education!])
+	~	People
+	~		|
+
+Vegan diet decomposition multiplier[FoodCategories,male,Cohorts]=
+	Vegan diet decomposition multiplier male[FoodCategories,Cohorts] ~~|
+Vegan diet decomposition multiplier[FoodCategories,female,Cohorts]=
+	Vegan diet decomposition multiplier female[FoodCategories,Cohorts]
+	~	Dmnl
+	~		|
+
+Vegan diet decomposition multiplier female[PasMeat,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier female[CropMeat,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier female[Dairy,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier female[Eggs,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier female[Pulses,Cohorts]=
+	0.058047,
+	0.073526,
+	0.092875,
+	0.098679,
+	0.106419,
+	0.096744,
+	0.096744,
+	0.096744,
+	0.096744,
+	0.096744,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707,
+	0.08707 ~~|
+Vegan diet decomposition multiplier female[Grains,Cohorts]=
+	0.17414,
+	0.220577,
+	0.278624,
+	0.296038,
+	0.319257,
+	0.290233,
+	0.290233,
+	0.290233,
+	0.290233,
+	0.290233,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121,
+	0.26121 ~~|
+Vegan diet decomposition multiplier female[VegFruits,Cohorts]=
+	0.116093,
+	0.147052,
+	0.185749,
+	0.197359,
+	0.212838,
+	0.193489,
+	0.193489,
+	0.193489,
+	0.193489,
+	0.193489,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414,
+	0.17414 ~~|
+Vegan diet decomposition multiplier female[OtherCrops,Cohorts]=
+	0.232187,
+	0.294103,
+	0.371499,
+	0.394717,
+	0.425676,
+	0.386978,
+	0.386978,
+	0.386978,
+	0.386978,
+	0.386978,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828
+	~	
+	~	Original data please see the excel file 'New_DietData.xlsx'  , 'Model Input' , 'y48'
+		
+		Added by Q. Ye in June 2024
+	|
+
+Vegan diet decomposition multiplier male[PasMeat,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier male[CropMeat,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier male[Dairy,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier male[Eggs,Cohorts]=
+	0 ~~|
+Vegan diet decomposition multiplier male[Pulses,Cohorts]=
+	0.061271,
+	0.077396,
+	0.102549,
+	0.133507,
+	0.135442,
+	0.125768,
+	0.125768,
+	0.125768,
+	0.125768,
+	0.116093,
+	0.116093,
+	0.116093,
+	0.116093,
+	0.106419,
+	0.106419,
+	0.106419,
+	0.106419,
+	0.106419,
+	0.106419,
+	0.106419,
+	0.106419 ~~|
+Vegan diet decomposition multiplier male[Grains,Cohorts]=
+	0.183814,
+	0.232187,
+	0.307647,
+	0.400522,
+	0.406327,
+	0.377303,
+	0.377303,
+	0.377303,
+	0.377303,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.34828,
+	0.319257,
+	0.319257,
+	0.319257,
+	0.319257,
+	0.319257,
+	0.319257,
+	0.319257,
+	0.319257 ~~|
+Vegan diet decomposition multiplier male[VegFruits,Cohorts]=
+	0.122543,
+	0.154791,
+	0.205098,
+	0.267015,
+	0.270885,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.251536,
+	0.232187,
+	0.232187,
+	0.232187,
+	0.232187,
+	0.212838,
+	0.212838,
+	0.212838,
+	0.212838,
+	0.212838,
+	0.212838,
+	0.212838,
+	0.212838 ~~|
+Vegan diet decomposition multiplier male[OtherCrops,Cohorts]=
+	0.245086,
+	0.309582,
+	0.410197,
+	0.534029,
+	0.541769,
+	0.503071,
+	0.503071,
+	0.503071,
+	0.503071,
+	0.464373,
+	0.464373,
+	0.464373,
+	0.464373,
+	0.425676,
+	0.425676,
+	0.425676,
+	0.425676,
+	0.425676,
+	0.425676,
+	0.425676,
+	0.425676
+	~	
+	~	Original data please see the excel file 'New_DietData.xlsx'  , 'Model Input' , 'y48'
+		
+		Added by Q. Ye in June 2024
+	|
+
+Vegetarian diet composition multiplier Sc3[FoodCategories,Gender,Cohorts]=
+	Reference vegetarian diet decomposition multiplier[FoodCategories,Gender,Cohorts]+Smooth Diet Switch Fnc\
+		*(Vegan diet decomposition multiplier[FoodCategories,Gender,Cohorts]-Reference vegetarian diet decomposition multiplier\
+		[FoodCategories,Gender,Cohorts])
+	~	Dmnl
+	~		|
+
+Vegetarian diet composition multipliers[FoodCategories,Gender,Cohorts]=
+	IF THEN ELSE(Diet Composition Switch=3 :OR: Diet Composition Switch=4,
+	Vegetarian diet composition multiplier Sc3[FoodCategories,Gender,Cohorts],
+	Reference vegetarian diet decomposition multiplier[FoodCategories,Gender,Cohorts])
+	~	Dmnl
+	~		|
+
+VM S=
+	0.01
+	~	1/Year
+	~		|
+
+VM Var S=
+	0.01+SMOOTH(STEP(VM S-0.01, 2020),1
+	)
+	~	1/Year
+	~		|
+
+x0 risk attitude=
+	5+ STEP(SA x0 risk attitude-5, 2020)
+	~	Dmnl
+	~		|
+
+x0 social norm[Childhood]=
+	0.6 + STEP (SA x0 social norm["10-14"]-0.6, 2020) ~~|
+x0 social norm[Young]=
+	0.45 + STEP(SA x0 social norm["20-24"]-0.45, 2020) ~~|
+x0 social norm[MiddleAged]=
+	0.55 + STEP (SA x0 social norm["40-44"]-0.55, 2020) ~~|
+x0 social norm[OldAge]=
+	0.7 + STEP(SA x0 social norm["80-84"]-0.7, 2020)
+	~	Dmnl
+	~		|
+
+Young:
+	"15-19","20-24","25-29","30-34","35-39","40-44"
+	~	
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Education:
+	noEd, primary, secondary, tertiary
+	~	
+	~		|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Cohorts:
+	"0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49"\
+		, "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", \
+		"95-99", "100+"
+	~	
+	~		|
+
+FoodCategories:
+	PasMeat, CropMeat, Dairy, Eggs, Pulses, Grains, VegFruits, OtherCrops
+	~	
+	~		|
+
+Gender:
+	male, female
+	~	
+	~		|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_DietChange
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,80,0
+10,1,"Meat-based Diet Followers",1222,102,72,42,3,131,0,32,0,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Lactoovo Vegetarian Diet Followers,1659,102,72,42,3,131,0,32,0,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(1659,402)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(1222,402)|
+11,5,0,1440,402,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,"Shift from meat-based to vegetarian",1440,443,60,31,40,3,0,32,-1,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,7,9,1,4,0,0,22,0,0,0,-1--1--1,,1|(1361,104)|
+1,8,9,2,100,0,0,22,0,0,0,-1--1--1,,1|(1514,104)|
+11,9,0,1435,104,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,10,"Shift from vegetarian to meat-based",1435,134,55,31,40,3,0,32,-1,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,11,Percentage of vegetarians,1579,-32,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,12,2,11,1,0,0,0,0,64,0,-1--1--1,,1|(1614,7)|
+10,13,"Initial Meat-based Diet Followers",1075,243,74,21,8,3,0,36,0,0,0,0,0-0-0,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,14,Initial Vegetarian Diet Followers,1815,216,70,21,8,131,0,36,0,0,0,0,0-0-0,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,15,Total Meat Eaters by Gender,1179,-11,75,21,8,131,0,32,0,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,16,Total Meat Eaters,1231,-135,46,21,8,131,0,32,0,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,17,1,15,1,0,0,0,0,64,0,-1--1--1,,1|(1180,41)|
+1,18,15,16,1,0,0,0,0,64,0,-1--1--1,,1|(1194,-81)|
+10,19,Total Vegetarians by Gender,1976,-11,68,22,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,20,Total Vegetarians,1950,-135,46,22,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,21,2,19,1,0,0,0,0,64,0,-1--1--1,,1|(1896,141)|
+1,22,19,20,1,0,0,0,0,64,0,-1--1--1,,1|(1971,-70)|
+10,23,Reference GWP per Capita,-343,869,60,18,8,131,0,34,0,0,0,0,-1--1--1,255-192-128,Arial|||255-128-0,0,0,0,0,0,0
+10,24,Effect of GWP on Meat Consumption,1367,293,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,25,23,26,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,26,Relative GWP per Capita,-271,772,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,27,Normal Shift Fraction from Vegetarianism to Meat,1531,304,81,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,28,Shift Fraction Vegetarians to Meat,1437,221,74,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,24,28,1,0,0,0,0,64,0,-1--1--1,,1|(1369,260)|
+1,30,27,28,1,0,0,0,0,64,0,-1--1--1,,1|(1510,261)|
+10,31,Shift fraction of meat eaters to vegetarianism,1435,524,98,21,8,3,0,32,0,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,32,Subjective norm multiplier for diet change,1881,762,69,31,8,131,0,32,0,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,Normal shift fraction from meat to vegetarianism,1123,499,84,31,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,34,Percentage of vegetarians,2026,843,59,22,8,2,1,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,35,Sum of diet followers,1589,-239,44,22,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,36,20,35,1,0,0,0,0,64,0,-1--1--1,,1|(1772,-200)|
+10,37,Total eater value cohort,1435,23,44,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,38,1,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,39,2,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,40,2,1,1,1,0,0,0,64,0,-1--1--1,,1|(1440,64)|
+1,41,28,10,1,1,0,0,0,64,0,-1--1--1,,1|(1441,170)|
+1,42,2,10,1,1,0,0,0,64,0,-1--1--1,,1|(1548,152)|
+1,43,31,6,1,0,0,0,0,64,0,-1--1--1,,1|(1374,487)|
+10,44,Potential vegetarians,1148,329,45,22,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,45,44,6,1,0,0,0,0,64,0,-1--1--1,,1|(1222,404)|
+10,46,Average calorie intake in meat diet,-48,-308,67,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,47,Average calorie intake in vegetarian diet,474,-291,71,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,48,"Meat-based Diet Followers",79,-223,67,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,49,Lactoovo Vegetarian Diet Followers,421,-218,58,27,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,50,Annual Kcal Intake SHIFT,224,-338,47,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,51,48,50,1,0,0,0,0,64,0,-1--1--1,,1|(123,-275)|
+1,52,46,50,1,0,0,0,0,64,0,-1--1--1,,1|(-5,-329)|
+1,53,47,50,1,0,0,0,0,64,0,-1--1--1,,1|(353,-341)|
+1,54,49,50,1,0,0,0,0,64,0,-1--1--1,,1|(353,-296)|
+12,55,48,1861,101,10,8,0,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,56,58,2,4,0,0,22,0,0,0,-1--1--1,,1|(1763,101)|
+1,57,58,55,100,0,0,22,0,0,0,-1--1--1,,1|(1829,101)|
+11,58,0,1801,101,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,59,Population increase rate,1801,131,55,21,40,3,0,32,-1,0,0,0,-1--1--1,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,60,11,58,1,0,0,0,0,64,0,-1--1--1,,1|(1704,13)|
+10,61,Previous population,1770,-30,39,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,62,61,59,1,0,0,0,0,64,0,-1--1--1,,1|(1815,49)|
+10,63,Initial Pop Ed,1857,4,48,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,64,14,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,65,Effect of GWP on Daily Caloric Intake,-164,655,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,66,26,65,1,2,0,0,0,64,0,-1--1--1,,1|(-275,806)|
+10,67,Reference Daily Caloric Intake,-370,632,59,18,8,131,0,34,0,0,0,0,-1--1--1,255-192-128,Arial|||255-128-0,0,0,0,0,0,0
+12,68,0,-151,-421,191,22,8,135,0,52,-1,0,0,0,0-0-0,192-192-192,Arial||B|0-0-0,0,0,0,0,0,0
+MEAT-BASED DIET
+12,69,0,568,-421,191,22,8,135,0,52,-1,0,0,0,0-0-0,192-192-192,Arial||B|0-0-0,0,0,0,0,0,0
+VEGETARIAN DIET
+10,70,"Percentage of meat-based diet followers",1317,-271,60,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,71,Percentage of vegetarian diet followers,1861,-264,55,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,72,16,70,1,0,0,0,0,64,0,-1--1--1,,1|(1246,-201)|
+1,73,20,71,1,0,0,0,0,64,0,-1--1--1,,1|(1921,-217)|
+10,74,Effect of GWP on Calorie Intake Lookup,-52,824,80,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-192-0,0,0,0,0,0,0
+1,75,74,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,76,Relative GWP per Capita,1341,354,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,77,76,24,1,0,0,0,0,64,0,-1--1--1,,1|(1299,327)|
+1,78,16,35,1,0,0,0,0,64,0,-1--1--1,,1|(1463,-241)|
+10,79,Average Total Daily Calorie Intake,-257,573,72,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,80,65,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,81,67,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,82,Average Total Daily Calorie Intake,722,-330,76,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,83,82,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,84,Average Total Daily Calorie Intake,-297,-322,76,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,85,84,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,86,0,1600,-434,459,22,8,135,0,52,-1,0,0,0,-1--1--1,192-192-192,Arial||B|0-0-0,0,0,0,0,0,0
+DIET SHIFTS
+10,87,Self efficacy multiplier,1568,634,45,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,88,Attitude multiplier for diet change,1213,803,63,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,89,Response efficacy multiplier,1309,636,63,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,90,Indicative fraction intended to change diet,1449,820,70,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,91,88,90,1,0,0,0,0,64,0,-1--1--1,,1|(1313,832)|
+10,92,L risk attitude,1022,867,49,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,93,k risk attitude,1022,895,48,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,94,x0 risk attitude,1022,929,52,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+1,95,92,88,1,0,0,0,0,64,0,-1--1--1,,1|(1106,844)|
+1,96,93,88,1,0,0,0,0,64,0,-1--1--1,,1|(1116,861)|
+1,97,94,88,1,0,0,0,0,64,0,-1--1--1,,1|(1122,887)|
+1,98,90,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,k social norm,1894,859,48,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,100,L social norm,1707,888,49,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,101,x0 social norm,1823,897,52,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+1,102,32,90,1,0,0,0,0,64,0,-1--1--1,,1|(1641,758)|
+1,103,87,90,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,104,89,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,105,87,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,106,33,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,107,"Total shift from meat-based to vegetarian diet",1632,448,55,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,108,6,107,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,109,34,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,110,99,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,111,101,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,112,100,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,113,Normal fraction intended to change diet stepped,1510,939,70,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,114,Young population,1870,-381,39,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,115,Ratio Young,1923,-324,44,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,116,114,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,117,Intention Delay,1317,725,53,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,118,Fraction intended to change diet,1425,686,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,119,117,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,120,118,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,121,Normal fraction intended to change diet,1351,1029,70,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+1,122,113,90,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,123,121,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,124,Reference vegetarian diet decomposition multiplier,877,-127,79,27,8,131,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,125,Reference meat diet decomposition multiplier,-381,-157,74,27,8,131,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,126,125,182,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,127,124,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,128,Annual Caloric Demand SHIFT,167,-122,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,129,50,128,1,0,0,0,0,64,0,-1--1--1,,1|(164,-250)|
+10,130,Global Total Calorie Demand SHIFT,182,-13,73,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,131,128,130,1,0,0,0,0,64,0,-1--1--1,,1|(163,-72)|
+1,132,26,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,133,Average Daily Calorie Demand per Capita,477,17,75,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,134,130,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,135,Annual Caloric Demand FAO,-148,373,54,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,136,Global Average Diet Composition FAO,-349,365,74,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,137,Average Kcal Intake per Person FAO,-261,454,73,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,138,79,137,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,139,136,137,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,140,137,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,141,Global Total Calorie Demand FAO,-5,302,61,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,142,135,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,143,Global Average Diet Composition WRI,22,372,74,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,144,Annual Caloric Demand WRI,201,374,54,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,145,Average Kcal Intake per Person WRI,80,447,73,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,146,145,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,147,Global Total Calorie Demand WRI,301,302,61,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,148,144,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,149,143,145,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,150,79,145,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,151,Global Average Diet Composition FLEX,390,372,74,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,152,Annual Caloric Demand FLEX,569,374,56,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,153,Average Kcal Intake per Person FLEX,368,438,73,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,154,153,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,155,Global Total Calorie Demand FLEX,669,302,73,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,156,152,155,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,151,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,158,79,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,159,0,165,225,587,22,8,135,0,52,-1,0,0,0,0-0-0,192-192-192,Arial||B|0-0-0,0,0,0,0,0,0
+DIFFERENT DIET COMPOSITIONS
+10,160,Average Kcal Intake per Person SHIFT,-53,43,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,161,128,160,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,162,Annual Caloric Demand,399,626,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,163,Annual Caloric Demand SHIFT,556,529,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,164,Healthy diet decomposition multiplier,-378,-87,55,27,8,131,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,165,Flexitarian diet decomposition multiplier,-381,-16,55,27,8,131,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,166,Vegan diet decomposition multiplier,877,-27,55,27,8,131,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,167,Meat diet composition multipliers,-170,-198,45,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,168,164,182,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,169,165,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,170,Diet Composition Switch,-379,-247,65,18,8,131,0,36,-1,0,0,0,-1--1--1,64-160-98,Arial|||0-0-0,0,0,0,0,0,0
+1,171,170,167,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Vegetarian diet composition multipliers,591,-180,57,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,173,166,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,174,Diet Composition Switch,685,-257,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,175,174,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,176,Diet Composition Switch,559,738,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,177,176,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,178,163,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,179,152,162,1,0,0,0,0,64,0,-1--1--1,,1|(502,491)|
+10,180,Time,399,664,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,181,Time,692,35,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,182,Meat diet composition multiplier Sc2,-176,-87,50,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,183,Meat diet composition multiplier Sc4,-177,-16,50,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,184,125,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,185,125,167,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,186,182,167,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,187,183,167,1,0,0,0,0,64,0,-1--1--1,,1|(-87,-105)|
+1,188,167,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,189,Smooth Diet Switch Fnc,-47,-141,46,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,190,Time,-34,-82,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,191,190,189,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,192,189,182,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,193,189,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,194,172,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,195,Vegetarian diet composition multiplier Sc3,675,-91,80,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,196,124,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,197,Smooth Diet Switch Fnc,675,-12,51,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,198,197,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,199,195,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,200,Smooth Diet Switch Fnc,565,654,51,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,201,200,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,202,SA L risk attitude,779,858,34,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,203,SA k risk attitude,793,894,34,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,204,SA x0 risk attitude,805,934,38,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,205,202,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,206,203,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,207,204,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,208,Normal Fraction Intended to Change Diet Variation,1138,1027,71,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,209,208,121,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,210,Response Efficacy Multiplier Variation,790,690,69,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,211,Self Efficacy Multiplier Variation,1892,595,68,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,212,SA L social norm,1695,961,43,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,213,SA x0 social norm,1825,965,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,214,SA k social norm,1944,947,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,215,212,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,216,213,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,217,214,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,218,Average Kcal Intake per Person,196,627,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,219,Average Kcal Intake per Person SHIFT,260,773,78,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,220,Diet Composition Percentage,105,730,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,221,218,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,222,162,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,223,Percentage of animal calories,102,858,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,224,220,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,225,Diet Composition Switch Variation,-548,-327,65,18,8,131,0,34,-1,0,0,0,-1--1--1,64-160-98,Arial|||255-0-255,0,0,0,0,0,0
+1,226,225,170,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,227,Normal Shift Fraction from Meat to Vegetarianism Variation,888,533,99,31,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,228,227,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,229,Normal Shift Fraction from Vegetarianism to Meat Variation,1763,282,81,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,230,229,27,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,231,Reference Daily Caloric Intake Variation,-418,752,59,27,8,131,0,34,0,0,0,0,-1--1--1,255-192-128,Arial|||255-0-255,0,0,0,0,0,0
+1,232,231,67,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,233,Response Efficacy Multiplier NoEd Variation,1094,601,69,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,234,Response Efficacy Multiplier Primary Variation,946,646,69,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,235,Response Efficacy Multiplier Secondary Variation,984,709,74,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,236,Response Efficacy Multiplier Tertiary Variation,1156,712,69,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,237,233,89,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,238,234,89,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,239,235,89,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,240,236,89,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,241,Self Efficacy Multiplier Male Variation,1714,567,53,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,242,Self Efficacy Multiplier Female Variation,1759,661,63,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,243,241,87,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,244,242,87,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,245,Diet Composition Variation,-586,-407,65,18,8,131,0,34,-1,0,0,0,-1--1--1,64-160-98,Arial|||255-0-255,0,0,0,0,0,0
+1,246,245,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,247,SSP Food and Diet Variation Time,1485,371,76,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,248,247,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,249,SSP Food and Diet Variation Time,-495,535,76,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,250,VM Var S,1633,355,36,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,251,VM S,1730,368,22,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,252,L Var T,1610,250,37,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,253,252,27,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,254,250,27,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,255,251,250,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,256,CI Var S,-615,541,32,10,8,131,0,34,0,0,0,0,-1--1--1,255-192-128,Arial|||255-0-255,0,0,0,0,0,0
+10,257,CI S,-541,726,17,10,8,131,0,34,0,0,0,0,-1--1--1,255-192-128,Arial|||255-0-255,0,0,0,0,0,0
+10,258,L Var T,-269,697,37,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,259,257,256,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,260,Meat Based Diet Followers Indicator,1145,-303,69,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,261,Plant Based Diet Followers Indicator,2032,-244,69,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,262,71,261,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,263,70,260,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,264,Animal Calories Consumption Indicator,142,972,59,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,265,223,264,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,266,SSP Food and Diet Variation Time,-782,-278,76,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,267,SSP Food and Diet Variation Time,752,472,76,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,268,267,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,269,Plant Based Food Caloric Intake per Person,17,619,67,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,270,Animal Food Caloric Intake Indicator,183,546,50,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,271,218,270,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,272,218,269,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,273,257,67,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,274,Flexitarian diet decomposition multiplier male,-487,78,55,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,275,Flexitarian diet decomposition multiplier female,-335,85,60,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,276,274,165,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,277,275,165,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,278,Healthy diet decomposition multiplier male,-651,-102,55,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,279,Healthy diet decomposition multiplier female,-653,-69,60,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,280,278,164,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,281,279,164,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,282,"Initial Meat-based Diet Followers Male",918,172,73,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,283,"Initial Meat-based Diet Followers Female",1052,127,83,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,284,282,13,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,285,283,13,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,286,Initial Vegetarian Diet Followers Male,2043,197,73,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,287,Initial Vegetarian Diet Followers Female,2055,223,83,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,288,286,14,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,289,287,14,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,290,Reference meat diet decomposition multiplier male,-685,-174,74,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,291,Reference meat diet decomposition multiplier female,-689,-149,89,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,292,291,125,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,293,290,125,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,294,Reference vegetarian diet decomposition multiplier male,842,-232,79,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,295,Reference vegetarian diet decomposition multiplier female,967,-236,79,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,296,294,124,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,297,295,124,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,298,Vegan diet decomposition multiplier male,833,66,55,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,299,Vegan diet decomposition multiplier female,937,68,60,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,300,298,166,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,301,299,166,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,302,Potential Vegetarians Accumulative,907,351,47,34,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,303,48,737,356,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,304,306,303,100,16,0,22,0,192,0,-1--1--1,,1|(764,356)|
+1,305,306,302,4,16,0,22,0,192,0,-1--1--1,,1|(826,356)|
+11,306,0,787,356,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,307,Inflow PVA,787,379,40,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,308,48,1054,355,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,309,311,302,100,16,0,22,0,192,0,-1--1--1,,1|(972,355)|
+1,310,311,308,4,16,0,22,0,192,0,-1--1--1,,1|(1023,355)|
+11,311,0,997,355,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,312,Outflow PVA,997,381,46,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,313,1,307,1,16,0,0,0,192,0,-1--1--1,,1|(921,153)|
+1,314,302,312,1,16,0,0,0,192,0,-1--1--1,,1|(993,342)|
+1,315,13,302,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,316,312,44,1,16,0,0,0,192,0,-1--1--1,,1|(1086,367)|
+10,317,Population,209,126,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,318,317,160,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,319,Smoothed GWP per Capita,-234,906,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,320,319,26,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,321,Population,-377,294,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,322,321,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,323,Population,373,537,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,324,323,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,325,Population,148,311,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,326,325,144,1,0,0,0,0,64,0,-1--1--1,,1|(172,351)|
+10,327,Population,1565,-355,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,328,327,70,1,0,0,0,0,64,0,-1--1--1,,1|(1456,-337)|
+10,329,Population wrt Education,1442,-94,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,330,329,11,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,331,63,61,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,332,Population Cohorts,2031,-358,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,333,332,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,334,Perceived Risk,1006,805,43,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,335,334,88,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,336,Population,477,62,48,10,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,337,336,133,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,338,317,133,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,339,323,152,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,340,Population,1867,-234,48,10,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,341,340,71,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,342,Population,1935,-296,48,10,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,343,342,115,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,344,327,71,1,0,0,0,0,192,0,-1--1--1,,1|(1709,-327)|
+1,345,327,115,1,0,0,0,0,192,0,-1--1--1,,1|(1746,-362)|
+1,346,329,1,1,0,0,0,0,192,0,-1--1--1,,1|(1328,-45)|
+1,347,329,58,1,0,0,0,0,192,0,-1--1--1,,1|(1701,-44)|
+10,348,Population wrt Education,1770,6,57,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,349,348,61,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,350,348,63,0,1,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,351,329,61,1,0,0,0,0,192,0,-1--1--1,,1|(1640,-111)|
+10,352,kcal to Mkcal,225,-256,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,353,352,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,354,kcal to Mkcal,527,75,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,355,354,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,356,kcal to Mkcal,-114,99,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,357,356,160,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,358,kcal to Mkcal,-129,434,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,359,358,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,360,kcal to Mkcal,226,425,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,361,360,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,362,kcal to Mkcal,587,433,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,363,362,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,364,kcal to Mkcal,232,710,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,365,364,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,366,Days in Year,-163,299,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,367,366,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,368,Days in Year,526,315,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,369,368,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,370,Days in Year,228,269,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,371,370,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,372,373,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,373,Days in Year,425,-146,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,374,373,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,375,Days in Year,277,678,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,376,375,218,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,377,Days in Year,-40,138,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,378,377,160,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:x.vdfx
+1:felix_gwp_convert_v25_2014.vdfx
+4:Time
+5:Annual Caloric Demand WRI[FoodCategories]
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:80,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

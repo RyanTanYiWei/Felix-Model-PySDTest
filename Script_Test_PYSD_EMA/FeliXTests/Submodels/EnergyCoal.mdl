@@ -1,0 +1,3248 @@
+{UTF-8}
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Coal Production Indicator=
+	Mtoe into EJ*Coal Production
+	~	EJ/Year
+	~		|
+
+Unit Cost of Coal Exploration=
+	MIN(Max Unit Cost of Coal Exploration, IF THEN ELSE(Productivity of Investment in Coal Exploration\
+		=0,0,1/Productivity of Investment in Coal Exploration
+	*toe per Mtoe))
+	~	$/Mtoe
+	~	Unit cost of coal exploration. Depends on remaining undiscovered coal \
+		resources and advances in exploration technologies.
+	|
+
+Desired Investment in Coal Production=
+	MIN(Potential Coal Production from Resources,Total Coal Demand)/Productivity of Investment in Coal Production\
+		*toe per Mtoe
+	~	$/Year
+	~	Desired Investment in Coal Production due to Total Coal Demand and \
+		Productivity of Investment in Coal Production.
+	|
+
+Potential Coal Production from Investment=
+	Productivity of Investment in Coal Production*Effective Investment in Coal Production\
+		/toe per Mtoe
+	~	Mtoe/Year
+	~	Potential Coal Production due to available investments in coal resources \
+		recovery.
+	|
+
+Potential Coal Exploration=
+	Effective Investment in Coal Exploration*Productivity of Investment in Coal Exploration\
+		/toe per Mtoe
+	~	Mtoe/Year
+	~	Potential Coal exploration due to available investments in coal resources \
+		discovery.
+	|
+
+Unit Cost of Coal Production=
+	1/Productivity of Investment in Coal Production*toe per Mtoe+Climate Policy Scenario\
+		*CO2 Intensity of Fuels[Coal]*Carbon Price
+	~	$/Mtoe
+	~	Unit cost of coal production. ZIDZ(1, Productivity of Investment in Coal \
+		Production/Million toe per Mtoe)
+	|
+
+Coal Price per Ton=
+	Coal Price*Mtoe per Ton
+	~	$/Ton
+	~	Actual Coal Price per Ton.
+	|
+
+Total Coal Demand=
+	Energy Demand*Market Share Coal
+	~	Mtoe/Year
+	~	Total demand for coal resources.
+	|
+
+Adjustment for Identified Coal Resource=
+	(Required Identified Coal Resources-Identified Coal Resources)/Identified Coal Resources Adjustment Time
+	~	Mtoe/Year
+	~	Adjustment of Identified Coal Resource to the desired level over a \
+		specified adjustment time.
+	|
+
+Average Coal Production= INTEG (
+	Change in Average Coal Production,
+		INIT Average Coal Production
+		
+		)
+	~	Mtoe/Year
+	~	Average total coal production per year.
+	|
+
+Carbon Price=
+	RAMP(Carbon Price Slope, Climate Action Year, Carbon Price Finish)
+	~	$/tCO2
+	~		|
+
+Carbon Price Finish=
+	2100
+	~	Year
+	~		|
+
+Carbon Price Slope=
+	5
+	~	$/tCO2/Year
+	~		|
+
+CDR S=
+	6
+	~	Year
+	~		|
+
+CDR Var S=
+	6+SMOOTH(STEP(CDR S-6, 2020),1)
+	~	$
+	~		|
+
+Change in Average Coal Production=
+	(Coal Production-Average Coal Production)/Time to Average Coal Production
+	~	Mtoe/(Year*Year)
+	~	Change in Average Coal Production.
+	|
+
+Change in Coal Productivity of Investment=
+	(Productivity of Investment in Coal Exploration-Coal Productivity of Investment)/Coal Production Coverage
+	~	toe/(Year*$)
+	~	Change in Coal Productivity of Investment.
+	|
+
+Change in Effective Investment in Coal Exploration=
+	(Investment in Coal Exploration-Effective Investment in Coal Exploration)/Investment in Coal Exploration Delay
+	~	$/(Year*Year)
+	~	Change in Effective Investment in Coal Exploration.
+	|
+
+Change in Effective Investment in Coal Production=
+	(Investment in Coal Production-Effective Investment in Coal Production)/Investment in Coal Production Delay
+	~	$/(Year*Year)
+	~	Change in Effective Investment in Coal Production.
+	|
+
+CO2 Intensity of Fuels[Coal]=
+	220*(0.000453592/0.025)*1e+06 ~~|
+CO2 Intensity of Fuels[Gas]=
+	117*(0.000453592/0.025)*1e+06 ~~|
+CO2 Intensity of Fuels[Oil]=
+	160*(0.000453592/0.025)*1e+06
+	~	tCO2/Mtoe
+	~	Coal: 220 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		Gas: 117 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		Oil: 160 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		
+		Data from EIA: https://www.eia.gov/tools/faqs/faq.php?id=73&t=11
+	|
+
+Coal Cost=
+	Unit Cost of Coal Exploration+Unit Cost of Coal Production
+	~	$/Mtoe
+	~	Cost of unit coal resources as a sum of unit exploration and production \
+		costs.
+	|
+
+Coal Demand to Supply Ratio=
+	Total Coal Demand/Potential Coal Production
+	~	Dmnl
+	~	Coal Demand to Supply Ratio.
+	|
+
+Coal Desired Gross Margin=
+	0.2
+	~	Dmnl
+	~	Desired Gross Margin per unit coal resources.
+	|
+
+Coal Discovery and Recovery Technology Development Time Variation=
+	6
+	~	Year
+	~		|
+
+Coal Discovery Technology Development Time=
+	CDR Var S+SMOOTH(STEP(Coal Discovery and Recovery Technology Development Time Variation\
+		-CDR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Average time required to turn investments into concrete coal discovery \
+		developments.
+	|
+
+Coal Exploration=
+	MAX(Coal Exploration Rate,0)
+	~	Mtoe/Year
+	~	Coal resources discovery rate.
+	|
+
+Coal Exploration Rate=
+	MIN(Desired Coal Exploration Rate,Potential Coal Exploration)
+	~	Mtoe/Year
+	~	Coal Exploration Rate accounting for potential and desired coal \
+		exploration rates.
+	|
+
+Coal Fraction Discoverable=
+	MINCFD+(MAXCFD-MINCFD)*(Ratio of Coal Fraction Discoverable to Undiscoverable/(Ratio of Coal Fraction Discoverable to Undiscoverable\
+		+1))
+	~	Dmnl
+	~	Percentage of coal resources that can be still explored due to current \
+		state of discovery technology.
+	|
+
+Coal Fraction Recoverable=
+	MINCFR+(MAXCFR-MINCFR)*(Ratio of Coal Fraction Recoverable to Unrecoverable/(Ratio of Coal Fraction Recoverable to Unrecoverable\
+		+1))
+	~	Dmnl
+	~	Percentage of coal resources that can be produced due to current state of \
+		recovery technology.
+	|
+
+Coal Gross Margin=
+	(Coal Price-Coal Cost)/Coal Cost
+	~	Dmnl
+	~	Actual coal gross margin.
+	|
+
+Coal Price=
+	Indicated Coal Price*Effect of Coal Demand and Supply on Price
+	~	$/Mtoe
+	~	Actual coal price accounting for indicated coal price and effect of demand \
+		and supply.
+	|
+
+Coal Production=
+	Coal Production Rate
+	~	Mtoe/Year
+	~	Total coal energy production per year. Source of historical data: \
+		International Energy Agency – Key World Energy Statistics 2007; BP \
+		Statistical Review of World Energy June 2008
+	|
+
+Coal Production Coverage=
+	Identified Coal Resources/Average Coal Production
+	~	Year
+	~	Ratio indicating coal coverage in years for discovered resources and at \
+		the current average coal production.
+	|
+
+Coal Production Rate=
+	MIN(Total Coal Demand,Potential Coal Production)
+	~	Mtoe/Year
+	~	Total coal energy production per year due to available resources, \
+		developments in production technology and coal energy demand.
+	|
+
+Coal Productivity of Investment= INTEG (
+	Change in Coal Productivity of Investment,
+		INIT CPI
+		)
+	~	toe/$
+	~	Factor indicating productivity of investments in coal production.
+	|
+
+Coal Recovery Technology Development Time=
+	CDR Var S+SMOOTH(STEP(Coal Discovery and Recovery Technology Development Time Variation\
+		-CDR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Average time required to turn investments into concrete coal recovery \
+		developments.
+	|
+
+Coal Revenue=
+	Coal Price*Average Coal Production
+	~	$/Year
+	~	Total revenue in coal market.
+	|
+
+Coal Shortage=
+	Total Coal Demand-Coal Production
+	~	Mtoe/Year
+	~	Difference between demand and the coal production rate.
+	|
+
+Cumulative Additions to Coal Production=
+	Identified Coal Resources+Cumulative Coal Production
+	~	Mtoe
+	~	Identified and already produced coal resources.
+	|
+
+Cumulative Coal Production= INTEG (
+	Coal Production,
+		INIT CCPN)
+	~	Mtoe
+	~	Cumulative Coal resources that has been produced.
+	|
+
+Delay Time IRCFDU=
+	Coal Discovery Technology Development Time/3
+	~	Year
+	~		|
+
+Delay Time IRCFRU=
+	Coal Recovery Technology Development Time/3
+	~	Year
+	~		|
+
+Desired Coal Exploration Rate=
+	MAX(0,Adjustment for Identified Coal Resource+Coal Production)
+	~	Mtoe/Year
+	~	Desired Coal exploration rate due to Total Coal Demand and Identified Coal \
+		Resources safety coverage.
+	|
+
+Desired Investment in Coal Exploration=
+	Desired Coal Exploration Rate*Unit Cost of Coal Exploration
+	~	$/Year
+	~	Desired amount of resources that need to be invested in order to secure \
+		desired coal exploration.
+	|
+
+Effect of Coal Demand and Supply on Price=
+	SC Init*(Total Coal Demand/Potential Coal Production)^Sensitivity of Coal Price to Supply and Demand
+	~	Dmnl
+	~	Effect of Coal Demand and Supply ratio on actual coal price.
+	|
+
+Effect of Technology on Coal Discoveries=
+	Total Coal Discoverable Resources/INIT UCRN
+	~	Dmnl
+	~	Impact of technology development on coal exploration taking into account \
+		remaining undiscovered coal resources (the less remaining undiscovered \
+		coal resources the more expensive it is to discover them).
+	|
+
+Effective Investment in Coal Exploration= INTEG (
+	Change in Effective Investment in Coal Exploration,
+		INIT EICE
+		)
+	~	$/Year
+	~	Effective investments dedicated for coal resources exploration.
+	|
+
+Effective Investment in Coal Production= INTEG (
+	Change in Effective Investment in Coal Production,
+		INIT EICP
+		)
+	~	$/Year
+	~	Effective investments dedicated for coal resources production.
+	|
+
+Effectiveness IRCFDU=
+	Effectiveness of Investment in Coal Discovery Technology*Investment in Coal Discovery Technology
+	~	1/Year
+	~		|
+
+Effectiveness IRCFRU=
+	Investment in Coal Recovery Technology*Effectiveness of Investment in Coal Recovery Technology
+	~	1/Year
+	~		|
+
+Effectiveness of Investment in Coal Discovery Technology=
+	1.62e-11+STEP(Effectiveness of Investment in Coal Discovery Technology Variation-1.62e-11\
+		, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to coal discovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Coal Discovery Technology Variation=
+	1.62e-11
+	~	1/$
+	~	Effectiveness of resources dedicated to coal discovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Coal Recovery Technology=
+	1.3e-12+STEP(Effectiveness of Investment in Coal Recovery Technology Variation-1.3e-12\
+		, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to coal recovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Coal Recovery Technology Variation=
+	1.3e-12
+	~	1/$
+	~	Effectiveness of resources dedicated to coal recovery technology \
+		development.
+	|
+
+FC S=
+	0.03
+	~	Dmnl
+	~	Percentage of total coal sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+FC Var S=
+	0.03+SMOOTH(STEP(FC S-0.03, 2020),1)
+	~	Dmnl
+	~	Percentage of total coal sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Fraction Invested in Coal Discovery Technology=
+	Table for FICDT(Coal Fraction Discoverable)
+	~	Dmnl
+	~	Fraction of investments in coal technology dedicated to discovery \
+		technology.
+	|
+
+Fraction of Coal Revenues Invested in Technology=
+	FC Var S+SMOOTH(STEP(Fraction of Coal Revenues Invested in Technology Variation-FC Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Dmnl
+	~	Percentage of total coal sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Fraction of Coal Revenues Invested in Technology Variation=
+	0.03
+	~	Dmnl
+	~	Percentage of total coal sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+IC S=
+	5
+	~	Year
+	~		|
+
+IC Var S=
+	5+SMOOTH(STEP(IC S-5, 2020),1)
+	~	Year
+	~		|
+
+Identified Coal Resources= INTEG (
+	Coal Exploration-Coal Production,
+		(Total Coal Demand*Normal Coal Production Ratio+Cumulative Coal Production*(1-Coal Fraction Recoverable\
+		))/Coal Fraction Recoverable)
+	~	Mtoe
+	~	Coal Resources discovered thanks to developments in exploration technology.
+	|
+
+Identified Coal Resources Adjustment Time=
+	10
+	~	Year
+	~	Time to adjust Identified Oil Coal Resource to the desired level.
+	|
+
+Increase in Ratio of Coal Fraction Discoverable to Undiscoverable=
+	Outflow IRCFDULV3
+	~	1/Year
+	~	Increase in Ratio of Coal Fraction Discoverable to Undiscoverable due to \
+		investments in discovery technology and their productivity.
+	|
+
+Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV1= INTEG (
+	Inflow IRCFDULV1-Outflow IRCFDULV1,
+		Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV2= INTEG (
+	Inflow IRCFDULV2-Outflow IRCFDULV2,
+		Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV3= INTEG (
+	Inflow IRCFDULV3-Outflow IRCFDULV3,
+		Effectiveness IRCFDU*Delay Time IRCFDU)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Coal Fraction Recoverable to Unrecoverable=
+	Outflow IRCFRULV3
+	~	1/Year
+	~	Increase in Ratio of Coal Fraction Recoverable to Unrecoverable due to \
+		investments in recovery technology and their productivity.
+	|
+
+Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV1= INTEG (
+	Inflow IRCFRULV1-Outflow IRCFRULV1,
+		Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV2= INTEG (
+	Inflow IRCFRULV2-Outflow IRCFRULV2,
+		Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV3)
+	~	
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV3= INTEG (
+	Inflow IRCFRULV3-Outflow IRCFRULV3,
+		Effectiveness IRCFRU*Delay Time IRCFRU)
+	~	
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Indicated Coal Price=
+	Coal Cost*(1+Coal Desired Gross Margin)
+	~	$/Mtoe
+	~	Indicated coal price accounting for exploration and production cost and \
+		gross margin.
+	|
+
+Inflow IRCFDULV1=
+	Effectiveness IRCFDU
+	~	1/Year
+	~		|
+
+Inflow IRCFDULV2=
+	Outflow IRCFDULV1
+	~	1/Year
+	~		|
+
+Inflow IRCFDULV3=
+	Outflow IRCFDULV2
+	~	1/Year
+	~		|
+
+Inflow IRCFRULV1=
+	Effectiveness IRCFRU
+	~	1/Year
+	~		|
+
+Inflow IRCFRULV2=
+	Outflow IRCFRULV1
+	~	1/Year
+	~		|
+
+Inflow IRCFRULV3=
+	Outflow IRCFRULV2
+	~	1/Year
+	~		|
+
+INIT Average Coal Production=
+	191.404
+	~	
+	~		|
+
+INIT CCPN=
+	37630
+	~	Mtoe
+	~	Cumulative Coal resources for 1900.
+	|
+
+INIT CPI=
+	0.00188537
+	~	
+	~		|
+
+INIT EICE=
+	1.01518e+11
+	~	
+	~	Effective Investment in Coal Exploration
+	|
+
+INIT EICP=
+	1.01521e+10
+	~	
+	~	Effective Investment in Coal Production
+	|
+
+INIT RCDU=
+	0
+	~	Dmnl
+	~	Initial Ratio of Coal Fraction Discoverable to Undiscoverable.
+	|
+
+INIT RCRU=
+	0
+	~	Dmnl
+	~	Initial Ratio of Coal Fraction Recoverable to Unrecoverable.
+	|
+
+INIT UCRN=
+	UC Var S+SMOOTH(STEP(Undiscovered Coal Resources Variation-UC Var S, 2020+E Var T),SSP Energy Production Variation Time\
+		)
+	~	Mtoe
+	~	Initial amount of Undiscovered Coal Resources.
+	|
+
+Investment in Coal Discovery Technology=
+	Investment in Coal Technology*Fraction Invested in Coal Discovery Technology
+	~	$/Year
+	~	Total investments in coal exploration technology.
+	|
+
+Investment in Coal Exploration=
+	Desired Investment in Coal Exploration
+	~	$/Year
+	~	Amount of resources dedicated to coal exploration.
+	|
+
+Investment in Coal Exploration and Production Delay Variation=
+	5
+	~	Year
+	~		|
+
+Investment in Coal Exploration Delay=
+	IC Var S+SMOOTH(STEP(Investment in Coal Exploration and Production Delay Variation-IC Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Time delay to make investments in coal exploration effective.
+	|
+
+Investment in Coal Production=
+	Desired Investment in Coal Production
+	~	$/Year
+	~	Amount of resources dedicated to coal production.
+	|
+
+Investment in Coal Production Delay=
+	IC Var S+SMOOTH(STEP(Investment in Coal Exploration and Production Delay Variation-IC Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Time delay to make investments in coal production effective.
+	|
+
+Investment in Coal Recovery Technology=
+	Investment in Coal Technology*(1-Fraction Invested in Coal Discovery Technology)
+	~	$/Year
+	~	Total investments in coal production technology.
+	|
+
+Investment in Coal Technology=
+	Fraction of Coal Revenues Invested in Technology*Coal Revenue
+	~	$/Year
+	~	Investments in development of coal exploration and production technology.
+	|
+
+Max Unit Cost of Coal Exploration=
+	MFC Var S+SMOOTH(STEP(Max Unit Cost of Fossil Fuel Exploration Variation-MFC Var S, \
+		2020+E Var T),SSP Energy Production Variation Time)
+	~	$/Mtoe
+	~	Upper level limit for unit cost of coal exploration.
+	|
+
+Max Unit Cost of Fossil Fuel Exploration Variation=
+	1e+09
+	~	$/Mtoe [0,?]
+	~		|
+
+MFC S=
+	1e+09
+	~	$/Mtoe
+	~		|
+
+MFC Var S=
+	1e+09+SMOOTH(STEP(MFC S-1e+09, 2020),1)
+	~	$/Mtoe
+	~		|
+
+MINCFD=
+	0.5
+	~	Dmnl
+	~	Initial and minimal possible percentage of coal resources to be discovered.
+	|
+
+MINCFR=
+	0.15
+	~	Dmnl
+	~	Initial and minimal possible percentage of coal resources to be recovered.
+	|
+
+Normal Coal Production Ratio=
+	10
+	~	Year
+	~	Safety stock coverage as a number of years of the total coal demand the \
+		coal sector would like to maintain in identified coal resources. It \
+		secures the market against possibility of unforeseen variations in demand. \
+		It is also a stimulus for coal exploration.
+	|
+
+Outflow IRCFDULV1=
+	Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV1/Delay Time IRCFDU
+	~	1/Year
+	~		|
+
+Outflow IRCFDULV2=
+	Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV2/Delay Time IRCFDU
+	~	1/Year
+	~		|
+
+Outflow IRCFDULV3=
+	Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV3/Delay Time IRCFDU
+	~	1/Year
+	~		|
+
+Outflow IRCFRULV1=
+	Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV1/Delay Time IRCFRU
+	~	1/Year
+	~		|
+
+Outflow IRCFRULV2=
+	Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV2/Delay Time IRCFRU
+	~	1/Year
+	~		|
+
+Outflow IRCFRULV3=
+	Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV3/Delay Time IRCFRU
+	~	1/Year
+	~		|
+
+Potential Coal Production=
+	MIN(Potential Coal Production from Investment,Potential Coal Production from Resources\
+		)
+	~	Mtoe/Year
+	~	Potential Coal Production due to available investments in coal resources \
+		recovery and recovery technology.
+	|
+
+Potential Coal Production from Resources=
+	Total Coal Recoverable Resource Remaining/Normal Coal Production Ratio
+	~	Mtoe/Year
+	~	Potential Coal Production rate due to Total Coal Recoverable Resource \
+		Remaining adjusted by coal production safety coverage.
+	|
+
+Productivity of Investment in Coal Exploration=
+	MAX(0,Relative Productivity of Investment in Coal Exploration*Effect of Technology on Coal Discoveries\
+		)
+	~	toe/$
+	~	Parameter indicating the amount of coal resources possible to be explored \
+		per unit investment spent.
+	|
+
+Productivity of Investment in Coal Production=
+	Relative Productivity of Investment in Coal Production Compared to Exploration*Coal Productivity of Investment
+	~	toe/$
+	~	Parameter indicating the amount of coal resources possible to be recovered \
+		per unit investment spent.
+	|
+
+Ratio of Coal Fraction Discoverable to Undiscoverable= INTEG (
+	Increase in Ratio of Coal Fraction Discoverable to Undiscoverable,
+		INIT RCDU)
+	~	Dmnl
+	~	Ratio of Coal Fraction Discoverable to Undiscoverable increased due to \
+		investments in discovery technology and their productivity.
+	|
+
+Ratio of Coal Fraction Recoverable to Unrecoverable= INTEG (
+	Increase in Ratio of Coal Fraction Recoverable to Unrecoverable,
+		INIT RCRU)
+	~	Dmnl
+	~	Ratio of Coal Fraction Recoverable to Unrecoverable increased due to \
+		investments in recovery technology and their productivity.
+	|
+
+Relative Productivity of Investment in Coal Exploration=
+	RPC Var S+SMOOTH(STEP(Relative Productivity of Investment in Coal Exploration Variation\
+		-RPC Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	toe/$
+	~	Relative Productivity of Investment in Coal Exploration without taking \
+		into account remaining undiscovered coal resources and advances in \
+		exploration technologies.
+	|
+
+Relative Productivity of Investment in Coal Exploration Variation=
+	0.5
+	~	toe/$
+	~	Relative Productivity of Investment in Coal Exploration without taking \
+		into account remaining undiscovered coal resources and advances in \
+		exploration technologies.
+	|
+
+Relative Productivity of Investment in Coal Production Compared to Exploration=
+	RPCPE Var S+SMOOTH(STEP(Relative Productivity of Investment in Coal Production Compared to Exploration Variation\
+		-RPCPE Var S, 2020+E Var T
+	),SSP Energy Technology Variation Time)
+	~	Dmnl
+	~	Relative Productivity of Investment in Coal Production as a multiplier of \
+		Productivity of Investment in Coal Exploration.
+	|
+
+Relative Productivity of Investment in Coal Production Compared to Exploration Variation\
+		=
+	10
+	~	Dmnl
+	~		|
+
+Required Identified Coal Resources=
+	(Identified Coal Resources/Total Coal Recoverable Resource Remaining)*(Normal Coal Production Ratio\
+		*Total Coal Demand)
+	~	Mtoe
+	~	The desired Identified Coal Resources level sought by the coal sector.
+	|
+
+RPC S=
+	0.5
+	~	toe/$ [0,?]
+	~	Relative Productivity of Investment in Coal Exploration without taking \
+		into account remaining undiscovered coal resources and advances in \
+		exploration technologies.
+	|
+
+RPC Var S=
+	0.5+SMOOTH(STEP(RPC S-0.5, 2020),1
+	)
+	~	toe/$
+	~	Relative Productivity of Investment in Coal Exploration without taking \
+		into account remaining undiscovered coal resources and advances in \
+		exploration technologies.
+	|
+
+RPCPE S=
+	10
+	~	Dmnl
+	~		|
+
+RPCPE Var S=
+	10+SMOOTH(STEP(RPCPE S-10, 2020),1)
+	~	Dmnl
+	~		|
+
+SC Init=
+	2
+	~	Dmnl
+	~		|
+
+SCo S=
+	0.1
+	~	Dmnl
+	~		|
+
+SCo Var S=
+	0.1+SMOOTH(STEP(SCo S-0.1, 2020),1)
+	~	Dmnl
+	~		|
+
+Sensitivity of Coal Price to Supply and Demand=
+	SCo Var S+SMOOTH(STEP(Sensitivity of Coal Price to Supply and Demand Variation-SCo Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time
+	)
+	~	Dmnl
+	~	Sensitivity of Coal Price to Supply and Demand ratio.
+	|
+
+Sensitivity of Coal Price to Supply and Demand Variation=
+	0.1
+	~	Dmnl
+	~		|
+
+Share of Investment in Revenue Coal=
+	Total Investment in Coal/Coal Revenue
+	~	Dmnl
+	~		|
+
+Share of Upstream Investment in Total Investment Coal=
+	0.753623
+	~	Dmnl
+	~	Data from World Energy Investment 2023
+	|
+
+SSP Energy Demand Variation Time=
+	5
+	~	Year
+	~		|
+
+Table for FICDT(
+	[(0,0)-(1,1)],(0,0.8),(0.2,0.8),(0.4,0.7),(0.6,0.5),(0.8,0.2),(1,0))
+	~	Dmnl
+	~	Table determining order by which technology investments are dedicated to \
+		exploration and production technologies. For small Coal Fraction \
+		Discoverable, in order to make sufficient resources available to be \
+		produced, more investments are directed to exploration technologies. Once \
+		the Coal Fraction Discoverable increases the investments are redirected to \
+		production technologies.
+	|
+
+Time to Average Coal Production=
+	1
+	~	Year
+	~	Time to average total coal production per year.
+	|
+
+Total Coal Discoverable Resources=
+	Total Coal Resources*Coal Fraction Discoverable-Cumulative Additions to Coal Production
+	~	Mtoe
+	~	Total Coal Discoverable Resources as a percentage of Total Coal Resources. \
+		It excludes identified and already produced resources. The percentage is \
+		determined by exploration technology developments.
+	|
+
+Total Coal Recoverable Resource Remaining=
+	Cumulative Additions to Coal Production*Coal Fraction Recoverable-Cumulative Coal Production
+	~	Mtoe
+	~	Total Coal Recoverable Resources Remaining as a percentage of Cumulative \
+		Additions to Coal Production. It excludes already produced resources. The \
+		percentage is determined by production technology developments.
+	|
+
+Total Coal Resources=
+	Undiscovered Coal Resources+Cumulative Additions to Coal Production
+	~	Mtoe
+	~	Total coal resources including Undiscovered Coal Resources, Identified \
+		Coal Resources and resources already produced i.e. Cumulative Coal \
+		Production.
+	|
+
+Total Investment in Coal=
+	(Investment in Coal Exploration+Investment in Coal Production+Investment in Coal Technology\
+		)/Share of Upstream Investment in Total Investment Coal
+	~	$/Year
+	~		|
+
+UC S=
+	900000
+	~	Mtoe
+	~		|
+
+UC Var S=
+	900000+SMOOTH(STEP(UC S-900000, 2020),1)
+	~	Mtoe
+	~		|
+
+Undiscovered Coal Resources= INTEG (
+	-Coal Exploration,
+		INIT UCRN)
+	~	Mtoe
+	~	Existing Coal Resources but not discovered yet.
+	|
+
+Undiscovered Coal Resources Variation=
+	900000
+	~	Mtoe
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+SSP Energy Technology Variation Time=
+	5
+	~	Year
+	~		|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+MAXCFD=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of coal resources to be discovered.
+	|
+
+MAXCFR=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of coal resources to be recovered.
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Climate Action Year=
+	2020
+	~	Year
+	~		|
+
+Climate Policy Scenario=
+	0
+	~	Dmnl
+	~	0: No climate policy
+		1: Climate policy
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+SSP Energy Production Variation Time=
+	5
+	~	Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_Coal
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,37,0
+10,1,Identified Coal Resources,1104,1084,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Cumulative Coal Production,1566,1084,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(1429,1082)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(1249,1082)|
+11,5,0,1343,1082,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Coal Production,1343,1099,58,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,7,Potential Coal Production,1564,835,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,Cumulative Additions to Coal Production,1810,1463,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,9,Coal Production Rate,1342,923,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,10,7,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,11,9,5,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,12,Potential Coal Production from Resources,1810,1052,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,13,Normal Coal Production Ratio,1587,1179,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,14,13,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,15,12,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,16,Potential Coal Production from Investment,1564,773,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,17,16,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,18,Productivity of Investment in Coal Production,1365,621,67,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,19,Effective Investment in Coal Production,1408,772,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,20,18,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,21,19,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,22,Investment in Coal Production Delay,1240,688,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,23,22,212,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,24,Desired Investment in Coal Production,1095,623,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,25,18,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,26,12,24,1,0,0,0,0,64,0,-1--1--1,,1|(1463,472)|
+10,27,Coal Shortage,1226,955,53,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,28,Undiscovered Coal Resources,622,1084,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,31,1,4,0,0,22,0,0,0,-1--1--1,,1|(960,1082)|
+1,30,31,28,100,0,0,22,0,0,0,-1--1--1,,1|(770,1082)|
+11,31,0,868,1082,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,32,Coal Exploration,868,1099,60,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,INIT UCRN,620,1022,40,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Total Coal Resources,1810,1623,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,35,Total Coal Recoverable Resource Remaining,1810,1296,77,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,36,8,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,37,35,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,38,8,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,39,Undiscovered Coal Resources,1587,1623,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,40,39,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,41,Total Coal Discoverable Resources,1970,1547,49,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,42,34,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,43,8,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,44,Effect of Technology on Coal Discoveries,1263,1696,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,45,Effective Investment in Coal Exploration,776,1440,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,46,Investment in Coal Exploration Delay,803,1365,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,47,46,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,48,Potential Coal Exploration,561,1452,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,49,45,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,50,44,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,51,Investment in Coal Exploration,952,1356,67,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,52,51,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,53,48,116,1,0,0,0,0,64,0,-1--1--1,,1|(561,1332)|
+10,54,Desired Investment in Coal Exploration,1105,1440,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,55,Coal Fraction Discoverable,2155,1547,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,56,Coal Fraction Recoverable,2134,1296,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,57,MINCFD,2250,1607,33,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,58,MAXCFD,2250,1479,37,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,59,Ratio of Coal Fraction Discoverable to Undiscoverable,2340,1547,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,60,57,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,61,58,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,62,59,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,63,48,2577,1546,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,64,66,59,4,0,0,22,0,0,0,-1--1--1,,1|(2441,1546)|
+1,65,66,63,100,0,0,22,0,0,0,-1--1--1,,1|(2532,1546)|
+11,66,0,2491,1546,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,67,Increase in Ratio of Coal Fraction Discoverable to Undiscoverable,2491,1578,90,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,68,INIT RCDU,2340,1600,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,69,Investment in Coal Discovery Technology,2857,1599,80,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,Effectiveness of Investment in Coal Discovery Technology,2299,1660,80,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,71,Coal Discovery Technology Development Time,2755,1685,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,72,MINCFR,2250,1355,32,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,73,MAXCFR,2250,1215,36,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,74,Ratio of Coal Fraction Recoverable to Unrecoverable,2332,1295,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,75,48,2569,1291,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,76,78,74,4,0,0,22,0,0,0,-1--1--1,,1|(2433,1291)|
+1,77,78,75,100,0,0,22,0,0,0,-1--1--1,,1|(2524,1291)|
+11,78,0,2483,1291,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,79,Increase in Ratio of Coal Fraction Recoverable to Unrecoverable,2483,1323,90,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,80,INIT RCRU,2332,1345,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,81,Investment in Coal Recovery Technology,2848,1344,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,82,Effectiveness of Investment in Coal Recovery Technology,2403,1415,78,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,83,Coal Recovery Technology Development Time,2733,1439,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,84,72,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,85,73,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,86,74,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,87,Investment in Coal Technology,3003,1457,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,88,Fraction Invested in Coal Discovery Technology,3003,1671,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,89,87,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,90,88,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,91,87,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,92,88,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,93,55,88,1,0,0,0,0,64,0,-1--1--1,,1|(2518,1813)|
+10,94,Table for FICDT,3071,1758,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,95,94,88,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,96,Coal Revenue,2355,915,51,10,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,97,Fraction of Coal Revenues Invested in Technology,3219,1488,77,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,98,Average Coal Production,970,968,48,26,3,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,99,Coal Price,2354,811,39,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,100,99,96,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,101,INIT CCPN,1567,1012,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,102,Productivity of Investment in Coal Exploration,631,1690,67,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,103,102,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,104,Relative Productivity of Investment in Coal Exploration,807,1771,83,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,105,Coal Production Coverage,830,1028,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,106,5,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,107,1,105,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,108,Unit Cost of Coal Exploration,977,1537,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,109,102,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,110,Productivity of Investment in Coal Exploration,1842,580,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,111,Coal Production Coverage,1886,643,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,112,110,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,113,111,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,114,Unit Cost of Coal Production,1366,540,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,115,18,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,116,Coal Exploration Rate,868,1250,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,116,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,118,Required Identified Coal Resources,1201,1179,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,119,1,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,120,13,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,121,Adjustment for Identified Coal Resource,1104,1248,53,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,122,Identified Coal Resources Adjustment Time,1015,1168,61,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,123,1,121,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,124,118,121,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,125,122,121,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,126,Desired Coal Exploration Rate,1104,1353,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,127,126,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,128,121,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,129,6,126,1,0,0,0,0,64,0,-1--1--1,,1|(1320,1277)|
+1,130,126,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,131,108,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,132,Coal Cost,2354,647,37,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,133,Unit Cost of Coal Exploration,2269,561,67,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,134,Unit Cost of Coal Production,2444,561,67,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,135,133,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,136,134,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,137,Indicated Coal Price,2269,725,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,138,132,137,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,139,Coal Desired Gross Margin,2186,647,50,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,140,139,137,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,141,Relative Productivity of Investment in Coal Production Compared to Exploration,1623,620,108,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,142,Effect of Coal Demand and Supply on Price,2631,811,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,143,137,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,144,142,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,145,Potential Coal Production,2799,846,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,146,Sensitivity of Coal Price to Supply and Demand,2631,724,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,147,145,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,148,Coal Demand to Supply Ratio,2956,810,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,149,145,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,150,Coal Gross Margin,2444,725,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,151,99,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,152,132,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,153,Total Coal Demand,1095,835,38,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,154,153,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,155,153,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,156,153,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,157,Total Coal Demand,2799,775,43,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,158,157,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,159,157,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,160,54,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,161,Total Coal Demand,1264,1124,43,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,162,161,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,163,Coal Revenue,3085,1396,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,164,163,87,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,165,Time to Average Coal Production,1039,907,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,166,165,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,167,Identified Coal Resources,1587,1463,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,168,Cumulative Coal Production,1587,1296,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,169,167,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,170,168,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,171,168,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Total Coal Discoverable Resources,1411,1638,49,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,173,172,44,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,174,Total Coal Recoverable Resource Remaining,1250,1245,84,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,175,174,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,176,55,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,177,56,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,178,Investment in Coal Production,1165,729,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,179,24,178,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,180,178,212,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,181,Average Coal Production,2533,914,56,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,182,181,96,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,183,5,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,184,98,105,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,185,INIT UCRN,1417,1732,49,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,186,185,44,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,187,56,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,188,2,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,189,13,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,190,101,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,191,33,28,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,192,68,59,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,193,80,74,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,194,153,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,195,Coal Price per Ton,2130,813,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,196,99,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,197,48,1160,962,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,198,200,98,4,0,0,22,0,0,0,-1--1--1,,1|(1057,962)|
+1,199,200,197,100,0,0,22,0,0,0,-1--1--1,,1|(1129,962)|
+11,200,0,1102,962,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,201,Change in Average Coal Production,1102,986,71,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,202,98,201,1,0,0,0,0,64,0,-1--1--1,,1|(1040,1005)|
+12,203,48,1006,1437,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,204,206,45,4,0,0,22,0,0,0,-1--1--1,,1|(870,1437)|
+1,205,206,203,100,0,0,22,0,0,0,-1--1--1,,1|(958,1437)|
+11,206,0,914,1437,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,207,Change in Effective Investment in Coal Exploration,914,1469,71,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,208,45,207,1,0,0,0,0,64,0,-1--1--1,,1|(835,1495)|
+12,209,48,1191,767,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,210,212,19,4,0,0,22,0,0,0,-1--1--1,,1|(1318,767)|
+1,211,212,209,100,0,0,22,0,0,0,-1--1--1,,1|(1237,767)|
+11,212,0,1279,767,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,213,Change in Effective Investment in Coal Production,1279,799,71,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,214,19,213,1,0,0,0,0,64,0,-1--1--1,,1|(1375,818)|
+10,215,Coal Productivity of Investment,1668,696,52,27,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,216,215,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,217,48,1856,694,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,218,220,215,4,0,0,22,0,0,0,-1--1--1,,1|(1749,694)|
+1,219,220,217,100,0,0,22,0,0,0,-1--1--1,,1|(1818,694)|
+11,220,0,1785,694,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,221,Change in Coal Productivity of Investment,1785,726,57,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,222,215,221,1,0,0,0,0,64,0,-1--1--1,,1|(1688,744)|
+10,223,Max Unit Cost of Coal Exploration,1134,1546,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,224,223,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,225,Coal Production Indicator,1412,1247,59,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,226,6,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,227,Max Unit Cost of Fossil Fuel Exploration Variation,1321,1515,84,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,228,227,223,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,229,Effectiveness of Investment in Coal Discovery Technology Variation,2119,1719,98,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,230,Effectiveness of Investment in Coal Recovery Technology Variation,2141,1418,98,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,231,Fraction of Coal Revenues Invested in Technology Variation,3255,1589,77,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,232,Relative Productivity of Investment in Coal Exploration Variation,1035,1772,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,233,229,70,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,234,230,82,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,235,231,97,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,236,INIT Average Coal Production,881,926,67,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,237,236,98,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,238,INIT CPI,1664,785,30,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,239,238,215,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,240,INIT EICE,770,1501,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-255,Arial|||0-0-0,0,0,0,0,0,0
+1,241,240,45,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,242,INIT EICP,1397,856,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,243,242,19,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,244,Undiscovered Coal Resources Variation,568,959,75,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,245,SSP Energy Technology Variation Time,1194,496,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,246,245,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,247,SSP Energy Production Variation Time,494,1042,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,248,SSP Energy Technology Variation Time,747,1281,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,249,248,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,250,SSP Energy Technology Variation Time,2692,1764,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,251,250,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,252,SSP Energy Technology Variation Time,2569,1470,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,253,252,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,254,SSP Energy Technology Variation Time,3156,1542,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,255,254,97,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,256,SSP Energy Technology Variation Time,809,1847,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,257,SSP Energy Technology Variation Time,1729,557,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,258,257,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,259,SSP Energy Demand Variation Time,2554,628,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,260,259,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,261,SSP Energy Production Variation Time,1175,1606,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,262,261,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,263,E Var T,680,1795,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,264,E Var T,1724,655,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,265,264,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,266,RPC Var S,931,1825,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,267,RPC S,1010,1846,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,268,267,266,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,269,E Var T,2802,1742,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,270,269,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,271,E Var T,2848,1471,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,272,271,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,273,FC Var S,3323,1529,35,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,274,FC S,3381,1501,21,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,275,E Var T,3316,1442,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,276,275,97,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,277,274,273,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,278,273,97,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,279,E Var T,847,1319,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,280,279,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,281,E Var T,1325,742,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,282,281,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,283,E Var T,717,1032,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,284,UC Var S,682,980,36,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,285,UC S,730,956,21,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,286,285,284,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,287,MFC Var S,1157,1495,42,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,288,MFC S,1223,1467,27,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,289,288,287,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,290,287,223,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,291,E Var T,1248,1566,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,292,291,223,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,293,283,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,294,284,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,295,244,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,296,247,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,297,232,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,298,266,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,299,256,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,300,263,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,301,CO2 Intensity of Fuels,1528,434,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,302,Carbon Price,1382,383,49,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,303,Climate Action Year,1515,387,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,304,Climate Policy Scenario,1291,408,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,305,Carbon Price Slope,1385,301,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,306,Carbon Price Finish,1480,291,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,307,306,302,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,308,305,302,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,309,303,302,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,310,301,114,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,311,302,114,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,312,304,114,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,313,Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV1,3021,1021,113,22,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,314,Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV2,3021,1130,113,22,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,315,Increase in Ratio of Coal Fraction Recoverable to Unrecoverable LV3,3021,1235,113,20,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,316,48,3264,1024,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,317,319,316,100,16,0,22,0,192,0,-1--1--1,,1|(3228,1024)|
+1,318,319,313,4,16,0,22,0,192,0,-1--1--1,,1|(3162,1024)|
+11,319,0,3196,1024,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,320,Inflow IRCFRULV1,3196,1054,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,321,48,2775,1021,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,322,324,313,100,16,0,22,0,192,0,-1--1--1,,1|(2887,1021)|
+1,323,324,321,4,16,0,22,0,192,0,-1--1--1,,1|(2819,1021)|
+11,324,0,2860,1021,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,325,Outflow IRCFRULV1,2860,1051,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,326,48,3264,1129,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,327,329,326,100,16,0,22,0,192,0,-1--1--1,,1|(3236,1129)|
+1,328,329,314,4,16,0,22,0,192,0,-1--1--1,,1|(3170,1129)|
+11,329,0,3212,1129,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,330,Inflow IRCFRULV2,3212,1159,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,331,48,2775,1132,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,332,334,314,100,16,0,22,0,192,0,-1--1--1,,1|(2883,1132)|
+1,333,334,331,4,16,0,22,0,192,0,-1--1--1,,1|(2815,1132)|
+11,334,0,2852,1132,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,335,Outflow IRCFRULV2,2852,1162,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,336,48,3264,1234,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,337,339,336,100,16,0,22,0,192,0,-1--1--1,,1|(3234,1234)|
+1,338,339,315,4,16,0,22,0,192,0,-1--1--1,,1|(3168,1234)|
+11,339,0,3209,1234,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,340,Inflow IRCFRULV3,3209,1264,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,341,48,2775,1231,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,342,344,315,100,16,0,22,0,192,0,-1--1--1,,1|(2883,1231)|
+1,343,344,341,4,16,0,22,0,192,0,-1--1--1,,1|(2816,1231)|
+11,344,0,2853,1231,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,345,Outflow IRCFRULV3,2853,1261,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,346,Delay Time IRCFRU,2655,1104,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,347,Effectiveness IRCFRU,3392,1102,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,348,Investment in Coal Recovery Technology,3437,1005,83,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,349,Effectiveness of Investment in Coal Recovery Technology,3402,1248,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,350,349,347,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,351,348,347,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,352,315,313,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,353,313,325,1,16,0,0,0,192,0,-1--1--1,,1|(2990,970)|
+1,354,83,346,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,355,346,325,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,356,347,320,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,357,325,330,1,16,0,0,0,192,0,-1--1--1,,1|(3105,1089)|
+1,358,314,335,1,16,0,0,0,192,0,-1--1--1,,1|(2941,1080)|
+1,359,346,335,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,360,315,314,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,361,335,340,1,16,0,0,0,192,0,-1--1--1,,1|(3107,1198)|
+1,362,346,345,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,363,315,345,1,16,0,0,0,192,0,-1--1--1,,1|(2944,1183)|
+1,364,346,315,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,365,347,315,1,16,0,0,0,192,1,-1--1--1,,1|(3286,1323)|
+1,366,345,79,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,367,Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV3,2282,1863,115,21,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,368,Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV2,2286,1965,118,21,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,369,Increase in Ratio of Coal Fraction Discoverable to Undiscoverable LV1,2291,2063,119,19,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,370,48,2555,1863,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,371,373,370,100,16,0,22,0,192,0,-1--1--1,,1|(2511,1863)|
+1,372,373,367,4,16,0,22,0,192,0,-1--1--1,,1|(2431,1863)|
+11,373,0,2471,1863,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,374,Inflow IRCFDULV3,2471,1889,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,375,48,2029,1862,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,376,378,367,100,16,0,22,0,192,0,-1--1--1,,1|(2142,1862)|
+1,377,378,375,4,16,0,22,0,192,0,-1--1--1,,1|(2072,1862)|
+11,378,0,2111,1862,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,379,Outflow IRCFDULV3,2111,1887,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,380,48,2558,1969,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,381,383,380,100,16,0,22,0,192,0,-1--1--1,,1|(2518,1969)|
+1,382,383,368,4,16,0,22,0,192,0,-1--1--1,,1|(2440,1969)|
+11,383,0,2482,1969,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,384,Inflow IRCFDULV2,2482,1993,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,385,48,2029,1965,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,386,388,368,100,16,0,22,0,192,0,-1--1--1,,1|(2145,1965)|
+1,387,388,385,4,16,0,22,0,192,0,-1--1--1,,1|(2074,1965)|
+11,388,0,2116,1965,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,389,Outflow IRCFDULV2,2116,1992,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,390,48,2561,2065,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,391,393,390,100,16,0,22,0,192,0,-1--1--1,,1|(2523,2065)|
+1,392,393,369,4,16,0,22,0,192,0,-1--1--1,,1|(2446,2065)|
+11,393,0,2489,2065,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,394,Inflow IRCFDULV1,2489,2090,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,395,48,2028,2060,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,396,398,369,100,16,0,22,0,192,0,-1--1--1,,1|(2148,2060)|
+1,397,398,395,4,16,0,22,0,192,0,-1--1--1,,1|(2075,2060)|
+11,398,0,2118,2060,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,399,Outflow IRCFDULV1,2118,2084,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,400,Delay Time IRCFDU,1916,1860,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,401,Effectiveness IRCFDU,2704,2080,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,402,Effectiveness of Investment in Coal Discovery Technology,2849,2037,85,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,403,Investment in Coal Discovery Technology,2863,2136,85,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,404,402,401,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,405,403,401,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,406,71,400,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,407,401,394,1,16,0,0,0,192,0,-1--1--1,,1|(2578,2114)|
+1,408,401,367,1,16,0,0,0,192,1,-1--1--1,,1|(2610,1904)|
+1,409,369,399,1,16,0,0,0,192,0,-1--1--1,,1|(2252,2105)|
+1,410,400,399,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,411,400,389,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,412,400,379,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,413,367,369,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,414,367,368,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,415,400,367,1,16,0,0,0,192,1,-1--1--1,,1|(2117,1774)|
+1,416,399,384,1,16,0,0,0,192,0,-1--1--1,,1|(2288,2001)|
+1,417,389,374,1,16,0,0,0,192,0,-1--1--1,,1|(2277,1905)|
+1,418,368,389,1,16,0,0,0,192,0,-1--1--1,,1|(2214,2012)|
+1,419,367,379,1,16,0,0,0,192,0,-1--1--1,,1|(2167,1908)|
+1,420,379,67,1,16,0,0,0,192,0,-1--1--1,,1|(2229,1732)|
+10,421,Investment in Coal Exploration and Production Delay Variation,637,1367,98,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,422,IC Var S,681,1322,32,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,423,IC S,622,1292,17,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,424,423,422,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,425,422,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,426,421,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,427,IC Var S,1375,671,41,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,428,Investment in Coal Exploration and Production Delay Variation,1408,705,98,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,429,427,22,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,430,428,22,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,431,Relative Productivity of Investment in Coal Production Compared to Exploration Variation,1757,487,108,36,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,432,RPCPE S,1606,479,38,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,433,RPCPE Var S,1592,523,52,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,434,432,433,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,435,431,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,436,433,141,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,437,Sensitivity of Coal Price to Supply and Demand Variation,2682,603,87,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,438,SCo S,2793,627,26,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,439,SCo Var S,2735,672,40,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,440,438,439,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,441,E Var T,2527,679,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,442,441,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,443,437,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,444,439,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,445,Coal Discovery and Recovery Technology Development Time Variation,2808,1528,104,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,446,CDR Var S,2674,1571,42,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,447,CDR S,2611,1638,27,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,448,447,446,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,449,446,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,450,445,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,451,446,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,452,445,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,453,Total Investment in Coal,2869,535,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,454,Share of Upstream Investment in Total Investment Coal,2932,649,69,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,455,Share of Investment in Revenue Coal,3064,445,72,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,456,453,455,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,457,Investment in Coal Production,3067,568,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,458,Investment in Coal Exploration,3070,518,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,459,Investment in Coal Technology,3066,627,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,460,458,453,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,461,457,453,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,462,459,453,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,463,Coal Revenue,2944,393,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,464,463,455,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,465,SC Init,2673,886,25,13,3,3,0,39,-1,0,0,0,9-81-45,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+1,466,465,142,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+12,467,0,3865,955,348,305,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Total Investment in Coal,Graph
+12,468,0,3873,1581,358,310,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Coal Production,Graph
+1,469,454,453,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,470,97,87,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,471,146,142,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,472,141,18,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,473,104,102,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,474,Energy Demand,907,830,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,475,474,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,476,Market Share Coal,921,694,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,477,476,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,478,Mtoe per Ton,2131,878,57,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,479,478,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,480,toe per Mtoe,709,1552,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,481,480,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,482,480,108,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,483,484,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,484,toe per Mtoe,1522,563,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,485,484,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,486,484,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,487,Mtoe into EJ,1410,1314,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,488,487,225,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+4:Time
+5:Energy Demand EJ
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:37,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

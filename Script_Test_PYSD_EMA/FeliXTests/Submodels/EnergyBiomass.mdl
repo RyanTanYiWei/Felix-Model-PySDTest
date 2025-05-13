@@ -1,0 +1,2723 @@
+{UTF-8}
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Biomass Energy Production Indicator=
+	Biomass Energy Production*Mtoe into EJ
+	~	EJ/Year
+	~		|
+
+Reference Cost of Biomass Energy Production=
+	Variable13 Biomas Cost
+	~	$/Year
+	~	Reference cost of unit biomass energy production per year.
+	|
+
+Biomass Production=
+	Forest Biomass Production+ Energy Crops Production
+	~	Biomass ton/Year
+	~	Total biomass production from forest and energy crops.
+	|
+
+Biomass Investment Fraction Finish=
+	INITIAL TIME+Ramp Investment Period
+	~	Year
+	~	End of fractional investments in biomass energy technology.
+	|
+
+Biomass Conversion Efficiency=
+	Variable1 Biomass
+	~	Mtoe/Biomass ton
+	~	Reference Biomass Conversion Efficiency indicating the greatest \
+		possibility of turning biomass into energy.
+	|
+
+Biomass Investment Fraction Slope=
+	ABS(Biomass Final Investment-Biomass Initial Investment)/Ramp Investment Period
+	~	1/Year
+	~	Intensity of increase in investments in biomass energy technology.
+	|
+
+Total Biomass Demand=
+	Energy Demand*Market Share Biomass
+	~	Mtoe/Year
+	~	Total demand for energy from biomass.
+	|
+
+Average Annual Production per Capacity=
+	0.116
+	~	Mtoe/Year
+	~	Average annual energy production per unit of biomass installed capacity.
+	|
+
+Biomass Capacity Aging Rate=
+	Biomass Energy Installed Capacity/Biomass Capacity Aging Time
+	~	1/Year
+	~	Aging rate of biomass energy production capacities.
+	|
+
+Biomass Capacity Aging Time=
+	20
+	~	Year
+	~	Average biomass energy production capacity aging time.
+	|
+
+Biomass Capacity Factor=
+	MINBCF+(MAXBCF-MINBCF)*(Biomass Energy Technology Ratio/(Biomass Energy Technology Ratio\
+		+1))
+	~	Dmnl
+	~	Parameter indicating what fraction of Biomass Conversion Efficiency it is \
+		possible to realize with the current state of technical developments.
+	|
+
+Biomass Energy Demand to Supply Ratio=
+	Total Biomass Demand/Potential Biomass Energy Production
+	~	Dmnl
+	~	Biomass Energy Demand to Supply Ratio.
+	|
+
+Biomass Energy Installed Capacity= INTEG (
+	Installation of Biomass Capacity Rate-Biomass Capacity Aging Rate,
+		INIT BIC)
+	~	Dmnl
+	~	Installed capacity to transform biomass into energy.
+	|
+
+Biomass Energy Installed Capacity Ratio=
+	MAX(0,1-(Biomass Energy Installed Capacity/Reference Biomass Energy Installed Capacity\
+		))
+	~	Dmnl
+	~	Ratio of installed biomass energy production capacities to reference \
+		capacity.
+	|
+
+Biomass Energy Price=
+	Indicated Biomass Energy Price*Effect of Biomass Energy Demand and Supply on Price
+	~	$/Mtoe
+	~	Actual biomass energy price accounting for indicated  biomass energy price \
+		and effect of demand and supply.
+	|
+
+Biomass Energy Production=
+	Biomass Energy Production Rate
+	~	Mtoe/Year
+	~	Total biomass energy production per year.
+	|
+
+Biomass Energy Production Rate=
+	MIN(Potential Biomass Energy Production,Total Biomass Demand)
+	~	Mtoe/Year
+	~	Total biomass energy production per year accounting for demand and \
+		potential production due to available resources, production capability and \
+		technical developments.
+	|
+
+Biomass Energy Revenue=
+	Biomass Energy Production*Biomass Energy Price
+	~	$/Year
+	~	Total revenue in biomass energy market.
+	|
+
+Biomass Energy Technology Development Time=
+	50+STEP(Renewable Energy Technology Development Time Variation-50, 2020)
+	~	Year
+	~	Average time required to turn investments into concrete biomass energy \
+		efficiency technology developments. Since the simulation starts in 1900 it \
+		is a significant time.
+	|
+
+Biomass Energy Technology Ratio= INTEG (
+	Increase in Biomass Energy Technology Ratio,
+		INIT BETRN)
+	~	Dmnl
+	~	Biomass Energy Technology Ratio increased due to investments in biomass \
+		energy efficiency.
+	|
+
+Biomass Final Investment=
+	0.03+STEP(Renewable Final Investment Fraction Variation-0.03, 2020)
+	~	Dmnl
+	~	Eventual average level of investments in biomass energy technology.
+	|
+
+Biomass Infrastructure Adjustment=
+	Biomass Capacity Aging Rate+(Desired Biomass Installed Capacity-Biomass Energy Installed Capacity\
+		)/Time to Adjust Biomass Infrastructure
+	~	1/Year
+	~	Adjustment of Biomass Infrastructure to the desired level over a specified \
+		adjustment time and accounting for constant infrastructure decrease due to \
+		aging process.
+	|
+
+Biomass Initial Investment=
+	0
+	~	Dmnl
+	~	Initial level of fractional investments in biomass energy technology.
+	|
+
+Biomass Installation Efficiency=
+	MINBIE+(MAXBIE-MINBIE)*(Biomass Installation Technology Ratio/(Biomass Installation Technology Ratio\
+		+1))
+	~	Dmnl
+	~	Parameter indicating biomass energy capacity installation efficiency at \
+		the current state of technical developments.
+	|
+
+Biomass Installation Technology Development Time=
+	100+STEP(Renewable Installation Technology Development Time Variation-100, 2020)
+	~	Year
+	~	Average time required to turn investments into concrete biomass energy \
+		production capacity. Since the simulation starts in 1900 it is a \
+		significant time.
+	|
+
+Biomass Installation Technology Ratio= INTEG (
+	Increase in Biomass Installation Technology Ratio,
+		INIT BITRN)
+	~	Dmnl
+	~	Biomass Installation Technology Ratio increased due to investments in \
+		biomass energy capacity efficiency.
+	|
+
+Biomass Investment Fraction Start=
+	INITIAL TIME
+	~	Year
+	~	Start of investments in biomass energy technology.
+	|
+
+Biomass Learning Curve Strength=
+	LN(1 - Fraction for Biomass Learning Curve Strength)/LN(2)
+	~	Dmnl
+	~	Strength of biomass learning curve with which the biomass energy costs are \
+		influenced..
+	|
+
+Biomass Production to Installation Ratio=
+	Biomass Energy Production/Biomass Energy Installed Capacity
+	~	Mtoe/Year
+	~	Ratio of biomass energy production to available production capacity.
+	|
+
+Cost of Biomass Energy=
+	Unit Cost of Biomass Capacity Installation+Unit Cost of Biomass Energy Production
+	~	$/Mtoe
+	~	Cost of biomass energy production assuming an impact of learning curve.
+	|
+
+Cumulative Biomass Energy Produced= INTEG (
+	Biomass Energy Production,
+		INIT Cumulative Biomass Produced
+		)
+	~	Mtoe
+	~	Cumulative biomass energy that has been produced.
+	|
+
+Delay Time IBETR=
+	Biomass Energy Technology Development Time/3
+	~	Year
+	~		|
+
+Delay Time IBITR=
+	Biomass Installation Technology Development Time/3
+	~	Year
+	~		|
+
+Desired Biomass Energy Gross Margin=
+	0.2
+	~	Dmnl
+	~	Desired Gross Margin per unit of biomass energy.
+	|
+
+Desired Biomass Installed Capacity=
+	Total Biomass Demand/Efficiency of Biomass Installed Capacity
+	~	Dmnl
+	~	Desired Biomass Installed Capacity accounting for Total Biomass Demand and \
+		Efficiency of Biomass Installed Capacity.
+	|
+
+Effect of Biomass Energy Demand and Supply on Price=
+	(Total Biomass Demand/Potential Biomass Energy Production)^Sensitivity of Biomass Energy Price to Supply and Demand
+	~	Dmnl
+	~	Effect of Biomass Demand and Supply ratio on actual biomass energy price.
+	|
+
+Effectiveness IBETR=
+	Investment in Biomass Energy Efficiency*Effectiveness of Investment in Biomass Energy Technology
+	~	1/Year
+	~		|
+
+Effectiveness IBITR=
+	Investment in Biomass Energy Installation*Effectiveness of Investment in Biomass Installation Technology
+	~	1/Year
+	~		|
+
+Effectiveness of Investment in Biomass Energy Technology=
+	1e-09+STEP(Effectiveness of Investment in Renewable Energy Technology Variation-1e-09\
+		, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to biomass energy efficiency \
+		technology development.
+	|
+
+Effectiveness of Investment in Biomass Installation Technology=
+	1e-10+STEP(Effectiveness of Investment in Renewable Installation Technology Variation\
+		-1e-10, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to biomass energy capacity efficiency \
+		technology development.
+	|
+
+Effectiveness of Investment in Renewable Energy Technology Variation=
+	1e-09
+	~	1/$
+	~		|
+
+Effectiveness of Investment in Renewable Installation Technology Variation=
+	1e-10
+	~	1/$
+	~		|
+
+Efficiency of Biomass Installed Capacity=
+	ZIDZ(Potential Biomass Energy Production from Infrastructure,Biomass Energy Installed Capacity\
+		)
+	~	Mtoe/Year
+	~	Total production efficiency of Biomass Installed Capacity.
+	|
+
+Fraction for Biomass Learning Curve Strength=
+	0.01+STEP(Fraction for Biomass Learning Curve Strength Variation-0.01, 2020)
+	~	Dmnl
+	~	Fraction for Biomass Learning Curve Strength indicating by what percentage \
+		the biomass energy cost will drop for each doubling of biomass installed \
+		capacity.
+	|
+
+Fraction for Biomass Learning Curve Strength Variation=
+	0.01
+	~	Dmnl
+	~	Fraction for Biomass Learning Curve Strength indicating by what percentage \
+		the biomass energy cost will drop for each doubling of biomass installed \
+		capacity.
+	|
+
+Fraction Invested in Biomass Energy Installation=
+	Table for FIBEI(Biomass Installation Efficiency)
+	~	Dmnl
+	~	Fraction of investments in biomass energy technology dedicated to capacity.
+	|
+
+Fraction of Revenue Invested in Biomass Technology=
+	RAMP(Biomass Investment Fraction Slope, Biomass Investment Fraction Start , Biomass Investment Fraction Finish\
+		)
+	~	Dmnl
+	~	Parameter to take into account historical increase of the biomass energy \
+		significance and over time greater resources dedicated to the technology \
+		development.
+	|
+
+Impact of Learning on Biomass Unit Cost of Technology=
+	(Biomass Energy Installed Capacity/INIT BIC)^Biomass Learning Curve Strength
+	~	Dmnl
+	~	Impact of learning curve on biomass energy cost.
+	|
+
+Increase in Biomass Energy Technology Ratio=
+	Outflow IBETRLV3
+	~	1/Year
+	~	Increase in Biomass Energy Technology Ratio due to investments in biomass \
+		energy efficiency technology and their productivity.
+	|
+
+Increase in Biomass Energy Technology Ratio LV1= INTEG (
+	Inflow IBETRLV1-Outflow IBETRLV1,
+		Increase in Biomass Energy Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Biomass Energy Technology Ratio LV2= INTEG (
+	Inflow IBETRLV2-Outflow IBETRLV2,
+		Increase in Biomass Energy Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Biomass Energy Technology Ratio LV3= INTEG (
+	Inflow IBETRLV3-Outflow IBETRLV3,
+		Effectiveness IBETR*Delay Time IBETR)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Biomass Installation Technology Ratio=
+	Outflow IBITRLV3
+	~	1/Year
+	~	Increase in Biomass Installation Technology Ratio due to investments in \
+		biomass energy capacity.
+	|
+
+Increase in Biomass Installation Technology Ratio LV1= INTEG (
+	Inflow IBITRLV1-Outflow IBITRLV1,
+		Increase in Biomass Installation Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Biomass Installation Technology Ratio LV2= INTEG (
+	Inflow IBITRLV2-Outflow IBITRLV2,
+		Increase in Biomass Installation Technology Ratio LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Biomass Installation Technology Ratio LV3= INTEG (
+	Inflow IBITRLV3-Outflow IBITRLV3,
+		Effectiveness IBITR*Delay Time IBITR)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Indicated Biomass Energy Price=
+	Cost of Biomass Energy*(1+Desired Biomass Energy Gross Margin)
+	~	$/Mtoe
+	~	Indicated biomass energy price accounting for unit cost and gross margin.
+	|
+
+Inflow IBETRLV1=
+	Effectiveness IBETR
+	~	1/Year
+	~		|
+
+Inflow IBETRLV2=
+	Outflow IBETRLV1
+	~	1/Year
+	~		|
+
+Inflow IBETRLV3=
+	Outflow IBETRLV2
+	~	1/Year
+	~		|
+
+Inflow IBITRLV1=
+	Effectiveness IBITR
+	~	1/Year
+	~		|
+
+Inflow IBITRLV2=
+	Outflow IBITRLV1
+	~	1/Year
+	~		|
+
+Inflow IBITRLV3=
+	Outflow IBITRLV2
+	~	1/Year
+	~		|
+
+INIT BETRN=
+	0
+	~	Dmnl
+	~	Initial Biomass Energy Technology Ratio.
+	|
+
+INIT BIC=
+	40
+	~	Dmnl
+	~	Initial installed capacity to transform biomass into energy.
+	|
+
+INIT BITRN=
+	0
+	~	Dmnl
+	~	Initial Biomass Installation Technology Ratio.
+	|
+
+INIT Cumulative Biomass Produced=
+	0
+	~	
+	~		|
+
+INIT Unit Cost of Biomass Capacity Installation=
+	2e+06
+	~	$/Mtoe
+	~	Initial unit cost per unit biomass capacity installation.
+	|
+
+Installation of Biomass Capacity Rate=
+	MAX(0,Biomass Infrastructure Adjustment*Productivity of Investment in Biomass Capacity Installation\
+		)
+	~	1/Year
+	~	Rate of new biomass capacity installation.
+	|
+
+Investment in Biomass Capacity=
+	Installation of Biomass Capacity Rate*Unit Cost of Biomass Capacity Installation*Efficiency of Biomass Installed Capacity\
+		*Biomass Capacity Aging Time
+	~	$/Year
+	~	Amount of resources dedicated to biomass capacity development.
+	|
+
+Investment in Biomass Energy Efficiency=
+	Investment in Biomass Energy Technology*(1-Fraction Invested in Biomass Energy Installation\
+		)
+	~	$/Year
+	~	Total investments in biomass energy efficiency technology.
+	|
+
+Investment in Biomass Energy Installation=
+	Investment in Biomass Energy Technology*Fraction Invested in Biomass Energy Installation
+	~	$/Year
+	~	Total investments in biomass energy capacity.
+	|
+
+Investment in Biomass Energy Technology=
+	Fraction of Revenue Invested in Biomass Technology*Biomass Energy Revenue
+	~	$/Year
+	~	Investments in development of biomass energy efficiency technology and \
+		production capability.
+	|
+
+MINBCF=
+	0.4
+	~	Dmnl
+	~	Minimal and initial value of Biomass Capacity Factor.
+	|
+
+MINBIE=
+	0.5
+	~	Dmnl
+	~	Minimal and initial value of Biomass Installation Efficiency factor.
+	|
+
+Outflow IBETRLV1=
+	Increase in Biomass Energy Technology Ratio LV1/Delay Time IBETR
+	~	1/Year
+	~		|
+
+Outflow IBETRLV2=
+	Increase in Biomass Energy Technology Ratio LV2/Delay Time IBETR
+	~	1/Year
+	~		|
+
+Outflow IBETRLV3=
+	Increase in Biomass Energy Technology Ratio LV3/Delay Time IBETR
+	~	1/Year
+	~		|
+
+Outflow IBITRLV1=
+	Increase in Biomass Installation Technology Ratio LV1/Delay Time IBITR
+	~	1/Year
+	~		|
+
+Outflow IBITRLV2=
+	Increase in Biomass Installation Technology Ratio LV2/Delay Time IBITR
+	~	1/Year
+	~		|
+
+Outflow IBITRLV3=
+	Increase in Biomass Installation Technology Ratio LV3/Delay Time IBITR
+	~	1/Year
+	~		|
+
+Potential Biomass Energy Production=
+	MIN(Potential Biomass Energy Production from Infrastructure,Potential Biomass Energy Production from Resources\
+		)
+	~	Mtoe/Year
+	~	Potential biomass energy production per year due to available resources, \
+		production capability and technical developments.
+	|
+
+Potential Biomass Energy Production from Infrastructure=
+	Biomass Energy Installed Capacity*Average Annual Production per Capacity
+	~	Mtoe/Year
+	~	Potential biomass energy production per year due to available production \
+		capability.
+	|
+
+Potential Biomass Energy Production from Resources=
+	Biomass Production*Biomass Conversion Efficiency*Biomass Capacity Factor
+	~	Mtoe/Year
+	~	Potential biomass energy production per year due to available resources \
+		and technical developments.
+	|
+
+Productivity of Investment in Biomass Capacity Installation=
+	Biomass Energy Installed Capacity Ratio*Biomass Installation Efficiency
+	~	Dmnl
+	~	Productivity of biomass capacity installation taking into account the \
+		level of available capacities and technology development state.
+	|
+
+Reference Biomass Energy Installed Capacity=
+	5e+11
+	~	Dmnl
+	~	Reference biomass capacity.
+	|
+
+Renewable Energy Technology Development Time Variation=
+	50
+	~	Year
+	~		|
+
+Renewable Final Investment Fraction Variation=
+	0.03
+	~	
+	~		|
+
+Renewable Installation Technology Development Time Variation=
+	100
+	~	Year
+	~		|
+
+Sensitivity of Biomass Energy Price to Supply and Demand=
+	0
+	~	Dmnl
+	~	Sensitivity of Biomass Energy Price to Supply and Demand ratio.
+	|
+
+Table for FIBEI(
+	[(0,0)-(1,1)],(0,0.8),(0.2,0.8),(0.4,0.7),(0.6,0.5),(0.8,0.2),(1,0))
+	~	Dmnl
+	~	Table determining order by which technology investments are dedicated to \
+		energy and installation efficiency. For small Biomass Installation \
+		Efficiency, in order to secure sufficient production capacity, more \
+		investments are directed to infrastructure. Once the Biomass Installation \
+		Efficiency increases the investments are redirected to energy efficiency \
+		technologies.
+	|
+
+Time to Adjust Biomass Infrastructure=
+	5
+	~	Year
+	~	Time to adjust Biomass Infrastructure to the desired level.
+	|
+
+Unit Cost of Biomass Capacity Installation=
+	INIT Unit Cost of Biomass Capacity Installation*Impact of Learning on Biomass Unit Cost of Technology
+	~	$/Mtoe
+	~	Unit Cost of Biomass Capacity Installation. Determined by Productivity of \
+		Investment in Biomass Capacity Installation.
+	|
+
+Unit Cost of Biomass Energy Production=
+	Reference Cost of Biomass Energy Production/Biomass Production to Installation Ratio
+	~	$/Mtoe
+	~	Unit cost of biomass capacity installation per energy unit.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+MAXBCF=
+	1
+	~	Dmnl
+	~	Maximal possible value of Biomass Capacity Factor.
+	|
+
+MAXBIE=
+	1
+	~	Dmnl
+	~	Maximal value of Biomass Installation Efficiency factor.
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_Biomass
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,76,0
+10,1,Biomass Energy Installed Capacity,631,825,64,30,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,2,48,350,822,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(511,822)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(401,822)|
+11,5,0,449,822,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Installation of Biomass Capacity Rate,449,853,68,27,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,7,Biomass Capacity Factor,1098,697,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,8,48,875,824,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,9,11,8,4,0,0,22,0,0,0,-1--1--1,,1|(824,824)|
+1,10,11,1,100,0,0,22,0,0,0,-1--1--1,,1|(733,824)|
+11,11,0,778,824,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,12,Biomass Capacity Aging Rate,778,851,68,18,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,13,1,12,1,0,0,0,0,64,0,-1--1--1,,1|(699,874)|
+10,14,Biomass Capacity Aging Time,923,909,68,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,15,14,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,16,Biomass Energy Price,1173,375,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,17,Biomass Energy Revenue,1173,472,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,18,16,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,19,INIT BIC,704,898,30,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,20,19,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+12,21,48,375,282,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,22,23,21,100,0,0,22,0,0,0,-1--1--1,,1|(426,282)|
+11,23,0,474,282,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,24,Biomass Energy Production,474,306,61,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,25,Cumulative Biomass Energy Produced,656,281,58,29,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,26,23,25,4,0,0,22,0,0,0,-1--1--1,,1|(539,282)|
+10,27,Biomass Energy Technology Ratio,1261,696,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,28,48,1498,696,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,31,27,4,0,0,22,0,0,0,-1--1--1,,1|(1362,696)|
+1,30,31,28,100,0,0,22,0,0,0,-1--1--1,,1|(1453,696)|
+11,31,0,1412,696,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,32,Increase in Biomass Energy Technology Ratio,1412,728,74,27,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,INIT BETRN,1261,745,44,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Effectiveness of Investment in Biomass Energy Technology,1325,812,82,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,35,Biomass Energy Technology Development Time,1510,813,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,36,Cost of Biomass Energy,1051,172,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,37,Desired Biomass Energy Gross Margin,1273,172,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,38,Indicated Biomass Energy Price,1173,270,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,39,37,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,40,36,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,41,33,27,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,42,MINBCF,1171,757,32,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,43,MAXBCF,1171,619,36,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,44,42,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,45,43,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,46,27,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,47,Total Biomass Demand,329,539,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,48,Desired Biomass Installed Capacity,329,706,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,49,47,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,50,Efficiency of Biomass Installed Capacity,513,706,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,51,1,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,52,50,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,53,Potential Biomass Energy Production from Infrastructure,631,591,86,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,54,1,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,55,24,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,56,53,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,57,Investment in Biomass Capacity,93,939,68,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,58,Productivity of Investment in Biomass Capacity Installation,449,1087,92,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,59,Unit Cost of Biomass Capacity Installation,925,-6,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,60,Effect of Biomass Energy Demand and Supply on Price,1348,375,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,61,Sensitivity of Biomass Energy Price to Supply and Demand,1348,278,83,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,62,61,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,63,Biomass Energy Demand to Supply Ratio,1636,375,68,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,64,Total Biomass Demand,1510,304,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,65,64,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,66,64,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,67,38,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,68,Biomass Infrastructure Adjustment,144,706,47,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,69,48,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,70,1,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,71,Biomass Energy Installed Capacity,474,85,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,72,Biomass Capacity Aging Rate,-28,806,57,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,73,72,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,74,Biomass Energy Production Rate,474,424,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,75,53,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,76,47,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,77,74,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,78,Biomass Production to Installation Ratio,489,172,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,Unit Cost of Biomass Energy Production,826,172,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,80,79,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,81,71,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,82,23,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,83,Average Annual Production per Capacity,696,706,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,84,83,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,85,Investment in Biomass Energy Technology,1802,830,61,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,86,Fraction of Revenue Invested in Biomass Technology,1802,944,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,87,86,85,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,88,Biomass Installation Efficiency,1099,974,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,89,Biomass Installation Technology Ratio,1262,974,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,90,48,1499,974,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,91,93,89,4,0,0,22,0,0,0,-1--1--1,,1|(1363,974)|
+1,92,93,90,100,0,0,22,0,0,0,-1--1--1,,1|(1454,974)|
+11,93,0,1413,974,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,94,Increase in Biomass Installation Technology Ratio,1413,1006,82,27,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,95,INIT BITRN,1262,1023,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,96,Biomass Installation Technology Development Time,1511,1091,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,97,95,89,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,98,MINBIE,1172,1090,28,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,99,MAXBIE,1170,897,32,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,100,98,88,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,101,99,88,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,102,89,88,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,103,Investment in Biomass Energy Efficiency,1626,728,61,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,104,Investment in Biomass Energy Installation,1627,1006,61,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,105,85,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,106,85,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,107,Fraction Invested in Biomass Energy Installation,1802,1098,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,108,Table for FIBEI,1802,1194,54,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,109,88,107,1,0,0,0,0,64,0,-1--1--1,,1|(1230,1100)|
+1,110,108,107,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,111,107,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,112,107,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,113,Biomass Investment Fraction Finish,1965,944,73,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,114,113,86,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,115,Biomass Investment Fraction Slope,1965,829,73,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,116,115,86,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,117,Biomass Investment Fraction Start,1965,1026,71,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,118,117,86,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,119,INITIAL TIME,2129,1026,56,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,120,119,117,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,121,119,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,122,Biomass Initial Investment,2129,797,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,123,Biomass Final Investment,2129,862,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,124,122,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,125,123,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,126,Biomass Energy Revenue,1801,729,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,127,126,85,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,128,Potential Biomass Energy Production from Resources,919,593,86,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,129,Potential Biomass Energy Production,765,503,68,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,130,128,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,131,Biomass Conversion Efficiency,1084,549,42,27,8,3,0,36,0,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+1,132,131,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,133,Biomass Production,919,698,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,134,133,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,135,129,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,136,Potential Biomass Energy Production,1510,450,72,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,137,136,60,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,138,136,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,139,88,58,1,0,0,0,0,64,0,-1--1--1,,1|(821,1155)|
+1,140,78,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,141,Reference Biomass Energy Installed Capacity,627,1061,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,142,1,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,143,141,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,144,Biomass Energy Installed Capacity Ratio,625,954,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,145,144,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,146,7,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,147,Impact of Learning on Biomass Unit Cost of Technology,656,-6,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,148,Biomass Learning Curve Strength,474,-77,67,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,149,148,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,150,Fraction for Biomass Learning Curve Strength,290,-77,77,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,151,150,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,152,71,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,153,INIT BIC,474,-6,39,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,154,153,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,155,147,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,156,6,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,58,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,158,68,5,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,159,Unit Cost of Biomass Capacity Installation,92,1050,68,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,160,159,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,161,59,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,162,INIT Unit Cost of Biomass Capacity Installation,920,-114,68,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,163,162,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,164,Reference Cost of Biomass Energy Production,771,74,67,27,8,3,0,36,0,0,0,0,0-0-0,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+1,165,164,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,60,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,167,Efficiency of Biomass Installed Capacity,-85,939,65,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,168,167,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,169,Biomass Capacity Aging Time,-85,1050,57,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,170,169,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,171,Effectiveness of Investment in Biomass Installation Technology,1322,1091,82,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,172,Time to Adjust Biomass Infrastructure,-24,691,53,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,173,172,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,174,Biomass Energy Production Indicator,202,258,73,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,175,24,174,1,0,0,0,0,128,0,-1--1--1,,1|(329,308)|
+10,176,Effectiveness of Investment in Renewable Energy Technology Variation,1313,879,103,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,177,Effectiveness of Investment in Renewable Installation Technology Variation,1280,1175,103,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,178,Renewable Energy Technology Development Time Variation,1528,885,92,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,179,Renewable Installation Technology Development Time Variation,1561,1176,92,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,180,176,34,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,181,178,35,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,182,177,171,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,183,179,96,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,184,Renewable Final Investment Fraction Variation,2274,867,71,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,185,184,123,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,186,Fraction for Biomass Learning Curve Strength Variation,124,-73,89,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,187,186,150,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,188,INIT Cumulative Biomass Produced,819,281,71,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,189,188,25,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,190,Increase in Biomass Installation Technology Ratio LV3,1231,1266,86,30,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,191,Increase in Biomass Installation Technology Ratio LV2,1214,1376,86,30,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,192,Increase in Biomass Installation Technology Ratio LV1,1224,1489,86,30,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,193,48,985,1262,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,194,196,193,100,16,0,22,0,192,0,-1--1--1,,1|(1029,1262)|
+1,195,196,190,4,16,0,22,0,192,0,-1--1--1,,1|(1110,1262)|
+11,196,0,1070,1262,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,197,Inflow IBITRLV3,1070,1292,56,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,198,48,1443,1266,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,199,201,190,100,16,0,22,0,192,0,-1--1--1,,1|(1343,1266)|
+1,200,201,198,4,16,0,22,0,192,0,-1--1--1,,1|(1407,1266)|
+11,201,0,1375,1266,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,202,Outflow IBITRLV3,1375,1296,35,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,203,48,999,1378,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,204,206,203,100,16,0,22,0,192,0,-1--1--1,,1|(1035,1378)|
+1,205,206,191,4,16,0,22,0,192,0,-1--1--1,,1|(1101,1378)|
+11,206,0,1068,1378,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,207,Inflow IBITRLV2,1068,1408,56,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,208,48,1452,1376,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,209,211,191,100,16,0,22,0,192,0,-1--1--1,,1|(1332,1376)|
+1,210,211,208,4,16,0,22,0,192,0,-1--1--1,,1|(1409,1376)|
+11,211,0,1371,1376,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,212,Outflow IBITRLV2,1371,1406,35,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,213,48,993,1496,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,214,216,213,100,16,0,22,0,192,0,-1--1--1,,1|(1033,1496)|
+1,215,216,192,4,16,0,22,0,192,0,-1--1--1,,1|(1107,1496)|
+11,216,0,1070,1496,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,217,Inflow IBITRLV1,1070,1526,56,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,218,48,1445,1489,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,219,221,192,100,16,0,22,0,192,0,-1--1--1,,1|(1338,1489)|
+1,220,221,218,4,16,0,22,0,192,0,-1--1--1,,1|(1406,1489)|
+11,221,0,1372,1489,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,222,Outflow IBITRLV1,1372,1519,35,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,223,Effectiveness IBITR,834,1386,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,224,Delay Time IBITR,1594,1372,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,225,Investment in Biomass Energy Installation,651,1328,61,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,226,Effectiveness of Investment in Biomass Installation Technology,642,1416,86,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,227,Biomass Installation Technology Development Time,1757,1380,78,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,228,225,223,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,229,226,223,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,230,190,202,1,16,0,0,0,192,0,-1--1--1,,1|(1319,1322)|
+1,231,191,212,1,16,0,0,0,192,0,-1--1--1,,1|(1282,1424)|
+1,232,192,222,1,16,0,0,0,192,0,-1--1--1,,1|(1284,1563)|
+1,233,224,222,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,234,224,212,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,235,224,202,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,236,224,190,1,16,0,0,0,192,1,-1--1--1,,1|(1451,1208)|
+1,237,227,224,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,238,223,217,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,239,223,190,1,16,0,0,0,192,1,-1--1--1,,1|(1032,1207)|
+1,240,222,207,1,16,0,0,0,192,0,-1--1--1,,1|(1213,1435)|
+1,241,212,197,1,16,0,0,0,192,0,-1--1--1,,1|(1237,1322)|
+1,242,190,192,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,243,190,191,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,244,202,94,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,245,Increase in Biomass Energy Technology Ratio LV1,1812,497,156,14,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,246,Increase in Biomass Energy Technology Ratio LV2,1813,578,163,13,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,247,Increase in Biomass Energy Technology Ratio LV3,1815,645,162,15,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,248,48,2101,494,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,249,251,248,100,16,0,22,0,192,0,-1--1--1,,1|(2063,494)|
+1,250,251,245,4,16,0,22,0,192,0,-1--1--1,,1|(1995,494)|
+11,251,0,2029,494,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,252,Inflow IBETRLV1,2029,524,40,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,253,48,1501,497,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,254,256,245,100,16,0,22,0,192,0,-1--1--1,,1|(1622,497)|
+1,255,256,253,4,16,0,22,0,192,0,-1--1--1,,1|(1544,497)|
+11,256,0,1583,497,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,257,Outflow IBETRLV1,1583,527,40,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,258,48,2116,577,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,259,261,258,100,16,0,22,0,192,0,-1--1--1,,1|(2076,577)|
+1,260,261,246,4,16,0,22,0,192,0,-1--1--1,,1|(2005,577)|
+11,261,0,2041,577,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,262,Inflow IBETRLV2,2041,607,40,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,263,48,1505,578,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,264,266,246,100,16,0,22,0,192,0,-1--1--1,,1|(1619,578)|
+1,265,266,263,4,16,0,22,0,192,0,-1--1--1,,1|(1545,578)|
+11,266,0,1582,578,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,267,Outflow IBETRLV2,1582,608,40,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,268,48,2127,646,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,269,271,268,100,16,0,22,0,192,0,-1--1--1,,1|(2085,646)|
+1,270,271,247,4,16,0,22,0,192,0,-1--1--1,,1|(2009,646)|
+11,271,0,2047,646,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,272,Inflow IBETRLV3,2047,676,40,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,273,48,1498,645,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,274,276,247,100,16,0,22,0,192,0,-1--1--1,,1|(1619,645)|
+1,275,276,273,4,16,0,22,0,192,0,-1--1--1,,1|(1541,645)|
+11,276,0,1580,645,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,277,Outflow IBETRLV3,1580,675,40,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,278,Delay Time IBETR,1384,553,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,279,Effectiveness IBETR,2262,568,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,280,Investment in Biomass Energy Efficiency,2412,520,61,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,281,Effectiveness of Investment in Biomass Energy Technology,2423,615,82,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,282,35,278,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,283,280,279,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,284,281,279,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,285,279,252,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,286,279,247,1,16,0,0,0,192,1,-1--1--1,,1|(2138,744)|
+1,287,247,277,1,16,0,0,0,192,0,-1--1--1,,1|(1679,680)|
+1,288,246,267,1,16,0,0,0,192,0,-1--1--1,,1|(1684,556)|
+1,289,245,257,1,16,0,0,0,192,0,-1--1--1,,1|(1683,474)|
+1,290,257,262,1,16,0,0,0,192,0,-1--1--1,,1|(1857,545)|
+1,291,267,272,1,16,0,0,0,192,0,-1--1--1,,1|(1863,616)|
+1,292,278,257,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,293,278,267,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,294,278,277,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,295,278,247,1,16,0,0,0,192,1,-1--1--1,,1|(1479,657)|
+1,296,247,245,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,297,247,246,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,298,277,32,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,299,Ramp Investment Period,2171,943,68,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,300,299,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,301,Variable1 Biomass,1218,550,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,302,301,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,303,Energy Crops Production,987,748,56,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,304,303,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,305,Forest Biomass Production,845,770,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,306,305,133,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,307,Energy Demand,194,578,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,308,307,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,309,Market Share Biomass,182,506,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,310,309,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,311,Variable13 Biomas Cost,627,119,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,312,311,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,313,Ramp Investment Period,1965,865,68,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,314,313,115,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,315,299,115,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,316,Mtoe into EJ,201,332,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,317,316,174,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+4:Time
+5:Mtoe into EJ
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:76,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

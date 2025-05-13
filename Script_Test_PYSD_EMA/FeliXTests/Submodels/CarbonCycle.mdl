@@ -1,0 +1,3363 @@
+{UTF-8}
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+INIT C in Atmosphere=
+	Atmospheric CO2 Law Dome 1850*GtC to TonC*ppm to GtC
+	~	TonC
+	~	Initial carbon in atmosphere.
+	|
+
+Atmospheric Concentration CO2=
+	C in Atmosphere/GtC to TonC/ppm to GtC
+	~	ppm
+	~	Converts weight of CO2 in atmosphere to concentration (ppm CO2). Source of \
+		Historical Data:
+		Etheridge, D.M., Steele, L.P., Langenfelds, R.L., Francey, R.J., Barnola, \
+		J.-M., Morgan, V.I. 1998. Historical CO2 records from the Law Dome DE08, \
+		DE08-2, and DSS ice cores. In Trends: A Compendium of Data on Global \
+		Change. Carbon Dioxide Information Analysis Center, Oak Ridge National \
+		Laboratory, U.S. Department of Energy, Oak Ridge, Tenn., U.S.A
+	|
+
+Default C Intensity of Emission from Gas=
+	Normal C Intensity of Emission from Gas*Ton C to kg CO2/Mtoe to GJ
+	~	kgCO2/GJ
+	~	Initial carbon intensity of production from gas technologies.
+	|
+
+Default C Intensity of Emission from Coal=
+	Normal C Intensity of Emission from Coal*Ton C to kg CO2/Mtoe to GJ
+	~	kgCO2/GJ
+	~	Initial carbon intensity of production from coal technologies.
+	|
+
+Default C Intensity of Emission from Oil=
+	Normal C Intensity of Emission from Oil*Ton C to kg CO2/Mtoe to GJ
+	~	kgCO2/GJ
+	~	Initial carbon intensity of production from oil technologies.
+	|
+
+Default C Intensity of Emission from Biomass=
+	C Intensity of Emission from Biomass Energy*Ton C to kg CO2/Mtoe to GJ
+	~	kgCO2/GJ
+	~	Carbon intensity from biomass energy production and it use.
+	|
+
+Total Agirculture CO2 Emissions Indicator=
+	Total CO2 Emissions from Agriculture*TonCO2 to Million ton CO2
+	~	Million ton CO2/Year
+	~		|
+
+Total CO2 Emissions Indicator=
+	(Total C Emission-Carbon Removal Rate)*CO2 to C*TonCO2 to Million ton CO2
+	~	Million ton CO2/Year
+	~		|
+
+Total CO2 Emissions from the Energy Sector Indicator=
+	Total C Emission from the Energy Sector*CO2 to C*TonCO2 to Million ton CO2
+	~	Million ton CO2/Year
+	~		|
+
+Total Land Use CO2 Emissions Indicator=
+	Total CO2 Emissions from Land Use*TonCO2 to Million ton CO2
+	~	Million ton CO2/Year
+	~		|
+
+Shock emission addition=
+	IF THEN ELSE(Shock Scenario SWITCH=0, 0,
+	                                      Marginal emission / CO2 to C)
+	~	TonC/Year
+	~	1 Ton CO2 is equaivalent to 1 / 3.644
+	|
+
+Total CO2 Emissions from Land Use=
+	C Emission from Land Use*CO2 to C
+	~	TonCO2/Year
+	~		|
+
+Agricultural Land Change=
+	Agricultural Land/INIT Agricultural Land
+	~	Dmnl
+	~	Ratio of agricultural land area change compared to its initial area in \
+		year 1900.
+	|
+
+Total Renewable Energy Production=
+	Biomass Energy Production+Solar Energy Production+Wind Energy Production
+	~	Mtoe/Year
+	~		|
+
+C Emission from Oil Energy=
+	Oil Production*C Intensity of Emission from Oil
+	~	TonC/Year
+	~	Total carbon emission from oil production and it use.
+	|
+
+C Emission from Solar Energy=
+	Solar Energy Production*C Intensity of Emission from Solar Energy
+	~	TonC/Year
+	~	Total carbon emission from solar energy production and it use.
+	|
+
+C Emission from Wind Energy=
+	Wind Energy Production*C Intensity of Emission from Wind Energy
+	~	TonC/Year
+	~	Total carbon emission from wind energy production and it use.
+	|
+
+Forest Land Change=
+	Forest Land/INIT Forest Land
+	~	Dmnl
+	~	Ratio of forest land area change compared to its initial area in year 1900.
+	|
+
+Emission from Fossil Fuels per Capita=
+	Total C Emission from Fossil Fuels/Population
+	~	TonC/(Year*Person)
+	~	Carbon emission from energy production and it use per capita.
+	|
+
+C Emission from Biomass Energy=
+	Biomass Energy Production*C Intensity of Emission from Biomass Energy
+	~	TonC/Year
+	~	Total carbon emission from biomass energy production and it use.
+	|
+
+C Emission from Coal Energy=
+	Coal Production*C Intensity of Emission from Coal
+	~	TonC/Year
+	~	Total carbon emission from coal energy production and it use.
+	|
+
+C Emission from Gas Energy=
+	Gas Production*C Intensity of Emission from Gas
+	~	TonC/Year
+	~	Total carbon emission from gas energy production and it use.
+	|
+
+Emission per Capita=
+	Total C Emission/Population
+	~	TonC/(Year*Person)
+	~	Emissions of carbon from energy use and other sources per capita.
+	|
+
+Total Agricultural and Land Use Emissions=
+	Total CO2 Emissions from Land Use+Total CO2 Emissions from Agriculture
+	~	TonCO2/Year
+	~		|
+
+Effect of Temp on C Flux Atm ML=
+	1-Sensitivity of C flux to temp*Temperature Change from Preindustrial
+	~	Dmnl
+	~		|
+
+Atmospheric CO2 Law Dome 1850=
+	284.7
+	~	ppm
+	~	Historical CO2 record derived from a spline fit (20 year cutoff) of the \
+		Law Dome DE08 and DE08-2 ice cores for year 1850
+	|
+
+Biomass Res Time=
+	10.6
+	~	Year
+	~	Average residence time of carbon in biomass.
+	|
+
+Biostimulation Coefficient=
+	0.35
+	~	Dmnl
+	~	Coefficient for response of primary production to carbon concentration.
+	|
+
+Buff C Coeff=
+	3.92
+	~	Dmnl
+	~	Coefficient of carbon concentration influence on buffer factor.
+	|
+
+Buffer Factor=
+	Ref Buffer Factor*(C in Mixed Layer/Preindustrial C in Mixed Layer)^Buff C Coeff
+	~	Dmnl
+	~	Buffer factor for atmosphere/mixed ocean carbon equilibration.
+	|
+
+C Concentration Ratio=
+	C in Atmosphere/INIT C in Atmosphere
+	~	Dmnl
+	~	Current to initial carbon concentration in atmosphere.
+	|
+
+C Emission from Land Use=
+	(C Intensity of Emissions from Agricultural Land Use*Agricultural Land Change) + ((2\
+		-Forest Land Change)*C Intensity of Emissions from Forest Land Use)
+	~	TonC/Year
+	~	Total carbon emission from forest and agricultural land use change. Source of \
+		Historical Data:
+		Houghton, R.A. 2008. Carbon Flux to the Atmosphere from Land-Use Changes: \
+		1850-2005. In TRENDS: A Compendium of Data on Global Change. Carbon \
+		Dioxide Information Analysis Center, Oak Ridge National Laboratory, U.S. \
+		Department of Energy, Oak Ridge, Tenn., U.S.A.
+	|
+
+C in Atmosphere= INTEG (
+	Flux Biomass to Atmosphere+Flux Humus to Atmosphere+Total C Emission-Carbon Removal Rate\
+		-Flux Atmosphere to Biomass-Flux Atmosphere to Ocean-Carbon Removal Rate,
+		INIT C in Atmosphere)
+	~	TonC
+	~	Carbon in atmosphere.
+	|
+
+C in Biomass= INTEG (
+	Flux Atmosphere to Biomass-Flux Biomass to Atmosphere-Flux Biomass to Humus,
+		INIT C in Biomass)
+	~	TonC
+	~	Carbon in biosphere (biomass, litter, and humus)
+	|
+
+C in Deep Ocean 1= INTEG (
+	Diffusion Flux 1-Diffusion Flux 2,
+		INIT C in Deep Ocean 1)
+	~	TonC
+	~	Carbon in the first layer of deep ocean.
+	|
+
+C in Deep Ocean 1 per meter=
+	C in Deep Ocean 1/Layer Depth 1
+	~	TonC/Meter
+	~	Carbon in the first ocean layer per its meter.
+	|
+
+C in Deep Ocean 2= INTEG (
+	Diffusion Flux 2-Diffusion Flux 3,
+		INIT C in Deep Ocean 2)
+	~	TonC
+	~	Carbon in the second layer of deep ocean.
+	|
+
+C in Deep Ocean 2 per meter=
+	C in Deep Ocean 2/Layer Depth 2
+	~	TonC/Meter
+	~	Carbon in the second ocean layer per its meter.
+	|
+
+C in Deep Ocean 3= INTEG (
+	Diffusion Flux 3-Diffusion Flux 4,
+		INIT C in Deep Ocean 3)
+	~	TonC
+	~	Carbon in the third layer of deep ocean.
+	|
+
+C in Deep Ocean 3 per meter=
+	C in Deep Ocean 3/Layer Depth 3
+	~	TonC/Meter
+	~	Carbon in the third ocean layer per its meter.
+	|
+
+C in Deep Ocean 4= INTEG (
+	Diffusion Flux 4,
+		INIT C in Deep Ocean 4)
+	~	TonC
+	~	Carbon in the fourth layer of deep ocean.
+	|
+
+C in Deep Ocean 4 per meter=
+	C in Deep Ocean 4/Layer Depth 4
+	~	TonC/Meter
+	~	Carbon in the fourth ocean layer per its meter.
+	|
+
+C in Humus= INTEG (
+	Flux Biomass to Humus-Flux Humus to Atmosphere,
+		INIT C in Humus)
+	~	TonC
+	~	Carbon in humus.
+	|
+
+C in Mixed Layer= INTEG (
+	Flux Atmosphere to Ocean-Diffusion Flux 1,
+		INIT C in Mixed Ocean)
+	~	TonC
+	~	Carbon in mixed layer.
+	|
+
+C in Mixed Layer per meter=
+	C in Mixed Layer/Mixed Layer Depth
+	~	TonC/Meter
+	~	Carbon in mixed layer per its meter.
+	|
+
+C Intensity of Emission from Biomass Energy=
+	1.5119e+06*(1-CCS Improvement Factor)
+	~	TonC/Mtoe
+	~	Carbon intensity from biomass energy production and it use.
+		Felix1: 1.278e+006
+		IPCC: med: 2.6749e+006 min:1511900
+	|
+
+C Intensity of Emission from Coal=
+	Normal C Intensity of Emission from Coal*(1-CCS Improvement Factor)
+	~	TonC/Mtoe
+	~	Carbon intensity from coal energy production and it use.
+	|
+
+C Intensity of Emission from Gas=
+	Normal C Intensity of Emission from Gas*(1-CCS Improvement Factor)
+	~	TonC/Mtoe
+	~	Carbon intensity from gas energy production and it use.
+	|
+
+C Intensity of Emission from Oil=
+	Normal C Intensity of Emission from Oil*(1-CCS Improvement Factor)
+	~	TonC/Mtoe
+	~	Carbon intensity from oil energy production and it use.
+	|
+
+C Intensity of Emission from Solar Energy=
+	43200
+	~	TonC/Mtoe
+	~	Carbon intensity from solar energy production and it use.
+		fELIX1: 43200
+		IPCC: med: 476830 min:302380
+	|
+
+C Intensity of Emission from Wind Energy=
+	27000
+	~	TonC/Mtoe
+	~	Carbon intensity from wind energy production and it use.
+		Felix1: 27000
+		IPCC: med: 139560 min: 93040
+	|
+
+C Intensity of Emissions from Agricultural Land Use=
+	Reference C Emission from Agricultural Land Use
+	~	TonC/Year
+	~		|
+
+C Intensity of Emissions from Forest Land Use=
+	Reference C Emission from Forest Land Use
+	~	TonC/Year
+	~		|
+
+Carbon Removal Impact Slope=
+	1.1
+	~	
+	~		|
+
+Carbon Removal Rate=
+	Climate Policy Scenario*SMOOTH(RAMP(Reference CO2 Removal Rate, Climate Action Year,\
+		 2100), CDR Policy Transition Period)
+	~	TonC/Year
+	~	Climate Policy Scenario*SMOOTH(STEP(Carbon Removal Impact Slope*Reference \
+		Removal Rate, Climate Action Year), Climate Policy Transition Period)
+	|
+
+CCS Improvement= INTEG (
+	CCS Improvement Change,
+		INIT CCS Improvement
+		)
+	~	Dmnl
+	~	Accumulated improvement of carbon capture and storage technology.
+	|
+
+CCS Improvement Change=
+	Outflow CCSICLV3
+	~	1/Year
+	~	Change in improvement of carbon capture and storage technology.
+	|
+
+CCS Improvement Change LV1= INTEG (
+	Inflow CCSICLV1-Outflow CCSICLV1,
+		CCS Improvement Change LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+CCS Improvement Change LV2= INTEG (
+	Inflow CCSICLV2-Outflow CCSICLV2,
+		CCS Improvement Change LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+CCS Improvement Change LV3= INTEG (
+	Inflow CCSICLV3-Outflow CCSICLV3,
+		Delay Time CCSIC*Pressure CCSIC)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+CCS Improvement Factor=
+	MIN CCS Improvement Factor+(MAX CCS Improvement Factor-MIN CCS Improvement Factor)*(\
+		CCS Improvement/(CCS Improvement+1))
+	~	Dmnl
+	~	Impact of carbon capture and storage on carbon intensity of emissions from \
+		fossil fuels. Scaled between min and max improvement factor.
+	|
+
+CCS Scenario=
+	0 + STEP(CCS Scenario Switch Variation, 2020)
+	~	Dmnl [0,1,1]
+	~	Carbon capture and storage scenario trigger
+	|
+
+CCS Scenario Switch Variation=
+	IF THEN ELSE(0 <= CCS Scenario Variation :AND: CCS Scenario Variation < 1, 0 , 0) + 
+	
+	IF THEN ELSE(1 <= CCS Scenario Variation :AND: CCS Scenario Variation  < 2,  1 , 0)
+	~	Dmnl
+	~	IF THEN ELSE(0 <= CCS Scenario Variation :AND: CCS Scenario Variation < 1, 0 , 0) + 
+		
+		IF THEN ELSE(1 <= CCS Scenario Variation :AND: CCS Scenario Variation  < \
+		2,  1 , 0)
+	|
+
+CCS Scenario Variation=
+	0
+	~	Dmnl
+	~		|
+
+CDR Policy Transition Period=
+	1
+	~	Year
+	~		|
+
+Climate Action Year=
+	2020
+	~	Year
+	~		|
+
+Climate Policy Scenario=
+	0
+	~	Dmnl
+	~	0: No climate policy
+		1: Climate policy
+	|
+
+Current year=
+	2023
+	~	Year
+	~		|
+
+DE S=
+	7.5e+09
+	~	TonC/Year
+	~	The upper level of acceptable total carbon emission from fossil fuels.
+	|
+
+DE Var S=
+	7.5e+09+SMOOTH(STEP(DE S-7.5e+09, 2020),1
+	)
+	~	TonC/Year
+	~	The upper level of acceptable total carbon emission from fossil fuels.
+	|
+
+Delay Time CCSIC=
+	Time to Improve CCS/3
+	~	Year
+	~		|
+
+Desired Total C Emission from Fossil Fuels=
+	DE Var S+SMOOTH(STEP(Desired Total C Emission from Fossil Fuels Variation-DE Var S, \
+		2020+E Var T),SSP Energy Production Variation Time
+	)
+	~	TonC/Year
+	~	The upper level of acceptable total carbon emission from fossil fuels.
+	|
+
+Desired Total C Emission from Fossil Fuels Variation=
+	7.5e+09
+	~	TonC/Year
+	~	The upper level of acceptable total carbon emission from fossil fuels.
+	|
+
+Diffusion Flux 1=
+	(C in Mixed Layer per meter-C in Deep Ocean 1 per meter)*Eddy diff coeff M 1/Mean Depth of Adjacent M 1 Layers
+	~	TonC/Year
+	~	Diffusion flux between mixed and the first ocean layers.
+	|
+
+Diffusion Flux 2=
+	(C in Deep Ocean 1 per meter-C in Deep Ocean 2 per meter)*Eddy diff coeff 1 2/Mean Depth of Adjacent 1 2 Layers
+	~	TonC/Year
+	~	Diffusion flux between the first and the second ocean layers.
+	|
+
+Diffusion Flux 3=
+	(C in Deep Ocean 2 per meter-C in Deep Ocean 3 per meter)*Eddy diff coeff 2 3/Mean Depth of Adjacent 2 3 Layers
+	~	TonC/Year
+	~	Diffusion flux between the second and the third ocean layers.
+	|
+
+Diffusion Flux 4=
+	(C in Deep Ocean 3 per meter-C in Deep Ocean 4 per meter)*Eddy diff coeff 3 4/Mean Depth of Adjacent 3 4 Layers
+	~	TonC/Year
+	~	Diffusion flux between the third and the fourth ocean layers.
+	|
+
+Eddy diff coeff 1 2=
+	Eddy diff coeff index 1 2*Eddy diff coeff mean 1 2
+	~	Meter*Meter/Year
+	~	Coefficient of carbon diffusion to the second layer of deep ocean.
+	|
+
+Eddy diff coeff 2 3=
+	Eddy diff coeff index 2 3*Eddy diff coeff mean 2 3
+	~	Meter*Meter/Year
+	~	Coefficient of carbon diffusion to the third layer of deep ocean.
+	|
+
+Eddy diff coeff 3 4=
+	Eddy diff coeff index 3 4*Eddy diff coeff mean 3 4
+	~	Meter*Meter/Year
+	~	Coefficient of carbon diffusion to the fourth layer of deep ocean.
+	|
+
+Eddy diff coeff index 1 2=
+	1
+	~	Dmnl
+	~	Index of coefficient for rate at which carbon is mixed in the ocean due to \
+		eddy motion, where 1 is equivalent to the expected value of 4400 \
+		meter/meter/year.
+	|
+
+Eddy diff coeff index 2 3=
+	1
+	~	Dmnl
+	~	Index of coefficient for rate at which carbon is mixed in the ocean due to \
+		eddy motion, where 1 is equivalent to the expected value of 4400 \
+		meter/meter/year.
+	|
+
+Eddy diff coeff index 3 4=
+	1
+	~	Dmnl
+	~	Index of coefficient for rate at which carbon is mixed in the ocean due to \
+		eddy motion, where 1 is equivalent to the expected value of 4400 \
+		meter/meter/year.
+	|
+
+Eddy diff coeff index M 1=
+	1
+	~	Dmnl
+	~	Index of coefficient for rate at which carbon is mixed in the ocean due to \
+		eddy motion, where 1 is equivalent to the expected value of 4400 \
+		meter/meter/year.
+	|
+
+Eddy diff coeff M 1=
+	Eddy diff coeff index M 1*Eddy diff coeff mean M 1
+	~	Meter*Meter/Year
+	~	Coefficient of carbon diffusion to the first layer of deep ocean.
+	|
+
+Eddy diff coeff mean 1 2=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Eddy diff coeff mean 2 3=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Eddy diff coeff mean 3 4=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Eddy diff coeff mean M 1=
+	4400
+	~	Meter*Meter/Year
+	~	Expected value at which carbon is mixed in the ocean due to eddy motion.
+	|
+
+Effectiveness of Pressure to Adjust C Emission=
+	0.07+STEP(Effectiveness of Pressure to Adjust C Emission Variation-0.07, 2020)
+	~	1/Year
+	~	Rate at which the gap between acceptable and current carbon emission from \
+		fossil fuels level is addressed.
+	|
+
+Effectiveness of Pressure to Adjust C Emission Variation=
+	0.07
+	~	1/Year
+	~	Rate at which the gap between acceptable and current carbon emission from \
+		fossil fuels level is addressed.
+	|
+
+Emission shock year=
+	2020
+	~	Year
+	~		|
+
+Equil C in Mixed Layer=
+	Preindustrial C in Mixed Layer *Effect of Temp on C Flux Atm ML* (C in Atmosphere/Preindustrial C in Atmosphere\
+		)^(1/Buffer Factor)
+	~	TonC
+	~	Equilibrium carbon content of mixed layer.
+	|
+
+Equilibrium C per meter in Mixed Layer=
+	Equil C in Mixed Layer/Mixed Layer Depth
+	~	TonC/Meter
+	~		|
+
+Flux Atmosphere to Biomass=
+	Initial Net Primary Production*(1+Biostimulation Coefficient*LN(C in Atmosphere/Preindustrial C in Atmosphere\
+		))
+	~	TonC/Year
+	~	Carbon flux from atmosphere to biosphere (from primary production)
+	|
+
+Flux Atmosphere to Ocean=
+	((Equil C in Mixed Layer-C in Mixed Layer)/Mixing Time)
+	~	TonC/Year
+	~	Carbon flux from atmosphere to mixed ocean layer.
+	|
+
+Flux Biomass to Atmosphere=
+	(C in Biomass/Biomass Res Time)*(1-Humification Fraction)
+	~	TonC/Year
+	~	Carbon flux from biomass to atmosphere.
+	|
+
+Flux Biomass to Humus=
+	(C in Biomass/Biomass Res Time)*Humification Fraction
+	~	TonC/Year
+	~	Carbon flux from biomass to humus.
+	|
+
+Flux Humus to Atmosphere=
+	C in Humus/Humus Res Time
+	~	TonC/Year
+	~	Carbon flux from humus to atmosphere.
+	|
+
+Humification Fraction=
+	0.428
+	~	Dmnl
+	~	Fraction of carbon outflow from biomass that enters humus stock.
+	|
+
+Humus Res Time=
+	27.8
+	~	Year
+	~	Average carbon residence time in humus.
+	|
+
+Inflow CCSICLV1=
+	Pressure CCSIC
+	~	1/Year
+	~		|
+
+Inflow CCSICLV2=
+	Outflow CCSICLV1
+	~	1/Year
+	~		|
+
+Inflow CCSICLV3=
+	Outflow CCSICLV2
+	~	1/Year
+	~		|
+
+INIT C in Biomass= INITIAL(
+	Flux Atmosphere to Biomass*Biomass Res Time)
+	~	TonC
+	~	Initial carbon in biomass.
+	|
+
+INIT C in Deep Ocean 1=
+	Init C in Deep Ocean per meter*Layer Depth 1
+	~	TonC
+	~	Initial carbon in the first layer of deep ocean. was constant at \
+		3.115e+012 in the earlier versions of the model.
+	|
+
+INIT C in Deep Ocean 2=
+	Init C in Deep Ocean per meter*Layer Depth 2
+	~	TonC
+	~	Initial carbon in the second layer of deep ocean. was constant at \
+		3.099e+012 in earlier versions of the model
+	|
+
+INIT C in Deep Ocean 3=
+	Init C in Deep Ocean per meter*Layer Depth 3
+	~	TonC
+	~	Initial carbon in the third layer of deep ocean. was constant at \
+		1.3356e+013 in earlier versions of the model
+	|
+
+INIT C in Deep Ocean 4=
+	Init C in Deep Ocean per meter*Layer Depth 4
+	~	TonC
+	~	Initial carbon in the fourth layer of deep ocean. was constant at \
+		1.8477e+013 in earlier versions of the model.
+	|
+
+Init C in Deep Ocean per meter= INITIAL(
+	Equilibrium C per meter in Mixed Layer)
+	~	TonC/Meter
+	~		|
+
+INIT C in Humus= INITIAL(
+	Flux Biomass to Humus*Humus Res Time)
+	~	TonC
+	~	Inital carbon in humus.
+	|
+
+INIT C in Mixed Ocean=
+	9.018e+11
+	~	TonC
+	~	Initial carbon in mixed ocean layer.
+	|
+
+INIT CCS Improvement=
+	0
+	~	
+	~		|
+
+Initial Net Primary Production=
+	8.51771e+10
+	~	TonC/Year
+	~	Initial net primary production.
+	|
+
+Land Mitigation Policy Multiplier=
+	0.5
+	~	1
+	~		|
+
+Land Mitigation Policy Transition Period=
+	20
+	~	Year
+	~		|
+
+Land Use as Share of Total C Emission=
+	(C Emission from Land Use/Total C Emission)*100
+	~	Dmnl
+	~	Carbon emission from forest and agricultural land use change as a \
+		percentage of total carbon emission.
+	|
+
+Layer Depth 1=
+	300
+	~	Meter
+	~	Depth of the first ocean layer.
+	|
+
+Layer Depth 2=
+	300
+	~	Meter
+	~	Depth of the second ocean layer.
+	|
+
+Layer Depth 3=
+	1300
+	~	Meter
+	~	Depth of the third ocean layer.
+	|
+
+Layer Depth 4=
+	1800
+	~	Meter
+	~	Depth of the fourth ocean layer.
+	|
+
+Layer Time Constant 1 2=
+	Layer Depth 2/(Eddy diff coeff 1 2/((Layer Depth 1+Layer Depth 2)/2))
+	~	Year
+	~	Time constant of exchange between the first and the second ocean layers.
+	|
+
+Layer Time Constant 2 3=
+	Layer Depth 3/(Eddy diff coeff 2 3/((Layer Depth 2+Layer Depth 3)/2))
+	~	Year
+	~	Time constant of exchange between the second and the third ocean layers.
+	|
+
+Layer Time Constant 3 4=
+	Layer Depth 4/(Eddy diff coeff 3 4/((Layer Depth 3+Layer Depth 4)/2))
+	~	Year
+	~	Time constant of exchange between the third and the fourth ocean layers.
+	|
+
+Layer Time Constant M 1=
+	Layer Depth 1/(Eddy diff coeff M 1/((Mixed Layer Depth+Layer Depth 1)/2))
+	~	Year
+	~	Time constant of exchange between mixed and the first ocean layers.
+	|
+
+Marginal emission=
+	1e+09 * PULSE ( Emission shock year , 
+	                  Year Period )
+	~	TonCO2/Year
+	~		|
+
+MAX CCS Improvement Factor=
+	1
+	~	Dmnl
+	~	Max impact of carbon capture and storage on carbon intensity of emissions \
+		from fossil fuels.
+	|
+
+Mean Depth of Adjacent 1 2 Layers=
+	(Layer Depth 1+Layer Depth 2)/2
+	~	Meter
+	~	Mean depth of the first and the second ocean layers.
+	|
+
+Mean Depth of Adjacent 2 3 Layers=
+	(Layer Depth 2+Layer Depth 3)/2
+	~	Meter
+	~	Mean depth of the second and the third ocean layers.
+	|
+
+Mean Depth of Adjacent 3 4 Layers=
+	(Layer Depth 3+Layer Depth 4)/2
+	~	Meter
+	~	Mean depth of the third and the fourth ocean layers.
+	|
+
+Mean Depth of Adjacent M 1 Layers=
+	(Mixed Layer Depth+Layer Depth 1)/2
+	~	Meter
+	~	Mean depth of mixed and the first ocean layers.
+	|
+
+MIN CCS Improvement Factor=
+	0
+	~	Dmnl
+	~	Min impact of carbon capture and storage on carbon intensity of emissions \
+		from fossil fuels.
+	|
+
+Mixed Layer Depth=
+	100
+	~	Meter
+	~	Mixed ocean layer depth.
+	|
+
+Mixing Time=
+	1
+	~	Year
+	~	Atmosphere - mixed ocean layer mixing time.
+	|
+
+Normal C Intensity of Emission from Coal=
+	Normal Carbon Emissions of Coal
+	~	TonC/Mtoe
+	~	Initial carbon intensity of production from coal technologies.
+	|
+
+Normal C Intensity of Emission from Gas=
+	Normal Carbon Emissions of Gas
+	~	TonC/Mtoe
+	~	Initial carbon intensity of production from gas technologies.
+	|
+
+Normal C Intensity of Emission from Oil=
+	Normal Carbon Emissions of Oil
+	~	TonC/Mtoe
+	~	Initial carbon intensity of production from oil technologies.
+	|
+
+Outflow CCSICLV1=
+	CCS Improvement Change LV1/Delay Time CCSIC
+	~	1/Year
+	~		|
+
+Outflow CCSICLV2=
+	CCS Improvement Change LV2/Delay Time CCSIC
+	~	1/Year
+	~		|
+
+Outflow CCSICLV3=
+	CCS Improvement Change LV3/Delay Time CCSIC
+	~	1/Year
+	~		|
+
+Preindustrial C in Atmosphere=
+	5.9e+11
+	~	TonC
+	~	Preindustrial carbon content of atmosphere.
+	|
+
+Preindustrial C in Mixed Layer=
+	Preindustrial Ocean C per meter*Mixed Layer Depth
+	~	TonC
+	~	Initial carbon content of mixed ocean layer.
+	|
+
+Preindustrial Ocean C per meter=
+	9e+09
+	~	TonC/m
+	~	Preindustrial carbon content in ocean per meter.
+	|
+
+Pressure CCSIC=
+	Presure to Adjust Total C Emission from Fossil Fuels*Effectiveness of Pressure to Adjust C Emission
+	~	
+	~		|
+
+Presure to Adjust Total C Emission from Fossil Fuels=
+	CCS Scenario*(MAX(0,((Total C Emission from Fossil Fuels+C Emission from Biomass Energy\
+		)/Desired Total C Emission from Fossil Fuels)-1))
+	~	Dmnl
+	~	Pressure to adjust the level of carbon emission from fossil fuels is the \
+		emission level rises above the acceptable level.
+	|
+
+Ref Buffer Factor=
+	9.7
+	~	Dmnl
+	~	Normal buffer factor.
+	|
+
+Reference C Emission from Agricultural Land Use=
+	6.5e+08
+	~	TonC/Year
+	~	Reference value of carbon emission from unit agricultural land change.
+	|
+
+Reference C Emission from Forest Land Use=
+	4.5e+08
+	~	TonC/Year
+	~	Reference value of carbon emission from unit forest land change.
+	|
+
+Reference CO2 Removal Rate=
+	3.7e+07
+	~	TonC/Year
+	~		|
+
+Sensitivity of C flux to temp=
+	0.003
+	~	Dmnl
+	~		|
+
+Shock Scenario SWITCH=
+	0
+	~	Dmnl
+	~	0: no emission shock
+		1: there is an emission shock in the current year
+	|
+
+SSP Energy Production Variation Time=
+	5
+	~	Year
+	~		|
+
+Terrestrial carbon sink=
+	Flux Atmosphere to Biomass-Flux Biomass to Atmosphere
+	~	TonC/Year
+	~		|
+
+Time to Improve CCS=
+	10+STEP(Time to Improve CCS Variation-10, 2020)
+	~	Year
+	~	Average CCS technology development lead time.
+	|
+
+Time to Improve CCS Variation=
+	10
+	~	Year
+	~	Average CCS technology development lead time.
+	|
+
+Total Agricultural and Land Use C Emissions=
+	MAX(0, (C Emission from Land Use) - Climate Policy Scenario*SMOOTH(RAMP(Land Mitigation Policy Multiplier
+	*(C Emission from Land Use)
+	,Climate Action Year, Climate Action Year+20), Land Mitigation Policy Transition Period\
+		))
+	~	TonC/Year
+	~		|
+
+Total C Emission=
+	Total C Emission from the Energy Sector+Total Agricultural and Land Use C Emissions+\
+		Shock emission addition
+	~	TonC/Year
+	~	Emissions of carbon from energy use and other sources.
+	|
+
+Total C Emission from Fossil Fuels=
+	C Emission from Coal Energy+C Emission from Gas Energy+C Emission from Oil Energy
+	~	TonC/Year
+	~	Source of historical data: Global Carbon Project 2020
+	|
+
+Total C Emission from Renewables=
+	C Emission from Biomass Energy+C Emission from Solar Energy+C Emission from Wind Energy
+	~	TonC/Year
+	~	Total carbon emission from renewable energy sources.
+	|
+
+Total C Emission from the Energy Sector=
+	Total C Emission from Fossil Fuels+Total C Emission from Renewables
+	~	TonC/Year
+	~	Total carbon emission from energy production and it use.
+	|
+
+Year Period=
+	1
+	~	Year
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+Normal Carbon Emissions of Coal=
+	1.08e+06
+	~	TonC/Mtoe
+	~	Felix1: 640000
+		IPCC: med: 9.5366e+006 min:8606200
+		Brian Felix 1.08e+006
+	|
+
+Normal Carbon Emissions of Gas=
+	640000
+	~	TonC/Mtoe
+	~	Felix1: 1.08e+006
+		IPCC: med: 5.6987e+006 min:4768300
+		Felix Brian: 640000
+	|
+
+Normal Carbon Emissions of Oil=
+	836500
+	~	TonC/Mtoe
+	~	Felix1: 836500
+		IPCC: 9.04814e+006 co2
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+FoodCategories:
+	PasMeat, CropMeat, Dairy, Eggs, Pulses, Grains, VegFruits, OtherCrops
+	~	
+	~		|
+
+Gender:
+	male, female
+	~	
+	~		|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+INIT Agricultural Land=
+	4.4e+09
+	~	ha
+	~	The area of agriculture land for year 1900.4.4e+009
+	|
+
+INIT Forest Land=
+	4.4e+09
+	~	ha
+	~	The area of forest land for year 1900. : 4.41e+013 (Felicjan)
+		Calibrated: 5.14e+013 m2, 5.14e+09 ha
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_CarbonCycle
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,82,0
+10,1,C Intensity of Emission from Oil,-370,-116,65,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,C Intensity of Emission from Coal,-370,-4,72,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,3,C Intensity of Emission from Gas,-370,122,70,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,4,C Intensity of Emission from Solar Energy,-370,368,74,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,5,C Intensity of Emission from Wind Energy,-370,502,74,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,6,C Emission from Oil Energy,-175,-62,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,7,C Emission from Coal Energy,-175,64,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,C Emission from Gas Energy,-175,174,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,9,C Emission from Solar Energy,-175,435,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,10,C Emission from Wind Energy,-175,578,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,11,Total C Emission from the Energy Sector,171,228,63,27,8,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,12,5,10,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,13,4,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,14,3,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,15,2,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,16,1,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,17,6,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,18,7,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,19,8,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,20,9,107,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,21,10,107,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,22,C in Atmosphere,685,209,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,23,Preindustrial C in Atmosphere,1218,322,63,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,24,48,495,209,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,25,27,22,4,0,0,22,0,0,0,-1--1--1,,1|(598,209)|
+1,26,27,24,100,0,0,22,0,0,0,-1--1--1,,1|(528,209)|
+11,27,0,557,209,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,28,Total C Emission,557,226,35,18,40,131,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,11,28,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,30,C in Biomass,1016,78,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,31,C in Humus,685,-35,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,32,C in Mixed Layer,685,517,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,C in Deep Ocean 1,685,723,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,34,36,30,4,0,0,22,0,0,0,-1--1--1,,1|(1016,209)|
+1,35,36,22,100,0,0,22,0,0,0,-1--1--1,,1|(815,209)|
+11,36,0,900,209,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,37,Flux Atmosphere to Biomass,900,233,62,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,38,40,22,4,0,0,22,0,0,0,-1--1--1,,1|(685,77)|
+1,39,40,30,100,0,0,22,0,0,0,-1--1--1,,1|(904,77)|
+11,40,0,838,77,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,41,Flux Biomass to Atmosphere,838,101,59,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,42,44,31,4,0,0,22,0,0,0,-1--1--1,,1|(820,-50)|
+1,43,44,30,100,0,0,22,0,0,0,-1--1--1,,1|(1016,-50)|
+11,44,0,909,-50,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,45,Flux Biomass to Humus,909,-26,59,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,46,48,22,4,0,0,22,0,0,0,-1--1--1,,1|(649,132)|
+1,47,48,31,100,0,0,22,0,0,0,-1--1--1,,1|(649,34)|
+11,48,0,649,80,8,6,33,3,0,0,2,0,0,0,0,0,0,0,0,0
+10,49,Flux Humus to Atmosphere,593,80,52,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,50,52,32,4,0,0,22,0,0,0,-1--1--1,,1|(685,431)|
+1,51,52,22,68,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(685,301)|
+11,52,0,685,369,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,53,Flux Atmosphere to Ocean,750,369,62,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,54,56,33,4,0,0,22,0,0,0,-1--1--1,,1|(685,655)|
+1,55,56,32,100,0,0,22,0,0,0,-1--1--1,,1|(685,576)|
+11,56,0,685,612,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,57,Diffusion Flux 1,744,612,55,10,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,58,INIT C in Deep Ocean 1,1260,832,54,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,59,INIT C in Mixed Ocean,570,517,55,18,8,3,0,52,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,60,INIT C in Biomass,1166,81,33,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,61,INIT C in Humus,681,-102,57,10,8,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,62,Humification Fraction,904,34,46,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,63,Biomass Res Time,802,19,50,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,64,Humus Res Time,712,27,43,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,65,Initial Net Primary Production,1218,232,64,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,66,Biostimulation Coefficient,1218,275,52,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,67,Buffer Factor,942,420,47,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,68,Buff C Coeff,942,466,45,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,69,Ref Buffer Factor,1070,463,37,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,Equil C in Mixed Layer,942,368,45,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,71,Preindustrial C in Mixed Layer,1218,420,63,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,72,Mixing Time,802,434,44,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,73,Mixed Layer Depth,1070,517,45,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,74,30,45,1,0,0,0,0,64,0,-1--1--1,,1|(981,12)|
+1,75,62,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,76,63,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,77,63,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,78,62,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,79,30,41,1,0,0,0,0,64,0,-1--1--1,,1|(911,126)|
+1,80,64,49,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,81,31,49,1,0,0,0,0,64,0,-1--1--1,,1|(613,22)|
+1,82,60,30,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,83,61,31,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,84,59,32,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,85,71,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,86,23,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,87,68,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,88,69,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,89,Eddy diff coeff M 1,520,612,53,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,90,INIT C in Atmosphere,443,353,45,18,8,3,0,52,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,91,90,22,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,92,Emission from Fossil Fuels per Capita,180,64,59,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,93,C Intensity of Emission from Biomass Energy,-370,234,61,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,94,C Emission from Biomass Energy,-195,301,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,95,93,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,96,94,107,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,97,Normal C Intensity of Emission from Oil,-559,-116,75,18,8,3,0,52,0,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+1,98,97,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,Normal C Intensity of Emission from Coal,-559,-28,75,18,8,3,0,52,0,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+1,100,99,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,101,Normal C Intensity of Emission from Gas,-559,122,75,18,8,3,0,52,0,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+1,102,101,3,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,103,C Concentration Ratio,590,353,60,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,104,90,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,105,22,103,1,0,0,0,0,64,0,-1--1--1,,1|(653,299)|
+10,106,Total C Emission from Fossil Fuels,11,64,63,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,107,Total C Emission from Renewables,11,435,64,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,108,106,11,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,109,107,11,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,110,106,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,111,Emission per Capita,349,135,49,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,112,27,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,113,Total C Emission from Fossil Fuels,-1022,-134,68,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,114,Desired Total C Emission from Fossil Fuels,-963,-246,77,27,8,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,115,Presure to Adjust Total C Emission from Fossil Fuels,-1182,-191,85,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,116,113,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,117,114,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,118,CCS Improvement,-1046,-6,53,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,119,48,-1263,-10,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,120,122,118,4,0,0,22,0,0,0,-1--1--1,,1|(-1137,-10)|
+1,121,122,119,100,0,0,22,0,0,0,-1--1--1,,1|(-1220,-10)|
+11,122,0,-1182,-10,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,123,CCS Improvement Change,-1182,14,68,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,124,MAX CCS Improvement Factor,-928,-54,47,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,125,MIN CCS Improvement Factor,-934,46,73,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,126,CCS Improvement Factor,-807,-4,68,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,127,124,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,128,125,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,129,118,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,130,Time to Improve CCS,-1286,91,50,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,131,126,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,132,126,2,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,133,126,3,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,134,Effectiveness of Pressure to Adjust C Emission,-1120,88,75,27,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,135,Reference C Emission from Agricultural Land Use,-125,-144,83,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,136,INIT Agricultural Land,-156,-228,61,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,137,INIT Forest Land,-156,-342,45,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,138,Agricultural Land Change,15,-255,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,139,Forest Land Change,15,-364,45,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,140,136,138,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,141,137,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,142,Reference C Emission from Forest Land Use,-92,-487,83,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,143,C Emission from Land Use,180,-310,61,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,144,138,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,145,139,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,146,Atmospheric CO2 Law Dome 1850,300,353,66,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,147,146,90,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,148,45,61,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,149,64,61,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,150,37,60,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,151,63,60,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,152,C in Deep Ocean 2,685,917,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,153,C in Deep Ocean 3,685,1101,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,154,C in Deep Ocean 4,685,1312,52,30,3,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,155,INIT C in Deep Ocean 2,1260,1010,54,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,156,INIT C in Deep Ocean 3,1260,1139,54,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,157,INIT C in Deep Ocean 4,1260,1280,54,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,158,Layer Depth 1,1070,723,51,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,159,Layer Depth 2,1070,917,51,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,160,Layer Depth 3,1070,1101,51,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,161,Layer Depth 4,1070,1312,51,10,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,162,Preindustrial Ocean C per meter,1218,517,70,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,163,73,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,164,162,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,165,23,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,67,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,167,32,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,168,71,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,169,66,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,170,65,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,171,C in Mixed Layer per meter,869,517,62,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,172,C in Deep Ocean 1 per meter,869,723,64,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,173,32,171,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,174,73,171,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,175,33,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,176,158,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,177,89,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,178,Mean Depth of Adjacent M 1 Layers,954,612,75,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,179,73,178,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,180,158,178,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,181,178,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,182,172,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,183,171,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,184,Eddy diff coeff index M 1,441,548,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,185,Eddy diff coeff mean M 1,441,680,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,186,Layer Time Constant M 1,202,612,49,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,187,Mixed Layer Depth,273,517,50,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,188,Layer Depth 1,273,723,50,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,189,89,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,190,187,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,191,188,186,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,192,184,89,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,193,185,89,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,194,196,152,4,0,0,22,0,0,0,-1--1--1,,1|(685,859)|
+1,195,196,33,100,0,0,22,0,0,0,-1--1--1,,1|(685,786)|
+11,196,0,685,825,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,197,Diffusion Flux 2,744,825,55,10,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,198,200,153,4,0,0,22,0,0,0,-1--1--1,,1|(685,1043)|
+1,199,200,152,100,0,0,22,0,0,0,-1--1--1,,1|(685,975)|
+11,200,0,685,1009,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,201,Diffusion Flux 3,744,1009,55,10,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,202,204,154,4,0,0,22,0,0,0,-1--1--1,,1|(685,1247)|
+1,203,204,153,100,0,0,22,0,0,0,-1--1--1,,1|(685,1165)|
+11,204,0,685,1206,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,205,Diffusion Flux 4,744,1206,55,10,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,206,C in Deep Ocean 2 per meter,869,917,64,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,207,C in Deep Ocean 3 per meter,869,1101,64,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,208,C in Deep Ocean 4 per meter,869,1312,64,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,209,154,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,210,161,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,211,152,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,212,159,206,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,213,153,207,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,214,160,207,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,215,58,33,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,216,155,152,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,217,156,153,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,218,157,154,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,219,Mean Depth of Adjacent 1 2 Layers,954,825,73,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,220,Mean Depth of Adjacent 2 3 Layers,954,1009,73,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,221,Mean Depth of Adjacent 3 4 Layers,954,1206,73,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,222,172,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,223,206,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,224,219,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,225,158,219,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,226,159,219,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,227,220,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,228,206,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,229,207,201,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,230,160,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,231,159,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,232,207,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,233,208,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,234,221,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,235,160,221,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,236,161,221,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,237,Eddy diff coeff 1 2,520,825,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,238,Eddy diff coeff 2 3,520,1009,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,239,Eddy diff coeff 3 4,520,1206,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,240,Eddy diff coeff index 1 2,441,765,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,241,Eddy diff coeff index 2 3,441,948,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,242,Eddy diff coeff index 3 4,441,1148,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,243,Eddy diff coeff mean 1 2,441,879,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,244,Eddy diff coeff mean 2 3,441,1070,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,245,Eddy diff coeff mean 3 4,441,1266,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,246,237,196,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,247,238,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,248,239,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,249,240,237,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,250,243,237,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,251,241,238,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,252,244,238,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,253,242,239,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,254,245,239,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,255,Layer Time Constant 1 2,202,825,47,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,256,Layer Time Constant 2 3,202,1009,47,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,257,Layer Time Constant 3 4,202,1206,47,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,258,Layer Depth 2,273,917,50,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,259,Layer Depth 3,273,1101,50,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,260,Layer Depth 4,273,1312,50,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,261,188,255,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,262,258,255,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,263,258,256,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,264,259,256,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,265,259,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,266,260,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,267,239,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,268,238,256,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,269,237,255,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,270,22,37,1,0,0,0,0,64,0,-1--1--1,,1|(791,241)|
+1,271,22,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,272,70,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,273,72,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,274,32,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,275,Atmospheric Concentration CO2,590,453,71,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,276,22,275,1,0,0,0,0,64,0,-1--1--1,,1|(658,351)|
+10,277,Default C Intensity of Emission from Oil,-807,244,74,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,278,Default C Intensity of Emission from Coal,-807,332,74,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,279,Default C Intensity of Emission from Gas,-807,420,74,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,280,Default C Intensity of Emission from Biomass,-807,508,74,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,281,97,277,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,282,99,278,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,283,101,279,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,284,93,280,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,285,CCS Scenario,-1210,-305,53,10,8,3,0,52,0,0,0,0,-1--1--1,128-192-0,Arial|||0-0-0,0,0,0,0,0,0
+1,286,285,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,287,Land Use as Share of Total C Emission,194,-48,72,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,288,143,287,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,289,27,287,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,290,Total Renewable Energy Production,-607,611,68,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,291,0,-392,839,96,24,8,135,0,36,-1,0,0,0,0-0-0,128-192-0,Arial|||0-0-0,0,0,0,0,0,0
+IPCC parameters are for all carbon emissions per energy source, not only CO2
+10,292,Sensitivity of C flux to temp,1309,446,55,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,293,Effect of Temp on C Flux Atm ML,1309,382,65,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,294,292,293,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,295,293,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,296,Equilibrium C per meter in Mixed Layer,1378,516,77,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,297,70,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,298,73,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,299,Init C in Deep Ocean per meter,1412,1068,62,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,300,296,299,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,301,299,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,302,158,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,303,159,155,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,304,299,155,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,305,299,156,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,306,160,156,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,307,299,157,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,308,161,157,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,309,Normal Carbon Emissions of Oil,-555,-176,60,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,310,309,97,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,311,Normal Carbon Emissions of Coal,-699,-85,67,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,312,311,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,313,Normal Carbon Emissions of Gas,-563,213,65,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,314,313,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,315,Total CO2 Emissions from Land Use,310,-273,57,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,316,143,315,1,0,0,0,0,64,0,-1--1--1,,1|(298,-264)|
+12,317,0,-1114,-406,75,24,8,7,0,34,-1,0,0,0,-1--1--1,-1--1--1,Arial|||255-0-255,0,0,0,0,0,0
+This scenario needs to be on for SSP calibration
+10,318,Total CO2 Emissions Indicator,342,273,39,27,8,3,0,50,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,319,28,318,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,320,Effectiveness of Pressure to Adjust C Emission Variation,-1126,176,75,27,8,3,0,50,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,321,320,134,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,322,Time to Improve CCS Variation,-1289,183,59,18,8,3,0,50,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,323,322,130,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,324,Desired Total C Emission from Fossil Fuels Variation,-749,-240,77,27,8,131,0,50,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,325,324,114,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,326,INIT CCS Improvement,-1071,-72,47,18,8,3,0,52,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,327,326,118,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,328,CCS Scenario Variation,-1268,-438,54,18,8,3,0,50,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,329,CCS Scenario Switch Variation,-1286,-368,60,18,8,131,0,50,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,330,328,329,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,331,329,285,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,332,SSP Energy Production Variation Time,-915,-174,75,27,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,333,332,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,334,E Var T,-966,-310,38,10,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,335,DE Var S,-884,-291,36,10,8,131,0,50,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,336,DE S,-821,-312,21,10,8,131,0,50,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,337,336,335,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,338,335,114,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,339,334,114,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,340,C Intensity of Emissions from Forest Land Use,131,-449,83,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,341,C Intensity of Emissions from Agricultural Land Use,86,-189,87,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,342,341,143,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,343,340,143,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,344,142,340,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,345,135,341,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,346,Climate Action Year,626,-149,54,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,347,126,93,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,348,Climate Policy Scenario,660,-200,53,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,349,Carbon Removal Impact Slope,1209,-89,62,18,8,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,350,Climate Policy Scenario,1094,140,58,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,351,Climate Action Year,1104,195,59,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+12,352,48,719,98,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,353,355,352,4,0,0,22,0,0,0,-1--1--1,,1|(719,126)|
+1,354,355,22,100,0,0,22,0,0,0,-1--1--1,,1|(719,168)|
+11,355,0,719,152,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,356,Carbon Removal Rate,774,152,52,18,40,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,357,351,356,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,358,350,356,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,359,Reference CO2 Removal Rate,907,184,58,18,8,131,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,360,359,356,1,0,0,0,0,128,0,-1--1--1,,1|(801,166)|
+10,361,CDR Policy Transition Period,1218,162,63,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,362,361,356,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,363,356,318,1,0,0,0,0,128,0,-1--1--1,,1|(564,230)|
+10,364,C Emission from Biomass Energy,-1310,-124,66,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,365,364,115,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,366,Land Mitigation Policy Multiplier,543,-274,57,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,367,Land Mitigation Policy Transition Period,677,-253,60,27,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,368,Total Agricultural and Land Use Emissions,299,-178,81,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,369,Total Agricultural and Land Use C Emissions,480,-136,84,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,370,369,27,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,371,366,369,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,372,367,369,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,373,348,369,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,374,346,369,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,375,Total CO2 Emissions from Land Use,348,-475,57,27,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,376,Total Land Use CO2 Emissions Indicator,378,-393,75,18,8,3,0,50,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,377,375,376,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,378,Total Agirculture CO2 Emissions Indicator,541,-391,79,18,8,3,0,50,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,379,Total CO2 Emissions from the Energy Sector Indicator,170,320,84,27,8,3,0,50,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,380,11,379,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,381,Terrestrial carbon sink,1192,1,43,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,382,37,381,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,383,41,381,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,384,143,369,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,385,Shock Scenario SWITCH,386,-27,59,18,8,3,0,52,-1,0,0,0,0-0-0,131-106-162,Arial|||0-0-0,0,0,0,0,0,0
+10,386,Shock emission addition,449,55,59,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,387,385,386,1,0,0,0,0,192,0,-1--1--1,,1|(453,5)|
+10,388,Marginal emission,543,-23,34,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,389,388,386,1,0,0,0,0,192,0,-1--1--1,,1|(513,41)|
+1,390,386,28,1,0,0,0,0,192,0,-1--1--1,,1|(512,142)|
+10,391,Current year,559,-78,54,10,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,392,Year Period,455,-65,53,10,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,393,392,388,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,394,Emission shock year,348,-85,40,18,8,3,0,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,395,394,388,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,396,CCS Improvement Change LV1,-1657,-63,52,30,3,3,16,54,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,397,48,-1810,-66,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,398,400,397,100,16,0,22,0,192,0,-1--1--1,,1|(-1786,-66)|
+1,399,400,396,4,16,0,22,0,192,0,-1--1--1,,1|(-1735,-66)|
+11,400,0,-1767,-66,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,401,Inflow CCSICLV1,-1767,-36,42,18,40,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,402,48,-1487,-63,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,403,405,396,100,16,0,22,0,192,0,-1--1--1,,1|(-1586,-63)|
+1,404,405,402,4,16,0,22,0,192,0,-1--1--1,,1|(-1526,-63)|
+11,405,0,-1561,-63,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,406,Outflow CCSICLV1,-1561,-33,42,18,40,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,407,CCS Improvement Change LV2,-1657,59,52,30,3,3,16,54,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,408,48,-1810,58,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,409,411,408,100,16,0,22,0,192,0,-1--1--1,,1|(-1786,58)|
+1,410,411,407,4,16,0,22,0,192,0,-1--1--1,,1|(-1735,58)|
+11,411,0,-1767,58,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,412,Inflow CCSICLV2,-1767,88,42,18,40,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,413,48,-1487,59,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,414,416,407,100,16,0,22,0,192,0,-1--1--1,,1|(-1586,59)|
+1,415,416,413,4,16,0,22,0,192,0,-1--1--1,,1|(-1526,59)|
+11,416,0,-1561,59,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,417,Outflow CCSICLV2,-1561,89,42,18,40,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,418,CCS Improvement Change LV3,-1657,188,52,30,3,3,16,54,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,419,48,-1810,191,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,420,422,419,100,16,0,22,0,192,0,-1--1--1,,1|(-1786,191)|
+1,421,422,418,4,16,0,22,0,192,0,-1--1--1,,1|(-1735,191)|
+11,422,0,-1767,191,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,423,Inflow CCSICLV3,-1767,221,42,18,40,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,424,48,-1487,188,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,425,427,418,100,16,0,22,0,192,0,-1--1--1,,1|(-1586,188)|
+1,426,427,424,4,16,0,22,0,192,0,-1--1--1,,1|(-1526,188)|
+11,427,0,-1561,188,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,428,Outflow CCSICLV3,-1561,218,42,18,40,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,429,Delay Time CCSIC,-1394,42,42,18,8,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,430,130,429,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,431,396,406,1,16,0,0,0,192,0,-1--1--1,,1|(-1574,-115)|
+1,432,429,406,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,433,Pressure CCSIC,-1903,24,34,18,8,3,16,48,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,434,Presure to Adjust Total C Emission from Fossil Fuels,-2039,-14,87,27,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,435,Effectiveness of Pressure to Adjust C Emission,-2041,63,75,27,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,436,434,433,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,437,435,433,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,438,433,401,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,439,418,396,1,16,0,0,0,192,1,-1--1--1,,1|(-2109,85)|
+1,440,407,417,1,16,0,0,0,192,0,-1--1--1,,1|(-1617,-10)|
+1,441,429,417,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,442,406,412,1,16,0,0,0,192,0,-1--1--1,,1|(-1732,40)|
+1,443,418,407,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,444,417,423,1,16,0,0,0,192,0,-1--1--1,,1|(-1719,135)|
+1,445,429,428,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,446,418,428,1,16,0,0,0,192,0,-1--1--1,,1|(-1597,143)|
+1,447,433,418,1,16,0,0,0,192,1,-1--1--1,,1|(-1818,147)|
+1,448,429,418,1,16,0,0,0,192,1,-1--1--1,,1|(-1605,124)|
+1,449,428,123,1,16,0,0,0,192,0,-1--1--1,,1|(-1249,207)|
+10,450,Biomass Energy Production,-366,297,66,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,451,450,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,452,Oil Production,-360,-63,70,14,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,453,452,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,454,Coal Production,-362,50,45,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,455,454,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,456,Gas Production,-364,169,69,17,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,457,456,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,458,Solar Energy Production,-365,425,53,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,459,458,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,460,Wind Energy Production,-362,575,52,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,461,460,10,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,462,Population,181,135,48,10,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,463,462,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,464,Agricultural Land,-157,-271,46,18,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,465,464,138,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,466,Forest Land,-154,-383,53,10,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,467,466,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,468,Total CO2 Emissions from Agriculture,598,-474,57,27,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,469,468,378,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,470,Temperature Change from Preindustrial,1478,321,52,27,8,2,0,51,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,471,470,293,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,472,Biomass Energy Production,-607,647,66,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,473,472,290,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,474,Solar Energy Production,-607,647,53,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,475,474,290,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,476,Wind Energy Production,-607,647,52,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,477,476,290,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,478,460,290,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,479,458,290,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,480,450,290,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,481,Population,349,171,48,10,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,482,481,111,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,483,462,111,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,484,485,275,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,485,GtC to TonC,288,452,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,486,485,90,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,487,488,386,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,488,CO2 to C,351,193,44,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,489,488,318,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,490,488,379,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,491,CO2 to C,452,-323,44,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,492,491,315,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,493,TonCO2 to Million ton CO2,463,-542,61,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,494,493,376,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,495,493,378,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,496,497,379,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,497,TonCO2 to Million ton CO2,163,390,61,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,498,497,318,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,499,Mtoe to GJ,-1005,238,49,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,500,499,280,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,501,Ton C to kg CO2,-1016,507,47,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,502,501,280,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,503,499,277,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,504,499,278,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,505,499,279,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,506,501,279,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,507,501,278,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,508,501,277,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,509,ppm to GtC,472,406,51,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,510,509,275,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,511,509,90,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:ppm to GtC
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:82,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

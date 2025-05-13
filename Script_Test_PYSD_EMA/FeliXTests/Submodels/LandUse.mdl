@@ -1,0 +1,4814 @@
+{UTF-8}
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Forest Land Indicator=
+	Forest Land*ha into million ha
+	~	Million ha
+	~		|
+
+Pasture Land Indicator=
+	Permanent meadows and pastures*ha into million ha
+	~	Million ha
+	~		|
+
+Urban Industrial Land Indicator=
+	Urban and Industrial Land*ha into million ha
+	~	Million ha
+	~		|
+
+Other Land Indicator=
+	Other Land*ha into million ha
+	~	Million ha
+	~		|
+
+Energy Crops Production Indicator=
+	Energy Crops Production*Biomass ton into Biomass million ton
+	~	Biomass million ton/Year
+	~		|
+
+Total C emissions from the agriculture=
+	Total CO2 Emissions from Agriculture/CO2 to C
+	~	TonC/Year
+	~		|
+
+Daily caloric supply per capita[FoodCategories]=
+	Food supply in kcal[FoodCategories]/(Population*Days in Year*kcal to Mkcal)
+	~	kcal/(Person*Day)
+	~		|
+
+Animal Food Supply kcal capita day=
+	Total Supply of Animal Calories/(Population*Days in Year*kcal to Mkcal)
+	~	kcal/(Person*Day)
+	~	Average amount of animal food measured in calories available for each \
+		person per day. Source of historical data: http://faostat.fao.org
+	|
+
+Vegetal Food supply kcal capita day=
+	Total Supply of Vegetal Calories/(Population*Days in Year*kcal to Mkcal)
+	~	kcal/(Person*Day)
+	~	Average amount of vegetal food measured in calories available for each \
+		person per day. Source of historical data: http://faostat.fao.org
+	|
+
+Nonenergy Crops Production Indicator=
+	(Production rate of crops[Pulses]*(1-Moisture Content[Pulses]) + 
+	Production rate of crops[Grains]*(1-Moisture Content[Grains]) +
+	Production rate of crops[VegFruits]*(1-Moisture Content[VegFruits]) +
+	Production rate of crops[OtherCrops]*(1-Moisture Content[OtherCrops]) )*tDM to Million tDM
+	~	Million tDM/Year
+	~		|
+
+Livestock Production Indicator=
+	(Production rate of animal food[CropMeat]*(1-Moisture Content[CropMeat])+Production rate of animal food\
+		[PasMeat]*(1-Moisture Content
+	[PasMeat])+Production rate of animal food[Dairy]*(1-Moisture Content
+	[Dairy])+Production rate of animal food[Eggs]*(1-Moisture Content
+	[Eggs]))*tDM to Million tDM
+	~	Million tDM/Year
+	~		|
+
+Fossil Fuels:
+	Coal, Oil, Gas
+	~	
+	~		|
+
+Effect of Input Neutral Technology Change on Agricultural Land Fertility=
+	L gdp agritech - EXP(-k gdp agritech*Relative GWP per Capita)
+	~	Dmnl
+	~	Impact of technological advancement on agricultural land fertility.
+		1+Reference Input Neutral TC in Agriculture Variation*(LN(Relative GWP per \
+		Capita+Delay in GWP for agriculture technology impact
+		))
+	|
+
+Effect of Management Practices on Agriculture Land Fertility=
+	1+Effect of GDP on Cropland Management Practices Increment*(1-EXP(-Effect of GDP on Cropland Management Practices Elasticity
+	*Smoothed GWP per Capita*Smoothed GWP per Capita))
+	~	Dmnl
+	~	Impact of agricultural land management practices on cropland fertility.
+	|
+
+Effect of Management Practices on Forest Land Fertility=
+	1+Effect of GDP on Forest Management Practices Increment*(1-EXP(-Effect of GDP on Forest Land Fertility Elasticity\
+		*GWP per Capita
+	*GWP per Capita))
+	~	Dmnl
+	~	Impact of forest land management practices on forest land fertility.
+	|
+
+Distortion Function C=
+	IF THEN ELSE(C Concentration Ratio<=p Effect of C on Yield , 
+	1+m Effect of C on Yield*(C Concentration Ratio-Calpha)/(p Effect of C on Yield-Calpha\
+		), 
+	1+m Effect of C on Yield - (1+m Effect of C on Yield-u Effect of C on Yield)*(C Concentration Ratio\
+		-p Effect of C on Yield
+	)/(Cbeta-p Effect of C on Yield))
+	~	Dmnl
+	~	Single Triangular Distortion Function with Static End Points
+		l+m-(l+m-u)*(Iratio-p)/(1-p)
+	|
+
+Distortion Function T=
+	IF THEN ELSE(Temperature Change from Preindustrial<=p Effect of T on Yield , 
+	1+m Effect of T on Yield*(Temperature Change from Preindustrial-alpha)/(p Effect of T on Yield\
+		-alpha), 
+	1+m Effect of T on Yield - (1+m Effect of T on Yield-u Effect of T on Yield)*(Temperature Change from Preindustrial\
+		-p Effect of T on Yield
+	)/(beta-p Effect of T on Yield))
+	~	Dmnl
+	~	Single Triangular Distortion Function with Static End Points
+		l+m-(l+m-u)*(Iratio-p)/(1-p)
+	|
+
+Effect of Biodiversity on Forest Land Fertility=
+	Min Impact of Biodiversity on Forest Land Fertility+(Max Impact of Biodiversity on Forest Land Fertility\
+		-Min Impact of Biodiversity on Forest Land Fertility
+	)*(Mean Species Abundance/INIT Species Abundance)
+	~	Dmnl
+	~	Impact of mean species abundance on forest land fertility. Scaled between \
+		minimal and maximal impact. Relative level is the value of mean species \
+		abundance in year 1900.
+	|
+
+Effect of Water Withdrawal on Agriculture Land Fertility=
+	Agricultural Water Withdrawal Fulfillment Rate
+	~	Dmnl
+	~	Impact of water availability on cropland fertility.
+	|
+
+Effect of GDP on Cropland Management Practices Increment=
+	Variable8 Cropland MP
+	~	Dmnl
+	~	Increment of impact of GDP on cropland management practices.
+	|
+
+Average expected crop yield[PlantFood]=
+	Reference crop yield 2016[PlantFood]*Effect of fertilizer on yield[PlantFood]
+	~	Ton/(Year*ha)
+	~		|
+
+Urban and Industrial Land Required=
+	Population*Urban and Industrial Land per Capita
+	~	ha
+	~		|
+
+Total Crops Biomass Demand=
+	Energy Demand*Market Share Biomass Crops/Biomass Conversion Efficiency
+	~	Biomass ton/Year
+	~	Total demand for energy crops accounting for biomass energy market share \
+		and reference technology development.
+	|
+
+Distorted Effect of T on Yield=
+	Distortion Function T*Effect of T on Yield Lookup(Temperature Change from Preindustrial\
+		)
+	~	Dmnl
+	~		|
+
+Grassland Meat Yield=
+	Reference meat yield
+	* Effect of Input Neutral Technology Change on Agricultural Land Fertility
+	* Effect of Climate Change on Agricultural Yield
+	* Effect of Carbon Concentration on Agricultural Yield
+	* Effect of fertilizer on yield[PasMeat]
+	* Effect of Water Withdrawal on Agriculture Land Fertility
+	~	Ton/(ha*Year)
+	~	Tons of meat per ha of grassland.The data for this variable is calculated \
+		based on the total production of pasture-based animal products (bovine \
+		meat, butter, cheese, animal fat, milk, mutton and goat meat) divided by \
+		the total pasture land.
+	|
+
+Total Forest Biomass Demand=
+	Energy Demand*Market Share Biomass Forest/Biomass Conversion Efficiency
+	~	Biomass ton/Year
+	~	Total demand for forest biomass accounting for forest biomass energy \
+		market share and reference technology development.
+	|
+
+Effect of GDP on Urban Land Requirement=
+	L urban land / 
+	(1 + 
+	EXP(-k urban land * (Relative GWP per Capita - x0 urban land))
+	)
+	~	Dmnl
+	~	k urban land +
+	|
+
+Effect of CO2 Concentration on Forest Land Fertility=
+	Max Effect of CO2 Concentration on Forest Land Fertility+(Min Effect of CO2 Concentration on Forest Land Fertility\
+		-Max Effect of CO2 Concentration on Forest Land Fertility
+	)*((C Concentration Ratio-1)/((C Concentration Ratio-1)+Elasticity of CO2 Concentration on Forest Land Fertility\
+		))
+	~	Dmnl
+	~	Impact of carbon concentration on forest land fertility. Scaled between \
+		minimal and maximal impact.
+	|
+
+Effect of Climate Change on Forest Land Fertility=
+	(1-Climate Impact on Forest Land Fertility Scale*(Temperature Change from Preindustrial\
+		/Climate Impact on Forest Land Fertility Reference Temperature
+	)^Climate Impact on Forest Land Fertility Nonlinearity)
+	~	Dmnl
+	~	Impact of climate change risk on forest land fertility.
+	|
+
+Annual Caloric Demand inc Waste[FoodCategories]=
+	Annual Caloric Demand[FoodCategories]/(1-Waste fraction[FoodCategories])
+	~	Mkcal/Year
+	~	Total Annual Calorie Demand for Food Category[FoodCategories]/(1-Waste \
+		fraction[FoodCategories])
+	|
+
+Effect of GDP on Forest Management Practices Increment=
+	Variable7 Forest MP
+	~	Dmnl
+	~	Increment of impact of GDP on forest land management practices.
+	|
+
+Actual Forest Land Harvested=
+	(Forest Biomass Production/(1-Biomass Production Processing Loss))/Forest Land Energy Yield
+	~	ha
+	~	Forest biomass production expressed in terms of forest land harvested \
+		excluding forest biomass production processing loss.
+	|
+
+AF S=
+	0.95
+	~	Dmnl
+	~		|
+
+AF Var S=
+	0.95 + SMOOTH(STEP(AF S-0.95, 2020),1
+	)
+	~	Dmnl
+	~		|
+
+Agricultural Land= INTEG (
+	- Agricultural Land Erosion Rate
+	- Forestation from Agricultural Land
+	- Agricultural Land Conversion Rate to Urban Land
+	+ Deforestation to Agricultural Land
+	+ Agricultural Land Development Rate,
+		INIT Agricultural Land)
+	~	ha
+	~	Total Agriculture Land.
+	|
+
+Agricultural Land Conversion Rate to Urban Land=
+	MIN(
+	Urban and Industrial Land Discrepancy*Fraction of Urban Land Conversion from Agriculture\
+		/Agriculture to Urban Land Allocation Time
+,
+	
+	(Agricultural Land-Agriculture Protected Land)/Agriculture to Urban Land Allocation Time
+	)
+	~	ha/Year
+	~	Transformation process of Agriculture Land into Urban and Industrial Land.
+	|
+
+Agricultural Land Development Rate=
+	MIN(Intended Conversion Other to Agriculture, Other Land-Other Protected Land)/Agricultural Land Development Time
+	~	ha/Year
+	~		|
+
+Agricultural Land Development Time=
+	100+STEP( Agricultural Land Development Time Variation-100, 2020)
+	~	
+	~		|
+
+Agricultural Land Development Time Variation=
+	100
+	~	
+	~		|
+
+Agricultural Land Erosion Fraction=
+	0.0001+STEP(Agricultural Land Erosion Fraction Variation-0.0001, 2020)
+	~	1/Year
+	~	This is actually dependent on yield. The highher the yield, the shorter \
+		the lifetime of the agricultural land.
+	|
+
+Agricultural Land Erosion Fraction Variation=
+	0.0001
+	~	1/Year
+	~	This is actually dependent on yield. The highher the yield, the shorter \
+		the lifetime of the agricultural land.
+	|
+
+Agricultural Land Erosion Rate=
+	Agricultural Land*Agricultural Land Erosion Fraction
+	~	ha/Year
+	~	Process of transformation between Agriculture and Other Land.
+	|
+
+Agriculture Land Energy Yield=
+	Nominal Energy Agriculture Land Productivity*
+	Effect of Carbon Concentration on Agricultural Yield*
+	Effect of Climate Change on Agricultural Yield*
+	Effect of Input Neutral Technology Change on Agricultural Land Fertility*
+	Effect of Water Withdrawal on Agriculture Land Fertility*
+	Effect of Management Practices on Agriculture Land Fertility
+	~	Biomass ton/(Year*ha)
+	~	Yield from a unit energy crops land area.
+	|
+
+Agriculture Protected Land=
+	1.46683e+09
+	~	ha
+	~	Area of Agriculture Land not transformable into other kind of lands.
+	|
+
+Agriculture to Forest Land Allocation Time=
+	150+STEP(Agriculture to Forest Land Allocation Time Variation-150, 2020)
+	~	Year
+	~	Average time which natural transformation of Agriculture to Forest Land \
+		would take.
+	|
+
+Agriculture to Forest Land Allocation Time Variation=
+	150
+	~	Year
+	~	Average time which natural transformation of Agriculture to Forest Land \
+		would take.
+	|
+
+Agriculture to Urban Land Allocation Time=
+	5+STEP(Agriculture to Urban Land Allocation Time Variation-5, 2020)
+	~	Year
+	~	Average time which natural transformation of Agriculture to Urban and \
+		Industrial Land would take.
+	|
+
+Agriculture to Urban Land Allocation Time Variation=
+	5
+	~	Year
+	~	Average time which natural transformation of Agriculture to Urban and \
+		Industrial Land would take.
+	|
+
+alpha=
+	1.25
+	~	Dmnl
+	~	Beginning point of the domain of the table function. In this model, equal \
+		to 0.
+	|
+
+Arable Land=
+	Agricultural Land*Arable Percentage of Agriculture Land
+	~	ha
+	~	Area of arable land.
+	|
+
+Arable Land Allocated for Crops=
+	MIN(Arable Land, Total Demand for Arable Land)
+	~	ha
+	~		|
+
+Arable Land Allocated for Energy Crops=
+	Demand Fraction of Energy Crops*Arable Land
+	~	ha
+	~		|
+
+Arable land allocation fraction[PlantFood]=
+	SMOOTH(Demand Fraction of Food and Feed Crops[PlantFood], 5)
+	~	Dmnl
+	~		|
+
+Arable Land Needed[PlantFood]=
+	Desired crop production[PlantFood]/Expected crop yield[PlantFood]
+	~	ha
+	~		|
+
+Arable Land Needed for Energy Crops=
+	Total Crops Biomass Demand/Agriculture Land Energy Yield
+	~	ha
+	~	Land area dedicated to energy crops production.
+	|
+
+Arable Percentage of Agriculture Land=
+	0.287
+	~	Dmnl
+	~	Percentage of agricultural land constituting the arable land.
+	|
+
+Area harvested[PlantFood]=
+	Arable Land Allocated for Crops*Arable land allocation fraction[PlantFood]
+	~	ha
+	~		|
+
+beta=
+	5
+	~	Dmnl
+	~	End point of the domain of the table function. In this model, qual to 1.
+	|
+
+Biomass Production Processing Loss=
+	0.1
+	~	Dmnl
+	~	Average percentage of total forest biomass production lost due to \
+		processing.
+	|
+
+Caloric value of food[FoodCategories]=
+	Caloric value of food Data[FoodCategories]*(1+STEP(SA multiplier for caloric value-1\
+		, 2020))
+	~	Mkcal/Ton
+	~		|
+
+Caloric value of food Data[FoodCategories]=
+	1.2,
+	1.546,
+	0.6,
+	1.43,
+	3.442,
+	3.207,
+	0.483,
+	0.8
+	~	Mkcal/Ton
+	~		|
+
+Calpha=
+	1.25
+	~	Dmnl
+	~	Beginning point of the domain of the table function. In this model, equal \
+		to 0.
+	|
+
+Cbeta=
+	5
+	~	Dmnl
+	~	End point of the domain of the table function. In this model, qual to 1.
+	|
+
+Climate Impact on Forest Land Fertility Nonlinearity=
+	2
+	~	Dmnl
+	~	Elasticity of climate impact on forest land fertility.
+	|
+
+Climate Impact on Forest Land Fertility Reference Temperature=
+	3
+	~	DegreesC
+	~	Reference temperature against which the average temerature is compared in \
+		calculation of impact of climate change on forest land fertility.
+	|
+
+Climate Impact on Forest Land Fertility Scale=
+	0.013
+	~	Dmnl
+	~	Increment of climate impact on forest land fertility.
+	|
+
+CO2 emission rate of the agriculture sector[FoodCategories]=
+	Food production rate[FoodCategories]*Unit CO2 emissions from food production[FoodCategories\
+		]
+	~	TonCO2/Year
+	~		|
+
+Crop demand for other uses[PlantFood]=
+	Food demand in tonnes[PlantFood]*Other uses multiplier for food[PlantFood]
+	~	Ton/Year
+	~		|
+
+Crop yield for each category[PlantFood]=
+	Average expected crop yield[PlantFood]
+	* Effect of Input Neutral Technology Change on Agricultural Land Fertility
+	* Effect of Climate Change on Agricultural Yield
+	* Effect of Carbon Concentration on Agricultural Yield
+	* Effect of Water Withdrawal on Agriculture Land Fertility
+	~	Ton/(ha*Year)
+	~		|
+
+Cropland Needed=
+	sum(Arable Land Needed[PlantFood!])+Permanent crops+Arable Land Needed for Energy Crops
+	~	ha
+	~	Land area required for food crops production due to food demand.
+	|
+
+Cropland Yield Indicator=
+	Cropland Yield
+	~	Ton/(Year*ha)
+	~		|
+
+Current to Max Forest Protected Land=
+	Forest Protected Land Change Ratio*(1-Forest Protected Land/Max Forest Protected Land\
+		)
+	~	1/Year
+	~	Gap being closed between current and max forest protected land.
+	|
+
+Deforestation=
+	Deforestation to Urban Land+Deforestation to Agricultural Land
+	~	ha/Year
+	~		|
+
+Deforestation to Agricultural Land=
+	MIN(
+	(Forest Land - Forest Protected Land) / Forest to Agriculture Land Allocation Time,
+	Intended Conversion Forest to Agriculture /Forest to Agriculture Land Allocation Time
+	)
+	~	ha/Year
+	~		|
+
+Deforestation to Urban Land=
+	MIN(
+	Urban and Industrial Land Discrepancy*(1-Fraction of Urban Land Conversion from Agriculture\
+		)/Forest to Urban Land Allocation Time,
+	(Forest Land-Forest Protected Land)/Forest to Urban Land Allocation Time)
+	~	ha/Year
+	~	Transformation process of Forest into Urban and Industrial Land.
+	|
+
+Delay Time FPLCLV=
+	Time to Adjust Forest Protected Land/3
+	~	Year
+	~		|
+
+Demand Fraction of Energy Crops=
+	Arable Land Needed for Energy Crops/Total Demand for Arable Land
+	~	Dmnl
+	~		|
+
+Demand Fraction of Food and Feed Crops[PlantFood]=
+	Arable Land Needed[PlantFood]/Total Demand for Arable Land
+	~	Dmnl
+	~		|
+
+Demand fraction of Grassland[PasMeat]=
+	Grassland Needed[PasMeat]/Total Grassland Needed ~~|
+Demand fraction of Grassland[Dairy]=
+	Grassland Needed[Dairy]/Total Grassland Needed
+	~	Dmnl
+	~		|
+
+Demand Supply ratio of Agricultural Land=
+	Total Agricultural Land Demand/Agricultural Land
+	~	Dmnl
+	~		|
+
+Desired Agricultural Land Conversion=
+	Trend of Land Demand*Agricultural Land
+	~	ha/Year
+	~		|
+
+Desired Agricultural Land Conversion Trend Averaging Time Variation=
+	10
+	~	Year
+	~		|
+
+Desired crop production[PlantFood]=
+	Food demand in tonnes[PlantFood]+Feed demand in tonnes[PlantFood]+Crop demand for other uses\
+		[PlantFood]
+	~	Ton/Year
+	~		|
+
+Desired Production Fraction=
+	Total Forest Biomass Demand/Potential Biomass Production
+	~	1
+	~	Ratio of demand for forest biomass to potential production.
+	|
+
+Effect of Carbon Concentration on Agricultural Yield=
+	Distortion Function C
+	~	Dmnl
+	~	Impact of carbon concentration on cropland fertility.
+		L C on Yield / 
+		(1 + 
+		EXP(-k C on Yield * (C Concentration Ratio - x0 C on Yield))
+		)
+	|
+
+Effect of Climate Change on Agricultural Yield=
+	1 + STEP(Distorted Effect of T on Yield-1, 2020)
+	~	Dmnl
+	~	Impact of climate change risk on cropland fertility.
+		L T on Yield / 
+		(1 + 
+		EXP(-k T on Yield * (Temperature Change from Preindustrial - x0 T on Yield))
+		)
+	|
+
+Effect of GDP on Cropland Management Practices Elasticity=
+	2.2e-08+STEP(Effect of GDP on Cropland Management Practices Elasticity Variation-2.2e-08\
+		, 2020)
+	~	(Year*Year*Person*Person)/($*$)
+	~	Elasticity of impact of GDP on cropland management practices.
+	|
+
+Effect of GDP on Cropland Management Practices Elasticity Variation=
+	2.2e-08
+	~	(Year*Year*Person*Person)/($*$)
+	~	Elasticity of impact of GDP on cropland management practices.
+	|
+
+Effect of GDP on Forest Land Fertility Elasticity=
+	9e-08+STEP(Effect of GDP on Forest Land Fertility Elasticity Variation-7e-08, 2020)
+	~	(Year*Year*Person*Person)/($*$)
+	~	Elasticity of impact of GDP on forest land management practices.
+	|
+
+Effect of GDP on Forest Land Fertility Elasticity Variation=
+	7e-08
+	~	(Year*Year*Person*Person)/($*$)
+	~	Elasticity of impact of GDP on forest land management practices.
+	|
+
+Effect of GDP on Urban Land Requirement k Variation=
+	1
+	~	Dmnl
+	~		|
+
+Effect of GDP on Urban Land Requirement l Variation=
+	1.25
+	~	Dmnl
+	~		|
+
+Effect of GDP on Urban Land Requirement x0 Variation=
+	5
+	~	Dmnl
+	~		|
+
+Effect of Input Neutral Technology Change on Forest Land Fertility=
+	Input Neutral Forest Technology/INIT Input Neutral TC in Forest
+	~	Dmnl
+	~	Impact of technological advancement on forest land fertility.
+	|
+
+Effect of T on Yield Lookup(
+	[(0,0)-(3,2)],(1.25,1),(1.5,1),(2,1),(2.5,1),(3,1))
+	~	Dmnl
+	~		|
+
+Effect of Trees Aging on Yield=
+	Table for ETAY(Desired Production Fraction)
+	~	Dmnl
+	~	Parameter accounting for decreased forest biomass production from aging \
+		tress.
+	|
+
+Effect of Trees Maturing on Yield=
+	Table for ETMY(Desired Production Fraction)
+	~	Dmnl
+	~	Parameter accounting for increased forest biomass production from mature \
+		trees.
+	|
+
+EGI S=
+	1.25
+	~	Dmnl
+	~		|
+
+EGI Var S=
+	1.25+STEP(EGI S-1.25, 2020)
+	~	Dmnl
+	~		|
+
+EGX S=
+	5
+	~	Dmnl
+	~		|
+
+EGX Var S=
+	5+STEP(EGX S-5, 2020)
+	~	Dmnl
+	~		|
+
+Elasticity of CO2 Concentration on Forest Land Fertility=
+	1
+	~	Dmnl
+	~	Elasticity of impact of carbon concentration on forest land fertility.
+	|
+
+Energy Crops Production=
+	Arable Land Allocated for Energy Crops*Agriculture Land Energy Yield
+	~	Biomass ton/Year
+	~	Total energy biomass production from energy crops.
+	|
+
+Expected crop yield[PlantFood]=
+	Outflow EXYA[PlantFood]
+	~	Ton/(Year*ha)
+	~		|
+
+Expected Crop Yield Accumulative[PlantFood]= INTEG (
+	Inflow EXYA[PlantFood]-Outflow EXYA[PlantFood],
+		INIT Crop Yield[PlantFood])
+	~	Ton/ha
+	~	For coverting DELAY1I function only. Added by Q Ye in July 2024
+	|
+
+Expected Grassland Meat Yield=
+	Outflow EGMeYA
+	~	Ton/(Year*ha)
+	~		|
+
+Expected Grassland Meat Yield Accumulative= INTEG (
+	Inflow EGMeYA-Outflow EGMeYA,
+		Initial Grassland Meat Yield*1)
+	~	Ton/ha
+	~	For coverting DELAY1I function only. Added by Q Ye in July 2024
+	|
+
+Expected Grassland Milk Yield=
+	Outflow EGMYA
+	~	Ton/(Year*ha)
+	~		|
+
+Expected Grassland Milk Yield Accumulative= INTEG (
+	Inflow EGMYA-Outflow EGMYA,
+		Initial Grassland Milk Yield)
+	~	Ton/Year
+	~	For coverting DELAY1I function only. Added by Q Ye in July 2024
+	|
+
+FAT S=
+	5
+	~	Year
+	~		|
+
+FAT Var S=
+	5 + SMOOTH(STEP(FAT S-5, 2020),1)
+	~	Year
+	~		|
+
+Feed Availability[PlantFood]=
+	Production rate of crops[PlantFood]*Feed fraction in demand[PlantFood]
+	~	Ton/Year
+	~		|
+
+Feed demand in tonnes[PlantFood]=
+	Food demand in tonnes[CropMeat]*Feed share of crop types[PlantFood]*Unit feed used for meat production
+	~	Ton/Year
+	~	The amount of PlantFood required for crop-based meat production
+	|
+
+Feed fraction in demand[PlantFood]=
+	Feed demand in tonnes[PlantFood]/Desired crop production[PlantFood]
+	~	Dmnl
+	~		|
+
+Feed per meat DATA= WITH LOOKUP (
+	Time,
+		([(1960,0)-(2020,10)],(1961,12.7),(1962,12.78),(1963,12.5),(1964,12.79),(1965,12.41\
+		),(1966,12.59),(1967,12.34),(1968,13.04),(1969,13.19),(1970,12.89),(1971,12.19),(1972\
+		,12.01),(1973,12.36),(1974,11.37),(1975,11.49),(1976,11.78),(1977,11.66),(1978,11.63\
+		),(1979,10.84),(1980,10),(1981,9.84),(1982,9.98),(1983,9.48),(1984,9.76),(1985,9.42\
+		),(1986,9.34),(1987,9.01),(1988,8.19),(1989,8.23),(1990,8.09),(1991,7.66),(1992,7.56\
+		),(1993,7.35),(1994,7.07),(1995,6.68),(1996,6.91),(1997,6.6),(1998,6.25),(1999,6.15\
+		),(2000,6.2),(2001,6.24),(2002,5.99),(2003,5.84),(2004,6.1),(2005,5.85),(2006,5.61)\
+		,(2007,5.49),(2008,5.55),(2009,5.22),(2010,5.09),(2011,5.35),(2012,5.1),(2013,5.39)\
+		 ))
+	~	Dmnl
+	~	The amount (in  tonnes) of feed for each crop type required to produce 1 \
+		ton of crop-based meat. Estimated based on the FAO data for Feed and Meat \
+		production, the data for 1961-1985. See FoodBalanceSheets.xlsx
+	|
+
+Feed share of crop types[Grains]=
+	Feed share of crop types Data[Grains] *
+	(1 + SMOOTH(STEP(Feed Share of Grains Variation-1, 2020),SSP Food and Diet Variation Time\
+		)) ~~|
+Feed share of crop types[VegFruits]=
+	Feed share of crop types Data[VegFruits]*
+	(1 + SMOOTH(STEP(Feed Share of VegFruits Variation-1, 2020),SSP Food and Diet Variation Time\
+		)) ~~|
+Feed share of crop types[Pulses]=
+	Feed share of crop types Data[Pulses] *
+	(1 + SMOOTH(STEP(Feed Share of Pulses Variation-1, 2020),SSP Food and Diet Variation Time\
+		)) ~~|
+Feed share of crop types[OtherCrops]=
+	Feed share of crop types Data[OtherCrops] *
+	(1 + SMOOTH(STEP(Feed Share of OtherCrops Variation-1, 2020),SSP Food and Diet Variation Time\
+		))
+	~	Dmnl
+	~	This parameter represents the fraction of each crop type in the total feed \
+		amount used to produce crop-based meat, i.e. pork and poultry. For \
+		instance, if the value of this parameter for grains is 72%, it means that \
+		72% of total feed comes from grains.  It is estimated based on the FAO \
+		balance sheets, the data for 1961-1985, by summing the amount of each crop \
+		type used as feed. See FoodBalanceSheets.xlsx
+	|
+
+Feed share of crop types Data[PlantFood]=
+	0.014,
+	0.715,
+	0.223,
+	0.048
+	~	Dmnl
+	~	PlantFood includes Pulses, grains, vegfruits, and other crops
+	|
+
+Feed Share of Grains Variation=
+	1
+	~	Dmnl
+	~		|
+
+Feed Share of OtherCrops Variation=
+	1
+	~	Dmnl
+	~		|
+
+Feed Share of Pulses Variation=
+	1
+	~	Dmnl
+	~		|
+
+Feed Share of VegFruits Variation=
+	1
+	~	Dmnl
+	~		|
+
+Fertilization Related Practices=
+	Effect of Input Neutral Technology Change on Agricultural Land Fertility*Effect of Management Practices on Agriculture Land Fertility
+	~	Dmnl
+	~	Variable representing extent of technical advancement and management \
+		practices related to fertilization.
+	|
+
+Food demand in tonnes[FoodCategories]=
+	Annual Caloric Demand inc Waste[FoodCategories]/Caloric value of food[FoodCategories\
+		]
+	~	Ton/Year
+	~		|
+
+Food fraction in demand[PlantFood]=
+	Food demand in tonnes[PlantFood]/Desired crop production[PlantFood]
+	~	Dmnl
+	~		|
+
+Food production rate[PlantFood]=
+	Production rate of crops[PlantFood] ~~|
+Food production rate[AnimalFood]=
+	Production rate of animal food[AnimalFood]
+	~	Ton/Year
+	~		|
+
+Food shortage in kcal[FoodCategories]=
+	Annual Caloric Demand inc Waste[FoodCategories]-Food supply in kcal[FoodCategories]
+	~	Mkcal/Year
+	~		|
+
+Food shortage in tonnes[FoodCategories]=
+	Food demand in tonnes[FoodCategories]-Food supply in tonnes[FoodCategories]
+	~	Ton/Year
+	~		|
+
+Food supply in kcal[FoodCategories]=
+	Caloric value of food[FoodCategories]*Food supply in tonnes[FoodCategories]
+	~	Mkcal/Year
+	~		|
+
+Food supply in tonnes[PlantFood]=
+	Food production rate[PlantFood]*Food fraction in demand[PlantFood] ~~|
+Food supply in tonnes[AnimalFood]=
+	Food production rate[AnimalFood]
+	~	Ton/Year
+	~		|
+
+Forest Biomass Production=
+	MIN(Total Forest Biomass Demand, Harvest Available Forest Land*Forest Land Energy Yield\
+		*(1-Biomass Production Processing Loss))
+	~	Biomass ton/Year
+	~	Total biomass production from forest.
+	|
+
+Forest Land= INTEG (
+	Forestation from Agricultural Land
+	+ Forestation from Other Land
+	- Deforestation to Agricultural Land
+	- Deforestation to Urban Land,
+		INIT Forest Land)
+	~	ha
+	~	Total Forest Land.
+	|
+
+Forest Land Discrepancy=
+	MAX(0, Forest Land Needed to be Harvested-Harvest Available Forest Land)
+	~	ha
+	~		|
+
+Forest Land Energy Yield=
+	Forest Land Yield*Effect of Trees Maturing on Yield*Effect of Trees Aging on Yield
+	~	Biomass ton/(Year*ha)
+	~	Forest Land Energy Yield accounting for reference forest biomass \
+		production and effect of trees age.
+	|
+
+Forest Land Fertility=
+	Normal Forest Land Fertility*Effect of Climate Change on Forest Land Fertility*Effect of Management Practices on Forest Land Fertility\
+		*Effect of CO2 Concentration on Forest Land Fertility
+	*Effect of Biodiversity on Forest Land Fertility*Effect of Input Neutral Technology Change on Forest Land Fertility
+	~	Dmnl
+	~	Multiplier inidcating forest land fertility i.e. how many times the \
+		nominal forest land yield has changed since the reference value in year \
+		1900.
+	|
+
+Forest Land Fraction Harvested excluding Protected Area=
+	0.5+STEP(Forest Land Fraction Harvested excluding Protected Area Variation-0.5, 2020\
+		)
+	~	Dmnl
+	~	Fraction of Forest dedicated to be harvested.
+	|
+
+Forest Land Fraction Harvested excluding Protected Area Variation=
+	0.5
+	~	Dmnl
+	~	Fraction of Forest dedicated to be harvested.
+	|
+
+Forest Land Needed to be Harvested=
+	(Total Forest Biomass Demand/(1-Biomass Production Processing Loss))/Forest Land Energy Yield
+	~	ha
+	~	Total area of Forest needed for biomass production purposes accounting for \
+		total demand for forest biomass, average forest land yield and average \
+		losses in forest biomass production process.
+	|
+
+Forest Land Yield=
+	Forest Land Fertility*Nominal Energy Forest Land Productivity
+	~	Biomass ton/(Year*ha)
+	~	Actual annual amount of forest biomass production from unit forest land \
+		area for given Forest Land Fertility.
+	|
+
+Forest Protected Land= INTEG (
+	Forest Protected Land Change,
+		INIT Forest Protected Land)
+	~	ha
+	~	Area of forest land indicated as protected. Source of historical data: \
+		http://www.fao.org/docrep/003/x4108e/X4108E11.htm# P3941_174357
+	|
+
+Forest Protected Land Change=
+	Outflow FPLCLV3
+	~	ha/Year
+	~	Changes in area of forest land indicated as protected.
+	|
+
+Forest Protected Land Change LV1= INTEG (
+	Inflow FPLCLV1-Outflow FPLCLV1,
+		Forest Protected Land Change LV3)
+	~	ha
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Forest Protected Land Change LV2= INTEG (
+	Inflow FPLCLV2-Outflow FPLCLV2,
+		Forest Protected Land Change LV3)
+	~	ha
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Forest Protected Land Change LV3= INTEG (
+	Inflow FPLCLV3-Outflow FPLCLV3,
+		Fraction FPLC*Delay Time FPLCLV)
+	~	ha
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Forest Protected Land Change Ratio=
+	0.1
+	~	1/Year
+	~	Ratio at which the gap between current and max forest protected land is \
+		closed.
+	|
+
+Forest to Agriculture Land Allocation Time=
+	FAT Var S + SMOOTH(STEP(Forest to Agriculture Land Allocation Time Variation-FAT Var S\
+		, 2020+L Var T),SSP Land Use Change Variation Time)
+	~	Year
+	~	Average time which natural transformation of Forest to Agriculture Land \
+		would take.130
+	|
+
+Forest to Agriculture Land Allocation Time Variation=
+	5
+	~	Year
+	~		|
+
+Forest to Urban Land Allocation Time=
+	10+STEP(Forest to Urban Land Allocation Time Variation-10, 2020)
+	~	Year
+	~	Average time which natural transformation of Forest to Urban and \
+		Industrial Land would take.
+	|
+
+Forest to Urban Land Allocation Time Variation=
+	10
+	~	Year
+	~	Average time which natural transformation of Forest to Urban and \
+		Industrial Land would take.
+	|
+
+Forestation from Agricultural Land=
+	MIN(
+	(Agricultural Land-Agriculture Protected Land)/TIME STEP,
+	Forest Land Discrepancy*Fraction of Forest Land Conversion from Agriculture/Agriculture to Forest Land Allocation Time
+	)
+	~	ha/Year
+	~	Process of transformation between Forest and Agriculture Land.
+	|
+
+Forestation from Other Land=
+	MIN(
+	(Other Land-Other Protected Land)/Other to Forest Land Allocation Time,
+	Forest Land Discrepancy*(1-Fraction of Forest Land Conversion from Agriculture)/Other to Forest Land Allocation Time
+	)
+	~	ha/Year
+	~		|
+
+Fraction FPLC=
+	Current to Max Forest Protected Land*Forest Protected Land
+	~	ha/Year
+	~		|
+
+Fraction of Agricultural Land Conversion from Forest=
+	AF Var S + SMOOTH(STEP(Fraction of Agricultural Land Conversion from Forest Variation\
+		-AF Var S, 2020+L Var T),SSP Land Use Change Variation Time
+	)
+	~	Dmnl
+	~		|
+
+Fraction of Agricultural Land Conversion from Forest Variation=
+	0.95
+	~	Dmnl
+	~		|
+
+Fraction of Forest Land Conversion from Agriculture=
+	0.1 + STEP(Fraction of Forest Land Conversion from Agriculture Variation-0.1, 2020)
+	~	Dmnl
+	~		|
+
+Fraction of Forest Land Conversion from Agriculture Variation=
+	0.1
+	~	Dmnl
+	~		|
+
+Fraction of Urban Land Conversion from Agriculture=
+	0.9+STEP(Fraction of Urban Land Conversion from Agriculture Variation-0.9, 2020)
+	~	Dmnl
+	~		|
+
+Fraction of Urban Land Conversion from Agriculture Variation=
+	0.9
+	~	Dmnl
+	~		|
+
+Grassland Allocated for Food Production=
+	MIN(Permanent meadows and pastures,Grassland allocation demand)
+	~	ha
+	~		|
+
+Grassland allocation demand=
+	SMOOTH(Total Grassland Needed, 5)
+	~	ha
+	~		|
+
+Grassland allocation fraction[PasMeat]=
+	SMOOTH(Demand fraction of Grassland[PasMeat], 5) ~~|
+Grassland allocation fraction[Dairy]=
+	SMOOTH(Demand fraction of Grassland[Dairy], 5)
+	~	Dmnl
+	~		|
+
+Grassland Meat Yield Indicator=
+	Grassland Meat Yield
+	~	Ton/(Year*ha)
+	~		|
+
+Grassland Milk Yield=
+	Grassland Meat Yield*Meat to Milk Multiplier
+	~	Ton/(Year*ha)
+	~		|
+
+Grassland Needed[PasMeat]=
+	Food demand in tonnes[PasMeat]/Expected Grassland Meat Yield ~~|
+Grassland Needed[Dairy]=
+	Food demand in tonnes[Dairy]/Expected Grassland Milk Yield
+	~	ha
+	~		|
+
+Half Measures=
+	(1-SCENARIO Half Measures)*1+SCENARIO Half Measures*(1+RAMP(Half Measures Scenario Ramp Change\
+		, 2010, 2020))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Half Measures Deforestation Time Factor=
+	SCENARIO Half Measures*(RAMP(Half Measures Scenario Ramp Time Change, 2019, 2020))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Half Measures Scenario Ramp Change=
+	-0.0215
+	~	1/Year
+	~	WWF Scenario variable. Further development required.
+	|
+
+Half Measures Scenario Ramp Time Change=
+	1
+	~	1/Year
+	~	WWF Scenario variable. Further development required.
+	|
+
+Harvest Available Forest Land=
+	Forest Land Fraction Harvested excluding Protected Area*MAX(0, (Forest Land-Forest Protected Land\
+		))
+	~	ha
+	~	Actual area of Forest available to be harvested.
+	|
+
+Harvested Forest Biomass Land Indicator=
+	Actual Forest Land Harvested
+	~	ha
+	~		|
+
+Inflow EGMeYA=
+	Grassland Meat Yield
+	~	Ton/(ha*Year)
+	~		|
+
+Inflow EGMYA=
+	Grassland Milk Yield
+	~	Ton/(Year*ha)
+	~		|
+
+Inflow EXYA[PlantFood]=
+	Crop yield for each category[PlantFood]
+	~	Ton/(ha*Year)
+	~		|
+
+Inflow FPLCLV1=
+	Fraction FPLC
+	~	ha/Year
+	~		|
+
+Inflow FPLCLV2=
+	Outflow FPLCLV1
+	~	ha/Year
+	~		|
+
+Inflow FPLCLV3=
+	Outflow FPLCLV2
+	~	ha/Year
+	~		|
+
+INIT Crop Yield[PlantFood]=
+	0.34, 0.97, 4.89, 2.99
+	~	Ton/(Year*ha)
+	~		|
+
+INIT Forest Protected Land=
+	282254
+	~	ha
+	~	Area of forest land indicated as protected in year 1900.
+	|
+
+INIT Input Neutral TC in Forest=
+	1
+	~	Dmnl
+	~	Reference variable representing technological advancement and its positive \
+		impact on forest land fertility in year 1900.
+	|
+
+INIT Urban and Industrial Land=
+	4e+06
+	~	ha
+	~	The area of urban and industrial land for year 1900.
+	|
+
+Initial Grassland Meat Yield=
+	0.015
+	~	Mkcal/(Year*ha)
+	~	0.007
+	|
+
+Initial Grassland Milk Yield=
+	0.45
+	~	Ton/(Year*ha)
+	~	0.2288
+	|
+
+Initial Trend=
+	0.01
+	~	1/Year
+	~		|
+
+Input Neutral Forest Technology= INTEG (
+	Input Neutral Technology Change in Forest,
+		INIT Input Neutral TC in Forest)
+	~	Dmnl
+	~	Exogenous variable representing technological advancement and its positive \
+		impact on forest land fertility.
+	|
+
+Input Neutral Technology Change in Forest=
+	Input Neutral Technology Change in Forest Factor
+	~	1/Year
+	~	Change in technological advancement related to forest land fertility.
+	|
+
+Input Neutral Technology Change in Forest Factor=
+	0.001
+	~	1/Year
+	~	Factor change of technological advancement related to forest land \
+		fertility.
+	|
+
+Intended Conversion Forest to Agriculture=
+	Desired Agricultural Land Conversion*Fraction of Agricultural Land Conversion from Forest
+	~	ha/Year
+	~		|
+
+Intended Conversion Other to Agriculture=
+	Desired Agricultural Land Conversion*(1-Fraction of Agricultural Land Conversion from Forest\
+		)
+	~	ha
+	~		|
+
+k C on Yield=
+	0 + STEP(SA k C on Yield, 2020)
+	~	Dmnl
+	~		|
+
+k gdp agritech=
+	0.466
+	~	Dmnl
+	~		|
+
+k T on Yield=
+	0 + STEP(SA k T on Yield, 2020)
+	~	Dmnl
+	~		|
+
+k urban land=
+	1+STEP(Effect of GDP on Urban Land Requirement k Variation-1, 2020)
+	~	Dmnl
+	~		|
+
+L C on Yield=
+	2 + STEP(SA L C on Yield-2, 2020)
+	~	Dmnl
+	~		|
+
+L gdp agritech=
+	1.45
+	~	Dmnl
+	~		|
+
+L T on Yield=
+	2 + STEP (SA L T on Yield-2, 2020)
+	~	Dmnl
+	~		|
+
+L urban land=
+	EGI Var S+STEP(Effect of GDP on Urban Land Requirement l Variation-EGI Var S, 2020+SE Var T\
+		)
+	~	Dmnl
+	~		|
+
+Land Allocated for Animal Calories=
+	Grassland Allocated for Food Production
+	~	ha
+	~	Calculated historical data and projection for land for animal food \
+		according to FAO. Source of historical data: http://faostat.fao.org
+	|
+
+Land Allocated for Energy Crops=
+	Arable Land Allocated for Energy Crops
+	~	ha
+	~	Land area dedicated to energy crops production.
+	|
+
+Land Allocated for Food Crops=
+	Arable Land Allocated for Crops+
+	Permanent crops
+	~	ha
+	~	Land area dedicated to crops production decreased by the area dedicated to \
+		energy crops production.
+	|
+
+Land Conversion Delay Time=
+	5
+	~	Year
+	~	Parameter indicating time delay required to change land from vegetal to \
+		animal food production land.
+	|
+
+m Effect of C on Yield=
+	0 + STEP(SA m Effect of C on Yield, 2020)
+	~	Dmnl
+	~		|
+
+m Effect of T on Yield=
+	0 + STEP(SA m Effect of T on Yield, 2020)
+	~	Dmnl
+	~		|
+
+Max Effect of CO2 Concentration on Forest Land Fertility=
+	1
+	~	Dmnl
+	~	Max impact of carbon concentration on forest land fertility.
+	|
+
+Max Forest Protected Land=
+	5e+08
+	~	ha
+	~	Maximum area of forest land that can become protected.: 3.5e+009
+	|
+
+Max Impact of Biodiversity on Forest Land Fertility=
+	1
+	~	Dmnl
+	~	Max impact of mean species abundance on forest land fertility.
+	|
+
+Meadows and Pastures Percentage of Agriculture Land=
+	0.689
+	~	Dmnl
+	~	Percentage of agricultural land constituting the meadows and pastures land.
+	|
+
+Meat to Eggs Multiplier=
+	0.29
+	~	Dmnl
+	~	Calibrated. Within the range of historical values, close to the histprical \
+		average.
+	|
+
+Meat to Milk Multiplier=
+	30
+	~	Dmnl
+	~	Tonnes of milk / tonnes of bovine meat. For now, based globiom 2000 value
+	|
+
+Min Effect of CO2 Concentration on Forest Land Fertility=
+	2
+	~	Dmnl
+	~	Min impact of carbon concentration on forest land fertility.
+	|
+
+Min Impact of Biodiversity on Forest Land Fertility=
+	0.1
+	~	Dmnl
+	~	Min impact of mean species abundance on forest land fertility.
+	|
+
+Moisture Content[CropMeat]=
+	(0.7+0.55)/2 ~~|
+Moisture Content[Eggs]=
+	0.26 ~~|
+Moisture Content[PasMeat]=
+	(0.53+0.57)/2 ~~|
+Moisture Content[Dairy]=
+	0.88 ~~|
+Moisture Content[Pulses]=
+	(0.15+0.14)/2 ~~|
+Moisture Content[Grains]=
+	(0.15+0.115+0.13+0.135+0.16+0.135+0.135+0.12)/8 ~~|
+Moisture Content[VegFruits]=
+	0.82 ~~|
+Moisture Content[OtherCrops]=
+	(0.79+0.09+0.75)/3
+	~	tDM/Ton
+	~	Data from Food and Animal moisture content \
+		https://lca-net.com/files/LCAfood2014-LCAofGlobalFoodConsumption.pdf
+		CropMeat = average (poultry and pork)
+		PasMeat = average ( Cattle beef and other meats)
+		Dairy = Animal raw milk
+		Vegetable and fruits  = vegetable and fuits
+		Other plant products = average (oil crops, sugar crops and crops other)
+		
+		https://www.researchgate.net/publication/325594668_Postharvest_Losses_in_Ethiopia_and\
+		_Opportunities_for_Reduction_A_Review/figures?lo=1
+		Crops = average of all crops in Table 2.
+		Pulses = average pulses and lentil and pea from Table 2
+	|
+
+MY S=
+	0.1877
+	~	Ton/ha
+	~		|
+
+MY Var S=
+	0.1877+SMOOTH(STEP(MY S-0.1877, 2020),1)
+	~	Ton/ha
+	~		|
+
+Nominal Energy Agriculture Land Productivity=
+	12.5 + STEP(Nominal Energy Agriculture Land Productivity Variation-12.5, 2020)
+	~	Biomass ton/(ha*Year)
+	~	Reference annual amount of energy crops biomass yield from unit energy \
+		crops land area.
+	|
+
+Nominal Energy Agriculture Land Productivity Variation=
+	12.5
+	~	Biomass ton/(ha*Year)
+	~		|
+
+Nominal Energy Forest Land Productivity=
+	50
+	~	Biomass ton/(Year*ha)
+	~	Reference annual amount of forest biomass production from unit forest land \
+		area.
+	|
+
+Normal Forest Land Fertility=
+	1
+	~	Dmnl
+	~	Reference value of forest land fertility in year 1900.
+	|
+
+Normal Urban and Industrial Land per Capita=
+	0.02
+	~	ha/Person
+	~	Normal required Urban and Industrial Land per capita assuming equal land \
+		distribution between the total population.
+	|
+
+Other crops supply in Mkcal= WITH LOOKUP (
+	Time,
+		([(0,0)-(10,10)],(1961,3.51924e+08),(1962,3.7243e+08),(1963,3.8199e+08),(1964,4.01483e+08\
+		),(1965,4.181e+08),(1966,4.35388e+08),(1967,4.49529e+08),(1968,4.61531e+08),(1969,4.79091e+08\
+		),(1970,5.03815e+08),(1971,5.1819e+08),(1972,5.2718e+08),(1973,5.46183e+08),(1974,5.58201e+08\
+		),(1975,5.62792e+08),(1976,5.8833e+08),(1977,6.09745e+08),(1978,6.39437e+08),(1979,\
+		6.6195e+08),(1980,6.83474e+08),(1981,7.03933e+08),(1982,7.29974e+08),(1983,7.36189e+08\
+		),(1984,7.65215e+08),(1985,7.88066e+08),(1986,8.13465e+08),(1987,8.48841e+08),(1988\
+		,8.75718e+08),(1989,8.9331e+08),(1990,9.14523e+08),(1991,9.15743e+08),(1992,9.28207e+08\
+		),(1993,9.38241e+08),(1994,9.66534e+08),(1995,9.95063e+08),(1996,1.02382e+09),(1997\
+		,1.05926e+09),(1998,1.07329e+09),(1999,1.0762e+09),(2000,1.11249e+09),(2001,1.13804e+09\
+		),(2002,1.16394e+09),(2003,1.19023e+09),(2004,1.21458e+09),(2005,1.24409e+09),(2006\
+		,1.27171e+09),(2007,1.30225e+09),(2008,1.32835e+09),(2009,1.34729e+09),(2010,1.36892e+09\
+		),(2011,1.40103e+09),(2012,1.42838e+09),(2013,1.42318e+09) ))
+	~	Mkcal/Year
+	~		|
+
+Other crops tonnes=
+	Other crops supply in Mkcal/Caloric value of food[OtherCrops]
+	~	Ton/Year
+	~		|
+
+Other Land= INTEG (
+	Agricultural Land Erosion Rate
+	- Agricultural Land Development Rate
+	- Forestation from Other Land,
+		INIT Other Land)
+	~	ha
+	~	Land not classified as Agricultural area, Forest area or Urban and \
+		Industrial Land.
+	|
+
+Other Protected Land=
+	5e+08
+	~	ha
+	~	Area of Other Land not transformable into other kind of lands.
+	|
+
+Other to Forest Land Allocation Time=
+	40+STEP(Other to Forest Land Allocation Time Variation-40, 2020)
+	~	Year
+	~	Average time which natural transformation of Other to Forest Land would \
+		take.
+	|
+
+Other to Forest Land Allocation Time Variation=
+	40
+	~	Year
+	~	Average time which natural transformation of Other to Forest Land would \
+		take.
+	|
+
+Other uses multiplier for food[PlantFood]=
+	0.19,
+	0.24,
+	0.16,
+	0.08
+	~	Dmnl
+	~	This parameter indicates how much of produced crop is used for puposes \
+		other than food and feed (seed, loss, other uses) with respect to FOOD. It \
+		is estimated based on the FAO food balance sheets, the data for 1961-1985. \
+		See FoodBalanceSheets.xlsx/AvgPercentages
+	|
+
+Outflow EGMeYA=
+	Expected Grassland Meat Yield Accumulative/1
+	~	Ton/(ha*Year)
+	~		|
+
+Outflow EGMYA=
+	Expected Grassland Milk Yield Accumulative/1
+	~	Ton/(Year*ha)
+	~		|
+
+Outflow EXYA[PlantFood]=
+	Expected Crop Yield Accumulative[PlantFood]/1
+	~	Ton/(ha*Year)
+	~		|
+
+Outflow FPLCLV1=
+	Forest Protected Land Change LV1/Delay Time FPLCLV
+	~	ha/Year
+	~		|
+
+Outflow FPLCLV2=
+	Forest Protected Land Change LV2/Delay Time FPLCLV
+	~	ha/Year
+	~		|
+
+Outflow FPLCLV3=
+	Forest Protected Land Change LV3/Delay Time FPLCLV
+	~	ha/Year
+	~		|
+
+p Effect of C on Yield=
+	1.5 + STEP(SA p Effect of C on Yield-1.5, 2020)
+	~	Dmnl
+	~		|
+
+p Effect of T on Yield=
+	1.5 + STEP(SA p Effect of T on Yield-1.5, 2020)
+	~	Dmnl
+	~		|
+
+Permanent crops=
+	Agricultural Land*Permanent Crops Percentage of Agriculture Land
+	~	ha
+	~	Area of permanent crops land.
+	|
+
+Permanent Crops Percentage of Agriculture Land=
+	0.05
+	~	Dmnl
+	~	Percentage of agricultural land constituting the permanent crops land.
+	|
+
+Permanent meadows and pastures=
+	Agricultural Land*Meadows and Pastures Percentage of Agriculture Land
+	~	ha
+	~	Area of permanent meadows and pastures land.
+	|
+
+Population Data= WITH LOOKUP (
+	Time,
+		([(1900,0)-(2015,8e+09)],(1900,1.6e+09),(1910,1.71092e+09),(1920,1.94955e+09),(1930\
+		,2.1e+09),(1940,2.3e+09),(1950,2.55e+09),(1960,3e+09),(1970,3.7e+09),(1980,4.5e+09)\
+		,(1990,5.3e+09),(2000,6.24176e+09),(2010,7.12458e+09),(2015,7.56345e+09),(2016,7.64832e+09\
+		),(2017,7.73203e+09),(2018,7.81452e+09),(2019,7.89638e+09),(2020,7.97785e+09),(2021\
+		,8.05888e+09),(2022,8.13938e+09),(2023,8.21929e+09),(2024,8.29854e+09),(2025,8.37707e+09\
+		),(2026,8.45482e+09),(2027,8.53172e+09),(2028,8.60768e+09),(2029,8.68265e+09),(2030\
+		,8.75657e+09),(2031,8.82939e+09),(2032,8.90108e+09),(2033,8.97158e+09),(2034,9.04086e+09\
+		),(2035,9.10887e+09),(2036,9.17557e+09),(2037,9.24087e+09),(2038,9.30473e+09),(2039\
+		,9.36709e+09),(2040,9.42791e+09),(2041,9.48716e+09),(2042,9.54481e+09),(2043,9.60083e+09\
+		),(2044,9.65519e+09),(2045,9.70786e+09),(2046,9.75887e+09),(2047,9.80831e+09),(2048\
+		,9.85617e+09),(2049,9.90239e+09),(2050,9.94695e+09),(2051,9.9898e+09),(2052,1.00309e+10\
+		),(2053,1.00702e+10),(2054,1.01076e+10),(2055,1.0143e+10),(2056,1.01764e+10),(2057,\
+		1.02079e+10),(2058,1.02373e+10),(2059,1.02646e+10),(2060,1.029e+10),(2061,1.03133e+10\
+		),(2062,1.03346e+10),(2063,1.03539e+10),(2064,1.03712e+10),(2065,1.03866e+10),(2066\
+		,1.04e+10),(2067,1.04116e+10),(2068,1.04213e+10),(2069,1.04291e+10),(2070,1.04351e+10\
+		),(2071,1.04393e+10),(2072,1.04415e+10),(2073,1.04414e+10),(2074,1.04392e+10),(2075\
+		,1.04349e+10),(2076,1.04285e+10),(2077,1.04201e+10),(2078,1.04097e+10),(2079,1.03974e+10\
+		),(2080,1.03833e+10),(2081,1.03673e+10),(2082,1.03497e+10),(2083,1.03303e+10),(2084\
+		,1.03093e+10),(2085,1.02868e+10),(2086,1.02627e+10),(2087,1.02371e+10),(2088,1.02102e+10\
+		),(2089,1.01818e+10),(2090,1.01522e+10),(2091,1.01213e+10),(2092,1.00891e+10),(2093\
+		,1.00558e+10),(2094,1.00213e+10),(2095,9.98575e+09),(2096,9.94913e+09),(2097,9.91151e+09\
+		),(2098,9.87291e+09),(2099,9.83339e+09) ))
+	~	
+	~		|
+
+Potential Biomass Production=
+	Forest Land Yield*Harvest Available Forest Land*(1-Biomass Production Processing Loss\
+		)
+	~	Biomass ton/Year
+	~	Potential Biomass Production for given area to be harvested, actual yield \
+		from ha and excluding forest biomass production processing losses.
+	|
+
+Production rate of animal food[CropMeat]=
+	MIN(Food demand in tonnes[CropMeat],
+	sum(Feed Availability[PlantFood!]/Unit feed used for meat production)) ~~|
+Production rate of animal food[Eggs]=
+	Production rate of animal food[CropMeat]*Meat to Eggs Multiplier ~~|
+Production rate of animal food[PasMeat]=
+	Production rate of pasture based food[PasMeat] ~~|
+Production rate of animal food[Dairy]=
+	Production rate of pasture based food[Dairy]
+	~	Ton/Year
+	~		|
+
+Production rate of crops[PlantFood]=
+	MIN(Desired crop production[PlantFood], 
+	Area harvested[PlantFood]*Crop yield for each category[PlantFood])
+	~	Ton/Year
+	~		|
+
+Production rate of pasture based food[PasMeat]=
+	MIN(Grassland Allocated for Food Production*Grassland allocation fraction[PasMeat]*Grassland Meat Yield\
+		,
+	Food demand in tonnes[PasMeat]) ~~|
+Production rate of pasture based food[Dairy]=
+	MIN(Grassland Allocated for Food Production*Grassland allocation fraction[Dairy]*Grassland Milk Yield\
+		,
+	Food demand in tonnes[Dairy])
+	~	Ton/Year
+	~	Total animal food production due to animal food land availability and \
+		animal food land yield.
+	|
+
+Reference Input Neutral TC in Agriculture=
+	TC Var S + SMOOTH(STEP(Reference Input Neutral TC in Agriculture Variation-TC Var S,\
+		 2020+L Var T),SSP Land Use Change Variation Time)
+	~	Dmnl
+	~	Reference variable representing technological advancement and its positive \
+		impact on agricultural land fertility in year 1900. Equal to 1 in \
+		Felicjan's formulation. ---- In Brians's GDP dependent in formulation, it \
+		is 0.3
+	|
+
+Reference Input Neutral TC in Agriculture Variation=
+	0.3
+	~	Dmnl
+	~		|
+
+Reference meat yield Variation=
+	0.1877
+	~	Ton/ha
+	~		|
+
+SA Feed share of crop types[PlantFood]=
+	1, 1, 1, 1
+	~	Dmnl
+	~		|
+
+SA k C on Yield=
+	0
+	~	Dmnl
+	~		|
+
+SA k T on Yield=
+	0
+	~	Dmnl
+	~		|
+
+SA L C on Yield=
+	2
+	~	Dmnl
+	~		|
+
+SA L T on Yield=
+	2
+	~	Dmnl
+	~		|
+
+SA m Effect of C on Yield=
+	0
+	~	Dmnl
+	~		|
+
+SA m Effect of T on Yield=
+	0
+	~	Dmnl
+	~		|
+
+SA multiplier for caloric value=
+	1
+	~	Dmnl
+	~		|
+
+SA p Effect of C on Yield=
+	1.5
+	~	Dmnl
+	~		|
+
+SA p Effect of T on Yield=
+	1.5
+	~	Dmnl
+	~		|
+
+SA u Effect of C on Yield=
+	1
+	~	Dmnl
+	~		|
+
+SA u Effect of T on Yield=
+	1
+	~	Dmnl
+	~		|
+
+SA Waste fraction[FoodCategories]=
+	1, 1, 1, 1, 1, 1, 1, 1
+	~	Dmnl
+	~		|
+
+SA x0 C on Yield=
+	5
+	~	Dmnl
+	~		|
+
+SA x0 T on Yield=
+	2
+	~	DegreesC
+	~		|
+
+SCENARIO Half Measures=
+	0
+	~	Dmnl [0,1,1]
+	~	WWF Scenario variable. Further development required.
+	|
+
+SCENARIO Target=
+	0
+	~	Dmnl [0,1,1]
+	~	WWF Scenario variable. Further development required.
+	|
+
+SCENARIO Target Delayed=
+	0
+	~	Dmnl [0,1,1]
+	~	WWF Scenario variable. Further development required.
+	|
+
+SSP Land Use Change Variation Time=
+	5
+	~	Year
+	~		|
+
+Table for ETAY(
+	[(0,0)-(1,1)],(0,1),(0.4,1),(0.5,0.98),(0.6,0.9),(0.7,0.7),(0.8,0.4),(0.9,0.15),(1,0.001\
+		))
+	~	Dmnl
+	~	Table for Effect of Trees Aging on Yield.
+	|
+
+Table for ETMY(
+	[(0,0)-(1,1)],(0,0.15),(0.1,0.45),(0.2,0.75),(0.3,0.95),(0.4,1),(1,1))
+	~	Dmnl
+	~	Table for Effect of Trees Maturing on Yield.
+	|
+
+Target=
+	(1-SCENARIO Target)*1+SCENARIO Target*(1+RAMP(Target Scenario Ramp Change, 2010, 2020\
+		))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Target Deforestation Time Factor=
+	SCENARIO Target*(RAMP(100, 2019, 2020))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Target Delayed=
+	(1-SCENARIO Target Delayed)*1+SCENARIO Target Delayed*(1+RAMP(Target Delayed Scenario Ramp Change\
+		, 2020, 2030))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Target Delayed Deforestation Time Factor=
+	SCENARIO Target Delayed*(RAMP(100, 2025, 2030))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Target Delayed Scenario Ramp Change=
+	-0.09
+	~	1/Year
+	~	WWF Scenario variable. Further development required.
+	|
+
+Target Scenario Ramp Change=
+	-0.0673
+	~	1/Year
+	~	WWF Scenario variable. Further development required.
+	|
+
+TC S=
+	0.3
+	~	Dmnl
+	~		|
+
+TC Var S=
+	0.3 + SMOOTH(STEP(TC S-0.3, 2020),1)
+	~	Dmnl
+	~		|
+
+Time to Adjust Forest Protected Land=
+	2
+	~	Year
+	~	Average time required to establish land protection.
+	|
+
+Total Agricultural Land Demand=
+	Cropland Needed+Total Grassland Needed
+	~	ha
+	~		|
+
+Total CO2 Emissions from Agriculture=
+	sum(CO2 emission rate of the agriculture sector[FoodCategories!])
+	~	TonCO2/Year
+	~		|
+
+Total Daily Calorie Supply per Capita=
+	Animal Food Supply kcal capita day+Vegetal Food supply kcal capita day
+	~	kcal/Person/Day
+	~	Total average amount of food measured in calories available for each \
+		person per day. Source of projection data: GLOBIOM model, IIASA.
+	|
+
+Total Demand for Arable Land=
+	Arable Land Needed for Energy Crops+sum(Arable Land Needed[PlantFood!])
+	~	ha
+	~		|
+
+Total food shortage in kcal=
+	sum(Food shortage in kcal[FoodCategories!])
+	~	Mkcal/Year
+	~		|
+
+Total Grassland Needed=
+	Grassland Needed[PasMeat]+Grassland Needed[Dairy]
+	~	ha
+	~		|
+
+Total Land=
+	Agricultural Land+Forest Land+Other Land+Urban and Industrial Land
+	~	ha
+	~	Total considered land.
+	|
+
+Total Supply of Animal Calories=
+	sum(Food supply in kcal[AnimalFood!])
+	~	Mkcal/Year
+	~		|
+
+Total Supply of Vegetal Calories=
+	sum(Food supply in kcal[PlantFood!])
+	~	Mkcal/Year
+	~		|
+
+Trend Averaging Time=
+	10 + STEP (Desired Agricultural Land Conversion Trend Averaging Time Variation-10, 2020\
+		)
+	~	Year
+	~	This parameter represents how many years ahead is taken into account to \
+		foresee the land demand for land conversion.
+	|
+
+Trend of Land Demand=
+	TREND(Total Agricultural Land Demand, Trend Averaging Time,Initial Trend)
+	~	1/Year
+	~		|
+
+u Effect of C on Yield=
+	0 + STEP(SA u Effect of C on Yield-0, 2020)
+	~	Dmnl
+	~		|
+
+u Effect of T on Yield=
+	0 + STEP(SA u Effect of T on Yield-0, 2020)
+	~	Dmnl
+	~		|
+
+Unit CO2 emissions from food production[FoodCategories]=
+	32.58,
+	1.32,
+	1.22,
+	1.58,
+	0.23,
+	0.47,
+	0.07,
+	0.3
+	~	TonC/Ton
+	~		|
+
+Unit feed used for meat production= WITH LOOKUP (
+	Time,
+		([(1961,0)-(2020,14)],(1961,12.7),(1965,12.41),(1975,11.49),(1979,10.84),(1984,9.76\
+		),(1988,8.19),(1995,6.68),(2000,6.2),(2006,5.61),(2010,5.09),(2015,5) ))
+	~	Dmnl
+	~		|
+
+Urban and Industrial Land= INTEG (
+	Agricultural Land Conversion Rate to Urban Land+Deforestation to Urban Land,
+		INIT Urban and Industrial Land)
+	~	ha
+	~	Total Urban and Industrial Land.
+	|
+
+Urban and Industrial Land Discrepancy=
+	MAX(Urban and Industrial Land Required-Urban and Industrial Land, 0)
+	~	ha
+	~		|
+
+Urban and Industrial Land per Capita=
+	Effect of GDP on Urban Land Requirement*Normal Urban and Industrial Land per Capita
+	~	ha/Person
+	~	Actual available area of Urban and Industrial Land per capita assuming \
+		equal land distribution between the total population.
+	|
+
+Waste fraction[PasMeat]=
+	Waste fraction Data[PasMeat] * 
+	(1+SMOOTH(STEP(Waste Fraction PasMeat CropMeat Variation-1, 2020), SSP Food and Diet Variation Time\
+		)) ~~|
+Waste fraction[CropMeat]=
+	Waste fraction Data[CropMeat] * 
+	(1 + SMOOTH(STEP(Waste Fraction PasMeat CropMeat Variation-1, 2020),SSP Food and Diet Variation Time\
+		)) ~~|
+Waste fraction[Dairy]=
+	Waste fraction Data[Dairy] * 
+	(1+SMOOTH(STEP(Waste Fraction EggsDairy Variation-1, 2020),SSP Food and Diet Variation Time\
+		)) ~~|
+Waste fraction[Eggs]=
+	Waste fraction Data[Eggs] * 
+	(1+SMOOTH(STEP(Waste Fraction EggsDairy Variation-1, 2020),SSP Food and Diet Variation Time\
+		)) ~~|
+Waste fraction[PlantFood]=
+	Waste fraction Data[PlantFood] * 
+	(1+SMOOTH(STEP(Waste Fraction PlantFood Variation-1, 2020),SSP Food and Diet Variation Time\
+		))
+	~	Dmnl
+	~		|
+
+Waste fraction Data[FoodCategories]=
+	0.2,
+	0.2,
+	0.2,
+	0.2,
+	0.2,
+	0.3,
+	0.45,
+	0.2
+	~	Dmnl
+	~		|
+
+Waste Fraction EggsDairy Variation=
+	1
+	~	Dmnl
+	~		|
+
+Waste Fraction PasMeat CropMeat Variation=
+	1
+	~	Dmnl
+	~		|
+
+Waste Fraction PlantFood Variation=
+	1
+	~	Dmnl
+	~		|
+
+x0 C on Yield=
+	5 + STEP(SA x0 C on Yield-5, 2020)
+	~	Dmnl
+	~		|
+
+x0 gdp agritech=
+	0.8
+	~	Dmnl
+	~		|
+
+x0 T on Yield=
+	2 + STEP(SA x0 T on Yield-2, 2020)
+	~	DegreesC
+	~		|
+
+x0 urban land=
+	EGX Var S+STEP(Effect of GDP on Urban Land Requirement x0 Variation-EGX Var S, 2020+\
+		SE Var T)
+	~	Dmnl
+	~		|
+
+Zero Net Deforestation and Forest Degradation Scenarios=
+	Target*Target Delayed*Half Measures
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Cropland Yield=
+	sum(Area harvested[PlantFood!]*Crop yield for each category[PlantFood!])/sum(Area harvested\
+		[PlantFood!])
+	~	Ton/(Year*ha)
+	~		|
+
+PlantFood:
+	Pulses,Grains,VegFruits,OtherCrops
+	~	
+	~		|
+
+Reference crop yield 2016[FoodCategories]=
+	1.28,
+	0.65,
+	6.42,
+	0.8,
+	0.99,
+	3.97,
+	15.13,
+	9.03
+	~	Ton/(Year*ha)
+	~	2016 values for each food category, based on FAO data
+	|
+
+Reference meat yield=
+	0.1877
+	~	Ton/ha
+	~	MY Var S+SMOOTH(STEP(Reference meat yield Variation-MY Var S, 2020+L Var \
+		T),SSP Land Use Change Variation Time)
+	|
+
+Total area harvested=
+	sum(Area harvested[PlantFood!])
+	~	ha
+	~		|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+FoodCategories:
+	PasMeat, CropMeat, Dairy, Eggs, Pulses, Grains, VegFruits, OtherCrops
+	~	
+	~		|
+
+Gender:
+	male, female
+	~	
+	~		|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+INIT Agricultural Land=
+	4.4e+09
+	~	ha
+	~	The area of agriculture land for year 1900.4.4e+009
+	|
+
+INIT Forest Land=
+	4.4e+09
+	~	ha
+	~	The area of forest land for year 1900. : 4.41e+013 (Felicjan)
+		Calibrated: 5.14e+013 m2, 5.14e+09 ha
+	|
+
+INIT Other Land=
+	4.1e+09
+	~	ha
+	~	The area of other land for year 1900.
+	|
+
+INIT Species Abundance=
+	85
+	~	Dmnl
+	~	Mean species abundance in year 1900.
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+SE Var T=
+	0
+	~	Year
+	~		|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+AnimalFood:
+	PasMeat,CropMeat,Dairy,Eggs
+	~	
+	~		|
+
+L Var T=
+	0
+	~	Year
+	~		|
+
+SSP Food and Diet Variation Time=
+	5
+	~	Year
+	~		|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Total Agricultural and Land Use Emissions=
+	Total CO2 Emissions from Land Use+Total CO2 Emissions from Agriculture
+	~	TonCO2/Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_LandUse
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,85,0
+10,1,Forest Land,259,216,46,25,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,2,3,1,68,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(440,237)|
+11,3,0,582,237,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,4,Forestation from Agricultural Land,582,261,61,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,5,Agricultural Land,885,220,46,25,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,6,3,5,36,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(713,237)|
+10,7,Urban and Industrial Land,592,533,46,25,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,Agriculture Protected Land,694,327,57,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||128-0-64,0,0,0,0,0,0
+10,9,Agriculture to Forest Land Allocation Time,554,346,77,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,10,12,7,4,0,0,22,0,0,0,-1--1--1,,1|(263,533)|
+1,11,12,1,100,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(263,317)|
+11,12,0,263,400,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,13,Deforestation to Urban Land,323,400,59,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,14,Forest to Urban Land Allocation Time,153,389,77,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,15,Agriculture to Urban Land Allocation Time,990,388,77,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,16,INIT Urban and Industrial Land,597,599,54,18,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||128-0-64,0,0,0,0,0,0
+1,17,16,7,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,18,20,7,4,0,0,22,0,0,0,-1--1--1,,1|(891,533)|
+1,19,20,5,100,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(891,319)|
+11,20,0,891,400,8,6,33,3,0,0,2,0,0,0,0,0,0,0,0,0
+10,21,Agricultural Land Conversion Rate to Urban Land,824,400,70,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,22,15,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,23,Other Land,570,-113,46,25,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,24,26,23,4,0,0,22,0,0,0,-1--1--1,,1|(886,-113)|
+1,25,26,5,100,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(886,125)|
+11,26,0,886,49,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,27,Agricultural Land Erosion Rate,964,49,61,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,28,5,27,1,0,0,0,0,64,0,-1--1--1,,1|(958,143)|
+10,29,INIT Other Land,581,-158,56,10,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||128-0-64,0,0,0,0,0,0
+10,30,Other Protected Land,523,-61,57,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||128-0-64,0,0,0,0,0,0
+10,31,Other to Forest Land Allocation Time,119,-79,77,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,32,Agriculture Land Energy Yield,2279,-63,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,Forest Land Energy Yield,-374,517,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Biomass Production Processing Loss,-196,391,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,35,Forest Biomass Production,-374,391,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,36,Forest Land Fraction Harvested excluding Protected Area,12,184,77,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,37,Total Forest Biomass Demand,-864,425,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,38,Potential Biomass Production,-870,585,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,39,Desired Production Fraction,-751,508,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,40,37,39,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,41,38,39,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,42,Biomass Production Processing Loss,-1033,585,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,43,42,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,44,Table for ETMY,-728,454,56,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,45,Table for ETAY,-728,563,55,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,46,Effect of Trees Maturing on Yield,-585,469,63,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,47,Effect of Trees Aging on Yield,-585,548,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,48,39,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,49,39,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,50,45,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,51,44,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,52,46,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,53,47,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,54,Harvest Available Forest Land,69,271,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,55,1,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,56,Harvest Available Forest Land,-872,661,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,57,56,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,58,33,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,59,54,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,60,34,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,61,37,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,62,36,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,63,Actual Forest Land Harvested,-196,517,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,64,35,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,65,34,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,66,Total Crops Biomass Demand,2184,-126,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,67,Arable Land,1185,86,45,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,68,5,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,69,Forest Land Needed to be Harvested,-864,271,50,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,70,37,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,71,33,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,72,Forest Land Energy Yield,-1033,270,51,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,73,72,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,74,Biomass Production Processing Loss,-1033,186,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,75,74,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,76,Urban and Industrial Land per Capita,683,925,72,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,77,76,295,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,78,Total Land,1180,-529,39,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,Forest Land Yield,-374,613,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,80,79,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,81,Nominal Energy Agriculture Land Productivity,2496,-35,60,27,8,3,0,36,0,0,0,0,-1--1--1,255-192-128,Arial|||0-0-0,0,0,0,0,0,0
+10,82,Agricultural Land,1038,-623,46,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,83,Other Land,1038,-441,50,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,84,Forest Land,1038,-557,53,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,85,Urban and Industrial Land,1038,-493,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,86,82,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,87,83,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,88,84,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,89,85,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,90,Nominal Energy Forest Land Productivity,-196,613,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,91,90,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,92,79,38,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,93,81,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,94,Effect of Management Practices on Agriculture Land Fertility,1025,1229,87,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,95,Crop yield for each category,1616,1030,52,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,96,Effect of GDP on Cropland Management Practices Elasticity,854,1323,84,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,97,96,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,98,Effect of Carbon Concentration on Agricultural Yield,1582,1116,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,99,Effect of Water Withdrawal on Agriculture Land Fertility,1334,1072,88,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,100,Effect of Climate Change on Agricultural Yield,1866,1098,83,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,101,Normal Forest Land Fertility,-508,891,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,102,Effect of Management Practices on Forest Land Fertility,-704,1164,80,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,103,Forest Land Fertility,-375,981,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,104,101,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,105,102,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,106,Effect of GDP on Forest Land Fertility Elasticity,-874,1280,73,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,107,106,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,108,Effect of Climate Change on Forest Land Fertility,-375,1164,66,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,109,108,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,110,Effect of CO2 Concentration on Forest Land Fertility,-4,1164,88,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,111,110,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,112,Max Effect of CO2 Concentration on Forest Land Fertility,-113,1278,88,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,113,Min Effect of CO2 Concentration on Forest Land Fertility,98,1278,88,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,114,112,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,115,113,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,116,Elasticity of CO2 Concentration on Forest Land Fertility,180,1164,88,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,116,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,118,103,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,119,Climate Impact on Forest Land Fertility Nonlinearity,-205,1204,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,120,Climate Impact on Forest Land Fertility Reference Temperature,-309,1278,92,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,121,120,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,119,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,123,INIT Species Abundance,-1145,938,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,124,Effect of Biodiversity on Forest Land Fertility,-944,979,84,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,125,123,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,126,Min Impact of Biodiversity on Forest Land Fertility,-1020,887,80,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,127,Max Impact of Biodiversity on Forest Land Fertility,-1022,1072,80,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,128,126,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,129,127,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,130,124,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,131,Effect of Input Neutral Technology Change on Agricultural Land Fertility,1344,985,90,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,132,Reference Input Neutral TC in Agriculture,1102,931,57,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,133,131,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,134,Effect of Input Neutral Technology Change on Forest Land Fertility,-177,980,84,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,135,Input Neutral Forest Technology,-4,980,48,27,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,136,48,222,981,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,137,139,135,4,0,0,22,0,0,0,-1--1--1,,1|(94,981)|
+1,138,139,136,100,0,0,22,0,0,0,-1--1--1,,1|(184,981)|
+11,139,0,151,981,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,140,Input Neutral Technology Change in Forest,151,1013,73,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,135,134,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,142,INIT Input Neutral TC in Forest,-4,923,61,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,143,142,135,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,144,142,134,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,145,134,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,146,Forest to Agriculture Land Allocation Time,715,93,77,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,147,Forest Protected Land,514,-627,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,148,48,304,-626,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,149,151,147,4,0,0,22,0,0,0,-1--1--1,,1|(435,-626)|
+1,150,151,148,100,0,0,22,0,0,0,-1--1--1,,1|(349,-626)|
+11,151,0,391,-626,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,152,Forest Protected Land Change,391,-602,62,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,153,Current to Max Forest Protected Land,464,-507,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,154,147,153,1,0,0,0,0,64,0,-1--1--1,,1|(517,-554)|
+10,155,Forest Protected Land Change Ratio,364,-435,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,156,Time to Adjust Forest Protected Land,259,-510,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,157,155,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,158,INIT Forest Protected Land,524,-675,57,18,8,3,0,36,-1,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,159,158,147,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,160,Forest Protected Land,190,307,61,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-0-64,0,0,0,0,0,0
+1,161,160,54,1,0,0,0,0,64,0,-1--1--1,,1|(135,285)|
+10,162,Total Daily Calorie Supply per Capita,2216,-731,68,18,8,3,0,36,0,0,0,0,-1--1--1,255-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,163,Effect of GDP on Cropland Management Practices Increment,1025,1321,84,27,8,3,0,36,-1,0,0,0,-1--1--1,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+1,164,163,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,165,Climate Impact on Forest Land Fertility Scale,-544,1212,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,166,165,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,167,Max Forest Protected Land,571,-434,57,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,168,167,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,169,Effect of GDP on Forest Management Practices Increment,-704,1280,87,27,8,3,0,36,-1,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+1,170,169,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,171,Input Neutral Technology Change in Forest Factor,151,923,81,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,172,171,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,173,INIT Agricultural Land,989,266,57,18,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||128-0-64,0,0,0,0,0,0
+10,174,INIT Forest Land,263,259,59,10,8,3,0,38,0,0,0,0,-1--1--1,192-255-192,Arial|||128-0-64,0,0,0,0,0,0
+10,175,Vegetal Food supply kcal capita day,2078,-598,65,27,8,3,0,36,0,0,0,0,0-0-0,255-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,176,Animal Food Supply kcal capita day,2080,-861,74,18,8,131,0,36,0,0,0,0,-1--1--1,255-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,177,Permanent crops,1163,219,41,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,178,Permanent meadows and pastures,1185,494,52,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,179,5,177,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,180,5,178,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,181,Arable Percentage of Agriculture Land,1185,-12,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,182,Permanent Crops Percentage of Agriculture Land,1161,313,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,183,Meadows and Pastures Percentage of Agriculture Land,1185,601,86,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,184,181,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,185,182,177,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,186,183,178,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,187,Grassland Meat Yield,2759,985,39,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,188,Effect of Input Neutral Technology Change on Agricultural Land Fertility,2758,878,94,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,189,Reference meat yield,2994,984,39,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+1,190,188,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,191,Grassland Meat Yield,3461,582,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,192,Crop yield for each category,2349,16,57,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,193,Fertilization Related Practices,941,1098,66,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,194,131,193,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,195,94,193,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,196,SCENARIO Target,-775,-677,44,18,8,3,0,36,0,0,0,0,0-0-0,128-192-0,Arial|||0-0-0,0,0,0,0,0,0
+10,197,Target,-828,-585,25,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,198,196,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,199,SCENARIO Target Delayed,-425,-677,57,18,8,3,0,36,0,0,0,0,0-0-0,128-192-0,Arial|||0-0-0,0,0,0,0,0,0
+10,200,Target Delayed,-506,-585,56,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,201,199,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,202,SCENARIO Half Measures,-81,-677,60,18,8,3,0,36,0,0,0,0,-1--1--1,128-192-0,Arial|||0-0-0,0,0,0,0,0,0
+10,203,Half Measures,-160,-585,52,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,204,202,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,205,Target Deforestation Time Factor,-681,-585,70,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,206,196,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,207,Target Delayed Deforestation Time Factor,-331,-585,70,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,208,Half Measures Deforestation Time Factor,14,-585,70,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,209,199,207,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,210,202,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,211,Zero Net Deforestation and Forest Degradation Scenarios,-505,-451,87,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,212,197,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,213,200,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,214,203,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,215,Target Scenario Ramp Change,-886,-647,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,216,215,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,217,Target Delayed Scenario Ramp Change,-548,-647,58,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,218,217,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,219,Half Measures Scenario Ramp Change,-197,-647,58,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,220,219,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,221,Half Measures Scenario Ramp Time Change,51,-647,78,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,222,221,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,223,14,13,1,0,0,0,0,64,0,-1--1--1,,1|(245,374)|
+1,224,176,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,225,175,162,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,226,0,1324,-210,210,23,8,135,0,36,-1,0,0,0,0-0-0,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+LAND SUPPLY
+12,227,0,1964,-212,210,23,8,135,0,36,-1,0,0,0,0-0-0,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+LAND DEMAND
+10,228,Energy Crops Production,3677,-131,51,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,229,Cropland Needed,2066,7,34,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,230,Land Allocated for Food Crops,1293,178,67,18,8,131,0,36,0,0,0,0,-1--1--1,255-255-0,Arial|||0-0-0,0,0,0,0,0,0
+10,231,Land Allocated for Energy Crops,1554,-40,67,18,8,131,0,36,0,0,0,0,-1--1--1,255-255-0,Arial|||0-0-0,0,0,0,0,0,0
+10,232,Arable Land Needed for Energy Crops,1969,-117,77,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,233,Land Allocated for Animal Calories,1422,295,67,18,8,131,0,36,0,0,0,0,-1--1--1,255-255-0,Arial|||0-0-0,0,0,0,0,0,0
+10,234,Production rate of pasture based food,3761,455,71,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,235,32,232,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,236,32,228,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,237,66,232,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,238,Total Agricultural Land Demand,1964,671,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,239,229,238,0,2,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,240,Demand Supply ratio of Agricultural Land,1676,619,77,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,241,Agricultural Land,1472,673,46,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,242,241,240,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,243,238,240,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,244,Grassland Needed,1969,495,38,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,245,Grassland Allocated for Food Production,1418,388,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,246,178,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,247,Land Conversion Delay Time,1251,-319,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,248,Arable Land Allocated for Energy Crops,1406,-117,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,249,Demand Fraction of Energy Crops,1615,-114,64,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,250,Total Demand for Arable Land,1779,3,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,251,250,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,252,249,248,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,253,67,248,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,254,232,250,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,255,177,230,1,1,0,0,0,64,0,-1--1--1,,1|(1205,199)|
+1,256,232,249,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,257,245,233,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,258,248,231,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,259,Total Agricultural Land Demand,-1958,-1747,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+12,260,0,3692,-211,210,23,8,135,0,36,-1,0,0,0,0-0-0,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+FOOD PRODUCTION
+10,261,Arable Land Allocated for Energy Crops,3893,-111,74,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,262,261,228,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,263,Grassland Allocated for Food Production,3786,625,79,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,264,263,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,265,Permanent crops,1919,29,45,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,266,265,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,267,Cropland Needed,2136,744,39,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,268,267,238,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,269,Average expected crop yield,1793,984,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,270,Reference crop yield 2016,1792,918,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,271,269,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,272,L C on Yield,1641,1953,44,10,8,3,1,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,273,x0 C on Yield,1781,1957,48,10,8,3,1,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,274,k C on Yield,1715,1903,44,10,8,3,1,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,275,L T on Yield,1960,1889,43,10,8,3,1,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,276,k T on Yield,1996,1937,42,10,8,3,1,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,277,x0 T on Yield,2105,1931,46,10,8,3,1,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,278,98,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,279,100,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,280,Effect of Water Withdrawal on Agriculture Land Fertility,2427,1102,93,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,281,Effect of Carbon Concentration on Agricultural Yield,2678,1203,66,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,282,281,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,283,Effect of Climate Change on Agricultural Yield,2510,1169,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,284,283,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,285,Agricultural Land Erosion Fraction,1014,-16,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,286,285,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,287,289,5,4,0,0,22,0,0,0,-1--1--1,,1|(712,205)|
+1,288,289,1,100,0,0,22,0,0,0,-1--1--1,,1|(439,205)|
+11,289,0,580,205,6,8,34,3,0,0,3,0,0,0,0,0,0,0,0,0
+10,290,Deforestation to Agricultural Land,580,181,61,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,291,293,1,4,0,0,22,0,0,0,-1--1--1,,1|(262,82)|
+1,292,293,23,100,0,0,22,0,0,0,-1--1--1,,1|(262,-113)|
+11,293,0,262,-33,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,294,Forestation from Other Land,325,-33,60,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,295,Urban and Industrial Land Required,541,856,72,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,296,Effect of GDP on Urban Land Requirement,582,1012,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,297,296,76,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,298,Normal Urban and Industrial Land per Capita,758,1010,67,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+1,299,298,76,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,300,L urban land,528,1174,45,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,301,k urban land,716,1133,44,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,302,301,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,303,300,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,304,Urban and Industrial Land Discrepancy,542,722,72,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,305,7,304,1,0,0,0,0,64,0,-1--1--1,,1|(507,611)|
+1,306,295,304,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,307,Fraction of Urban Land Conversion from Agriculture,728,716,84,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,308,304,13,1,0,0,0,0,64,0,-1--1--1,,1|(322,620)|
+1,309,307,13,1,0,0,0,0,64,0,-1--1--1,,1|(436,605)|
+1,310,307,21,1,0,0,0,0,64,0,-1--1--1,,1|(838,603)|
+1,311,304,21,1,0,0,0,0,64,0,-1--1--1,,1|(736,606)|
+1,312,1,290,1,0,0,0,0,64,0,-1--1--1,,1|(399,179)|
+1,313,146,290,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,314,5,4,1,0,0,0,0,64,0,-1--1--1,,1|(748,276)|
+1,315,8,4,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,316,9,4,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,317,23,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,318,30,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,319,31,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,320,Forest Land Discrepancy,-170,80,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,321,69,320,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,322,54,320,1,0,0,0,0,64,0,-1--1--1,,1|(-102,208)|
+10,323,TIME STEP,486,311,52,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,324,323,4,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,325,Fraction of Forest Land Conversion from Agriculture,351,118,85,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,326,325,4,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,327,320,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,328,325,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,329,174,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,330,Forest Land Discrepancy,416,280,51,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,331,330,4,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,332,Forest Protected Land,482,115,61,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,333,332,290,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,334,8,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,335,5,21,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,336,TIME STEP,946,441,52,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,337,1,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,338,160,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,339,Total Agricultural Land Demand,-2065,-935,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,340,342,5,4,0,0,22,0,0,0,-1--1--1,,1|(885,-57)|
+1,341,342,23,100,0,0,22,0,0,0,-1--1--1,,1|(570,-57)|
+11,342,0,748,-57,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,343,Agricultural Land Development Rate,748,-33,68,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,344,Fraction of Agricultural Land Conversion from Forest,739,-273,82,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,345,Intended Conversion Other to Agriculture,792,-173,75,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,346,Intended Conversion Forest to Agriculture,987,-173,75,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,347,344,345,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,348,344,346,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,349,345,343,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,350,Agricultural Land Development Time,672,17,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,351,350,343,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,352,23,343,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,353,30,343,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,354,29,23,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,355,173,5,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,356,Population Data,1808,-735,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,357,Time,1808,-710,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,358,357,356,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,359,Annual Caloric Demand inc Waste,3076,163,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,360,Waste fraction,3091,93,52,10,8,3,0,37,0,0,0,0,192-255-192,192-255-192,Arial|||0-128-0,0,0,0,0,0,0
+1,361,360,359,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,362,x0 urban land,637,1163,48,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,363,362,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,364,Caloric value of food,3335,417,48,18,8,3,0,37,0,0,0,0,192-255-192,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,365,Arable Land Needed,1982,120,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,366,365,250,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,367,Demand Fraction of Food and Feed Crops,1775,122,82,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,368,250,367,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,369,365,367,1,0,0,0,0,64,0,-1--1--1,,1|(1879,131)|
+10,370,Arable Land Allocated for Crops,1402,88,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,371,67,370,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,372,370,230,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,373,Production rate of crops,3797,173,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,374,Arable Land Allocated for Crops,3795,87,75,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,375,365,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,376,Total Supply of Animal Calories,2337,-925,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,377,376,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,378,Total Supply of Vegetal Calories,2290,-610,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,379,378,175,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,380,Production rate of animal food,3713,350,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,381,Cropland Yield,1649,905,53,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,382,Food demand in tonnes,2913,144,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,383,INIT Crop Yield,2498,26,54,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,384,Expected Grassland Meat Yield,3079,1088,58,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,385,Initial Grassland Meat Yield,3248,1089,58,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,386,Meat to Eggs Multiplier,3510,396,49,18,8,131,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-192-0,0,0,0,0,0,0
+1,387,359,382,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,388,Feed share of crop types,3068,16,52,18,8,3,0,37,0,0,0,0,192-255-192,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,389,Other uses multiplier for food,2801,306,63,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,390,Caloric value of food,2944,307,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,391,390,382,1,0,0,0,0,64,0,-1--1--1,,1|(2915,229)|
+10,392,Feed demand in tonnes,2801,51,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,393,Crop demand for other uses,2801,237,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,394,382,392,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,395,388,392,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,396,382,393,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,397,389,393,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,398,Desired crop production,2677,144,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,399,392,398,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,400,382,398,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,401,393,398,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,402,Feed per meat DATA,3008,-211,55,18,8,131,0,36,0,0,0,0,-1--1--1,255-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,403,Expected crop yield,2154,109,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,404,403,365,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,405,398,365,1,0,0,0,0,64,0,-1--1--1,,1|(2328,213)|
+10,406,Desired crop production,3695,85,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,407,406,373,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,408,Crop yield for each category,3608,113,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,409,189,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,410,Food demand in tonnes,2122,446,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,411,410,244,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,412,Expected Grassland Meat Yield,2213,512,58,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,413,412,244,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,414,Grassland Milk Yield,3081,1174,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,415,Meat to Milk Multiplier,3081,1255,45,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+1,416,415,414,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,417,Expected Grassland Milk Yield,3256,1173,55,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,418,Initial Grassland Milk Yield,3354,1321,58,18,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,419,Expected Grassland Milk Yield,2112,586,55,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,420,419,244,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,421,Total Grassland Needed,1709,499,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,422,244,421,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,423,421,238,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,424,Grassland Milk Yield,3672,567,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,425,Food demand in tonnes,3585,445,57,18,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,426,425,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,427,Demand fraction of Grassland,1849,417,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,428,421,427,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,429,244,427,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,430,Demand fraction of Grassland,3942,600,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,431,424,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,432,Feed Availability,3655,246,60,10,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,433,373,432,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,434,432,380,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,435,425,380,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,436,386,380,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,437,234,380,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,438,Food production rate,3841,274,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,439,373,438,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,440,380,438,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,441,Food supply in tonnes,4005,273,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,442,438,441,1,0,0,0,0,64,0,-1--1--1,,1|(3933,237)|
+10,443,Feed fraction in demand,2662,44,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,444,Food fraction in demand,3965,369,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,445,398,443,1,0,0,0,0,64,0,-1--1--1,,1|(2640,101)|
+1,446,392,443,1,17,0,0,0,64,0,-1--1--1,,1|(2740,4)|
+1,447,382,444,1,17,0,0,0,64,0,-1--1--1,,1|(3542,-745)|
+1,448,398,444,1,17,0,0,0,64,0,-1--1--1,,1|(2869,1361)|
+10,449,Feed fraction in demand,3439,263,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,450,449,432,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,451,Food supply in tonnes,2592,-691,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,452,451,453,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,453,Food supply in kcal,2500,-752,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,454,Caloric value of food,2664,-786,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,455,454,453,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,456,453,376,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,457,453,378,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,458,250,370,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,459,Area harvested,1527,172,55,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,460,370,459,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,461,367,524,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,462,Area harvested,3982,159,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,463,462,373,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,464,Area harvested,1518,964,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,465,464,381,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,466,Food shortage in tonnes,4119,374,54,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,467,444,441,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,468,Food demand in tonnes,4178,277,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,469,468,466,1,0,0,0,0,64,0,-1--1--1,,1|(4134,313)|
+1,470,441,466,1,0,0,0,0,64,0,-1--1--1,,1|(4071,311)|
+10,471,Food shortage in kcal,4126,476,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,472,Annual Caloric Demand inc Waste,3970,474,75,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,473,472,471,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,474,Food supply in kcal,4274,475,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,475,474,471,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,476,Total food shortage in kcal,4118,564,58,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,477,471,476,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,478,Time,2942,-145,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,479,478,402,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,480,Other crops supply in Mkcal,3247,318,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,481,Time,3242,263,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,482,481,480,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,483,Other crops tonnes,3104,385,43,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,484,480,483,1,0,0,0,0,64,0,-1--1--1,,1|(3190,362)|
+1,485,390,483,1,0,0,0,0,64,0,-1--1--1,,1|(2997,349)|
+1,486,232,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,487,Desired Agricultural Land Conversion,1682,776,72,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,488,241,487,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,489,Desired Agricultural Land Conversion,980,-377,77,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,490,489,346,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,491,489,345,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,492,Daily caloric supply per capita,2493,-585,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,493,453,492,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,494,Trend of Land Demand,1966,777,51,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,495,238,494,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,496,Initial Trend,1894,860,42,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,497,Trend Averaging Time,2038,865,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,498,496,494,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,499,497,494,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,500,Effect of Input Neutral Technology Change on Agricultural Land Fertility,2724,-195,94,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,501,Effect of Water Withdrawal on Agriculture Land Fertility,2642,-135,93,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,502,Effect of Carbon Concentration on Agricultural Yield,2549,-276,66,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,503,Effect of Climate Change on Agricultural Yield,2716,-261,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,504,502,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,505,503,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,506,500,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,507,501,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,508,Effect of Management Practices on Agriculture Land Fertility,2735,-330,87,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,509,508,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,510,270,269,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,511,191,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,512,187,414,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,513,95,381,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,514,408,373,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,515,Unit CO2 emissions from food production,4117,20,75,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||255-160-0,0,0,0,0,0,0
+10,516,Food production rate,4114,-36,60,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,517,CO2 emission rate of the agriculture sector,4300,-12,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,518,Total CO2 Emissions from Agriculture,4477,-14,57,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,519,516,517,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,520,515,517,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,521,517,518,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,522,Total C emissions from the agriculture,4414,63,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,523,518,522,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,524,Arable land allocation fraction,1684,186,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,525,524,459,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,526,Grassland allocation fraction,2007,391,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,527,427,526,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,528,Grassland allocation fraction,3915,691,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,529,528,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,530,Grassland allocation demand,1424,547,67,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,531,421,530,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,532,530,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,533,Unit feed used for meat production,2881,-57,65,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,534,478,533,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,535,533,392,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,536,Total area harvested,1412,211,42,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,537,Total Agricultural and Land Use Emissions,4547,176,77,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,538,518,537,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,539,Unit feed used for meat production,3528,334,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,540,539,380,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,541,SA multiplier for caloric value,3284,556,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,542,Caloric value of food Data,3396,505,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,543,541,364,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,544,542,364,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,545,Waste fraction Data,3279,60,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,546,SA Waste fraction,3443,107,38,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+1,547,545,360,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,548,Forest to Agriculture Land Allocation Time Variation,548,72,77,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,549,548,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,550,Fraction of Agricultural Land Conversion from Forest Variation,540,-275,82,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,551,550,344,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,552,Fraction of Forest Land Conversion from Agriculture Variation,186,41,85,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,553,552,325,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,554,Reference Input Neutral TC in Agriculture Variation,907,929,85,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,555,554,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,556,Nominal Energy Agriculture Land Productivity Variation,2694,-37,78,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,557,556,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,558,SA Feed share of crop types,3039,-125,65,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,559,Feed share of crop types Data,3208,31,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,560,559,388,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,561,Desired Agricultural Land Conversion Trend Averaging Time Variation,2211,871,93,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,562,561,497,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,563,SA L C on Yield,1638,2054,57,10,8,3,1,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,564,SA x0 C on Yield,1778,2058,42,18,8,3,1,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,565,SA k C on Yield,1712,2004,57,10,8,3,1,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,566,563,272,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,567,565,274,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,568,564,273,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,569,SA L T on Yield,1948,1997,56,10,8,3,1,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,570,SA k T on Yield,1984,2045,55,10,8,3,1,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,571,SA x0 T on Yield,2093,2039,59,10,8,3,1,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,572,569,275,1,0,0,0,0,64,0,-1--1--1,,1|(1934,1905)|
+1,573,570,276,1,0,0,0,0,64,0,-1--1--1,,1|(2016,1999)|
+1,574,571,277,1,0,0,0,0,64,0,-1--1--1,,1|(2120,1995)|
+10,575,Effect of T on Yield Lookup,2096,1095,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,576,m Effect of T on Yield,2279,1384,57,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,577,p Effect of T on Yield,2387,1387,55,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,578,Distortion Function T,2354,1279,39,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,579,alpha,2056,1266,21,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-128-0,0,0,0,0,0,0
+10,580,beta,2058,1308,18,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-128-0,0,0,0,0,0,0
+1,581,579,578,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,582,580,578,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,583,576,578,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,584,577,578,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,585,Distorted Effect of T on Yield,2006,1161,66,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,586,575,585,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,587,578,585,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,588,585,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,589,u Effect of T on Yield,2489,1324,55,18,8,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,590,589,578,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,591,SA m Effect of T on Yield,2272,1489,60,18,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,592,SA p Effect of T on Yield,2380,1501,58,18,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,593,SA u Effect of T on Yield,2482,1438,57,18,8,131,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,594,591,576,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,595,592,577,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,596,593,589,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,597,m Effect of C on Yield,1493,1410,48,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,598,p Effect of C on Yield,1601,1413,57,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,599,Distortion Function C,1568,1327,40,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,600,Calpha,1389,1304,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-128-0,0,0,0,0,0,0
+10,601,Cbeta,1409,1355,24,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||0-128-0,0,0,0,0,0,0
+1,602,600,599,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,603,601,599,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,604,597,599,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,605,598,599,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,606,u Effect of C on Yield,1703,1350,56,18,8,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,607,606,599,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,608,SA m Effect of C on Yield,1482,1524,61,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,609,SA p Effect of C on Yield,1594,1527,59,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,610,SA u Effect of C on Yield,1696,1464,59,18,8,131,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,611,608,597,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,612,609,598,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,613,610,606,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,614,599,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,615,0,4440,-117,125,24,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+FOOD PRODUCTION EMISSIONS
+1,616,232,249,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,617,0,2021,329,197,28,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+ANIMAL CALORIES LAND DEMAND 
+12,618,0,2555,-402,214,23,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+ENERGY LAND DEMAND 
+12,619,0,2555,-402,214,23,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+ENERGY LAND DEMAND 
+12,620,0,3122,-285,209,32,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+FOOD CROPS (MEAT, EGGS, OTHERS) LAND DEMAND 
+12,621,0,1341,749,128,24,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+CROPLAND YIELD FERTILITY
+12,622,0,2693,794,139,29,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+GRASSLAND MEAT YIELD FERTALITY
+12,623,0,2204,-9,61,26,8,135,0,36,-1,0,0,0,-1--1--1,192-192-192,Arial|||0-0-0,0,0,0,0,0,0
+LAND ENERGY YIELD
+12,624,0,3127,1339,119,26,8,135,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+GRASSLAND MILK YIELD
+10,625,Feed Share of Pulses Variation,3120,-72,60,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,626,Feed Share of Grains Variation,3245,-64,60,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,627,Feed Share of VegFruits Variation,3257,-17,71,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,628,Feed Share of OtherCrops Variation,3017,-42,78,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,629,626,388,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,630,627,388,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,631,Waste Fraction PasMeat CropMeat Variation,3280,102,72,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,632,Waste Fraction EggsDairy Variation,3287,151,74,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,633,Waste Fraction PlantFood Variation,3215,207,73,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,634,631,360,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,635,632,360,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,636,633,360,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,637,Forest Land Indicator,80,96,45,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,638,1,637,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,639,Pasture Land Indicator,1191,395,49,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,640,Energy Crops Production Indicator,3705,-32,73,18,8,3,0,34,0,0,0,0,-1--1--1,-1--1--1,Arial|||255-0-255,0,0,0,0,0,0
+1,641,228,640,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,642,Nonenergy Crops Production Indicator,3995,86,73,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,643,373,642,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,644,Livestock Production Indicator,3873,347,73,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,645,380,644,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,646,Agricultural Land Erosion Fraction Variation,1075,-82,61,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,647,646,285,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,648,Agriculture to Urban Land Allocation Time Variation,991,510,77,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,649,648,15,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,650,Forest to Urban Land Allocation Time Variation,110,470,78,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,651,Agriculture to Forest Land Allocation Time Variation,567,414,77,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,652,650,14,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,653,651,9,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,654,Other to Forest Land Allocation Time Variation,-44,-83,75,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,655,654,31,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,656,Fraction of Urban Land Conversion from Agriculture Variation,760,807,84,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,657,Agricultural Land Development Time Variation,502,13,69,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,658,657,350,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,659,656,307,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,660,Forest Land Fraction Harvested excluding Protected Area Variation,-48,112,91,27,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,661,660,36,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,662,Effect of GDP on Urban Land Requirement l Variation,473,1266,86,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,663,Effect of GDP on Urban Land Requirement k Variation,806,1185,86,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,664,Effect of GDP on Urban Land Requirement x0 Variation,719,1248,86,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,665,662,300,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,666,664,362,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,667,663,301,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,668,Effect of GDP on Cropland Management Practices Elasticity Variation,804,1423,97,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,669,Effect of GDP on Forest Land Fertility Elasticity Variation,-924,1380,87,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,670,669,106,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,671,668,96,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,672,Reference meat yield Variation,3153,984,59,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,673,625,388,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,674,628,388,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,675,178,639,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,676,Moisture Content,3925,426,32,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,677,676,644,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,678,Moisture Content,4140,125,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,679,678,642,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,680,Urban Industrial Land Indicator,771,618,57,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,681,7,680,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,682,SSP Land Use Change Variation Time,1128,993,65,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,683,682,132,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,684,SSP Land Use Change Variation Time,824,133,65,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,685,684,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,686,SSP Land Use Change Variation Time,3045,1041,65,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,687,SSP Land Use Change Variation Time,682,-218,65,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,688,687,344,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,689,SSP Food and Diet Variation Time,2947,73,76,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,690,689,360,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,691,EGI Var S,398,1192,37,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,692,EGI S,344,1236,23,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,693,SE Var T,579,1227,43,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,694,693,300,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,695,693,362,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,696,692,691,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,697,691,300,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,698,EGX Var S,618,1282,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,699,EGX S,564,1326,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,700,699,698,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,701,698,362,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,702,AF Var S,646,-324,35,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,703,AF S,556,-328,20,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,704,L Var T,796,-328,28,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,705,704,344,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,706,703,702,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,707,702,344,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,708,FAT Var S,619,117,39,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,709,FAT S,563,143,25,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,710,L Var T,700,134,37,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,711,710,146,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,712,709,708,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,713,708,146,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,714,TC Var S,977,881,35,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,715,TC S,881,874,20,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,716,L Var T,1020,974,37,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,717,715,714,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,718,714,132,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,719,716,132,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,720,MY S,3144,941,21,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,721,MY Var S,3015,929,35,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,722,L Var T,2928,940,37,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,723,720,721,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,724,Cropland Yield Indicator,1745,852,54,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,725,381,724,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,726,Grassland Meat Yield Indicator,2560,919,58,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,727,187,726,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,728,Harvested Forest Biomass Land Indicator,-20,548,64,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,729,63,728,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,730,689,388,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,731,Other Land Indicator,378,-191,41,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,732,23,731,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+12,733,0,736,1955,439,199,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Cropland Yield,Graph
+10,734,L gdp agritech,1240,789,52,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,735,k gdp agritech,1334,788,52,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,736,x0 gdp agritech,1435,787,56,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,737,735,131,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,738,734,131,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,739,346,290,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,740,494,487,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,741,99,95,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,742,280,187,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,743,Deforestation,-37,389,49,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,744,290,743,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,745,13,743,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,746,Expected Crop Yield Accumulative,2416,108,45,30,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,747,48,2573,105,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,748,750,747,100,16,0,22,0,192,0,-1--1--1,,1|(2543,105)|
+1,749,750,746,4,16,0,22,0,192,0,-1--1--1,,1|(2486,105)|
+11,750,0,2517,105,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,751,Inflow EXYA,2517,133,44,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,752,48,2254,108,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,753,755,746,100,16,0,22,0,192,0,-1--1--1,,1|(2349,108)|
+1,754,755,752,4,16,0,22,0,192,0,-1--1--1,,1|(2289,108)|
+11,755,0,2321,108,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,756,Outflow EXYA,2321,136,51,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,757,192,751,1,16,0,0,0,192,0,-1--1--1,,1|(2491,65)|
+1,758,746,756,1,16,0,0,0,192,0,-1--1--1,,1|(2401,168)|
+1,759,383,746,1,16,0,0,0,192,1,-1--1--1,,1|(2494,76)|
+1,760,756,403,1,16,0,0,0,192,0,-1--1--1,,1|(2213,143)|
+10,761,Expected Grassland Milk Yield Accumulative,3303,1253,60,28,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,762,48,3165,1258,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,763,765,762,100,16,0,22,0,192,0,-1--1--1,,1|(3186,1258)|
+1,764,765,761,4,16,0,22,0,192,0,-1--1--1,,1|(3226,1258)|
+11,765,0,3203,1258,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,766,Inflow EGMYA,3203,1280,51,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,767,48,3453,1255,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,768,770,761,100,16,0,22,0,192,0,-1--1--1,,1|(3378,1255)|
+1,769,770,767,4,16,0,22,0,192,0,-1--1--1,,1|(3424,1255)|
+11,770,0,3399,1255,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,771,Outflow EGMYA,3399,1281,58,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,772,761,771,1,16,0,0,0,192,0,-1--1--1,,1|(3338,1293)|
+1,773,414,766,1,16,0,0,0,192,0,-1--1--1,,1|(3190,1241)|
+1,774,418,761,1,16,0,0,0,192,1,-1--1--1,,1|(3299,1290)|
+1,775,771,417,1,16,0,0,0,192,0,-1--1--1,,1|(3384,1239)|
+10,776,Expected Grassland Meat Yield Accumulative,3338,1003,61,31,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,777,48,3482,1005,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,778,781,777,100,16,0,22,0,192,0,-1--1--1,,1|(3460,1005)|
+1,779,781,776,4,16,0,22,0,192,0,-1--1--1,,1|(3418,1005)|
+12,780,48,3094,450,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+11,781,0,3443,1005,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,782,Inflow EGMeYA,3443,1045,56,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,783,48,3189,1003,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,784,786,776,100,16,0,22,0,192,0,-1--1--1,,1|(3260,1003)|
+1,785,786,783,4,16,0,22,0,192,0,-1--1--1,,1|(3215,1003)|
+11,786,0,3238,1003,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,787,Outflow EGMeYA,3238,1033,35,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,788,187,782,1,16,0,0,0,192,0,-1--1--1,,1|(3080,857)|
+1,789,776,787,1,16,0,0,0,192,0,-1--1--1,,1|(3318,1058)|
+1,790,385,776,1,16,0,0,0,192,1,-1--1--1,,1|(3357,1090)|
+1,791,787,384,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,792,Forest Protected Land Change LV1,292,-889,64,17,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,793,Forest Protected Land Change LV2,288,-808,60,15,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,794,Forest Protected Land Change LV3,287,-725,58,16,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,795,48,126,-889,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,796,798,795,100,16,0,22,0,192,0,-1--1--1,,1|(156,-889)|
+1,797,798,792,4,16,0,22,0,192,0,-1--1--1,,1|(208,-889)|
+11,798,0,182,-889,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,799,Inflow FPLCLV1,182,-859,59,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,800,48,461,-889,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,801,803,792,100,16,0,22,0,192,0,-1--1--1,,1|(376,-889)|
+1,802,803,800,4,16,0,22,0,192,0,-1--1--1,,1|(430,-889)|
+11,803,0,403,-889,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,804,Outflow FPLCLV1,403,-859,38,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,805,48,132,-808,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,806,808,805,100,16,0,22,0,192,0,-1--1--1,,1|(160,-808)|
+1,807,808,793,4,16,0,22,0,192,0,-1--1--1,,1|(209,-808)|
+11,808,0,185,-808,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,809,Inflow FPLCLV2,185,-778,59,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,810,48,468,-808,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,811,813,793,100,16,0,22,0,192,0,-1--1--1,,1|(372,-808)|
+1,812,813,810,4,16,0,22,0,192,0,-1--1--1,,1|(433,-808)|
+11,813,0,403,-808,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,814,Outflow FPLCLV2,403,-778,38,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,815,48,129,-722,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,816,818,815,100,16,0,22,0,192,0,-1--1--1,,1|(158,-722)|
+1,817,818,794,4,16,0,22,0,192,0,-1--1--1,,1|(209,-722)|
+11,818,0,184,-722,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,819,Inflow FPLCLV3,184,-692,59,10,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,820,48,481,-725,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,821,823,794,100,16,0,22,0,192,0,-1--1--1,,1|(373,-725)|
+1,822,823,820,4,16,0,22,0,192,0,-1--1--1,,1|(442,-725)|
+11,823,0,408,-725,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,824,Outflow FPLCLV3,408,-695,38,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,825,Delay Time FPLCLV,582,-826,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,826,Fraction FPLC,9,-829,54,10,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,827,Forest Protected Land,-124,-870,61,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,828,Current to Max Forest Protected Land,-140,-804,62,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,829,Time to Adjust Forest Protected Land,692,-848,62,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,830,829,825,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,831,827,826,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,832,828,826,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,833,826,799,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,834,794,792,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,835,794,793,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,836,825,804,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,837,825,814,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,838,825,824,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,839,825,794,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,840,804,809,1,16,0,0,0,192,0,-1--1--1,,1|(246,-843)|
+1,841,814,819,1,16,0,0,0,192,0,-1--1--1,,1|(257,-764)|
+1,842,826,794,1,16,0,0,0,192,1,-1--1--1,,1|(159,-634)|
+1,843,792,804,1,16,0,0,0,192,0,-1--1--1,,1|(353,-921)|
+1,844,793,814,1,16,0,0,0,192,0,-1--1--1,,1|(326,-836)|
+1,845,794,824,1,16,0,0,0,192,0,-1--1--1,,1|(339,-759)|
+1,846,824,152,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,847,Mean Species Abundance,-1137,1025,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,848,847,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,849,Biomass Conversion Efficiency,-1026,481,42,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,850,849,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,851,Energy Demand,-1022,420,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,852,851,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,853,Market Share Biomass Forest,-1014,364,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,854,853,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,855,Variable8 Cropland MP,1025,1412,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,856,855,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,857,Temperature Change from Preindustrial,-475,1291,52,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,858,857,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,859,GWP per Capita,-920,1212,40,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,860,859,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,861,Variable7 Forest MP,-705,1362,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,862,861,169,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,863,C Concentration Ratio,-11,1345,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,864,863,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,865,Smoothed GWP per Capita,1209,1326,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,866,865,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,867,Relative GWP per Capita,442,1082,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,868,867,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,869,Population,455,922,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,870,869,295,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,871,Agricultural Water Withdrawal Fulfillment Rate,1332,1161,79,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,872,871,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,873,880,578,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,874,C Concentration Ratio,1398,1258,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,875,874,599,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,876,Relative GWP per Capita,1228,895,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,877,876,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,878,Effect of fertilizer on yield,1793,1020,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,879,878,269,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,880,Temperature Change from Preindustrial,1974,1221,52,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,881,880,585,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,882,Biomass Conversion Efficiency,2374,-222,42,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,883,882,66,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,884,Energy Demand,2215,-266,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,885,884,66,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,886,Market Share Biomass Crops,2332,-302,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,887,886,66,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,888,Population,2666,-584,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,889,888,492,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,890,891,175,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,891,Population,1885,-768,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,892,891,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,893,Annual Caloric Demand,3076,250,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,894,893,359,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,895,Total CO2 Emissions from Land Use,4508,339,57,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,896,895,537,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,897,Effect of fertilizer on yield,2359,1024,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,898,897,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,899,tDM to Million tDM,3851,397,55,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,900,899,644,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,901,tDM to Million tDM,4130,179,55,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,902,901,642,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,903,905,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,904,905,492,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,905,kcal to Mkcal,2358,-763,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,906,905,175,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,907,908,175,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,908,Days in Year,2065,-730,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,909,908,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,910,Days in Year,2425,-532,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,911,910,492,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,912,CO2 to C,4349,138,44,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,913,912,522,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,914,Biomass ton into Biomass million ton,3537,-82,76,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,915,914,640,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,916,ha into million ha,-9,-11,55,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,917,916,637,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,918,ha into million ha,215,-169,55,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,919,918,731,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,920,ha into million ha,998,627,55,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,921,920,639,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,922,920,680,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Agricultural Land
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:85,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

@@ -1,0 +1,3199 @@
+{UTF-8}
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Poverty line=
+	Consumption or income of a person per day*Days in Year
+	~	$/(Person*Year)
+	~		|
+
+GWP Indicator=
+	Gross World Product*USD to billionUSD
+	~	B$/Year
+	~		|
+
+GWP per Capita Indicator=
+	GWP per Capita*"$ into $thousand"
+	~	$*Thousand/(Year*Person)
+	~		|
+
+OLDGross World Product=
+	sum(OLDReference Economy Output[Gender!,WorkingAge!,Labor force type!])*Net Climate Change Impact on Economy\
+		*Impact of Biodiversity on Economy
+	~	$/Year
+	~	Gross World Product taking into account climate change impact. Source of \
+		historical data: http://www.ggdc.net/MADDISON/oriindex.htm
+	|
+
+Gross World Product=
+	Total REO*Net Climate Change Impact on Economy*Impact of Biodiversity on Economy
+	~	$/Year
+	~		|
+
+Poverty rate[Gender,Cohorts]=
+	IF THEN ELSE(Standard deviation of the lognormal distribution of consumption[Gender,\
+		Cohorts]=0, 0.5, IF THEN ELSE("lnPL-mean"
+	[Gender,Cohorts]<0, 1-Table for standard normal distribution(-"lnPL-mean"[Gender,Cohorts\
+		]/Standard deviation of the lognormal distribution of consumption
+	[Gender,Cohorts]), Table for standard normal distribution("lnPL-mean"[Gender,Cohorts\
+		]/Standard deviation of the lognormal distribution of consumption
+	[Gender,Cohorts])))*"100 percent"
+	~	percent
+	~		|
+
+Net Energy Capital Change=
+	(Investment in Oil Exploration+Investment in Oil Production+Investment in Oil Technology\
+		+Investment in Coal Exploration
+	+
+	Investment in Coal Production+Investment in Coal Technology+Investment in Gas Exploration\
+		+Investment in Gas Production+
+	Investment in Gas Technology
+	+Investment in Biomass Capacity+Investment in Biomass Energy Technology
+	+Investment in Solar Capacity+Investment in Solar Energy Technology
+	+Investment in Wind Capacity+Investment in Wind Energy Technology
+	)
+	~	$/Year
+	~	Capital change from energy sector.
+	|
+
+Oil Technology=
+	((Oil Fraction Discoverable/MAXOFD)+(Oil Fraction Recoverable/MAXOFR))/2
+	~	Dmnl
+	~	Factor productivity in Oil energy sector.
+	|
+
+Global poverty rate=
+	sum(Poverty rate[Gender!,SecondaryEdCohorts!]*Population Cohorts[Gender!,SecondaryEdCohorts\
+		!])/sum(Population Cohorts[Gender
+	!,Cohorts!])
+	~	percent
+	~	Calibrated with historical data from World Bank: \
+		https://data.worldbank.org/indicator/SI.POV.DDAY
+	|
+
+GWP per Capita=
+	Gross World Product/Population
+	~	$/(Person*Year)
+	~		|
+
+Gas Technology=
+	((Gas Fraction Discoverable/MAXGFD)+(Gas Fraction Recoverable/MAXGFR))/2
+	~	Dmnl
+	~	Factor productivity in Gas energy sector.
+	|
+
+OLDGWP per Capita=
+	OLDGross World Product/Population
+	~	$/(Year*Person)
+	~	Gross World Product per Capita.  Source of historical data: \
+		http://www.ggdc.net/MADDISON/oriindex.htm
+	|
+
+Impact of Biodiversity on Economy=
+	Min Impact of Biodiversity on Economy+(Max Impact of Biodiversity on Economy-Min Impact of Biodiversity on Economy\
+		)*(Mean Species Abundance
+	/INIT Species Abundance)
+	~	Dmnl
+	~	The fraction of ecomomy output loss due to changes in biodiversity.
+	|
+
+Solar Technology=
+	((Solar Conversion Efficiency/MAXSCE)+(Solar Installation Efficiency/MAXSIE))/2
+	~	Dmnl
+	~	Factor productivity in Solar energy sector.
+	|
+
+Coal Technology=
+	((Coal Fraction Discoverable/MAXCFD)+(Coal Fraction Recoverable/MAXCFR))/2
+	~	Dmnl
+	~	Factor productivity in Coal energy sector.
+	|
+
+Biomass Technology=
+	((Biomass Capacity Factor/MAXBCF)+(Biomass Installation Efficiency/MAXBIE))/2
+	~	Dmnl
+	~	Factor productivity in Biomass energy sector.
+	|
+
+Wind Technology=
+	((Wind Capacity Factor/MAXWCF)+(Wind Installation Efficiency/MAXWIE))/2
+	~	Dmnl
+	~	Factor productivity in Wind energy sector.
+	|
+
+OLDReference Economy Output[Gender,WorkingAge,Labor force type]=
+	OLDOutput in 1900*OLDTechnology*(
+	((OLDCapital/OLDINIT Capital)^OLDCapital Elasticity Output)*Labor Force[Gender,WorkingAge\
+		,Labor force type]/Initial Labor Force
+	[Gender,WorkingAge,Labor force type]*Indicative Labor Force Participation Fraction[Gender\
+		,WorkingAge])^(1-OLDCapital Elasticity Output
+	)
+	~	$/Year
+	~	Reference Output before effects of climate damage and emissions abatement \
+		are considered. Calculated as Cobb-Douglas functional form of production \
+		functions.
+	|
+
+Unskilled population[Gender,Cohorts]=
+	Population Cohorts[Gender,Cohorts]-Skilled population[Gender,Cohorts]
+	~	People
+	~		|
+
+Skilled population[Gender,Cohorts]=
+	Tertiary Education Graduates[Gender,Cohorts]+Fraction of skilled secondary education graduates\
+		*Secondary Education Graduates
+	[Gender,Cohorts]
+	~	People
+	~		|
+
+Reference Economy Output[Labor force type]=
+	InitialREO[Labor force type]*Output in 1900*Ratio of technology[Labor force type]*Technology\
+		*(Ratio of capital[Labor force type
+	]*(Capital/INIT Capital
+	))^Capital Elasticity Output[Labor force type]*sum(Labor Force input[Gender!,WorkingAge\
+		!,Labor force type])^(1-Capital Elasticity Output
+	[Labor force type])
+	~	$/Year
+	~	Output in 1900*Technology*(((Capital/INIT Capital)^Capital Elasticity \
+		Output)*(Labor Force input)^(1-Capital Elasticity Output))
+	|
+
+Gini2[Gender,Cohorts]=
+	1-(Skilled population[Gender,Cohorts]*Relative incomes of skilled[Gender,Cohorts]
+	+(2*Relative incomes of skilled[Gender,Cohorts]+Relative incomes of unskilled[Gender\
+		,Cohorts])*Unskilled population
+	[Gender,Cohorts
+	])/(Population Cohorts[Gender,Cohorts]*Total relative incomes[Gender,Cohorts])
+	~	
+	~	if using the shares variables, the equation is: 1-(population share of \
+		skilled*income share of skilled+population share of unskilled*(income \
+		share of skilled+1))
+	|
+
+Initial Labor Force[Gender,WorkingAge,Labor force type]= INITIAL(
+	Labor Force[Gender,WorkingAge,Labor force type])
+	~	Person
+	~		|
+
+Gini1[Gender,Cohorts]=
+	1-(Unskilled population[Gender,Cohorts]*Relative incomes of unskilled[Gender,Cohorts\
+		]+(2*Relative incomes of unskilled[
+	Gender,Cohorts]+Relative incomes of skilled[Gender,Cohorts])*Skilled population[Gender\
+		,Cohorts])/(Population Cohorts[Gender
+	,Cohorts]*Total relative incomes[Gender,Cohorts])
+	~	
+	~	if using the shares variables, the equation is: 1-(population share of \
+		unskilled*income share of unskilled+population share of skilled*(income \
+		share of unskilled+1))
+	|
+
+"15 to 24":
+	"15-19","20-24"
+	~	
+	~		|
+
+"15 to 39":
+	"15-19","20-24","25-29","30-34","35-39"
+	~	
+	~		|
+
+"25 to 54":
+	"25-29","30-34","35-39","40-44","45-49","50-54"
+	~	
+	~		|
+
+"40 to 64":
+	"40-44","45-49","50-54","55-59","60-64"
+	~	
+	~		|
+
+"55 to 64":
+	"55-59","60-64"
+	~	
+	~		|
+
+"65+":
+	"65-69","70-74","75-79","80-84","85-89","90-94","95-99","100+"
+	~	
+	~		|
+
+Adjustments for relative incomes of skilled[male,Childhood]=
+	0.77 ~~|
+Adjustments for relative incomes of skilled[male,"15 to 39"]=
+	1.05 ~~|
+Adjustments for relative incomes of skilled[male,"40 to 64"]=
+	1.2 ~~|
+Adjustments for relative incomes of skilled[male,"65+"]=
+	1.22 ~~|
+Adjustments for relative incomes of skilled[female,Childhood]=
+	0.77 ~~|
+Adjustments for relative incomes of skilled[female,"15 to 39"]=
+	1 ~~|
+Adjustments for relative incomes of skilled[female,"40 to 64"]=
+	1.07 ~~|
+Adjustments for relative incomes of skilled[female,"65+"]=
+	1.05
+	~	Dmnl
+	~	to adjust the relative incomes of skilled labor force of each population group
+		Two assumptions: (1) the relationship between income and age tends to \
+		exhibit an inverted-U-shape pattern. Incomes rise with age and then drop \
+		slightly as taxpayers enter retirement. (2)  Male has more incomes than \
+		female in the same age group.
+	|
+
+Capital= INTEG (
+	Net Capital Change Rate,
+		INIT Capital)
+	~	$
+	~	Capital stock. Source of historical data: \
+		http://www.ggdc.net/MADDISON/oriindex.htm
+	|
+
+Capital Elasticity Output[skill]=
+	Cs ~~|
+Capital Elasticity Output[unskill]=
+	Cu
+	~	Dmnl
+	~	CE Var S+SMOOTH(STEP(Capital Elasticity Output Variation-CE Var S, 2020+SE \
+		Var T),SSP Economic Variation Time)
+	|
+
+Capital Elasticity Output Variation=
+	0.425
+	~	Dmnl
+	~	Capital Elasticity of Output.
+	|
+
+CE S=
+	0.425
+	~	Dmnl
+	~	Capital Elasticity of Output.
+	|
+
+CE Var S=
+	0.425+SMOOTH(STEP(CE S-0.425, 2020),1)
+	~	Dmnl
+	~	Capital Elasticity of Output.
+	|
+
+Consumption or income of a person per day=
+	2.15
+	~	$/(Person*Day)
+	~	$2.15 a day (2017PPP)
+		$1.9 a day (2011PPP)
+	|
+
+Cs=
+	0.595487 + SMOOTH(STEP(Cs SA-0.595487,Current year),SA effective change delay)
+	~	Dmnl
+	~		|
+
+Cs SA=
+	0.595487
+	~	Dmnl
+	~	From calibration. Comment by Q. Ye in July 2024
+	|
+
+Cu=
+	0.133783 + SMOOTH(STEP(Cu SA-0.133783,Current year),SA effective change delay)
+	~	Dmnl
+	~		|
+
+Cu SA=
+	0.133783
+	~	Dmnl
+	~	From calibration. Comment by Q. Ye in July 2024.
+	|
+
+Current to Max Other Capital=
+	Other Capital Change Ratio*(1-Other Capital Change/Reference Other Capital Change)
+	~	Dmnl
+	~	Adjustment of current to reference other capital change.
+	|
+
+DemoFeliX target year=
+	2030
+	~	Year
+	~		|
+
+Energy Technology=
+	(Oil Technology+Coal Technology+Gas Technology+Biomass Technology+Solar Technology+Wind Technology\
+		)
+	~	Dmnl
+	~	Factor productivity in energy sector.
+	|
+
+Fraction of skilled secondary education graduates=
+	Skilled fraction of secondary education graduates baseline + SMOOTH(RAMP((Skilled fraction of secondary education graduates\
+		-Skilled fraction of secondary education graduates baseline)/(DemoFeliX target year\
+		-Current year), Current year, 
+	DemoFeliX target year),5)
+	~	Dmnl
+	~	the value was obtained by the model calibration.
+	|
+
+GDP per Capita GLOBIOM usd=
+	GWP per Capita
+	~	$/(Year*Person)
+	~	Projection of GDP per Capita according to GLOBIOM model. Source of \
+		projection data: GLOBIOM model, IIASA.
+	|
+
+Gini coefficient[Gender,Cohorts]=
+	IF THEN ELSE(Gini1[Gender,Cohorts]>0,Gini1[Gender,Cohorts], Gini2[Gender,Cohorts])
+	~	Dmnl
+	~	To make sure the value of Gini coefficient>0
+	|
+
+Indicative Labor Force Participation Fraction[male,"15 to 24"]=
+	MIN(MAX(-0.6039*(Time-1989)+66.308, 10)/100, 0.8) ~~|
+Indicative Labor Force Participation Fraction[male,"25 to 54"]=
+	0.929 ~~|
+Indicative Labor Force Participation Fraction[male,"55 to 64"]=
+	0.72 ~~|
+Indicative Labor Force Participation Fraction[female,"15 to 24"]=
+	MIN(MAX(-0.5743*(Time-1989)+49.044, 10)/100, 0.62) ~~|
+Indicative Labor Force Participation Fraction[female,"55 to 64"]=
+	MAX(0.1, MIN(0.3743*(Time-1989)+34.797, 62)/100) ~~|
+Indicative Labor Force Participation Fraction[female,"25 to 54"]=
+	0.629
+	~	Dmnl
+	~	LF S + RAMP((Labor Force Participation Fraction Variation-LF S)/78, 2022, 2100)
+		Assumptions from the World Bank data. (Labor force participation rate data \
+		from WB.xlsx)
+	|
+
+INIT Capital=
+	1.3e+12
+	~	$
+	~	Initial Capital Stock.
+	|
+
+INIT Other Capital Change=
+	4e+10
+	~	$/Year
+	~	Inital capital in other sectors.
+	|
+
+InitialREO[skill]=
+	REOs ~~|
+InitialREO[unskill]=
+	1-REOs
+	~	Dmnl
+	~		|
+
+Inverse table for standard normal distribution(
+	[(0.5,0)-(1,5)],(0.5,0),(0.504,0.01),(0.508,0.02),(0.512,0.03),(0.516,0.04),(0.5199,\
+		0.05),(0.5239,0.06),(0.5279,0.07),(0.5319,0.08),(0.5359,0.09),(0.5398,0.1),(0.5438,\
+		0.11),(0.5478,0.12),(0.5517,0.13),(0.5557,0.14),(0.5596,0.15),(0.5636,0.16),(0.5675\
+		,0.17),(0.5714,0.18),(0.5753,0.19),(0.5793,0.2),(0.5832,0.21),(0.5871,0.22),(0.591,\
+		0.23),(0.5948,0.24),(0.5987,0.25),(0.6026,0.26),(0.6064,0.27),(0.6103,0.28),(0.6141\
+		,0.29),(0.6179,0.3),(0.6217,0.31),(0.6255,0.32),(0.6293,0.33),(0.6331,0.34),(0.6368\
+		,0.35),(0.6406,0.36),(0.6443,0.37),(0.648,0.38),(0.6517,0.39),(0.6554,0.4),(0.6591,\
+		0.41),(0.6628,0.42),(0.6664,0.43),(0.67,0.44),(0.6736,0.45),(0.6772,0.46),(0.6808,0.47\
+		),(0.6844,0.48),(0.6879,0.49),(0.6915,0.5),(0.695,0.51),(0.6985,0.52),(0.7019,0.53)\
+		,(0.7054,0.54),(0.7088,0.55),(0.7123,0.56),(0.7157,0.57),(0.719,0.58),(0.7224,0.59)\
+		,(0.7257,0.6),(0.7291,0.61),(0.7324,0.62),(0.7357,0.63),(0.7389,0.64),(0.7422,0.65)\
+		,(0.7454,0.66),(0.7486,0.67),(0.7517,0.68),(0.7549,0.69),(0.758,0.7),(0.7611,0.71),\
+		(0.7642,0.72),(0.7673,0.73),(0.7703,0.74),(0.7734,0.75),(0.7764,0.76),(0.7794,0.77)\
+		,(0.7823,0.78),(0.7852,0.79),(0.7881,0.8),(0.791,0.81),(0.7939,0.82),(0.7967,0.83),\
+		(0.7995,0.84),(0.8023,0.85),(0.8051,0.86),(0.8078,0.87),(0.8106,0.88),(0.8133,0.89)\
+		,(0.8159,0.9),(0.8186,0.91),(0.8212,0.92),(0.8238,0.93),(0.8264,0.94),(0.8289,0.95)\
+		,(0.8355,0.96),(0.834,0.97),(0.8365,0.98),(0.8389,0.99),(0.8413,1),(0.8438,1.01),(0.8461\
+		,1.02),(0.8485,1.03),(0.8508,1.04),(0.8531,1.05),(0.8554,1.06),(0.8577,1.07),(0.8599\
+		,1.08),(0.8621,1.09),(0.8643,1.1),(0.8665,1.11),(0.8686,1.12),(0.8708,1.13),(0.8729\
+		,1.14),(0.8749,1.15),(0.877,1.16),(0.879,1.17),(0.881,1.18),(0.883,1.19),(0.8849,1.2\
+		),(0.8869,1.21),(0.8888,1.22),(0.8907,1.23),(0.8925,1.24),(0.8944,1.25),(0.8962,1.26\
+		),(0.898,1.27),(0.8997,1.28),(0.9015,1.29),(0.9032,1.3),(0.9049,1.31),(0.9066,1.32)\
+		,(0.9082,1.33),(0.9099,1.34),(0.9115,1.35),(0.9131,1.36),(0.9147,1.37),(0.9162,1.38\
+		),(0.9177,1.39),(0.9192,1.4),(0.9207,1.41),(0.9222,1.42),(0.9236,1.43),(0.9251,1.44\
+		),(0.9265,1.45),(0.9279,1.46),(0.9292,1.47),(0.9306,1.48),(0.9319,1.49),(0.9332,1.5\
+		),(0.9345,1.51),(0.9357,1.52),(0.937,1.53),(0.9382,1.54),(0.9394,1.55),(0.9406,1.56\
+		),(0.9418,1.57),(0.943,1.58),(0.9441,1.59),(0.9452,1.6),(0.9463,1.61),(0.9474,1.62)\
+		,(0.9484,1.63),(0.9495,1.64),(0.9505,1.65),(0.9515,1.66),(0.9525,1.67),(0.9535,1.68\
+		),(0.9535,1.69),(0.9554,1.7),(0.9564,1.71),(0.9573,1.72),(0.9582,1.73),(0.9591,1.74\
+		),(0.9599,1.75),(0.9608,1.76),(0.9616,1.77),(0.9625,1.78),(0.9633,1.79),(0.9641,1.8\
+		),(0.9648,1.81),(0.9656,1.82),(0.9664,1.83),(0.9672,1.84),(0.9678,1.85),(0.9686,1.86\
+		),(0.9693,1.87),(0.97,1.88),(0.9706,1.89),(0.9713,1.9),(0.9719,1.91),(0.9726,1.92),\
+		(0.9732,1.93),(0.9738,1.94),(0.9744,1.95),(0.975,1.96),(0.9756,1.97),(0.9762,1.98),\
+		(0.9767,1.99),(0.9772,2),(0.9778,2.01),(0.9783,2.02),(0.9788,2.03),(0.9793,2.04),(0.9798\
+		,2.05),(0.9803,2.06),(0.9808,2.07),(0.9812,2.08),(0.9817,2.09),(0.9821,2.1),(0.9826\
+		,2.11),(0.983,2.12),(0.9834,2.13),(0.9838,2.14),(0.9842,2.15),(0.9846,2.16),(0.985,\
+		2.17),(0.9854,2.18),(0.9857,2.19),(0.9861,2.2),(0.9864,2.21),(0.9868,2.22),(0.9871,\
+		2.23),(0.9874,2.24),(0.9878,2.25),(0.9881,2.26),(0.9884,2.27),(0.9887,2.28),(0.989,\
+		2.29),(0.9893,2.3),(0.9896,2.31),(0.9898,2.32),(0.9901,2.33),(0.9904,2.34),(0.9906,\
+		2.35),(0.9909,2.36),(0.9911,2.37),(0.9913,2.38),(0.9916,2.39),(0.9918,2.4),(0.992,2.41\
+		),(0.9922,2.42),(0.9925,2.43),(0.9927,2.44),(0.9929,2.45),(0.9931,2.46),(0.9932,2.47\
+		),(0.9934,2.48),(0.9936,2.49),(0.9938,2.5),(0.994,2.51),(0.9941,2.52),(0.9943,2.53)\
+		,(0.9945,2.54),(0.9946,2.55),(0.9948,2.56),(0.9949,2.57),(0.9951,2.58),(0.9952,2.59\
+		),(0.9953,2.6),(0.9955,2.61),(0.9956,2.62),(0.9957,2.63),(0.9959,2.64),(0.996,2.65)\
+		,(0.9961,2.66),(0.9962,2.67),(0.9963,2.68),(0.9964,2.69),(0.9965,2.7),(0.9966,2.71)\
+		,(0.9967,2.72),(0.9968,2.73),(0.9969,2.74),(0.997,2.75),(0.9971,2.76),(0.9972,2.77)\
+		,(0.9973,2.78),(0.9974,2.79),(0.9974,2.8),(0.9975,2.81),(0.9976,2.82),(0.9977,2.83)\
+		,(0.9977,2.84),(0.9978,2.85),(0.9979,2.86),(0.9979,2.87),(0.998,2.88),(0.9981,2.89)\
+		,(0.9981,2.9),(0.9982,2.91),(0.9982,2.92),(0.9983,2.93),(0.9984,2.94),(0.9984,2.95)\
+		,(0.9985,2.96),(0.9985,2.97),(0.9986,2.98),(0.9986,2.99),(0.9987,3),(0.999,3.01),(0.9993\
+		,3.02),(0.9995,3.03),(0.9997,3.04),(0.9998,3.05),(0.9998,3.06),(0.9999,3.07),(0.9999\
+		,3.08),(1,3.09),(1,4),(1,5))
+	~	Dmnl
+	~		|
+
+Labor force type:
+	skill, unskill
+	~	
+	~		|
+
+"lnPL-mean"[Gender,Cohorts]=
+	LN(Poverty line)-Mean value of the lognormal distribution of consumption or income[Gender\
+		,Cohorts]
+	~	Dmnl
+	~		|
+
+Max Impact of Biodiversity on Economy=
+	1
+	~	Dmnl
+	~	Scaling factor indicating maximum impact of changes in biodiversity on \
+		economy output.
+	|
+
+MAXBCF=
+	1
+	~	Dmnl
+	~	Maximal possible value of Biomass Capacity Factor.
+	|
+
+MAXBIE=
+	1
+	~	Dmnl
+	~	Maximal value of Biomass Installation Efficiency factor.
+	|
+
+MAXCFD=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of coal resources to be discovered.
+	|
+
+MAXCFR=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of coal resources to be recovered.
+	|
+
+MAXGFD=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of gas resources to be discovered.
+	|
+
+MAXGFR=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of gas resources to be recovered.
+	|
+
+MAXOFD=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of oil resources to be discovered.
+	|
+
+MAXOFR=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of oil resources to be recovered.
+	|
+
+MAXSCE=
+	0.4
+	~	Dmnl
+	~	Maximal efficiency of solar radiation conversion.
+	|
+
+MAXSIE=
+	1
+	~	Dmnl
+	~	Maximal value of Solar Installation Efficiency factor.
+	|
+
+MAXWCF=
+	0.5
+	~	Dmnl
+	~	Maximal wind capacity factor.
+	|
+
+MAXWIE=
+	1
+	~	Dmnl
+	~	Maximal value of Wind Installation Efficiency factor.
+	|
+
+Mean value of the lognormal distribution of consumption or income[Gender,Cohorts]=
+	LN(Real incomes per capita[Gender,Cohorts])-(Standard deviation of the lognormal distribution of consumption\
+		[Gender,Cohorts]^
+	2)/2
+	~	$/(Person*Year)
+	~		|
+
+Min Impact of Biodiversity on Economy=
+	0.98
+	~	Dmnl
+	~	Scaling factor indicating minimal impact of changes in biodiversity on \
+		economy output.
+	|
+
+Net Capital Change=
+	Net Energy Capital Change+Other Capital Change
+	~	$/Year
+	~	Net capital change.
+	|
+
+Net Capital Change Rate=
+	Net Capital Change
+	~	$/Year
+	~	Net Capital Stock change rate.
+	|
+
+Net Change in Other Capital=
+	(Other Capital Change*Current to Max Other Capital/Time to Adjust Other Capital)
+	~	$/(Year*Year)
+	~	Adjustment of capital changes in sectors other than energy.
+	|
+
+OLDCapital= INTEG (
+	OLDNet Capital Change Rate,
+		OLDINIT Capital)
+	~	$
+	~	Capital stock. Source of historical data: \
+		http://www.ggdc.net/MADDISON/oriindex.htm
+	|
+
+OLDCapital Elasticity Output=
+	0.35
+	~	Dmnl
+	~	Capital Elasticity of Output.
+	|
+
+OLDGWP Ratio=
+	OLDGross World Product/OLDOutput in 1900
+	~	Dmnl
+	~	Gross World Product compared to Output in 1900 as a reference indicator.
+	|
+
+OLDINIT Capital=
+	1.3e+12
+	~	$
+	~	Initial Capital Stock.
+	|
+
+OLDNet Capital Change=
+	Net Energy Capital Change+Other Capital Change
+	~	$/Year
+	~	Net capital change.
+	|
+
+OLDNet Capital Change Rate=
+	OLDNet Capital Change
+	~	$/Year
+	~	Net Capital Stock change rate.
+	|
+
+OLDOutput in 1900=
+	1.3e+12
+	~	$/Year
+	~	Economy output in 1900.
+	|
+
+OLDTechnology=
+	Energy Technology+Other Technologies
+	~	Dmnl
+	~	Total factor productivity.
+	|
+
+Other Capital Change= INTEG (
+	Net Change in Other Capital,
+		INIT Other Capital Change)
+	~	$/Year
+	~	Capital change from other sector.
+	|
+
+Other Capital Change Ratio=
+	0.77
+	~	Dmnl
+	~	Strength of adjustment of current to reference capital change related to \
+		sectors other than energy.
+	|
+
+Other Technologies=
+	Reference Other Technology*(1-Other Technology Inflection Point^Other Technology Steepness\
+		/(Other Technology Inflection Point
+	^Other Technology Steepness
+	+((Time-INITIAL TIME)/Year Period)^Other Technology Steepness))
+	~	Dmnl
+	~	Factor productivity in other than energy sectors.
+	|
+
+Other Technology Inflection Point=
+	100+STEP(Other Technology Inflection Point Variation-100, 2020)
+	~	Dmnl
+	~	Parameter determining inflection point of reference factor productivity in \
+		other than energy sectors.
+	|
+
+Other Technology Inflection Point Variation=
+	100
+	~	Dmnl
+	~	Parameter determining inflection point of reference factor productivity in \
+		other than energy sectors.
+	|
+
+Other Technology Steepness=
+	Variable16 Technology
+	~	Dmnl
+	~	Parameter determining intensity of reference factor productivity in other \
+		than energy sectors.
+	|
+
+Output in 1900=
+	1.3e+12
+	~	$/Year
+	~		|
+
+Ratio of capital[skill]=
+	RCs ~~|
+Ratio of capital[unskill]=
+	1-RCs
+	~	Dmnl
+	~		|
+
+Ratio of technology[skill]=
+	Ts ~~|
+Ratio of technology[unskill]=
+	1-Ts
+	~	Dmnl
+	~		|
+
+RCs=
+	0.125608 + SMOOTH(STEP(RCs SA-0.125608,Current year),SA effective change delay)
+	~	Dmnl
+	~		|
+
+RCs SA=
+	0.125608
+	~	Dmnl
+	~	From calibration. Comment by Q. Ye in July 2024
+	|
+
+Real incomes parameter[male,Childhood]=
+	0.18842 ~~|
+Real incomes parameter[male,"15 to 39"]=
+	0.195 ~~|
+Real incomes parameter[male,"40 to 64"]=
+	0.21 ~~|
+Real incomes parameter[male,"65+"]=
+	0.19 ~~|
+Real incomes parameter[female,Childhood]=
+	0.18 ~~|
+Real incomes parameter[female,"15 to 39"]=
+	0.156082 ~~|
+Real incomes parameter[female,"40 to 64"]=
+	0.18117 ~~|
+Real incomes parameter[female,"65+"]=
+	0.16
+	~	Dmnl
+	~	to obtain the real earnings per capita of each group instead of relative incomes by \
+		model calibration.
+		Two assumptions: (1) the relationship between income and age tends to \
+		exhibit an inverted-U-shape pattern. Incomes rise with age and then drop \
+		slightly as taxpayers enter retirement. (2)  Male has more incomes than \
+		female in the same age group.
+	|
+
+Real incomes per capita[Gender,Cohorts]=
+	GWP per Capita*Real incomes parameter[Gender,Cohorts]
+	~	$/(Person*Year)
+	~		|
+
+Reference Other Capital Change=
+	1e+15
+	~	$/Year
+	~	Reference other capital change than from energy sector.
+	|
+
+Reference Other Technology=
+	Reference Other Technology baseline  + 
+	RAMP((Reference Other Technology Variation-Reference Other Technology baseline)/(Year2100\
+		-Current year),
+	Current year,Year2100)
+	~	Dmnl
+	~	Reference factor productivity in other than energy sectors.
+	|
+
+Reference Other Technology baseline=
+	1
+	~	Dmnl
+	~	Reference factor productivity in other than energy sectors.
+	|
+
+Reference Other Technology Variation=
+	1
+	~	Dmnl
+	~	Reference factor productivity in other than energy sectors.
+	|
+
+Reference relative income of skilled=
+	Relative income of skilled variation baseline + 
+	SMOOTH(RAMP((Relative income of skilled variation-Relative income of skilled variation baseline\
+		)/(DemoFeliX target year-Current year), 
+	Current year , DemoFeliX target year),5)
+	~	$/Year
+	~		|
+
+Relative income of skilled variation=
+	65
+	~	$/Year
+	~		|
+
+Relative income of skilled variation baseline=
+	65
+	~	$/Year
+	~		|
+
+Relative incomes of skilled[Gender,Cohorts]=
+	Reference relative income of skilled*Adjustments for relative incomes of skilled[Gender\
+		,Cohorts]
+	~	$/Year
+	~	Relative incomes of skilled. Need data about the earnings of skilled in each \
+		population cohort.
+		Data from OECD datasets. https://stats.oecd.org/Index.aspx?DataSetCode=EAG_EARNINGS 
+		65 is about the average relative incomes of skilled population in OECD countries.
+		Detailed data collection can be found in the file: Data collection from \
+		OECD earnings.xlsx
+	|
+
+Relative incomes of unskilled[male,Cohorts]=
+	Total relative incomes[male,Cohorts]-Relative incomes of skilled[male,Cohorts] ~~|
+Relative incomes of unskilled[female,Cohorts]=
+	Total relative incomes[female,Cohorts]-Relative incomes of skilled[female,Cohorts]
+	~	$/Year
+	~	Relative incomes of unskilled. Need data about the earnings of unskilled population \
+		in each population cohort.
+		Data from OECD datasets. https://stats.oecd.org/Index.aspx?DataSetCode=EAG_EARNINGS 
+		Detailed data collection can be found in the file: Data collection from \
+		OECD earnings.xlsx
+	|
+
+REOs=
+	0.210843
+	~	Dmnl
+	~		|
+
+SE Var T=
+	0
+	~	Year
+	~		|
+
+SecondaryEdButYoungest:
+	"30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84"\
+		,"85-89","90-94","95-99","100+"
+	~	
+	~		|
+
+SecondaryEdCohorts:
+	"15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69"\
+		,"70-74","75-79","80-84","85-89","90-94","95-99","100+"
+	~	
+	~		|
+
+SecondaryEdPrevious:
+	"25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79"\
+		,"80-84","85-89","90-94","95-99" -> SecondaryEdButYoungest
+	~	
+	~		|
+
+Skilled fraction of secondary education graduates=
+	0.5
+	~	Dmnl
+	~		|
+
+Skilled fraction of secondary education graduates baseline=
+	0.5
+	~	Dmnl
+	~		|
+
+Smoothed GWP per Capita=
+	SMOOTH(GWP per Capita, Year Period)
+	~	$/(Person*Year)
+	~		|
+
+SSP Demographic Variation Time=
+	5
+	~	Year
+	~		|
+
+SSP Economic Variation Time=
+	5
+	~	Year
+	~		|
+
+Standard deviation of the lognormal distribution of consumption[Gender,Cohorts]=
+	SQRT(2)*Inverse table for standard normal distribution((Gini coefficient[Gender,Cohorts\
+		]+1)/2)
+	~	Dmnl
+	~		|
+
+Table for standard normal distribution(
+	[(0,0.4)-(5,1)],(0,0.5),(0.01,0.504),(0.02,0.508),(0.03,0.512),(0.04,0.516),(0.05,0.5199\
+		),(0.06,0.5239),(0.07,0.5279),(0.08,0.5319),(0.09,0.5359),(0.1,0.5398),(0.11,0.5438\
+		),(0.12,0.5478),(0.13,0.5517),(0.14,0.5557),(0.15,0.5596),(0.16,0.5636),(0.17,0.5675\
+		),(0.18,0.5714),(0.19,0.5753),(0.2,0.5793),(0.21,0.5832),(0.22,0.5871),(0.23,0.591)\
+		,(0.24,0.5948),(0.25,0.5987),(0.26,0.6026),(0.27,0.6064),(0.28,0.6103),(0.29,0.6141\
+		),(0.3,0.6179),(0.31,0.6217),(0.32,0.6255),(0.33,0.6293),(0.34,0.6331),(0.35,0.6368\
+		),(0.36,0.6406),(0.37,0.6443),(0.38,0.648),(0.39,0.6517),(0.4,0.6554),(0.41,0.6591)\
+		,(0.42,0.6628),(0.43,0.6664),(0.44,0.67),(0.45,0.6736),(0.46,0.6772),(0.47,0.6808),\
+		(0.48,0.6844),(0.49,0.6879),(0.5,0.6915),(0.51,0.695),(0.52,0.6985),(0.53,0.7019),(\
+		0.54,0.7054),(0.55,0.7088),(0.56,0.7123),(0.57,0.7157),(0.58,0.719),(0.59,0.7224),(\
+		0.6,0.7257),(0.61,0.7291),(0.62,0.7324),(0.63,0.7357),(0.64,0.7389),(0.65,0.7422),(\
+		0.66,0.7454),(0.67,0.7486),(0.68,0.7517),(0.69,0.7549),(0.7,0.758),(0.71,0.7611),(0.72\
+		,0.7642),(0.73,0.7673),(0.74,0.7703),(0.75,0.7734),(0.76,0.7764),(0.77,0.7794),(0.78\
+		,0.7823),(0.79,0.7852),(0.8,0.7881),(0.81,0.791),(0.82,0.7939),(0.83,0.7967),(0.84,\
+		0.7995),(0.85,0.8023),(0.86,0.8051),(0.87,0.8078),(0.88,0.8106),(0.89,0.8133),(0.9,\
+		0.8159),(0.91,0.8186),(0.92,0.8212),(0.93,0.8238),(0.94,0.8264),(0.95,0.8289),(0.96\
+		,0.8355),(0.97,0.834),(0.98,0.8365),(0.99,0.8389),(1,0.8413),(1.01,0.8438),(1.02,0.8461\
+		),(1.03,0.8485),(1.04,0.8508),(1.05,0.8531),(1.06,0.8554),(1.07,0.8577),(1.08,0.8599\
+		),(1.09,0.8621),(1.1,0.8643),(1.11,0.8665),(1.12,0.8686),(1.13,0.8708),(1.14,0.8729\
+		),(1.15,0.8749),(1.16,0.877),(1.17,0.879),(1.18,0.881),(1.19,0.883),(1.2,0.8849),(1.21\
+		,0.8869),(1.22,0.8888),(1.23,0.8907),(1.24,0.8925),(1.25,0.8944),(1.26,0.8962),(1.27\
+		,0.898),(1.28,0.8997),(1.29,0.9015),(1.3,0.9032),(1.31,0.9049),(1.32,0.9066),(1.33,\
+		0.9082),(1.34,0.9099),(1.35,0.9115),(1.36,0.9131),(1.37,0.9147),(1.38,0.9162),(1.39\
+		,0.9177),(1.4,0.9192),(1.41,0.9207),(1.42,0.9222),(1.43,0.9236),(1.44,0.9251),(1.45\
+		,0.9265),(1.46,0.9279),(1.47,0.9292),(1.48,0.9306),(1.49,0.9319),(1.5,0.9332),(1.51\
+		,0.9345),(1.52,0.9357),(1.53,0.937),(1.54,0.9382),(1.55,0.9394),(1.56,0.9406),(1.57\
+		,0.9418),(1.58,0.943),(1.59,0.9441),(1.6,0.9452),(1.61,0.9463),(1.62,0.9474),(1.63,\
+		0.9484),(1.64,0.9495),(1.65,0.9505),(1.66,0.9515),(1.67,0.9525),(1.68,0.9535),(1.69\
+		,0.9535),(1.7,0.9554),(1.71,0.9564),(1.72,0.9573),(1.73,0.9582),(1.74,0.9591),(1.75\
+		,0.9599),(1.76,0.9608),(1.77,0.9616),(1.78,0.9625),(1.79,0.9633),(1.8,0.9641),(1.81\
+		,0.9648),(1.82,0.9656),(1.83,0.9664),(1.84,0.9672),(1.85,0.9678),(1.86,0.9686),(1.87\
+		,0.9693),(1.88,0.97),(1.89,0.9706),(1.9,0.9713),(1.91,0.9719),(1.92,0.9726),(1.93,0.9732\
+		),(1.94,0.9738),(1.95,0.9744),(1.96,0.975),(1.97,0.9756),(1.98,0.9762),(1.99,0.9767\
+		),(2,0.9772),(2.01,0.9778),(2.02,0.9783),(2.03,0.9788),(2.04,0.9793),(2.05,0.9798),\
+		(2.06,0.9803),(2.07,0.9808),(2.08,0.9812),(2.09,0.9817),(2.1,0.9821),(2.11,0.9826),\
+		(2.12,0.983),(2.13,0.9834),(2.14,0.9838),(2.15,0.9842),(2.16,0.9846),(2.17,0.985),(\
+		2.18,0.9854),(2.19,0.9857),(2.2,0.9861),(2.21,0.9864),(2.22,0.9868),(2.23,0.9871),(\
+		2.24,0.9874),(2.25,0.9878),(2.26,0.9881),(2.27,0.9884),(2.28,0.9887),(2.29,0.989),(\
+		2.3,0.9893),(2.31,0.9896),(2.32,0.9898),(2.33,0.9901),(2.34,0.9904),(2.35,0.9906),(\
+		2.36,0.9909),(2.37,0.9911),(2.38,0.9913),(2.39,0.9916),(2.4,0.9918),(2.41,0.992),(2.42\
+		,0.9922),(2.43,0.9925),(2.44,0.9927),(2.45,0.9929),(2.46,0.9931),(2.47,0.9932),(2.48\
+		,0.9934),(2.49,0.9936),(2.5,0.9938),(2.51,0.994),(2.52,0.9941),(2.53,0.9943),(2.54,\
+		0.9945),(2.55,0.9946),(2.56,0.9948),(2.57,0.9949),(2.58,0.9951),(2.59,0.9952),(2.6,\
+		0.9953),(2.61,0.9955),(2.62,0.9956),(2.63,0.9957),(2.64,0.9959),(2.65,0.996),(2.66,\
+		0.9961),(2.67,0.9962),(2.68,0.9963),(2.69,0.9964),(2.7,0.9965),(2.71,0.9966),(2.72,\
+		0.9967),(2.73,0.9968),(2.74,0.9969),(2.75,0.997),(2.76,0.9971),(2.77,0.9972),(2.78,\
+		0.9973),(2.79,0.9974),(2.8,0.9974),(2.81,0.9975),(2.82,0.9976),(2.83,0.9977),(2.84,\
+		0.9977),(2.85,0.9978),(2.86,0.9979),(2.87,0.9979),(2.88,0.998),(2.89,0.9981),(2.9,0.9981\
+		),(2.91,0.9982),(2.92,0.9982),(2.93,0.9983),(2.94,0.9984),(2.95,0.9984),(2.96,0.9985\
+		),(2.97,0.9985),(2.98,0.9986),(2.99,0.9986),(3,0.9987),(3.01,0.999),(3.02,0.9993),(\
+		3.03,0.9995),(3.04,0.9997),(3.05,0.9998),(3.06,0.9998),(3.07,0.9999),(3.08,0.9999),\
+		(3.09,1),(4,1),(5,1))
+	~	Dmnl
+	~		|
+
+Technology=
+	Energy Technology+Other Technologies
+	~	Dmnl
+	~	Total factor productivity.
+	|
+
+TertiaryEdButYoungest:
+	"35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85-89"\
+		,"90-94","95-99","100+"
+	~	
+	~		|
+
+TertiaryEdPrevious:
+	"30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84"\
+		,"85-89","90-94","95-99" -> TertiaryEdButYoungest
+	~	
+	~		|
+
+Time to Adjust Other Capital=
+	20
+	~	Year
+	~	Time required to adjust capital changes in sectors other than energy.
+	|
+
+Total relative incomes[Gender,Cohorts]=
+	100
+	~	$/Year
+	~	Relative total incomes of skilled and unskilled.
+	|
+
+Total REO=
+	sum(Reference Economy Output[Labor force type!])
+	~	
+	~		|
+
+Ts=
+	0.904986 + SMOOTH(STEP(Ts SA-0.904986,Current year),SA effective change delay)
+	~	Dmnl
+	~		|
+
+Ts SA=
+	0.904986
+	~	Dmnl
+	~	From calibration. Commented by Q. Ye in July 2024
+	|
+
+WorkingAge:
+	"15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64"
+	~	
+	~		|
+
+Year2100=
+	2100
+	~	Year
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Variable16 Technology=
+	Initial Change Rate16+SCENARIO ON*RAMP(Change Rate Slope16, Change Rate Start16, Change Rate Finish16\
+		)
+	~	1/Year
+	~	Educational Attainment Change Rate.
+	|
+
+Initial Change Rate16=
+	3
+	~	1/Year
+	~	Initial Educational Attainment Change Rate
+	|
+
+SCENARIO ON=
+	STEP(1, 2010)
+	~	Dmnl [0,1,1]
+	~	Scenario is on to consider the impact on GDP
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Cohorts:
+	"0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49"\
+		, "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", \
+		"95-99", "100+"
+	~	
+	~		|
+
+Gender:
+	male, female
+	~	
+	~		|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+INIT Species Abundance=
+	85
+	~	Dmnl
+	~	Mean species abundance in year 1900.
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+AllButYoungest:
+	"5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54"\
+		, "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", "95-99", \
+		"100+"
+	~	
+	~		|
+
+Childhood:
+	"0-4","5-9","10-14"
+	~	
+	~		|
+
+PreviousCohort:
+	"0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49"\
+		, "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", \
+		"95-99" -> AllButYoungest
+	~	
+	~		|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+SA effective change delay=
+	30
+	~	Year
+	~		|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Current year=
+	2023
+	~	Year
+	~		|
+
+Year Period=
+	1
+	~	Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Economy_GDP
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,104,0
+10,1,Net Energy Capital Change,-226,832,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,OLDCapital,142,1802,46,25,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,3,48,141,1942,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,4,6,2,4,0,0,22,0,0,0,-1--1--1,,1|(141,1852)|
+1,5,6,3,100,0,0,22,0,0,0,-1--1--1,,1|(141,1912)|
+11,6,0,141,1884,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,7,OLDNet Capital Change Rate,193,1884,59,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,OLDINIT Capital,16,1809,59,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,9,OLDReference Economy Output,142,1714,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,10,OLDCapital Elasticity Output,300,1752,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,11,10,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,12,Oil Technology,658,442,53,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,13,Coal Technology,658,586,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,14,Gas Technology,658,730,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,15,Solar Technology,658,1054,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,16,Wind Technology,658,1206,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,17,MAXOFR,840,499,45,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,18,MAXOFD,840,427,46,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,19,17,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,20,18,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,21,MAXCFD,840,571,46,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,22,MAXCFR,840,643,45,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,23,21,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,24,22,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,25,MAXGFD,840,715,46,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,26,MAXGFR,840,787,45,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,27,MAXSCE,840,1038,46,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,28,MAXSIE,840,1114,41,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,29,MAXWCF,840,1190,47,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,30,MAXWIE,840,1278,43,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,31,25,14,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,32,26,14,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,33,27,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,34,28,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,35,29,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,36,30,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,37,12,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,38,13,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,39,14,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,40,15,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,41,16,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,42,Energy Technology,506,826,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,43,8,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,44,OLDOutput in 1900,300,1688,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,45,44,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,46,8,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,47,Other Technologies,370,1037,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,48,OLDGross World Product,142,1580,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,49,9,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,50,OLDGWP Ratio,300,1580,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,51,48,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,52,44,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,53,2,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,54,OLDGWP per Capita,142,1517,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,55,48,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,56,MAXBCF,840,859,45,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,57,MAXBIE,840,947,41,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,58,Biomass Technology,658,874,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,59,56,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,60,57,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,61,58,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,62,OLDNet Capital Change,5,1883,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,63,62,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,64,Time,195,1247,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,65,INITIAL TIME,195,1175,56,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,66,OLDTechnology,368,1876,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,67,66,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,68,Other Technology Inflection Point,533,1107,64,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,69,68,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,70,Other Technology Steepness,489,1175,64,18,8,3,0,36,-1,0,0,0,-1--1--1,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+1,71,70,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,72,Reference Other Technology,370,1247,60,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,73,72,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,74,65,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,75,64,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,76,Other Capital Change,7,1053,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,77,48,-203,1054,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,78,80,76,4,0,0,22,0,0,0,-1--1--1,,1|(-71,1054)|
+1,79,80,77,100,0,0,22,0,0,0,-1--1--1,,1|(-157,1054)|
+11,80,0,-116,1054,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,81,Net Change in Other Capital,-116,1078,53,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,82,Current to Max Other Capital,-43,1173,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,83,76,81,1,0,0,0,0,64,0,-1--1--1,,1|(-29,1102)|
+1,84,76,82,1,0,0,0,0,64,0,-1--1--1,,1|(10,1126)|
+10,85,Other Capital Change Ratio,-143,1245,51,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,86,82,81,1,0,0,0,0,64,0,-1--1--1,,1|(-98,1139)|
+10,87,Time to Adjust Other Capital,-248,1170,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,88,87,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,89,85,82,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,90,INIT Other Capital Change,-99,1002,58,18,8,3,0,36,-1,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,91,90,76,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,92,INIT Species Abundance,-302,520,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,93,Impact of Biodiversity on Economy,-46,496,54,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,94,92,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,95,Min Impact of Biodiversity on Economy,-226,569,54,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,96,Max Impact of Biodiversity on Economy,-226,421,54,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,97,95,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,98,96,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,GDP per Capita GLOBIOM usd,-76,284,60,18,8,3,0,36,0,0,0,0,-1--1--1,255-128-0,Arial|||0-0-0,0,0,0,0,0,0
+10,100,Reference Other Capital Change,42,1245,60,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,101,100,82,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,102,Reference Economy Output,145,606,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,103,Gross World Product,145,469,46,18,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,104,GWP per Capita,156,354,35,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,105,Output in 1900,365,606,53,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,106,103,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,107,Capital,145,752,46,25,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,108,48,144,892,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,109,111,107,4,0,0,22,0,0,0,-1--1--1,,1|(144,802)|
+1,110,111,108,100,0,0,22,0,0,0,-1--1--1,,1|(144,862)|
+11,111,0,144,834,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,112,Net Capital Change Rate,196,834,49,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,113,INIT Capital,-19,675,42,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,114,Capital Elasticity Output,264,650,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,115,113,107,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,116,Net Capital Change,8,833,42,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,116,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,118,Technology,371,826,42,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,119,1,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,120,42,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,121,113,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,107,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,123,114,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,124,118,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,125,105,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,126,93,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,127,Smoothed GWP per Capita,482,258,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,128,104,99,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,129,Net Energy Capital Change,-102,1851,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,130,129,62,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,131,Other Capital Change,-49,1941,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,132,131,62,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,133,Other Technologies,308,1977,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,134,Energy Technology,420,1932,47,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,135,134,66,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,136,133,66,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,137,Impact of Biodiversity on Economy,-41,1486,54,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,138,137,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,139,76,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,140,47,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,141,Variable16 Technology,619,1329,47,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,142,141,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,143,Initial Labor Force,8,1746,47,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,144,143,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,145,Indicative Labor Force Participation Fraction,254,1849,70,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,146,145,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,147,Year Period,370,1069,53,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,148,147,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,149,Year Period,305,334,53,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,150,104,127,1,0,0,0,0,64,0,-1--1--1,,1|(355,391)|
+1,151,149,127,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,152,GWP per Capita Indicator,371,463,61,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,153,104,152,1,0,0,0,0,128,0,-1--1--1,,1|(222,430)|
+10,154,Capital Elasticity Output Variation,447,887,61,18,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,155,Other Technology Inflection Point Variation,496,1007,64,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,156,155,68,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,157,SSP Demographic Variation Time,1153,859,74,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,158,CE Var S,463,707,36,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,159,CE S,476,663,21,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,160,SE Var T,358,633,43,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,161,159,158,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,162,SSP Economic Variation Time,140,1008,57,18,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,163,Poverty rate,1171,370,44,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,164,"lnPL-mean",1023,319,40,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,165,164,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,166,Standard deviation of the lognormal distribution of consumption,1348,361,91,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,167,166,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,168,Table for standard normal distribution,1018,417,67,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,169,168,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,170,Gini coefficient,1540,433,54,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,171,170,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Inverse table for standard normal distribution,1349,465,59,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,173,172,166,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,174,Mean value of the lognormal distribution of consumption or income,1228,202,87,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,175,174,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,176,Poverty line,926,270,42,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,177,176,164,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,178,Consumption or income of a person per day,882,164,70,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,179,178,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,180,166,174,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,181,Gini2,1637,370,21,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,182,181,170,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,183,Gini1,1638,483,21,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,184,183,170,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,185,Relative incomes of skilled,1964,481,63,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,186,185,181,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,187,Relative incomes of unskilled,1946,406,63,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,188,187,181,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,189,Skilled population,1810,359,39,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,190,189,181,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,191,Unskilled population,1731,296,39,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,192,191,181,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,193,187,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,194,189,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,195,191,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,196,Total relative incomes,1847,504,47,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,197,196,181,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,198,196,183,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,199,189,191,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,200,0,1400,45,525,17,8,135,0,44,-1,0,0,0,-1--1--1,192-192-192,Arial|15||0-0-0,0,0,0,0,0,0
+Poverty rate
+10,201,Global poverty rate,1170,558,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,202,163,201,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,203,185,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,204,Fraction of skilled secondary education graduates,1984,309,76,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,205,204,189,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,206,196,187,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,207,185,187,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,208,Real incomes per capita,1511,237,50,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,209,Real incomes parameter,1587,146,50,18,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-0,0,0,0,0,0,0
+10,210,Adjustments for relative incomes of skilled,2158,469,69,27,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,211,210,185,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,212,209,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,213,208,174,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,214,GWP per Capita,1498,313,40,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,215,214,208,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,216,Skilled fraction of secondary education graduates,2223,347,76,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,217,Reference relative income of skilled,1967,555,67,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,218,217,185,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,219,Relative income of skilled variation,1967,641,68,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,220,219,217,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,221,GWP Indicator,284,515,53,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,222,103,221,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,223,InitialREO,87,672,37,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,224,223,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,225,Ratio of capital,37,550,54,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,226,225,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,227,Ratio of technology,212,553,40,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,228,227,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,229,REOs,30,712,23,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,230,229,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,231,RCs,-66,572,18,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,232,231,225,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,233,Ts,315,562,11,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,234,233,227,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,235,Cs,441,759,12,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,236,235,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,237,Cu,325,719,12,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,238,237,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,239,Total REO,71,512,38,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,240,102,239,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,241,239,103,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,242,216,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,243,Variable16 Technology,678,1485,42,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,244,Initial Change Rate16,617,1588,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,245,244,243,0,0,0,0,0,0,0,-1--1--1,,1|(0,0)|
+10,246,SCENARIO ON,723,1531,48,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,247,246,243,0,0,0,0,0,0,0,-1--1--1,,1|(0,0)|
+10,248,Reference Other Technology Variation,231,1316,77,18,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,249,248,72,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,250,Current year,1891,746,54,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,251,DemoFeliX target year,2024,741,43,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,252,251,217,1,0,0,0,0,192,0,-1--1--1,,1|(2055,641)|
+1,253,250,217,1,0,0,0,0,192,0,-1--1--1,,1|(1875,647)|
+10,254,Current year,2096,372,54,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,255,DemoFeliX target year,2125,253,47,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,256,255,204,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,257,254,204,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,258,Relative income of skilled variation baseline,2127,554,68,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,259,258,217,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,260,Skilled fraction of secondary education graduates baseline,2264,282,76,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,261,260,204,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,262,Reference Other Technology baseline,362,1381,75,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,263,Current year,246,1403,54,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,264,DemoFeliX target year,473,1305,47,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,265,263,72,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,266,Year2100,458,1366,36,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,267,266,72,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,268,262,72,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,269,Current year,-67,788,54,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,270,RCs SA,-167,621,31,10,8,3,0,34,-1,0,0,0,-1--1--1,-1--1--1,Arial|||255-0-255,0,0,0,0,0,0
+10,271,Ts SA,384,553,24,10,8,3,0,34,-1,0,0,0,-1--1--1,-1--1--1,Arial|||255-0-255,0,0,0,0,0,0
+10,272,Cs SA,287,820,25,10,8,3,0,34,-1,0,0,0,-1--1--1,-1--1--1,Arial|||255-0-255,0,0,0,0,0,0
+10,273,Cu SA,358,747,25,10,8,3,0,34,-1,0,0,0,-1--1--1,-1--1--1,Arial|||255-0-255,0,0,0,0,0,0
+10,274,SA effective change delay,-162,698,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,275,SA effective change delay,504,614,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,276,SA effective change delay,2149,651,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,277,271,233,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,278,275,233,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,279,269,233,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,280,270,231,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,281,274,231,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,282,269,231,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,283,275,237,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,284,273,237,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,285,269,237,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,286,272,235,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,287,275,235,1,0,0,0,0,192,0,-1--1--1,,1|(500,745)|
+1,288,269,235,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,289,Investment in Biomass Capacity,-546,1073,72,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,290,289,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,291,Investment in Biomass Energy Technology,-546,1013,61,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,292,291,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,293,Investment in Coal Exploration,-546,793,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,294,293,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,295,Investment in Coal Production,-546,744,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,296,295,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,297,Investment in Coal Technology,-546,690,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,298,297,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,299,Investment in Gas Exploration,-546,949,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,300,299,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,301,Investment in Gas Production,-546,897,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,302,301,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,303,Investment in Gas Technology,-546,846,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,304,303,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,305,Investment in Oil Exploration,-546,543,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,306,305,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,307,Investment in Oil Production,-546,591,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,308,307,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,309,Investment in Oil Technology,-546,640,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,310,309,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,311,Investment in Solar Capacity,-546,1232,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,312,311,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,313,Investment in Solar Energy Technology,-546,1297,74,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,314,313,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,315,Investment in Wind Capacity,-546,1177,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,316,315,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,317,Investment in Wind Energy Technology,-546,1129,74,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,318,317,1,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,319,Labor Force,67,1843,54,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,320,319,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,321,Mean Species Abundance,-283,472,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,322,321,93,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,323,Population,240,1473,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,324,323,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,325,Change Rate Finish16,710,1619,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,326,325,243,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,327,Change Rate Slope16,480,1482,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,328,327,243,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,329,Change Rate Start16,536,1539,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,330,329,243,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,331,Wind Capacity Factor,840,1154,59,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,332,331,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,333,Wind Installation Efficiency,840,1230,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,334,333,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,335,Solar Conversion Efficiency,840,1003,68,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,336,335,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,337,Solar Installation Efficiency,840,1076,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,338,337,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,339,Biomass Capacity Factor,840,827,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,340,339,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,341,Biomass Installation Efficiency,840,903,41,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,342,341,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,343,Gas Fraction Discoverable,840,683,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,344,343,14,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,345,Gas Fraction Recoverable,840,753,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,346,345,14,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,347,Coal Fraction Discoverable,840,542,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,348,347,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,349,Coal Fraction Recoverable,840,606,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,350,349,13,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,351,Labor Force input,1,613,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,352,351,102,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,353,Oil Fraction Discoverable,840,390,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,354,353,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,355,Oil Fraction Recoverable,840,462,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,356,355,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,357,Population,138,276,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,358,357,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,359,Population Cohorts,1745,557,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,360,359,183,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,361,Secondary Education Graduates,1893,240,45,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,362,361,189,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,363,Tertiary Education Graduates,1786,230,44,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,364,363,189,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,365,Population Cohorts,1170,594,44,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,366,365,201,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,367,359,201,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,368,Population Cohorts,1731,332,44,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,369,368,191,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,370,359,191,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,371,359,181,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,372,"100 percent",1055,520,53,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,373,372,163,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,374,Net Climate Change Impact on Economy,-22,1634,62,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,375,374,48,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,376,Net Climate Change Impact on Economy,13,394,79,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,377,376,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,378,USD to billionUSD,474,516,44,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,379,378,221,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,380,"$ into $thousand",532,458,43,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,381,380,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,382,Days in Year,785,230,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,383,382,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+4:Time
+5:Days in Year
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:104,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

@@ -1,0 +1,3309 @@
+{UTF-8}
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Oil Production Indicator=
+	Oil Production*Mtoe into EJ
+	~	EJ/Year
+	~		|
+
+Unit Cost of Oil Exploration=
+	MIN(Max Unit Cost of Oil Exploration, IF THEN ELSE(Productivity of Investment in Oil Exploration\
+		=0,0,1/Productivity of Investment in Oil Exploration
+	*toe per Mtoe))
+	~	$/Mtoe
+	~	Unit cost of oil exploration. Depends on remaining undiscovered oil \
+		resources and advances in exploration technologies.
+	|
+
+Potential Oil Production from Investment=
+	Productivity of Investment in Oil Production*Effective Investment in Oil Production/\
+		toe per Mtoe
+	~	Mtoe/Year
+	~	Potential Oil Production due to available investments in oil resources \
+		recovery.
+	|
+
+Desired Investment in Oil Production=
+	MIN(Potential Oil Production from Resources,Total Oil Demand)/Productivity of Investment in Oil Production\
+		*toe per Mtoe
+	~	$/Year
+	~	Desired Investment in Oil Production due to Total Oil Demand and \
+		Productivity of Investment in Oil Production.
+	|
+
+Potential Oil Exploration=
+	Effective Investment in Oil Exploration*Productivity of Investment in Oil Exploration\
+		/toe per Mtoe
+	~	Mtoe/Year
+	~	Potential Oil exploration due to available investments in oil resources \
+		discovery.
+	|
+
+Unit Cost of Oil Production=
+	1/Productivity of Investment in Oil Production*toe per Mtoe+Climate Policy Scenario*\
+		CO2 Intensity of Fuels[Oil]*Carbon Price
+	~	$/Mtoe
+	~	Unit cost of oil production.
+	|
+
+Undiscovered Oil Resources= INTEG (
+	Rate of New Discovery Oil-Oil Exploration,
+		INIT UORN)
+	~	Mtoe
+	~	Existing Oil Resources but not discovered yet.
+	|
+
+Oil Price per Barrel=
+	Oil Price*Mtoe per Barrel
+	~	$/Barrel
+	~	Actual Oil Price per Barrel.
+	|
+
+Rate of New Discovery Oil=
+	Mtoe per Barrel*Annual Change in Oil Reserves
+	~	Mtoe/Year
+	~		|
+
+Total Oil Demand=
+	Energy Demand*Market Share Oil
+	~	Mtoe/Year
+	~	Total demand for oil resources.
+	|
+
+Max Unit Cost of Oil Exploration=
+	MFC Var S+SMOOTH(STEP(Max Unit Cost of Fossil Fuel Exploration Variation-MFC Var S, \
+		2020+E Var T),SSP Energy Production Variation Time
+	)
+	~	$/Mtoe
+	~	Upper level limit for unit cost of oil exploration.
+	|
+
+Adjustment for Identified Oil Resource=
+	(Required Identified Oil Resources-Identified Oil Resources)/Identified Oil Resources Adjustment Time
+	~	Mtoe/Year
+	~	Adjustment of Identified Oil Resource to the desired level over a \
+		specified adjustment time.
+	|
+
+Annual Change in Oil Reserves=
+	STEP(URO Var S+SMOOTH(STEP(Annual Change in Oil Reserves Variation-URO Var S, 2020+E Var T\
+		),SSP Energy Production Variation Time
+	), 2010)
+	~	Barrel/Year
+	~		|
+
+Annual Change in Oil Reserves Variation=
+	2.1e+10
+	~	Barrel/Year [0,?]
+	~		|
+
+Average Oil Production= INTEG (
+	Change in Average Oil Production,
+		INIT Average Oil Production
+		)
+	~	Mtoe/Year
+	~	Average total oil production per year.
+	|
+
+Change in Average Oil Production=
+	(Oil Production-Average Oil Production)/Time to Average Oil Production
+	~	Mtoe/(Year*Year)
+	~	Change in Average Oil Production.
+	|
+
+Change in Effective Investment in Oil Exploration=
+	(Investment in Oil Exploration-Effective Investment in Oil Exploration)/Investment in Oil Exploration Delay
+	~	$/(Year*Year)
+	~	Change in Effective Investment in Oil Exploration.
+	|
+
+Change in Effective Investment in Oil Production=
+	(Investment in Oil Production-Effective Investment in Oil Production)/Investment in Oil Production Delay
+	~	$/(Year*Year)
+	~	Change in Effective Investment in Oil Production.
+	|
+
+Change in Oil Productivity of Investment=
+	(Productivity of Investment in Oil Exploration-Oil Productivity of Investment)/Oil Production Coverage
+	~	toe/(Year*$)
+	~	Change in Oil Productivity of Investment.
+	|
+
+Cumulative Additions to Oil Production=
+	Identified Oil Resources+Cumulative Oil Production
+	~	Mtoe
+	~	Identified and already produced resources.
+	|
+
+Cumulative Oil Production= INTEG (
+	Oil Production,
+		INIT COPN)
+	~	Mtoe
+	~	Cumulative Oil Resources that has been produced.
+	|
+
+Delay Time IROFDU=
+	Oil Discovery Technology Development Time/3
+	~	Year
+	~		|
+
+Delay Time IROFRU=
+	Oil Recovery Technology Development Time/3
+	~	Year
+	~		|
+
+Desired Investment in Oil Exploration=
+	Desired Oil Exploration Rate*Unit Cost of Oil Exploration
+	~	$/Year
+	~	Desired amount of resources that need to be invested in order to secure \
+		desired oil exploration.
+	|
+
+Desired Oil Exploration Rate=
+	MAX(0,Adjustment for Identified Oil Resource+Oil Production)
+	~	Mtoe/Year
+	~	Desired Oil exploration rate due to Total Oil Demand and Identified Oil \
+		Resources safety coverage.
+	|
+
+Effect of Oil Demand and Supply on Price=
+	SO Init*(Total Oil Demand/Potential Oil Production)^Sensitivity of Oil Price to Supply and Demand
+	~	Dmnl
+	~	Effect of Oil Demand and Supply ratio on actual oil price.
+	|
+
+Effect of Technology on Oil Discoveries=
+	Total Oil Discoverable Resources/INIT UORN
+	~	Dmnl
+	~	Impact of technology development on oil exploration taking into account \
+		remaining undiscovered oil resources (the less remaining undiscovered oil \
+		resources the more expensive it to discover them).
+	|
+
+Effective Investment in Oil Exploration= INTEG (
+	Change in Effective Investment in Oil Exploration,
+		INIT EIOE
+		)
+	~	$/Year
+	~	Effective investments dedicated for oil resources exploration.
+	|
+
+Effective Investment in Oil Production= INTEG (
+	Change in Effective Investment in Oil Production,
+		INIT EIOP
+		)
+	~	$/Year
+	~	Effective investments dedicated for oil resources production.
+	|
+
+Effectiveness IROFDU=
+	Investment in Oil Discovery Technology*Effectiveness of Investment in Oil Discovery Technology
+	~	1/Year
+	~		|
+
+Effectiveness IROFRU=
+	Investment in Oil Recovery Technology*Effectiveness of Investment in Oil Recovery Technology
+	~	1/Year
+	~		|
+
+Effectiveness of Investment in Oil Discovery Technology=
+	4.48e-09+STEP(Effectiveness of Investment in Oil Discovery Technology Variation-4.48e-09\
+		, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to oil discovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Oil Discovery Technology Variation=
+	4.48e-09
+	~	1/$ [0,?]
+	~	Effectiveness of resources dedicated to oil discovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Oil Recovery Technology=
+	EIOR Var S+SMOOTH(STEP(Effectiveness of Investment in Oil Recovery Technology Variation\
+		-EIOR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/$
+	~	Effectiveness of resources dedicated to recovery technology development.
+	|
+
+Effectiveness of Investment in Oil Recovery Technology Variation=
+	2.8e-11
+	~	1/$
+	~	Effectiveness of resources dedicated to recovery technology development.
+	|
+
+EIOR S=
+	2.8e-11
+	~	1/$ [0,?]
+	~	Effectiveness of resources dedicated to recovery technology development.
+	|
+
+EIOR Var S=
+	2.8e-11+SMOOTH(STEP(EIOR S-2.8e-11, 2020),1
+	)
+	~	1/$
+	~	Effectiveness of resources dedicated to recovery technology development.
+	|
+
+FDR S=
+	6
+	~	Year [0,?]
+	~		|
+
+FDR Var S=
+	6+SMOOTH(STEP(FDR S-6, 2020),1
+	)
+	~	Year
+	~		|
+
+FO S=
+	0.04
+	~	Dmnl [0,1]
+	~	Percentage of total oil sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+FO Var S=
+	0.04+SMOOTH(STEP(FO S-0.04, 2020),1
+	)
+	~	Dmnl
+	~	Percentage of total oil sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Fossil Fuel Discovery and Recovery Technology Development Time Variation=
+	6
+	~	Year
+	~		|
+
+Fraction Invested in Oil Discovery Technology=
+	Table for FIODT(Oil Fraction Discoverable)
+	~	Dmnl
+	~	Fraction of investments in oil technology dedicated to discovery \
+		technology.
+	|
+
+Fraction of Oil Revenues Invested in Technology=
+	FO Var S+SMOOTH(STEP(Fraction of Oil Revenues Invested in Technology Variation-FO Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Dmnl
+	~	Percentage of total oil sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Fraction of Oil Revenues Invested in Technology Variation=
+	0.04
+	~	Dmnl
+	~	Percentage of total oil sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Identified Oil Resources= INTEG (
+	Oil Exploration-Oil Production,
+		(Total Oil Demand*Normal Oil Production Ratio+Cumulative Oil Production*(1-Oil Fraction Recoverable\
+		))/Oil Fraction Recoverable)
+	~	Mtoe
+	~	Oil Resources discovered thanks to developments in exploration technology.
+	|
+
+Identified Oil Resources Adjustment Time=
+	2
+	~	Year
+	~	Time to adjust Identified Oil Resource to the desired level.
+	|
+
+IF S=
+	5
+	~	Year [0,?]
+	~		|
+
+IF Var S=
+	5+SMOOTH(STEP(IF S-5, 2020),1
+	)
+	~	Year
+	~		|
+
+Increase in Ratio of Oil Fraction Discoverable to Undiscoverable=
+	Outflow IROFDULV3
+	~	1/Year
+	~	Increase in Ratio of Oil Fraction Discoverable to Undiscoverable due to \
+		investments in discovery technology and their productivity.
+	|
+
+Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV1= INTEG (
+	Inflow IROFDULV1-Outflow IROFDULV1,
+		Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV2= INTEG (
+	Inflow IROFDULV2-Outflow IROFDULV2,
+		Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV3= INTEG (
+	Inflow IROFDULV3-Outflow IROFDULV3,
+		Effectiveness IROFDU*Delay Time IROFDU)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Oil Fraction Recoverable to Unrecoverable=
+	Outflow IROFRULV3
+	~	1/Year
+	~	Increase in Ratio of Oil Fraction Recoverable to Unrecoverable due to \
+		investments in recovery technology and their productivity.
+	|
+
+Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV1= INTEG (
+	Inflow IROFRULV1-Outflow IROFRULV1,
+		Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV2= INTEG (
+	Inflow IROFRULV2-Outflow IROFRULV2,
+		Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV3= INTEG (
+	Inflow IROFRULV3-Outflow IROFRULV3,
+		Effectiveness IROFRU*Delay Time IROFRU)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Indicated Oil Price=
+	Oil Cost*(1+Oil Desired Gross Margin)
+	~	$/Mtoe
+	~	Indicated oil price accounting for exploration and production cost and \
+		gross margin.
+	|
+
+Inflow IROFDULV1=
+	Effectiveness IROFDU
+	~	1/Year
+	~		|
+
+Inflow IROFDULV2=
+	Outflow IROFDULV1
+	~	1/Year
+	~		|
+
+Inflow IROFDULV3=
+	Outflow IROFDULV2
+	~	1/Year
+	~		|
+
+Inflow IROFRULV1=
+	Effectiveness IROFRU
+	~	1/Year
+	~		|
+
+Inflow IROFRULV2=
+	Outflow IROFRULV1
+	~	1/Year
+	~		|
+
+Inflow IROFRULV3=
+	Outflow IROFRULV2
+	~	1/Year
+	~		|
+
+INIT Average Oil Production=
+	6.537
+	~	Mtoe/Year [0,?]
+	~		|
+
+INIT COPN=
+	0
+	~	Mtoe [0,?]
+	~	Cumulative Oil Resources for 2016
+	|
+
+INIT EIOE=
+	1.25068e+09
+	~	 [0,?]
+	~	Effective Investment in Oil Exploration
+	|
+
+INIT EIOP=
+	1.25068e+08
+	~	 [0,?]
+	~	Effective Investment in Oil Production
+	|
+
+INIT OPI=
+	0.01
+	~	 [0,?]
+	~	Oil Productivity of Investment
+	|
+
+INIT RODU=
+	0.2
+	~	Dmnl [0,1]
+	~	Initial Ratio of Oil Fraction Discoverable to Undiscoverable.
+	|
+
+INIT RORU=
+	0.2
+	~	Dmnl [0,1]
+	~	Initial Ratio of Oil Fraction Recoverable to Unrecoverable.
+	|
+
+INIT UORN=
+	500000
+	~	Mtoe [0,?]
+	~	Initial amount of Undiscovered Oil Resources.
+	|
+
+Investment in Fossil Fuel Exploration and Production Delay Variation=
+	5
+	~	Year
+	~		|
+
+Investment in Oil Discovery Technology=
+	Investment in Oil Technology*Fraction Invested in Oil Discovery Technology
+	~	$/Year
+	~	Total investments in oil exploration technology.
+	|
+
+Investment in Oil Exploration=
+	Desired Investment in Oil Exploration
+	~	$/Year
+	~	Amount of resources dedicated to oil exploration.
+	|
+
+Investment in Oil Exploration and Production Delay Variation=
+	5
+	~	Year
+	~		|
+
+Investment in Oil Exploration Delay=
+	IO Var S+SMOOTH(STEP(Investment in Oil Exploration and Production Delay Variation-IO Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Time delay to make investments in oil exploration effective.
+	|
+
+Investment in Oil Production=
+	Desired Investment in Oil Production
+	~	$/Year
+	~	Amount of resources dedicated to oil production.
+	|
+
+Investment in Oil Production Delay=
+	IO Var S+SMOOTH(STEP(Investment in Oil Exploration and Production Delay Variation-IO Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Time delay to make investments in oil production effective.
+	|
+
+Investment in Oil Recovery Technology=
+	Investment in Oil Technology*(1-Fraction Invested in Oil Discovery Technology)
+	~	$/Year
+	~	Total investments in oil production technology.
+	|
+
+Investment in Oil Technology=
+	Fraction of Oil Revenues Invested in Technology*Oil Revenue
+	~	$/Year
+	~	Investments in development of exploration and production technology.
+	|
+
+IO S=
+	5
+	~	Year
+	~		|
+
+IO Var S=
+	5+SMOOTH(STEP(IO S-5, 2020),1)
+	~	Year
+	~		|
+
+MINOFD=
+	0.02
+	~	Dmnl
+	~	Initial and minimal possible percentage of oil resources to be discovered.
+	|
+
+MINOFR=
+	0.1
+	~	Dmnl
+	~	Initial and minimal possible percentage of oil resources to be recovered.
+	|
+
+Normal Oil Production Ratio=
+	2
+	~	Year [0,?]
+	~	Safety stock coverage as a number of years of the total oil demand the oil \
+		sector would like to maintain in identified oil resources. It secures the \
+		market against possibility of unforeseen variations in demand. It is also \
+		a stimulus for oil exploration.
+	|
+
+ODR S=
+	6
+	~	Year
+	~		|
+
+ODR Var S=
+	6+SMOOTH(STEP(ODR S-6, 2020),1)
+	~	
+	~		|
+
+Oil Cost=
+	Unit Cost of Oil Exploration+Unit Cost of Oil Production
+	~	$/Mtoe
+	~	Cont of unit oil resources as a sum of unit exploration and production \
+		costs.
+	|
+
+Oil Demand to Supply Ratio=
+	Total Oil Demand/Potential Oil Production
+	~	Dmnl
+	~	Oil Demand to Supply Ratio.
+	|
+
+Oil Desired Gross Margin=
+	0.2
+	~	Dmnl
+	~	Desired Gross Margin per unit oil resources.
+	|
+
+Oil Discovery and Recovery Technology Development Time Variation=
+	6
+	~	Year
+	~		|
+
+Oil Discovery Technology Development Time=
+	ODR Var S+SMOOTH(STEP(Oil Discovery and Recovery Technology Development Time Variation\
+		-ODR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Average time required to turn investments into concrete oil discovery \
+		developments.
+	|
+
+Oil Exploration=
+	MAX(0,Oil Exploration Rate)
+	~	Mtoe/Year
+	~	Oil resources discovery rate.
+	|
+
+Oil Exploration Rate=
+	MIN(Desired Oil Exploration Rate,Potential Oil Exploration)
+	~	Mtoe/Year
+	~	Oil Exploration Rate accounting for potential and desired oil exploration \
+		rates.
+	|
+
+Oil Fraction Discoverable=
+	MINOFD+(MAXOFD-MINOFD)*(Ratio of Oil Fraction Discoverable to Undiscoverable/(Ratio of Oil Fraction Discoverable to Undiscoverable\
+		+1))
+	~	Dmnl
+	~	Percentage of oil resources that can be still explored due to current \
+		state of discovery technology.
+	|
+
+Oil Fraction Recoverable=
+	MINOFR+(MAXOFR-MINOFR)*(Ratio of Oil Fraction Recoverable to Unrecoverable/(Ratio of Oil Fraction Recoverable to Unrecoverable\
+		+1))
+	~	Dmnl
+	~	Percentage of oil resources that can be produced due to current state of \
+		recovery technology.
+	|
+
+Oil Gross Margin=
+	(Oil Price-Oil Cost)/Oil Cost
+	~	Dmnl
+	~	Actual oil gross margin.
+	|
+
+Oil Price=
+	Indicated Oil Price*Effect of Oil Demand and Supply on Price
+	~	$/Mtoe
+	~	Actual oil price accounting for indicated oil price and effect of demand \
+		and supply.
+	|
+
+Oil Production=
+	Oil Production Rate
+	~	Mtoe/Year
+	~	Total oil energy production per year. Source of historical data: \
+		International Energy Agency – Key World Energy Statistics 2007; BP \
+		Statistical Review of World Energy June 2008
+	|
+
+Oil Production Coverage=
+	Identified Oil Resources/Average Oil Production
+	~	Year
+	~	Ratio indicating oil coverage in years for discovered resources and at the \
+		current average oil production.
+	|
+
+Oil Production Rate=
+	MIN(Total Oil Demand,Potential Oil Production)
+	~	Mtoe/Year
+	~	Total oil energy production per year due to available resources, \
+		developments in production technology and oil energy demand.
+	|
+
+Oil Productivity of Investment= INTEG (
+	Change in Oil Productivity of Investment,
+		INIT OPI
+		)
+	~	toe/$
+	~	Factor indicating productivity of investments in oil production.
+	|
+
+Oil Recovery Technology Development Time=
+	ODR Var S+SMOOTH(STEP(Oil Discovery and Recovery Technology Development Time Variation\
+		-ODR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Average time required to turn investments into concrete oil recovery \
+		developments.
+	|
+
+Oil Revenue=
+	Oil Price*Average Oil Production
+	~	$/Year
+	~	Total revenue in oil market.
+	|
+
+Oil Shortage=
+	Total Oil Demand-Oil Production
+	~	Mtoe/Year
+	~	Difference between demand and the oil production rate.
+	|
+
+Outflow IROFDULV1=
+	Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV1/Delay Time IROFDU
+	~	1/Year
+	~		|
+
+Outflow IROFDULV2=
+	Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV2/Delay Time IROFDU
+	~	1/Year
+	~		|
+
+Outflow IROFDULV3=
+	Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV3/Delay Time IROFDU
+	~	1/Year
+	~		|
+
+Outflow IROFRULV1=
+	Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV1/Delay Time IROFRU
+	~	1/Year
+	~		|
+
+Outflow IROFRULV2=
+	Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV2/Delay Time IROFRU
+	~	1/Year
+	~		|
+
+Outflow IROFRULV3=
+	Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV3/Delay Time IROFRU
+	~	1/Year
+	~		|
+
+Potential Oil Production=
+	MIN(Potential Oil Production from Investment,Potential Oil Production from Resources\
+		)
+	~	Mtoe/Year
+	~	Potential Oil Production due to available investments in oil resources \
+		recovery and recovery technology.
+	|
+
+Potential Oil Production from Resources=
+	Total Oil Recoverable Resource Remaining/Normal Oil Production Ratio
+	~	Mtoe/Year
+	~	Desired Oil Production rate due to Total Oil Recoverable Resource \
+		Remaining adjusted by oil production safety coverage.
+	|
+
+Productivity of Investment in Oil Exploration=
+	MAX(0,Relative Productivity of Investment in Oil Exploration*Effect of Technology on Oil Discoveries\
+		)
+	~	toe/$
+	~	Parameter indicating the amount of oil resources possible to be explored \
+		per unit investment spent.
+	|
+
+Productivity of Investment in Oil Production=
+	Relative Productivity of Investment in Oil Production Compared to Exploration*Oil Productivity of Investment
+	~	toe/$
+	~	Parameter indicating the amount of oil resources possible to be recovered \
+		per unit investment spent.
+	|
+
+Ratio of Oil Fraction Discoverable to Undiscoverable= INTEG (
+	Increase in Ratio of Oil Fraction Discoverable to Undiscoverable,
+		INIT RODU)
+	~	Dmnl
+	~	Ratio of Oil Fraction Discoverable to Undiscoverable increased due to \
+		investments in discovery technology and their productivity.
+	|
+
+Ratio of Oil Fraction Recoverable to Unrecoverable= INTEG (
+	Increase in Ratio of Oil Fraction Recoverable to Unrecoverable,
+		INIT RORU)
+	~	Dmnl
+	~	Ratio of Oil Fraction Recoverable to Unrecoverable increased due to \
+		investments in recovery technology and their productivity.
+	|
+
+Relative Productivity of Investment in Fossil Fuel Production Compared to Exploration Variation\
+		=
+	10
+	~	Dmnl
+	~		|
+
+Relative Productivity of Investment in Oil Exploration=
+	0.05+STEP(Relative Productivity of Investment in Oil Exploration Variation-0.05, 2020\
+		)
+	~	toe/$
+	~	Relative Productivity of Investment in Oil Exploration without taking into \
+		account remaining undiscovered oil resources and advances in exploration \
+		technologies.
+	|
+
+Relative Productivity of Investment in Oil Exploration Variation=
+	0.05
+	~	toe/$ [0,?]
+	~	Relative Productivity of Investment in Oil Exploration without taking into \
+		account remaining undiscovered oil resources and advances in exploration \
+		technologies.
+	|
+
+Relative Productivity of Investment in Oil Production Compared to Exploration=
+	RPOPE Var S+SMOOTH(STEP(Relative Productivity of Investment in Oil Production Compared to Exploration Variation\
+		-RPOPE Var S, 2020+E Var T
+	),SSP Energy Technology Variation Time)
+	~	Dmnl
+	~	Relative Productivity of Investment in Oil Production as a multiplier of \
+		Productivity of Investment in Oil Exploration.
+	|
+
+Relative Productivity of Investment in Oil Production Compared to Exploration Variation\
+		=
+	10
+	~	Dmnl
+	~		|
+
+Required Identified Oil Resources=
+	(Identified Oil Resources/Total Oil Recoverable Resource Remaining)*(Normal Oil Production Ratio\
+		*Total Oil Demand)
+	~	Mtoe
+	~	The desired Identified Oil Resources level sought by the oil sector.
+	|
+
+RPOPE S=
+	10
+	~	Dmnl
+	~		|
+
+RPOPE Var S=
+	10+SMOOTH(STEP(RPOPE S-10, 2020),1)
+	~	Dmnl
+	~		|
+
+RPPE S=
+	10
+	~	Dmnl [0,?]
+	~		|
+
+RPPE Var S=
+	10+SMOOTH(STEP(RPPE S-10, 2020
+	),1)
+	~	Dmnl
+	~		|
+
+Sensitivity of Fossil Fuel Price to Supply and Demand Variation=
+	2
+	~	Dmnl
+	~		|
+
+Sensitivity of Oil Price to Supply and Demand=
+	SO Var S+SMOOTH(STEP(Sensitivity of Oil Price to Supply and Demand Variation-SO Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time
+	)
+	~	Dmnl
+	~	Sensitivity of Oil Price to Supply and Demand ratio.
+	|
+
+Sensitivity of Oil Price to Supply and Demand Variation=
+	1.4
+	~	Dmnl
+	~		|
+
+SF S=
+	1.4
+	~	Dmnl [0,?]
+	~		|
+
+SF Var S=
+	2+SMOOTH(STEP(SF S-2, 2020),1)
+	~	Dmnl
+	~		|
+
+Share of Investment in Revenue Oil=
+	Total Investment in Oil/Oil Revenue
+	~	Dmnl
+	~		|
+
+Share of Upstream Investment in Total Investment Oil=
+	0.65
+	~	Dmnl
+	~	Data from World Energy
+		Investment 2023
+	|
+
+SO Init=
+	0.095
+	~	Dmnl
+	~	A CONSTANT
+	|
+
+SO S=
+	1.4
+	~	Dmnl
+	~		|
+
+SO Var S=
+	1.4+SMOOTH(STEP(SO S-1.4, 2020),1)
+	~	Dmnl
+	~		|
+
+Table for FIODT(
+	[(0,0)-(1,1)],(0,0.8),(0.2,0.8),(0.4,0.7),(0.6,0.5),(0.8,0.2),(1,0))
+	~	Dmnl
+	~	Table determining order by which technology investments are dedicated to \
+		exploration and production technologies. For small Oil Fraction \
+		Discoverable, in order to make sufficient resources available to be \
+		produced, more investments are directed to exploration technologies. Once \
+		the Oil Fraction Discoverable increases the investments are redirected to \
+		production technologies.
+	|
+
+Time to Average Oil Production=
+	1
+	~	Year
+	~	Time to average total oil production per year.
+	|
+
+Total Investment in Oil=
+	(Investment in Oil Exploration+Investment in Oil Production+Investment in Oil Technology\
+		)/Share of Upstream Investment in Total Investment Oil
+	~	$/Year
+	~		|
+
+Total Oil Discoverable Resources=
+	Total Oil Resources*Oil Fraction Discoverable-Cumulative Additions to Oil Production
+	~	Mtoe
+	~	Total Oil Discoverable Resources as a percentage of Total Oil Resources. \
+		It excludes identified and already produced resources. The percentage is \
+		determined by exploration technology developments.
+	|
+
+Total Oil Recoverable Resource Remaining=
+	Cumulative Additions to Oil Production*Oil Fraction Recoverable-Cumulative Oil Production
+	~	Mtoe
+	~	Total Oil Recoverable Resources Remaining as a percentage of Cumulative \
+		Additions to Oil Production. It already produced resources. The percentage \
+		is determined by production technology developments.
+	|
+
+Total Oil Resources=
+	Undiscovered Oil Resources+Cumulative Additions to Oil Production
+	~	Mtoe
+	~	Total oil resources including Undiscovered Oil Resources, Identified Oil \
+		Resources and resources already produced i.e. Cumulative Oil Production.
+	|
+
+URO S=
+	5e+09
+	~	Barrel/Year [0,?]
+	~		|
+
+URO Var S=
+	5e+09+SMOOTH(STEP(URO S-5e+09, 2020),1)
+	~	Barrel/Year
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+CO2 Intensity of Fuels[Coal]=
+	220*(0.000453592/0.025)*1e+06 ~~|
+CO2 Intensity of Fuels[Gas]=
+	117*(0.000453592/0.025)*1e+06 ~~|
+CO2 Intensity of Fuels[Oil]=
+	160*(0.000453592/0.025)*1e+06
+	~	tCO2/Mtoe
+	~	Coal: 220 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		Gas: 117 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		Oil: 160 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		
+		Data from EIA: https://www.eia.gov/tools/faqs/faq.php?id=73&t=11
+	|
+
+Max Unit Cost of Fossil Fuel Exploration Variation=
+	1e+09
+	~	$/Mtoe [0,?]
+	~		|
+
+SSP Energy Demand Variation Time=
+	5
+	~	Year
+	~		|
+
+SSP Energy Technology Variation Time=
+	5
+	~	Year
+	~		|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+MAXOFD=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of oil resources to be discovered.
+	|
+
+MAXOFR=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of oil resources to be recovered.
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Climate Policy Scenario=
+	0
+	~	Dmnl
+	~	0: No climate policy
+		1: Climate policy
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+SSP Energy Production Variation Time=
+	5
+	~	Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_Oil
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,38,0
+10,1,Identified Oil Resources,1348,507,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Cumulative Oil Production,1810,507,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(1673,505)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(1493,505)|
+11,5,0,1587,505,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Oil Production,1587,522,51,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,7,Potential Oil Production,1808,258,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,Cumulative Additions to Oil Production,2054,886,56,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,9,Oil Production Rate,1586,346,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,10,7,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,11,9,5,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,12,Potential Oil Production from Resources,2054,475,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,13,Normal Oil Production Ratio,1831,602,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,14,13,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,15,12,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,16,Potential Oil Production from Investment,1808,196,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,17,16,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,18,Productivity of Investment in Oil Production,1609,45,59,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,19,Effective Investment in Oil Production,1667,193,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,20,18,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,21,19,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,22,Investment in Oil Production Delay,1540,110,63,18,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,23,Desired Investment in Oil Production,1339,46,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,24,18,23,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,25,12,23,1,0,0,0,0,64,0,-1--1--1,,1|(1689,-101)|
+10,26,Oil Shortage,1470,378,46,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,27,Undiscovered Oil Resources,758,505,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,28,30,1,4,0,0,22,0,0,0,-1--1--1,,1|(1204,505)|
+1,29,30,27,100,0,0,22,0,0,0,-1--1--1,,1|(961,505)|
+11,30,0,1112,505,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,31,Oil Exploration,1112,527,53,10,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,32,INIT UORN,693,428,40,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,Total Oil Resources,2057,1071,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Total Oil Recoverable Resource Remaining,2054,719,79,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,35,8,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,36,34,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,37,8,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,38,Undiscovered Oil Resources,1845,1072,68,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,39,38,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,40,Total Oil Discoverable Resources,2214,970,49,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,41,33,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,42,8,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,43,Effect of Technology on Oil Discoveries,1486,1121,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,44,Effective Investment in Oil Exploration,1003,851,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,45,Investment in Oil Exploration Delay,1020,941,65,18,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,46,Potential Oil Exploration,889,779,45,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,47,44,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,48,43,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,49,Investment in Oil Exploration,1216,790,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,50,49,198,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,51,46,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,52,Desired Investment in Oil Exploration,1349,863,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,53,Oil Fraction Discoverable,2399,970,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,54,Oil Fraction Recoverable,2378,719,47,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,55,MINOFD,2486,1028,33,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,56,MAXOFD,2486,919,37,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,57,Ratio of Oil Fraction Discoverable to Undiscoverable,2584,970,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,58,55,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,59,56,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,60,57,53,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,61,48,2821,969,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,62,64,57,4,0,0,22,0,0,0,-1--1--1,,1|(2685,969)|
+1,63,64,61,100,0,0,22,0,0,0,-1--1--1,,1|(2776,969)|
+11,64,0,2735,969,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,65,Increase in Ratio of Oil Fraction Discoverable to Undiscoverable,2735,1001,90,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,66,INIT RODU,2584,1023,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,67,Investment in Oil Discovery Technology,3129,1031,80,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,68,Oil Discovery Technology Development Time,3002,1095,69,27,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,69,MINOFR,2486,781,32,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,MAXOFR,2486,654,36,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,71,Ratio of Oil Fraction Recoverable to Unrecoverable,2576,718,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,72,48,2813,714,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,73,75,71,4,0,0,22,0,0,0,-1--1--1,,1|(2677,714)|
+1,74,75,72,100,0,0,22,0,0,0,-1--1--1,,1|(2768,714)|
+11,75,0,2727,714,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,76,Increase in Ratio of Oil Fraction Recoverable to Unrecoverable,2727,746,87,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,77,INIT RORU,2576,768,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,78,Investment in Oil Recovery Technology,2984,774,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,Oil Recovery Technology Development Time,2980,849,69,27,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,80,69,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,81,70,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,82,71,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,83,Investment in Oil Technology,3261,858,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,84,Fraction Invested in Oil Discovery Technology,3273,1113,83,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,85,83,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,86,84,67,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,87,83,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,88,84,78,1,0,0,0,0,64,0,-1--1--1,,1|(3209,915)|
+1,89,53,84,1,0,0,0,0,64,0,-1--1--1,,1|(2766,1251)|
+10,90,Table for FIODT,3292,1191,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,91,90,84,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,92,Oil Revenue,2543,399,44,10,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,93,Fraction of Oil Revenues Invested in Technology,3383,918,77,27,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,94,Average Oil Production,1186,399,48,26,3,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,95,Oil Price,2542,295,32,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,96,95,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,97,INIT COPN,1811,435,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,98,Productivity of Investment in Oil Exploration,781,1130,59,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,99,98,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,100,Relative Productivity of Investment in Oil Exploration,959,1197,83,27,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,101,Oil Production Coverage,1060,453,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,102,5,26,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,103,1,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,104,Unit Cost of Oil Exploration,1189,929,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,105,98,104,1,0,0,0,0,64,0,-1--1--1,,1|(1017,1055)|
+10,106,Productivity of Investment in Oil Exploration,2048,0,59,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,107,Oil Production Coverage,2163,60,57,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,108,Unit Cost of Oil Production,1610,-37,55,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,109,18,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,110,Oil Exploration Rate,1112,673,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,111,110,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,112,Required Identified Oil Resources,1445,602,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,113,1,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,114,13,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,115,Adjustment for Identified Oil Resource,1348,671,53,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,116,Identified Oil Resources Adjustment Time,1259,591,61,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,1,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,118,112,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,119,116,115,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,120,Desired Oil Exploration Rate,1348,776,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,121,120,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,115,120,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,123,6,120,1,0,0,0,0,64,0,-1--1--1,,1|(1564,700)|
+1,124,120,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,125,104,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,126,Oil Cost,2542,131,30,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,127,Unit Cost of Oil Exploration,2457,45,60,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,128,Unit Cost of Oil Production,2632,45,60,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,129,127,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,130,128,126,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,131,Indicated Oil Price,2457,209,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,132,126,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,133,Oil Desired Gross Margin,2374,131,50,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,134,133,131,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,135,Relative Productivity of Investment in Oil Production Compared to Exploration,1867,43,100,27,8,131,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,136,Effect of Oil Demand and Supply on Price,2819,295,76,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,137,131,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,138,136,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,139,Potential Oil Production,2987,330,49,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,140,Sensitivity of Oil Price to Supply and Demand,2819,208,83,18,8,3,16,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,139,136,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,142,Oil Demand to Supply Ratio,3144,294,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,143,139,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,144,Oil Gross Margin,2632,209,35,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,145,95,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,146,126,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,147,Total Oil Demand,1339,258,32,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,148,147,23,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,149,147,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,150,147,26,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,151,Total Oil Demand,2987,259,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,152,151,136,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,153,151,142,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,154,52,49,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,155,Total Oil Demand,1508,547,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,156,155,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,157,Oil Revenue,3310,780,53,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,158,157,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,159,Time to Average Oil Production,1320,340,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,160,159,192,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,161,Identified Oil Resources,1831,886,50,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,162,Cumulative Oil Production,1831,719,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,163,161,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,164,162,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,165,162,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,166,Total Oil Discoverable Resources,1670,1050,49,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,167,166,43,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,168,Total Oil Recoverable Resource Remaining,1494,668,83,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,169,168,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,170,53,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,171,54,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Investment in Oil Production,1415,136,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,173,23,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,174,172,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,175,Average Oil Production,2693,347,48,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,176,175,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,177,5,193,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,178,94,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,179,INIT UORN,1655,1136,49,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,180,54,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,181,2,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,182,13,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,183,97,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,184,66,57,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,185,77,71,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,186,147,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,187,Oil Price per Barrel,2334,297,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,188,95,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,189,48,1390,394,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,190,192,94,4,0,0,22,0,0,0,-1--1--1,,1|(1273,394)|
+1,191,192,189,100,0,0,22,0,0,0,-1--1--1,,1|(1352,394)|
+11,192,0,1319,394,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,193,Change in Average Oil Production,1319,418,71,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,194,94,193,1,0,0,0,0,64,0,-1--1--1,,1|(1252,443)|
+12,195,48,1223,844,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,196,197,195,100,0,0,22,0,0,0,-1--1--1,,1|(1182,844)|
+11,197,0,1146,844,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,198,Change in Effective Investment in Oil Exploration,1146,876,71,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,199,44,197,1,0,0,0,0,64,0,-1--1--1,,1|(1047,801)|
+1,200,197,44,4,0,0,22,0,0,0,-1--1--1,,1|(1100,844)|
+12,201,48,1453,192,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,202,204,19,4,0,0,22,0,0,0,-1--1--1,,1|(1576,192)|
+1,203,204,201,100,0,0,22,0,0,0,-1--1--1,,1|(1496,192)|
+11,204,0,1536,192,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,205,Change in Effective Investment in Oil Production,1536,224,71,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,206,19,205,1,0,0,0,0,64,0,-1--1--1,,1|(1628,244)|
+10,207,Oil Productivity of Investment,1909,116,47,27,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,208,48,2083,117,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,209,211,207,4,0,0,22,0,0,0,-1--1--1,,1|(1985,117)|
+1,210,211,208,100,0,0,22,0,0,0,-1--1--1,,1|(2049,117)|
+11,211,0,2020,117,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,212,Change in Oil Productivity of Investment,2020,149,52,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,213,107,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,214,106,211,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,215,207,212,1,0,0,0,0,64,0,-1--1--1,,1|(1922,156)|
+1,216,207,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,217,Max Unit Cost of Oil Exploration,1366,929,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,218,217,104,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,219,Effectiveness of Investment in Oil Recovery Technology,2641,836,78,27,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,220,Effectiveness of Investment in Oil Discovery Technology,2626,1112,80,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,221,Oil Production Indicator,1670,677,52,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,222,6,221,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,223,Investment in Fossil Fuel Exploration and Production Delay Variation,771,1467,98,27,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,224,Investment in Fossil Fuel Exploration and Production Delay Variation,803,122,98,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,225,Max Unit Cost of Fossil Fuel Exploration Variation,1510,903,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,226,225,217,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,227,Relative Productivity of Investment in Fossil Fuel Production Compared to Exploration Variation,2164,-364,90,36,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,228,Fossil Fuel Discovery and Recovery Technology Development Time Variation,3394,1538,104,27,8,131,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,229,Sensitivity of Fossil Fuel Price to Supply and Demand Variation,2919,-145,88,27,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,230,Relative Productivity of Investment in Oil Exploration Variation,1267,1203,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,231,230,100,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,232,Fraction of Oil Revenues Invested in Technology Variation,3393,1034,90,27,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,233,232,93,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,234,Effectiveness of Investment in Oil Recovery Technology Variation,2392,871,98,27,8,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,235,Effectiveness of Investment in Oil Discovery Technology Variation,2397,1117,98,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,236,234,219,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,237,235,220,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,238,INIT Average Oil Production,1031,375,59,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,239,238,94,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,240,INIT EIOE,1028,758,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,241,240,44,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,242,INIT EIOP,1644,268,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,243,242,19,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,244,INIT OPI,1905,216,30,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,245,244,207,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,246,Annual Change in Oil Reserves Variation,670,807,77,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,247,SSP Energy Technology Variation Time,1415,-69,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,248,247,22,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,249,SSP Energy Technology Variation Time,834,913,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,250,249,45,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,251,SSP Energy Technology Variation Time,3078,1155,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,252,251,68,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,253,SSP Energy Technology Variation Time,2879,898,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,254,253,79,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,255,SSP Energy Technology Variation Time,3464,982,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,256,255,93,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,257,SSP Energy Technology Variation Time,1954,-14,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,258,257,135,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,259,SSP Energy Demand Variation Time,2707,251,67,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,260,259,140,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,261,SSP Energy Production Variation Time,1471,967,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,262,261,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,263,SSP Energy Technology Variation Time,2551,896,77,27,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,264,263,219,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,265,SF Var S,3064,-147,35,10,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,266,SF S,3144,-117,20,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,267,E Var T,2719,162,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,268,266,265,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,269,267,140,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,270,E Var T,1800,-4,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,271,270,135,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,272,RPPE Var S,2042,-320,46,10,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,273,RPPE S,1991,-371,32,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,274,273,272,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,275,E Var T,2638,891,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,276,275,219,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,277,EIOR Var S,2458,823,43,10,8,3,16,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,278,EIOR S,2359,804,28,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,279,278,277,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,280,277,219,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,281,FDR Var S,3209,1571,41,10,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,282,FDR S,3179,1635,26,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,283,282,281,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,284,E Var T,2978,952,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,285,284,79,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,286,284,68,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,287,E Var T,3521,892,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,288,FO Var S,3439,849,35,10,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,289,FO S,3466,809,21,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,290,289,288,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,291,288,93,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,292,287,93,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,293,E Var T,983,900,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,294,IF S,722,1410,16,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,295,IF Var S,783,1398,31,10,8,3,16,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,296,294,295,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,297,293,45,0,16,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,298,E Var T,1581,154,38,10,8,2,16,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,299,298,22,0,16,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,300,E Var T,1308,957,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,301,300,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,302,48,761,670,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,303,305,27,4,0,0,22,0,0,0,-1--1--1,,1|(761,567)|
+1,304,305,302,100,0,0,22,0,0,0,-1--1--1,,1|(761,634)|
+11,305,0,761,601,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,306,Rate of New Discovery Oil,813,601,49,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,307,URO S,577,723,27,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,308,URO Var S,665,747,41,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,309,Annual Change in Oil Reserves,856,686,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,310,307,308,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,311,309,306,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,312,E Var T,931,598,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,313,SSP Energy Production Variation Time,961,655,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,314,308,309,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,315,246,309,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,316,313,309,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,317,312,309,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,318,CO2 Intensity of Fuels,1514,-163,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,319,Climate Policy Scenario,1708,-165,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,320,319,108,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,321,318,108,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,322,Total Investment in Oil,3315,449,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,323,Investment in Oil Exploration,3439,368,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,324,Investment in Oil Production,3422,456,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,325,Investment in Oil Technology,3344,513,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,326,325,322,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,327,324,322,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,328,323,322,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,329,Share of Investment in Revenue Oil,3158,402,72,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,330,92,329,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,331,322,329,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,332,Share of Upstream Investment in Total Investment Oil,3158,504,69,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,333,0,3906,686,311,222,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Oil Production,Graph
+1,334,332,322,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+12,335,0,3908,164,309,279,8,15,0,32,1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Graph_for_oil_price
+12,336,0,3908,1182,310,242,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Total Investment in Oil,Graph
+10,337,SO Init,2881,370,24,11,3,3,0,39,-1,0,0,0,9-81-45,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+1,338,337,136,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,339,Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV3,2472,1256,114,20,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,340,Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV2,2475,1350,113,20,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,341,Increase in Ratio of Oil Fraction Discoverable to Undiscoverable LV1,2475,1444,115,18,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,342,48,2244,1257,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,343,345,342,100,16,0,22,0,192,0,-1--1--1,,1|(2277,1257)|
+1,344,345,339,4,16,0,22,0,192,0,-1--1--1,,1|(2335,1257)|
+11,345,0,2306,1257,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,346,Inflow IROFDULV3,2306,1281,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,347,48,2698,1256,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,348,350,339,100,16,0,22,0,192,0,-1--1--1,,1|(2608,1256)|
+1,349,350,347,4,16,0,22,0,192,0,-1--1--1,,1|(2665,1256)|
+11,350,0,2637,1256,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,351,Outflow IROFDULV3,2637,1280,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,352,48,2244,1348,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,353,355,352,100,16,0,22,0,192,0,-1--1--1,,1|(2278,1348)|
+1,354,355,340,4,16,0,22,0,192,0,-1--1--1,,1|(2338,1348)|
+11,355,0,2308,1348,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,356,Inflow IROFDULV2,2308,1372,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,357,48,2710,1350,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,358,360,340,100,16,0,22,0,192,0,-1--1--1,,1|(2613,1350)|
+1,359,360,357,4,16,0,22,0,192,0,-1--1--1,,1|(2675,1350)|
+11,360,0,2644,1350,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,361,Outflow IROFDULV2,2644,1374,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,362,48,2249,1445,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,363,365,362,100,16,0,22,0,192,0,-1--1--1,,1|(2281,1445)|
+1,364,365,341,4,16,0,22,0,192,0,-1--1--1,,1|(2337,1445)|
+11,365,0,2309,1445,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,366,Inflow IROFDULV1,2309,1469,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,367,48,2715,1444,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,368,370,341,100,16,0,22,0,192,0,-1--1--1,,1|(2615,1444)|
+1,369,370,367,4,16,0,22,0,192,0,-1--1--1,,1|(2679,1444)|
+11,370,0,2647,1444,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,371,Outflow IROFDULV1,2647,1468,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,372,Effectiveness IROFDU,2115,1355,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,373,Delay Time IROFDU,2835,1346,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,374,372,366,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,375,372,339,1,16,0,0,0,192,1,-1--1--1,,1|(2240,1221)|
+1,376,373,351,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,377,373,361,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,378,373,371,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,379,373,339,1,16,0,0,0,192,1,-1--1--1,,1|(2541,1204)|
+1,380,371,356,1,16,0,0,0,192,0,-1--1--1,,1|(2530,1400)|
+1,381,341,371,1,16,0,0,0,192,0,-1--1--1,,1|(2533,1488)|
+1,382,340,361,1,16,0,0,0,192,0,-1--1--1,,1|(2593,1384)|
+1,383,361,346,1,16,0,0,0,192,0,-1--1--1,,1|(2535,1301)|
+1,384,339,341,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,385,339,340,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,386,339,351,1,16,0,0,0,192,0,-1--1--1,,1|(2577,1299)|
+1,387,68,373,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,388,351,65,1,16,0,0,0,192,0,-1--1--1,,1|(2740,1095)|
+10,389,Investment in Oil Discovery Technology,1923,1303,64,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,390,Effectiveness of Investment in Oil Discovery Technology,1937,1407,85,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,391,389,372,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,392,390,372,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,393,Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV1,2769,456,115,17,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,394,Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV2,2770,531,112,17,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,395,Increase in Ratio of Oil Fraction Recoverable to Unrecoverable LV3,2774,608,113,18,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,396,48,3008,454,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,397,399,396,100,16,0,22,0,192,0,-1--1--1,,1|(2976,454)|
+1,398,399,393,4,16,0,22,0,192,0,-1--1--1,,1|(2913,454)|
+11,399,0,2949,454,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,400,Inflow IROFRULV1,2949,478,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,401,48,2543,456,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,402,404,393,100,16,0,22,0,192,0,-1--1--1,,1|(2631,456)|
+1,403,404,401,4,16,0,22,0,192,0,-1--1--1,,1|(2575,456)|
+11,404,0,2603,456,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,405,Outflow IROFRULV1,2603,480,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,406,48,3010,537,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,407,409,406,100,16,0,22,0,192,0,-1--1--1,,1|(2973,537)|
+1,408,409,394,4,16,0,22,0,192,0,-1--1--1,,1|(2908,537)|
+11,409,0,2941,537,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,410,Inflow IROFRULV2,2941,561,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,411,48,2538,531,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,412,414,394,100,16,0,22,0,192,0,-1--1--1,,1|(2633,531)|
+1,413,414,411,4,16,0,22,0,192,0,-1--1--1,,1|(2572,531)|
+11,414,0,2603,531,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,415,Outflow IROFRULV2,2603,555,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,416,48,3018,608,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,417,419,416,100,16,0,22,0,192,0,-1--1--1,,1|(2980,608)|
+1,418,419,395,4,16,0,22,0,192,0,-1--1--1,,1|(2914,608)|
+11,419,0,2947,608,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,420,Inflow IROFRULV3,2947,632,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,421,48,2523,607,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,422,424,395,100,16,0,22,0,192,0,-1--1--1,,1|(2635,607)|
+1,423,424,421,4,16,0,22,0,192,0,-1--1--1,,1|(2565,607)|
+11,424,0,2603,607,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,425,Outflow IROFRULV3,2603,631,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,426,Effectiveness IROFRU,3145,604,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,427,Delay Time IROFRU,2416,536,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,428,426,400,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,429,426,395,1,16,0,0,0,192,1,-1--1--1,,1|(3020,681)|
+1,430,405,410,1,16,0,0,0,192,0,-1--1--1,,1|(2753,483)|
+1,431,415,420,1,16,0,0,0,192,0,-1--1--1,,1|(2774,569)|
+1,432,393,405,1,16,0,0,0,192,0,-1--1--1,,1|(2688,416)|
+1,433,394,415,1,16,0,0,0,192,0,-1--1--1,,1|(2685,487)|
+1,434,395,425,1,16,0,0,0,192,0,-1--1--1,,1|(2697,568)|
+1,435,427,405,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,436,427,415,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,437,427,425,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,438,427,395,1,16,0,0,0,192,1,-1--1--1,,1|(2631,668)|
+1,439,395,394,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,440,395,393,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+10,441,Investment in Oil Recovery Technology,3319,620,83,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,442,Effectiveness of Investment in Oil Recovery Technology,3204,689,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,443,441,426,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,444,442,426,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,445,Oil Recovery Technology Development Time,2269,592,74,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,446,445,427,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,447,425,76,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,448,100,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,449,45,198,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,450,22,205,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,451,135,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,452,Sensitivity of Oil Price to Supply and Demand Variation,2814,101,89,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,453,SO S,2988,86,21,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,454,SO Var S,2916,144,36,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,455,453,454,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,456,454,140,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,457,452,140,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,458,140,136,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,459,93,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,460,Oil Discovery and Recovery Technology Development Time Variation,3088,940,100,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,461,ODR Var S,2910,984,42,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,462,ODR S,2866,1053,27,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,463,462,461,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,464,461,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,465,460,68,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,466,461,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,467,460,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,468,Investment in Oil Exploration and Production Delay Variation,981,1010,98,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,469,IO Var S,909,977,32,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,470,IO S,848,1015,17,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,471,470,469,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,472,468,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,473,469,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,474,469,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,475,Investment in Oil Exploration and Production Delay Variation,1700,121,98,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,476,475,22,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,477,Relative Productivity of Investment in Oil Production Compared to Exploration Variation,1926,-96,100,36,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,478,RPOPE S,1806,-99,38,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,479,RPOPE Var S,1823,-38,52,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,480,478,479,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,481,477,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,482,479,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,483,179,43,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,484,MFC Var S,1366,1004,51,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,485,484,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,486,Energy Demand,1133,258,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,487,486,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,488,Market Share Oil,1166,150,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,489,488,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,490,Carbon Price,1606,-190,58,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,491,490,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,492,Mtoe per Barrel,2336,375,38,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,493,492,187,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,494,Mtoe per Barrel,627,544,38,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,495,494,306,1,0,0,0,0,64,0,-1--1--1,,1|(701,590)|
+1,496,32,27,0,0,0,0,0,192,1,-1--1--1,,1|(0,0)|
+10,497,toe per Mtoe,883,914,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,498,497,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,499,497,104,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,500,toe per Mtoe,1743,-5,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,501,500,23,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,502,500,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,503,500,108,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,504,Mtoe into EJ,1670,765,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,505,504,221,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Mtoe into EJ
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:38,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

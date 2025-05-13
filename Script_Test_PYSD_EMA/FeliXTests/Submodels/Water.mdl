@@ -1,0 +1,2496 @@
+{UTF-8}
+********************************************************
+	.water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Agricultural Water Demand=
+	(Average Agricultural Water Use per m2 Irrigated*Irrigated Agriculture Land/Sqr m to ha\
+		)+(Average Agricultural Water Use per m2 Rainfed
+	*Rainfed Agriculture Land/Sqr m to ha)
+	~	m*m*m/Year
+	~	Total water demand for agricultural purposes. Source of Historical Data:
+		International Hydrological Programme (IHP) of UNESCO, data by Shiklomanov, I.A \
+		Dynamics of water use in the world (total) over the kinds of economic \
+		activities
+		http://webworld.unesco.org/water/ihp/db/shiklomanov/
+	|
+
+MAX Industrial Water Use=
+	Variable10 Industrial Water
+	~	m*m*m/Year
+	~	Max level of average industrial water use.
+	|
+
+Average Agricultural Water Use per m2 Irrigated=
+	MIN Agricultural Water Use Irrigated+(MAX Agricultural Water Use Irrigated-MIN Agricultural Water Use Irrigated\
+		)*(
+	Smoothed GWP per Capita
+	/(Smoothed GWP per Capita+Reference GWP per Capita for Agricultural Water Use Irrigated\
+		))
+	~	m*m*m/(Year*m*m)
+	~	Nonlinear relation that describes average agricultural water use on \
+		irrigated part of agricultural land as dependent on the population wealth \
+		represented by GWP per capita. Scaled between minimal and maximal level.
+	|
+
+Average Agricultural Water Use per m2 Rainfed=
+	MIN Agricultural Water Use Rainfed+(MAX Agricultural Water Use Rainfed-MIN Agricultural Water Use Rainfed\
+		)*(Smoothed GWP per Capita
+	/(Smoothed GWP per Capita+Reference GWP per Capita for Agricultural Water Use Rainfed\
+		))
+	~	m*m*m/(Year*m*m)
+	~	Nonlinear relation that describes average agricultural water use on \
+		rainfed part of agricultural land as dependent on the population wealth \
+		represented by GWP per capita. Scaled between minimal and maximal level.
+	|
+
+Average Domestic Water Use per Capita=
+	MIN Domestic Water Use per Capita+(MAX Domestic Water Use per Capita-MIN Domestic Water Use per Capita\
+		)*(Smoothed GWP per Capita
+	/(Smoothed GWP per Capita+Reference GWP per Capita for Domestic Water Use))
+	~	m*m*m/(Year*People)
+	~	Nonlinear relation that describes average domestic water use per capita as \
+		dependent on the population wealth represented by GWP per capita. Scaled \
+		between minimal and maximal level.
+	|
+
+Average Industrial Water Use=
+	MIN Industrial Water Use+(MAX Industrial Water Use-MIN Industrial Water Use)*(Smoothed GWP per Capita\
+		/(Smoothed GWP per Capita
+	+Reference GWP per Capita for Industrial Water Use
+	))
+	~	m*m*m/Year
+	~	Nonlinear relation that describes average industrial water use as \
+		dependent on the population wealth represented by GWP per capita. Scaled \
+		between minimal and maximal level.
+	|
+
+Average Used Water Recovery Fraction=
+	Variable12 Water Recovery
+	~	1/Year
+	~	Factor determining the percentage of consumed water resources that can be \
+		recovered.
+	|
+
+Impact of Climate Damage on Reliable Water Supply=
+	Climate Damage Fraction OLD
+	~	Dmnl
+	~	A parameter that determines the impact of climate risk on water resources \
+		or infrastructure availability to provide reliable water supply.
+	|
+
+MAX Domestic Water Use per Capita=
+	Variable11 Domestic Water
+	~	m*m*m/(Year*People)
+	~	Max level of average domestic water use per capita.
+	|
+
+Domestic Water Demand=
+	Smoothed Total Population*Average Domestic Water Use per Capita
+	~	m*m*m/Year
+	~	Total water demand for domestic purposes. Source of Historical Data:
+		International Hydrological Programme (IHP) of UNESCO, data by Shiklomanov, I.A – \
+		Dynamics of water use in the world (total) over the kinds of economic \
+		activities
+		http://webworld.unesco.org/water/ihp/db/shiklomanov/
+	|
+
+Rainfed Agriculture Land=
+	Agricultural Land*(1-Percent of Irrigated Land/100)
+	~	ha
+	~	Area of agricultural land on which the supply of water is only due to rain.
+	|
+
+Irrigated Agriculture Land=
+	Agricultural Land*Percent of Irrigated Land/100
+	~	ha
+	~	Area of agricultural land on which the supply of water is only due to \
+		irrigation. Source of Historical Data: Gleick,P.H., et al. The World's \
+		Water Volume 7: The Biennial Report on Freshwater Resources. Washington: \
+		Island Press, 2012.
+	|
+
+Percent of Irrigated Land=
+	MIN Percent of Irrigated Land+(MAX Percent of Irrigated Land-MIN Percent of Irrigated Land\
+		)*(Smoothed GWP per Capita/(Smoothed GWP per Capita
+	+Reference GWP per Capita for Land Irrigation))
+	~	Dmnl
+	~	Nonlinear relation that determines the area of irrigated land as \
+		percentage of total agricultural land as dependent on the population \
+		wealth represented by GWP per capita. Scaled between minimal and maximal \
+		percentage.
+	|
+
+Additional Change in Reliable Water Supply=
+	1
+	~	Dmnl
+	~	A parameter that enables testing additional changes in reliable water \
+		supply independently from changes due to climate risk.
+	|
+
+Agricultural Water Withdrawal Fulfillment Factor=
+	3.5
+	~	Dmnl
+	~	A factor determining the strength of infrastructure operating limits on \
+		agricultural water withdrawal fulfillment.
+	|
+
+Agricultural Water Withdrawal Fulfillment Rate=
+	(2/(1+EXP(-Agricultural Water Withdrawal Fulfillment Factor*(Max Water Withdrawal Rate\
+		/Agricultural Water Demand)))-1)
+	~	Dmnl
+	~	Nonlinear relation that describes agricultural water withdrawal \
+		fulfillment as a relation of max water withdrawal and demand. With growing \
+		agricultural water demand the withdrawal fulfillment might be impaired \
+		which relates to infrastructure design and its operating limits.
+	|
+
+Agricultural Water Withdrawal Rate=
+	Agricultural Water Demand*Agricultural Water Withdrawal Fulfillment Rate * (1-Extreme Drought\
+		)
+	~	m*m*m/Year
+	~	Water withdrawal rate for agricultural purposes.
+	|
+
+Agricultural Water Withdrawal Rate no Drought=
+	Agricultural Water Demand*Agricultural Water Withdrawal Fulfillment Rate
+	~	m*m*m/Year
+	~	Drought scenario variable. Accounts for Agricultural Water Withdrawal Rate \
+		in no drought case.
+	|
+
+Available Water Resources= INTEG (
+	Recovery of Used Water Resources Rate+Water Supply Rate-Agricultural Water Withdrawal Rate\
+		-Domestic Water Withdrawal Rate-Industrial Water Withdrawal Rate-Drought Out,
+		Desired Available Water Resources)
+	~	m*m*m
+	~	Available water resources to be used for domestic, agricultural and \
+		industrial use.
+	|
+
+Available Water Resources Adjustment=
+	(Desired Available Water Resources-Available Water Resources)/Available Water Resources Adjustment Time
+	~	m*m*m/Year
+	~	Adjustment of available water resources to desired available water \
+		resources.
+	|
+
+Available Water Resources Adjustment Time=
+	1
+	~	Year
+	~	Time required to adjust available water resources to desired water \
+		resources.
+	|
+
+Desired Available Water Resources=
+	Total Water Demand*(Min Water Withdrawal Time+Water Safety Stock Coverage)
+	~	m*m*m
+	~	Total desired available water resources including demand from industrial, \
+		agricultural and domestic sectors as well as safety coverage.
+	|
+
+Desired Water Supply Rate=
+	MAX(0,Water Consumption Adjustment+Available Water Resources Adjustment)
+	~	m*m*m/Year
+	~	Desired water supply including constant water consumption and available \
+		water resources adjustment.
+	|
+
+Domestic Water Withdrawal Fulfillment Factor=
+	0.8
+	~	Dmnl
+	~	A factor determining the strength of infrastructure operating limits on \
+		domestic water withdrawal fulfillment.
+	|
+
+Domestic Water Withdrawal Fulfillment Rate=
+	(2/(1+EXP(-Domestic Water Withdrawal Fulfillment Factor*(Max Water Withdrawal Rate/Domestic Water Demand\
+		)))-1)
+	~	Dmnl
+	~	Nonlinear relation that describes domestic water withdrawal fulfillment as \
+		a relation of max water withdrawal and demand. With growing domestic water \
+		demand the withdrawal fulfillment might be impaired which relates to \
+		infrastructure design and its operating limits.
+	|
+
+Domestic Water Withdrawal Rate=
+	Domestic Water Demand*Domestic Water Withdrawal Fulfillment Rate
+	~	m*m*m/Year
+	~	Water withdrawal rate for domestic purposes.
+	|
+
+Drought Out=
+	Agricultural Water Withdrawal Rate no Drought-Agricultural Water Withdrawal Rate
+	~	m*m*m/Year
+	~	Water resources decrease rate due to drought.
+	|
+
+Extreme Drought=
+	0
+	~	Dmnl
+	~	Drought scenario trigger.
+	|
+
+Industrial Water Demand=
+	Average Industrial Water Use
+	~	m*m*m/Year
+	~	Total water demand for industrial purposes. Source of Historical Data:
+		International Hydrological Programme (IHP) of UNESCO, data by Shiklomanov, I.A – \
+		Dynamics of water use in the world (total) over the kinds of economic \
+		activities
+		http://webworld.unesco.org/water/ihp/db/shiklomanov/
+	|
+
+Industrial Water Withdrawal Fulfillment Factor=
+	2
+	~	Dmnl
+	~	A factor determining the strength of infrastructure operating limits on \
+		industrial water withdrawal fulfillment.
+	|
+
+Industrial Water Withdrawal Fulfillment Rate=
+	(2/(1+EXP(-Industrial Water Withdrawal Fulfillment Factor*(Max Water Withdrawal Rate\
+		/Industrial Water Demand)))-1)
+	~	Dmnl
+	~	Nonlinear relation that describes industrial water withdrawal fulfillment \
+		as a relation of max water withdrawal and demand. With growing industrial \
+		water demand the withdrawal fulfillment might be impaired which relates to \
+		infrastructure design and its operating limits.
+	|
+
+Industrial Water Withdrawal Rate=
+	Industrial Water Demand*Industrial Water Withdrawal Fulfillment Rate
+	~	m*m*m/Year
+	~	Water withdrawal rate for industrial purposes.
+	|
+
+INIT Reliable Water Supply=
+	4.2e+12
+	~	m*m*m/Year
+	~	Amount of water that can be reliably provided on annual basis for \
+		domestic, agricultural and industrial use due to resources and \
+		infrastructure availability for year 1900.
+	|
+
+MAX Agricultural Water Use Irrigated=
+	0.05
+	~	m*m*m/(Year*m*m)
+	~	Max level of average agricultural water use on part of agricultural land \
+		that is irrigated.
+	|
+
+MAX Agricultural Water Use Rainfed=
+	0.1
+	~	m*m*m/(Year*m*m)
+	~	Max level of average agricultural water use on part of agricultural land \
+		that is rainfed.
+	|
+
+MAX Percent of Irrigated Land=
+	100
+	~	Dmnl
+	~	Max percentage of total agricultural land that can be eventually irrigated.
+	|
+
+Max Water Withdrawal Rate=
+	Available Water Resources/Min Water Withdrawal Time
+	~	m*m*m/Year
+	~	Max possible water withdrawal rate due to available water resources.
+	|
+
+MIN Agricultural Water Use Irrigated=
+	0.005
+	~	m*m*m/(Year*m*m)
+	~	Min level of average agricultural water use on part of agricultural land \
+		that is irrigated.
+	|
+
+MIN Agricultural Water Use Rainfed=
+	0.005
+	~	m*m*m/(Year*m*m)
+	~	Min level of average agricultural water use on part of agricultural land \
+		that is rainfed.
+	|
+
+MIN Domestic Water Use per Capita=
+	5
+	~	m*m*m/(Year*People)
+	~	Min level of average domestic water use per capita.
+	|
+
+MIN Industrial Water Use=
+	2000
+	~	m*m*m/Year
+	~	Min level of average industrial water use.
+	|
+
+MIN Percent of Irrigated Land=
+	0
+	~	Dmnl
+	~	Min percentage of total agricultural land that can be irrigated.
+	|
+
+Min Reliable Water Supply Decrease Time=
+	1
+	~	Year
+	~	Minimal period of time used to consider changes in water resources or \
+		infrastructure availability.
+	|
+
+Min Water Withdrawal Time=
+	1
+	~	Year
+	~	Minimal time unit constraining water withdrawal.
+	|
+
+Net Change in Reliable Water Supply=
+	((INIT Reliable Water Supply*Impact of Climate Damage on Reliable Water Supply*Additional Change in Reliable Water Supply\
+		)-Reliable Water Supply)/Min Reliable Water Supply Decrease Time
+	~	m*m*m/(Year*Year)
+	~	Change in reliable water supply due to changes in water resources or \
+		infrastructure availability.
+	|
+
+Non Recoverable Water Consumption Rate=
+	Used Water Resources*(1-Average Used Water Recovery Fraction)
+	~	m*m*m/Year
+	~	Rate of water consumption not possible to be recovered.
+	|
+
+Quality of Domestic Water=
+	Domestic Water Withdrawal Fulfillment Rate^Water Quality Steepness*(Water Quality Inflection\
+		^Water Quality Steepness+1)/(Water Quality Inflection^Water Quality Steepness+Domestic Water Withdrawal Fulfillment Rate\
+		^Water Quality Steepness)
+	~	Dmnl
+	~	Nonlinear relation describing the quality of domestic as dependent on \
+		withdrawal fulfillment rate.
+	|
+
+Recovery of Used Water Resources Rate=
+	Used Water Resources*Average Used Water Recovery Fraction
+	~	m*m*m/Year
+	~	Rate of water consumption possible to be recovered and thus return to \
+		available water resources stock.
+	|
+
+Reference GWP per Capita for Agricultural Water Use Irrigated=
+	3500
+	~	$/(Year*Person)
+	~	A reference value against which the GDP per Capita is compared to \
+		calculate the impact of population wealth on average agricultural water \
+		use on the land where the supply of water is due to irrigation.
+	|
+
+Reference GWP per Capita for Agricultural Water Use Rainfed=
+	7000
+	~	$/(Year*Person)
+	~	A reference value against which the GDP per Capita is compared to \
+		calculate the impact of population wealth on average agricultural water \
+		use on the land where the supply of water is only due to rainfall.
+	|
+
+Reference GWP per Capita for Domestic Water Use=
+	9000
+	~	$/(Year*Person)
+	~	A reference value against which the GDP per Capita is compared to \
+		calculate the impact of population wealth on domestic water use.
+	|
+
+Reference GWP per Capita for Industrial Water Use=
+	17000
+	~	$/(Year*Person)
+	~	A reference value against which the GDP per Capita is compared to \
+		calculate the impact of population wealth on average inductrial water use.
+	|
+
+Reference GWP per Capita for Land Irrigation=
+	120000
+	~	$/(Year*Person)
+	~	A reference value against which the GDP per Capita is compared to \
+		calculate the impact of population wealth on percentage of agricultural \
+		land irrigation.
+	|
+
+Reliable Water Supply= INTEG (
+	Net Change in Reliable Water Supply,
+		INIT Reliable Water Supply)
+	~	m*m*m/Year
+	~	Amount of water that can be reliably provided on annual basis for \
+		domestic, agricultural and industrial use due to resources and \
+		infrastructure availability. Source of historical data: 2030 Water \
+		Resources Group, 2009. Charting Our Water Future - Economic frameworks to \
+		inform decision-making. \
+		http://www.mckinsey.com/App_Media/Reports/Water/Charting_Our_Water_Future_F\
+		ull_Report_001.pdf
+	|
+
+Total Water Demand=
+	Agricultural Water Demand+Domestic Water Demand+Industrial Water Demand
+	~	m*m*m/Year
+	~	Total world water demand related to various purposes.
+		http://webworld.unesco.org/water/ihp/db/shiklomanov/index.shtml
+	|
+
+Used Water Resources= INTEG (
+	Agricultural Water Withdrawal Rate+Domestic Water Withdrawal Rate+Industrial Water Withdrawal Rate\
+		-Non Recoverable Water Consumption Rate-Recovery of Used Water Resources Rate,
+		Available Water Resources)
+	~	m*m*m
+	~	Water resources that have been used for industrial, agricultural and \
+		domestic purposes.
+	|
+
+Water Consumption Adjustment=
+	Agricultural Water Withdrawal Rate+Domestic Water Withdrawal Rate+Industrial Water Withdrawal Rate\
+		-Recovery of Used Water Resources Rate
+	~	m*m*m/Year
+	~	The sum of consumption of water in industrial, agricultural and domestic \
+		sectors corected by used water recovery rate.
+	|
+
+Water Quality Inflection=
+	0.5
+	~	Dmnl
+	~	Inflection point of nonlinear relation describing domestic water quality.
+	|
+
+Water Quality Steepness=
+	5
+	~	Dmnl
+	~	Steepness of nonlinear relation describing domestic water quality.
+	|
+
+Water Safety Stock Coverage=
+	0.1
+	~	Year
+	~	Water resources safety stock expressed in terms of time duration. \
+		Additional time period during which the water resources need to be \
+		available at the total water demand level.
+	|
+
+Water Supply Fulfillment Factor=
+	3
+	~	Dmnl
+	~	A factor determining the strength of infrastructure operating limits on \
+		water supply fulfillment.
+	|
+
+Water Supply Fulfillment Rate=
+	2/(1+EXP(-Water Supply Fulfillment Factor*(Reliable Water Supply/Desired Water Supply Rate\
+		)))-1
+	~	Dmnl
+	~	Nonlinear relation that describes water supply fulfillment as a relation \
+		of water supply and demand. With growing water demand the supply \
+		fulfillment might be impaired which relates to infrastructure design and \
+		its operating limits.
+	|
+
+Water Supply Rate=
+	Desired Water Supply Rate*Water Supply Fulfillment Rate
+	~	m*m*m/Year
+	~	Water supply taking into account the desired water supply and the supply \
+		fulfillment rate. The water supply includes withdrawals from surface \
+		water, groundwater or nonconventional sources for example desalination.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Water
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,81,0
+10,1,Available Water Resources,63,375,47,216,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Used Water Resources,573,379,40,219,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(63,756)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(573,756)|
+11,5,0,325,756,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Recovery of Used Water Resources Rate,325,780,83,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,7,9,2,4,0,0,22,0,0,0,-1--1--1,,1|(432,176)|
+1,8,9,1,100,0,0,22,0,0,0,-1--1--1,,1|(214,176)|
+11,9,0,325,176,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,10,Industrial Water Withdrawal Rate,325,200,60,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,11,48,807,177,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,12,14,11,4,0,0,22,0,0,0,-1--1--1,,1|(754,177)|
+1,13,14,2,100,0,0,22,0,0,0,-1--1--1,,1|(656,177)|
+11,14,0,705,177,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,15,Non Recoverable Water Consumption Rate,705,209,73,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,16,17,1,4,0,0,22,0,0,0,-1--1--1,,1|(-85,178)|
+11,17,0,-193,178,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,18,Water Supply Rate,-193,202,49,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,19,Min Water Withdrawal Time,173,256,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,20,Total Water Demand,911,447,43,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,21,2,15,1,0,0,0,0,64,0,-1--1--1,,1|(660,292)|
+1,22,2,6,1,0,0,0,0,64,0,-1--1--1,,1|(569,651)|
+10,23,Average Used Water Recovery Fraction,704,785,77,18,8,3,0,36,0,0,0,0,0-0-0,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+1,24,23,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,25,Agricultural Water Demand,1089,447,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,26,Industrial Water Demand,1089,46,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,27,Domestic Water Demand,1089,848,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,28,Max Water Withdrawal Rate,173,326,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,1,28,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,30,19,28,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,31,Industrial Water Withdrawal Fulfillment Rate,448,265,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,32,28,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,33,31,10,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,34,Industrial Water Withdrawal Fulfillment Factor,448,326,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,35,34,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,36,Desired Available Water Resources,173,105,66,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,37,19,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,38,Water Safety Stock Coverage,304,42,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,39,38,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,40,Available Water Resources Adjustment,63,42,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,41,36,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,42,1,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,43,Available Water Resources Adjustment Time,173,-14,82,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,44,43,40,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,45,Desired Water Supply Rate,-193,43,54,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,46,Water Consumption Adjustment,-193,-67,49,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,47,46,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,48,40,45,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,49,45,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,50,36,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,51,Average Domestic Water Use per Capita,1264,848,80,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,52,51,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,53,Reference GWP per Capita for Domestic Water Use,1494,890,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,54,MAX Domestic Water Use per Capita,1307,955,80,18,8,3,0,36,-1,0,0,0,0-0-0,0-255-0,Arial|||0-0-0,0,0,0,0,0,0
+10,55,MIN Domestic Water Use per Capita,1307,760,54,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,56,54,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,57,55,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,58,53,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,59,Average Industrial Water Use,1264,46,66,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,60,Reference GWP per Capita for Industrial Water Use,1494,84,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,61,MAX Industrial Water Use,1307,153,53,18,8,3,0,36,-1,0,0,0,0-0-0,0-255-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,62,MIN Industrial Water Use,1307,-42,49,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,63,61,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,64,62,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,65,60,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,66,Time,1381,-911,29,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,67,59,26,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,68,26,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,69,25,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,70,27,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,71,73,2,4,0,0,22,0,0,0,-1--1--1,,1|(430,369)|
+1,72,73,1,100,0,0,22,0,0,0,-1--1--1,,1|(212,369)|
+11,73,0,321,369,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,74,Agricultural Water Withdrawal Rate,321,393,65,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,75,77,2,4,0,0,22,0,0,0,-1--1--1,,1|(432,563)|
+1,76,77,1,100,0,0,22,0,0,0,-1--1--1,,1|(214,563)|
+11,77,0,325,563,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,78,Domestic Water Withdrawal Rate,325,587,60,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,Agricultural Water Withdrawal Fulfillment Rate,448,455,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,80,Agricultural Water Withdrawal Fulfillment Factor,448,516,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,81,80,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,82,79,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,83,Domestic Water Withdrawal Fulfillment Rate,448,649,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,84,Domestic Water Withdrawal Fulfillment Factor,448,710,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,85,84,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,86,83,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,87,Industrial Water Demand,299,265,61,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,88,87,10,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,89,87,31,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,90,Agricultural Water Demand,299,467,61,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,91,90,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,92,90,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,93,Domestic Water Demand,299,649,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,94,93,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,95,93,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,96,Max Water Withdrawal Rate,173,535,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,97,96,79,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,98,Max Water Withdrawal Rate,173,713,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,99,98,83,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,100,23,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,101,Total Water Demand,418,105,47,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,102,101,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,103,Industrial Water Withdrawal Rate,-349,-127,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,104,103,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,105,Agricultural Water Withdrawal Rate,-193,-168,70,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,106,Domestic Water Withdrawal Rate,-40,-127,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,107,Recovery of Used Water Resources Rate,63,-67,70,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,108,105,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,109,106,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,110,107,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,111,1,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,112,Water Supply Fulfillment Rate,-106,310,56,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,113,Water Supply Fulfillment Factor,-272,310,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,114,113,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,115,45,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,116,112,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,117,Reliable Water Supply,-193,457,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,118,117,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,119,INIT Reliable Water Supply,-275,383,49,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+12,120,48,-395,453,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,121,123,117,4,0,0,22,0,0,0,-1--1--1,,1|(-272,453)|
+1,122,123,120,100,0,0,22,0,0,0,-1--1--1,,1|(-354,453)|
+11,123,0,-317,453,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,124,Net Change in Reliable Water Supply,-317,485,55,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,125,48,-367,178,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,126,17,125,100,0,0,22,0,0,0,-1--1--1,,1|(-278,178)|
+10,127,Rainfed Agriculture Land,1239,-319,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,128,Irrigated Agriculture Land,1239,-175,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,129,Percent of Irrigated Land,1337,-241,51,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,130,129,127,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,131,129,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,132,Reference GWP per Capita for Land Irrigation,1601,-227,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,133,MAX Percent of Irrigated Land,1486,-175,58,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,134,MIN Percent of Irrigated Land,1477,-319,54,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,135,133,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,136,134,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,137,132,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,138,Average Agricultural Water Use per m2 Irrigated,1287,582,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,139,Reference GWP per Capita for Agricultural Water Use Irrigated,1494,607,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,140,MIN Agricultural Water Use Irrigated,1330,509,71,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,140,138,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,142,139,138,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,143,Average Agricultural Water Use per m2 Rainfed,1276,310,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,144,Reference GWP per Capita for Agricultural Water Use Rainfed,1494,342,79,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,145,MIN Agricultural Water Use Rainfed,1319,244,70,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,146,145,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,147,144,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,148,Rainfed Agriculture Land,1089,356,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,149,Irrigated Agriculture Land,1089,531,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,150,148,25,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,151,149,25,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,152,143,25,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,153,138,25,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,154,Impact of Climate Damage on Reliable Water Supply,-317,625,75,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,155,Min Reliable Water Supply Decrease Time,-194,570,84,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,156,117,124,1,0,0,0,0,64,0,-1--1--1,,1|(-227,498)|
+1,157,154,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,158,155,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,159,119,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,160,Domestic Water Withdrawal Fulfillment Rate,469,-251,79,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,161,Quality of Domestic Water,704,-251,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,162,160,161,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,163,Water Quality Steepness,589,-301,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,164,Water Quality Inflection,591,-200,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,165,163,161,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,164,161,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,167,119,117,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+12,168,48,-105,487,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,169,171,168,4,0,0,22,0,0,0,-1--1--1,,1|(-65,487)|
+1,170,171,1,100,0,0,22,0,0,0,-1--1--1,,1|(-4,487)|
+11,171,0,-30,487,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,172,Drought Out,-30,504,44,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,173,Agricultural Water Withdrawal Rate no Drought,186,404,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,174,90,173,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,175,79,173,1,0,0,0,0,64,0,-1--1--1,,1|(316,422)|
+10,176,Agricultural Water Withdrawal Rate no Drought,-94,673,71,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,177,Agricultural Water Withdrawal Rate,-13,725,70,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,178,176,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,179,177,172,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,180,MAX Agricultural Water Use Rainfed,1324,395,70,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,181,180,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,182,MAX Agricultural Water Use Irrigated,1349,662,71,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,183,182,138,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,184,Additional Change in Reliable Water Supply,-467,573,81,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,185,184,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,186,Extreme Drought,778,452,31,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,187,186,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,188,Smoothed GWP per Capita,1507,15,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,189,188,59,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,190,Variable10 Industrial Water,1507,158,61,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,191,190,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,192,Smoothed GWP per Capita,1504,273,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,193,192,143,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,194,195,127,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,195,Agricultural Land,1093,-275,46,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,196,195,128,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,197,Smoothed GWP per Capita,1496,537,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,198,197,138,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,199,Smoothed Total Population,1108,724,63,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,200,199,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,201,Climate Damage Fraction OLD,-317,727,68,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,202,201,154,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,203,Smoothed GWP per Capita,1493,821,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,204,203,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,205,Smoothed GWP per Capita,1609,-294,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,206,205,129,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,207,Variable12 Water Recovery,718,909,64,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,208,207,23,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,209,Variable11 Domestic Water,1532,989,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,210,209,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,211,Sqr m to ha,1254,452,51,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,212,211,25,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Used Water Resources
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:81,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

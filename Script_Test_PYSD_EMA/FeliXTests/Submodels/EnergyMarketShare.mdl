@@ -1,0 +1,3073 @@
+{UTF-8}
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Energy Demand EJ=
+	Energy Demand*Mtoe into EJ
+	~	EJ/Year
+	~		|
+
+Wind Price toe=
+	Wind Energy Price/toe per Mtoe
+	~	$/toe
+	~	Actual wind energy price in dollars per toe.
+	|
+
+Coal Price toe=
+	Coal Price/toe per Mtoe
+	~	$/toe
+	~	Actual coal price in dollars per toe.
+	|
+
+Biomass Price toe=
+	Biomass Energy Price/toe per Mtoe
+	~	$/toe
+	~	Actual biomass energy price in dollars per toe.
+	|
+
+Oil Price toe=
+	Oil Price/toe per Mtoe
+	~	$/toe
+	~	Actual oil price in dollars per toe.
+	|
+
+Solar Price toe=
+	Solar Energy Price/toe per Mtoe
+	~	$/toe
+	~	Actual solar energy price in dollars per toe.
+	|
+
+Gas Price toe=
+	Gas Price/toe per Mtoe
+	~	$/toe
+	~	Actual gas price in dollars per toe.
+	|
+
+INIT APO per bbl=
+	INIT APO*Mtoe per Barrel
+	~	$/Barrel
+	~		|
+
+Energy Demand=
+	Energy Demand per Capita*Population
+	~	Mtoe/Year
+	~	Total world demand for energy determined by population and energy demand \
+		per capita. Source of historical data: International Energy Agency – Key \
+		World Energy Statistics 2007
+	|
+
+Impact of GWP on Energy Demand per Capita=
+	1-Impact of GWP per Capita on Energy Demand Inflection^Impact of GWP per Capita on Energy Demand Steepness\
+		/(Impact of GWP per Capita on Energy Demand Inflection
+	^Impact of GWP per Capita on Energy Demand Steepness+(Smoothed GWP per Capita/(Reference GWP per Capita for Energy Demand
+	))^Impact of GWP per Capita on Energy Demand Steepness
+	)
+	~	Dmnl
+	~	Impact of population wealth on energy demand per capita.
+	|
+
+Energy Production=
+	Coal Production+Gas Production+Oil Production+Biomass Energy Production+Solar Energy Production\
+		+Wind Energy Production
+	~	Mtoe/Year
+	~	Total energy production per year.
+	|
+
+Average Energy Price=
+	(Average Price Oil+Average Price Gas+Average Price Coal+Average Price Solar+Average Price Wind\
+		+Average Price Biomass)/Number of Energy Sources
+	~	$/toe
+	~	Average market energy price.
+	|
+
+Average Price Biomass= INTEG (
+	Change in Price Biomass,
+		INIT APB)
+	~	$/toe
+	~	Average market biomass energy price.
+	|
+
+Average Price Coal= INTEG (
+	Change in Price Coal,
+		INIT APC)
+	~	$/toe
+	~	Average market coal price.
+	|
+
+Average Price Gas= INTEG (
+	Change in Price Gas,
+		INIT APG)
+	~	$/toe
+	~	Average market gas price.
+	|
+
+Average Price Oil= INTEG (
+	Change in Price Oil,
+		INIT APO)
+	~	$/toe
+	~	Average market oil price.
+	|
+
+Average Price Solar= INTEG (
+	Change in Price Solar,
+		INIT APS)
+	~	$/toe
+	~	Average market solar energy price.
+	|
+
+Average Price Wind= INTEG (
+	Change in Price Wind,
+		INIT APW)
+	~	$/toe
+	~	Average market wind energy price.
+	|
+
+Carbon Price Change=
+	(1-SCENARIO BioenergyPlus)*1+SCENARIO BioenergyPlus*(1+STEP(Factor of Carbon Price Change\
+		, 2010))
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Change in Market Share Biomass= INTEG (
+	Change Rate Due to Price Biomass,
+		Reference Change in Market Share Biomass*Effect of Price on Market Share Biomass)
+	~	Dmnl
+	~	Change in biomass energy market share due to price competitiveness.
+	|
+
+Change in Market Share Coal= INTEG (
+	Change Rate Due to Price Coal,
+		Reference Change in Market Share Coal*Effect of Price on Market Share Coal)
+	~	Dmnl
+	~	Change in coal energy market share due to price competitiveness.
+	|
+
+Change in Market Share Gas= INTEG (
+	Change Rate Due to Price Gas,
+		Reference Change in Market Share Gas*Effect of Price on Market Share Gas)
+	~	Dmnl
+	~	Change in gas energy market share due to price competitiveness.
+	|
+
+Change in Market Share Oil= INTEG (
+	Change Rate Due to Price Oil,
+		Reference Change in Market Share Oil*Effect of Price on Market Share Oil)
+	~	Dmnl
+	~	Change in oil energy market share due to price competitiveness.
+	|
+
+Change in Market Share Solar= INTEG (
+	Change Rate Due to Price Solar,
+		Reference Change in Market Share Solar*Effect of Price on Market Share Solar)
+	~	Dmnl
+	~	Change in solar energy market share due to price competitiveness.
+	|
+
+Change in Market Share Wind= INTEG (
+	Change Rate Due to Price Wind,
+		Reference Change in Market Share Wind*Effect of Price on Market Share Wind)
+	~	Dmnl
+	~	Change in wind energy market share due to price competitiveness.
+	|
+
+Change in Price Biomass=
+	(Biomass Price toe-Average Price Biomass)/Time to Average Price Biomass
+	~	$/(toe*Year)
+	~	Change in average market biomass energy price.
+	|
+
+Change in Price Coal=
+	(Coal Price toe-Average Price Coal)/Time to Average Price Coal
+	~	$/(toe*Year)
+	~	Change in average market coal price.
+	|
+
+Change in Price Gas=
+	(Gas Price toe-Average Price Gas)/Time to Average Price Gas
+	~	$/(toe*Year)
+	~	Change in average market gas price.
+	|
+
+Change in Price Oil=
+	(Oil Price toe-Average Price Oil)/Time to Average Price Oil
+	~	$/(Year*toe)
+	~	Change in average market oil price.
+	|
+
+Change in Price Solar=
+	(Solar Price toe-Average Price Solar)/Time to Average Price Solar
+	~	$/(toe*Year)
+	~	Change in average market solar energy price.
+	|
+
+Change in Price Wind=
+	(Wind Price toe-Average Price Wind)/Time to Average Price Wind
+	~	$/(toe*Year)
+	~	Change in average market wind energy price.
+	|
+
+Change Rate Due to Price Biomass=
+	(Reference Change in Market Share Biomass*Effect of Price on Market Share Biomass-Change in Market Share Biomass\
+		)/Time to Adjust Market Share
+	~	1/Year
+	~	Ratio of change in biomass energy market share.
+	|
+
+Change Rate Due to Price Coal=
+	(Reference Change in Market Share Coal*Effect of Price on Market Share Coal-Change in Market Share Coal\
+		)/Time to Adjust Market Share
+	~	1/Year
+	~	Ratio of change in coal energy market share.
+	|
+
+Change Rate Due to Price Gas=
+	(Reference Change in Market Share Gas*Effect of Price on Market Share Gas-Change in Market Share Gas\
+		)/Time to Adjust Market Share
+	~	1/Year
+	~	Ratio of change in gas energy market share.
+	|
+
+Change Rate Due to Price Oil=
+	(Reference Change in Market Share Oil*Effect of Price on Market Share Oil-Change in Market Share Oil\
+		)/Time to Adjust Market Share
+	~	1/Year
+	~	Ratio of change in oil energy market share.
+	|
+
+Change Rate Due to Price Solar=
+	(Reference Change in Market Share Solar*Effect of Price on Market Share Solar-Change in Market Share Solar\
+		)/Time to Adjust Market Share
+	~	1/Year
+	~	Ratio of change in solar energy market share.
+	|
+
+Change Rate Due to Price Wind=
+	(Reference Change in Market Share Wind*Effect of Price on Market Share Wind-Change in Market Share Wind\
+		)/Time to Adjust Market Share
+	~	1/Year
+	~	Ratio of change in wind energy market share.
+	|
+
+Effect of Price on Market Share Biomass=
+	Price Competitiveness Factor Biomass^(-Price Elasticity of Demand Biomass)
+	~	Dmnl
+	~	Effect of biomass energy price competitiveness on market share.
+	|
+
+Effect of Price on Market Share Coal=
+	Price Competitiveness Factor Coal^(-Price Elasticity of Demand Coal)
+	~	Dmnl
+	~	Effect of coal energy price competitiveness on market share.
+	|
+
+Effect of Price on Market Share Gas=
+	Price Competitiveness Factor Gas^(-Price Elasticity of Demand Gas)
+	~	Dmnl
+	~	Effect of gas energy price competitiveness on market share.
+	|
+
+Effect of Price on Market Share Oil=
+	Price Competitiveness Factor Oil^(-Price Elasticity of Demand Oil)
+	~	Dmnl
+	~	Effect of oil energy price competitiveness on market share.
+	|
+
+Effect of Price on Market Share Solar=
+	Price Competitiveness Factor Solar^(-Price Elasticity of Demand Solar)
+	~	Dmnl
+	~	Effect of solar energy price competitiveness on market share.
+	|
+
+Effect of Price on Market Share Wind=
+	Price Competitiveness Factor Wind^(-Price Elasticity of Demand Wind)
+	~	Dmnl
+	~	Effect of wind energy price competitiveness on market share.
+	|
+
+Energy Demand 1900 Calibration=
+	120
+	~	Mtoe/Year
+	~	Energy demand calibration factor for year 1900.
+	|
+
+Energy Demand Fulfillment Ratio=
+	Energy Production/Energy Demand
+	~	Dmnl
+	~	Ratio of energy production to energy demand indicating a level of energy \
+		demand fulfillment.
+	|
+
+Energy Demand per Capita=
+	Max Energy Demand per Capita*Impact of GWP on Energy Demand per Capita
+	~	Mtoe/(Year*Person)
+	~	Energy demand per capita taking into consideration the change in \
+		population wealth.
+	|
+
+Factor of Carbon Price Change=
+	99
+	~	Dmnl
+	~	WWF Scenario variable. Further development required.
+	|
+
+Impact of GWP per Capita on Energy Demand Inflection=
+	1.1
+	~	Dmnl [0.4,1,0.05]
+	~	A parameter determining the inflection point of the nonlinear function \
+		representing the impact of population wealth on energy demand.
+	|
+
+Impact of GWP per Capita on Energy Demand Steepness=
+	0.7946
+	~	Dmnl [0.5,3,0.05]
+	~	A parameter determining the steepness of the nonlinear function \
+		representing the impact of population wealth on energy demand.
+	|
+
+INIT APB=
+	500
+	~	$/toe
+	~	Initial average market biomass energy price.
+	|
+
+INIT APC=
+	4
+	~	$/toe
+	~	Initial average market coal price.
+	|
+
+INIT APG=
+	50000
+	~	$/toe
+	~	Initial average market gas price.
+	|
+
+INIT APO=
+	35
+	~	$/toe
+	~	Initial average market oil price.
+	|
+
+INIT APS=
+	50000
+	~	$/toe
+	~	Initial average market solar energy price.
+	|
+
+INIT APW=
+	50000
+	~	$/toe
+	~	Initial average market wind energy price.
+	|
+
+Market Share Biomass=
+	Change in Market Share Biomass/Reference Change in Total Market Share
+	~	Dmnl
+	~	Biomass energy market share among other energy sources.
+	|
+
+Market Share Biomass Allocation=
+	0.7
+	~	Dmnl
+	~	Market share allocation between forest and energy crops biomass.
+	|
+
+Market Share Biomass Crops=
+	Market Share Biomass*(1-Market Share Biomass Allocation)
+	~	Dmnl
+	~	Energy crops specific biomass energy market share among other energy \
+		sources.
+	|
+
+Market Share Biomass Forest=
+	Market Share Biomass*Market Share Biomass Allocation
+	~	Dmnl
+	~	Forest specific biomass energy market share among other energy sources.
+	|
+
+Market Share Coal=
+	Change in Market Share Coal/Reference Change in Total Market Share
+	~	Dmnl
+	~	Coal market share among other energy sources.
+	|
+
+Market Share Gas=
+	Change in Market Share Gas/Reference Change in Total Market Share
+	~	Dmnl
+	~	Gas market share among other energy sources.
+	|
+
+Market Share Oil=
+	Change in Market Share Oil/Reference Change in Total Market Share
+	~	Dmnl
+	~	Oil market share among other energy sources.
+	|
+
+Market Share Renewables=
+	Market Share Biomass+Market Share Solar+Market Share Wind
+	~	Dmnl
+	~		|
+
+Market Share Renewables Indicator=
+	Market Share Renewables
+	~	Dmnl
+	~		|
+
+Market Share Solar=
+	Change in Market Share Solar/Reference Change in Total Market Share
+	~	Dmnl
+	~	Solar energy market share among other energy sources.
+	|
+
+Market Share Wind=
+	Change in Market Share Wind/Reference Change in Total Market Share
+	~	Dmnl
+	~	Wind energy market share among other energy sources.
+	|
+
+Max Energy Demand per Capita=
+	ME Var S+SMOOTH(STEP(Max Energy Demand per Capita Variation-ME Var S, 2020+E Var T),\
+		SSP Energy Demand Variation Time)
+	~	Mtoe/(Year*Person)
+	~	Maximal reference Energy Demand per Capita.
+	|
+
+Max Energy Demand per Capita Variation=
+	4.8e-06
+	~	Mtoe/(Year*Person)
+	~	Maximal reference Energy Demand per Capita.
+	|
+
+ME S=
+	4.8e-06
+	~	Mtoe/(Year*Person)
+	~	Maximal reference Energy Demand per Capita.
+	|
+
+ME Var S=
+	4.8e-06+SMOOTH(STEP(ME S-4.8e-06, 2020),1)
+	~	Mtoe/(Year*Person)
+	~	Maximal reference Energy Demand per Capita.
+	|
+
+Number of Energy Sources=
+	6
+	~	Dmnl
+	~	Number of various energy sources to average energy price.
+	|
+
+PEB S=
+	0.8
+	~	Dmnl
+	~	Biomass energy price elasticity of demand.
+	|
+
+PEB Var S=
+	0.8+SMOOTH(STEP(PEB S-0.8, 2020),1)
+	~	Dmnl
+	~	Biomass energy price elasticity of demand.
+	|
+
+PEC S=
+	0.89
+	~	Dmnl
+	~	Coal energy price elasticity of demand.
+	|
+
+PEC Var S=
+	0.89+SMOOTH(STEP(PEC S-0.89, 2020),1)
+	~	Dmnl
+	~	Coal energy price elasticity of demand.
+	|
+
+PEG S=
+	0.54
+	~	Dmnl
+	~	Gas energy price elasticity of demand.
+	|
+
+PEG Var S=
+	0.54+SMOOTH(STEP(PEG S-0.54, 2020),1)
+	~	Dmnl
+	~	Gas energy price elasticity of demand.
+	|
+
+PEO S=
+	0.6
+	~	Dmnl
+	~	Oil energy price elasticity of demand.
+	|
+
+PEO Var S=
+	0.6+SMOOTH(STEP(PEO S-0.6, 2020),1)
+	~	Dmnl
+	~	Oil energy price elasticity of demand.
+	|
+
+PEW S=
+	1
+	~	Dmnl
+	~	Wind energy price elasticity of demand.
+	|
+
+PEW Var S=
+	1+SMOOTH(STEP(PEW S-1, 2020),1)
+	~	Dmnl
+	~	Wind energy price elasticity of demand.
+	|
+
+Price Competitiveness Factor Biomass=
+	(Average Price Biomass)/Average Energy Price
+	~	Dmnl
+	~	Biomass energy price competitiveness as a ratio of biomass energy market \
+		price to average market energy price.
+	|
+
+Price Competitiveness Factor Coal=
+	Carbon Price Change*(Average Price Coal)/Average Energy Price
+	~	Dmnl
+	~	Coal price competitiveness as a ratio of coal market price to average \
+		market energy price.
+	|
+
+Price Competitiveness Factor Gas=
+	Carbon Price Change*(Average Price Gas)/Average Energy Price
+	~	Dmnl
+	~	Gas price competitiveness as a ratio of gas market price to average market \
+		energy price.
+	|
+
+Price Competitiveness Factor Oil=
+	Carbon Price Change*(Average Price Oil)/Average Energy Price
+	~	Dmnl
+	~	Oil price competitiveness as a ratio of oil market price to average market \
+		energy price.
+	|
+
+Price Competitiveness Factor Solar=
+	(Average Price Solar)/Average Energy Price
+	~	Dmnl
+	~	Solar energy price competitiveness as a ratio of solar energy market price \
+		to average market energy price.
+	|
+
+Price Competitiveness Factor Wind=
+	(Average Price Wind)/Average Energy Price
+	~	Dmnl
+	~	Wind energy price competitiveness as a ratio of wind energy market price \
+		to average market energy price.
+	|
+
+Price Elasticity of Demand Biomass=
+	PEB Var S+SMOOTH(STEP(Price Elasticity of Demand Biomass Variation-PEB Var S, 2020+E Var T\
+		),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Biomass energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Biomass Variation=
+	0.8
+	~	Dmnl
+	~	Biomass energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Coal=
+	PEC Var S+SMOOTH(STEP(Price Elasticity of Demand Coal Variation-PEC Var S, 2020+E Var T\
+		),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Coal energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Coal Variation=
+	0.89
+	~	Dmnl
+	~	Coal energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Gas=
+	PEG Var S+SMOOTH(STEP(Price Elasticity of Demand Gas Variation-PEG Var S, 2020+E Var T\
+		),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Gas energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Gas Variation=
+	0.54
+	~	Dmnl
+	~	Gas energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Oil=
+	PEO Var S+SMOOTH(STEP(Price Elasticity of Demand Oil Variation-PEO Var S, 2020+E Var T\
+		),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Oil energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Oil Variation=
+	0.6
+	~	Dmnl
+	~	Oil energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Solar=
+	PEW Var S+SMOOTH(STEP(Price Elasticity of Demand Wind and Solar Variation-PEW Var S,\
+		 2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Solar energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Wind=
+	PEW Var S+SMOOTH(STEP(Price Elasticity of Demand Wind and Solar Variation-PEW Var S,\
+		 2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Wind energy price elasticity of demand.
+	|
+
+Price Elasticity of Demand Wind and Solar Variation=
+	1
+	~	Dmnl
+	~	Wind energy price elasticity of demand.
+	|
+
+RCBI S=
+	1.5
+	~	Dmnl
+	~	Reference change in biomass energy market share due to price \
+		competitiveness.
+	|
+
+RCBI Var S=
+	1.5+SMOOTH(STEP(RCBI S-1.5, 2020),1)
+	~	Dmnl
+	~	Reference change in biomass energy market share due to price \
+		competitiveness.
+	|
+
+RCF S=
+	1
+	~	Dmnl
+	~		|
+
+RCF Var S=
+	1+SMOOTH(STEP(RCF S-1, 2020),1)
+	~	Dmnl
+	~		|
+
+RCMS S=
+	4.5
+	~	Dmnl
+	~	Reference change in solar energy market share due to price competitiveness.
+	|
+
+RCMS Var S=
+	4.5+SMOOTH(STEP(RCMS S-4.5, 2020),1)
+	~	Dmnl
+	~	Reference change in solar energy market share due to price competitiveness.
+	|
+
+RCMW S=
+	3
+	~	Dmnl
+	~	Reference change in wind energy market share due to price competitiveness.
+	|
+
+RCMW Var S=
+	3+SMOOTH(STEP(RCMW S-3, 2020),1)
+	~	Dmnl
+	~	Reference change in wind energy market share due to price competitiveness.
+	|
+
+Reference Change in Fossil Fuel Market Share Variation=
+	1
+	~	Dmnl
+	~		|
+
+Reference Change in Market Share Biomass=
+	RCBI Var S+SMOOTH(STEP(Reference Change in Market Share Biomass Variation-RCBI Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Reference change in biomass energy market share due to price \
+		competitiveness.
+	|
+
+Reference Change in Market Share Biomass Variation=
+	3.25
+	~	Dmnl
+	~	Reference change in biomass energy market share due to price \
+		competitiveness.
+	|
+
+Reference Change in Market Share Coal=
+	RCF Var S+SMOOTH(STEP(Reference Change in Fossil Fuel Market Share Variation-RCF Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Reference change in coal energy market share due to price competitiveness.
+	|
+
+Reference Change in Market Share Gas=
+	RCF Var S+SMOOTH(STEP(Reference Change in Fossil Fuel Market Share Variation-RCF Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Reference change in gas energy market share due to price competitiveness.
+	|
+
+Reference Change in Market Share Oil=
+	RCF Var S+SMOOTH(STEP(Reference Change in Fossil Fuel Market Share Variation-RCF Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Reference change in oil energy market share due to price competitiveness.
+	|
+
+Reference Change in Market Share Solar=
+	RCMS Var S+SMOOTH(STEP(Reference Change in Market Share Solar Variation-RCMS Var S, \
+		2020+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Reference change in solar energy market share due to price competitiveness.
+	|
+
+Reference Change in Market Share Solar Variation=
+	8
+	~	Dmnl
+	~	Reference change in solar energy market share due to price competitiveness.
+	|
+
+Reference Change in Market Share Wind=
+	RCMW Var S+SMOOTH(STEP(Reference Change in Market Share Wind Variation-RCMW Var S, 2020\
+		+E Var T),SSP Energy Demand Variation Time)
+	~	Dmnl
+	~	Reference change in wind energy market share due to price competitiveness.
+	|
+
+Reference Change in Market Share Wind Variation=
+	6
+	~	Dmnl
+	~	Reference change in wind energy market share due to price competitiveness.
+	|
+
+Reference Change in Total Market Share=
+	Change in Market Share Oil+Change in Market Share Gas+Change in Market Share Coal+Change in Market Share Solar\
+		+Change in Market Share Wind+Change in Market Share Biomass
+	~	Dmnl
+	~	Reference Change in Total Market Share taking into account changes in \
+		specific energy sectors.
+	|
+
+Reference GWP per Capita for Energy Demand=
+	16000
+	~	$/(Year*Person)
+	~	A reference value against which the GDP per Capita is compared to in order \
+		to calculate the impact of population wealth on energy demand.
+	|
+
+SCENARIO BioenergyPlus=
+	0
+	~	Dmnl [0,1,1]
+	~	WWF Scenario variable. Further development required.
+	|
+
+Time to Adjust Market Share=
+	10
+	~	Year
+	~	Time to adjust changes in market share.
+	|
+
+Time to Average Price Biomass=
+	18
+	~	Year
+	~	Time to average market biomass energy price.
+	|
+
+Time to Average Price Coal=
+	5
+	~	Year
+	~	Time to average market coal price.
+	|
+
+Time to Average Price Gas=
+	5
+	~	Year
+	~	Time to average market gas price.
+	|
+
+Time to Average Price Oil=
+	5
+	~	Year
+	~	Time to average market oil price.
+	|
+
+Time to Average Price Solar=
+	15
+	~	Year
+	~	Time to average market solar energy price.
+	|
+
+Time to Average Price Wind=
+	20
+	~	Year
+	~	Time to average market wind energy price.
+	|
+
+Total Energy Market=
+	Market Share Oil+Market Share Gas+Market Share Coal+Market Share Solar+Market Share Wind\
+		+Market Share Biomass
+	~	Dmnl
+	~	Total energy market share.
+	|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Gender:
+	male, female
+	~	
+	~		|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+SSP Energy Demand Variation Time=
+	5
+	~	Year
+	~		|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+GWP per Capita=
+	Gross World Product/Population ~~|
+GWP per Capita=
+	Gross World Product/Population
+	~	$/(Person*Year)
+	~		|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_MarketShare
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,67,0
+10,1,Average Price Oil,1670,-560,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,2,48,1835,-564,10,8,0,131,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(1735,-564)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(1799,-564)|
+11,5,0,1767,-564,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Change in Price Oil,1767,-540,38,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,7,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(1743,-527)|
+10,8,Time to Average Price Oil,1816,-476,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,9,8,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,10,Average Price Gas,1670,-402,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,11,48,1835,-403,10,8,0,131,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,12,14,10,4,0,0,22,0,0,0,-1--1--1,,1|(1735,-403)|
+1,13,14,11,100,0,0,22,0,0,0,-1--1--1,,1|(1799,-403)|
+11,14,0,1767,-403,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,15,Change in Price Gas,1767,-379,38,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,16,10,15,1,0,0,0,0,64,0,-1--1--1,,1|(1723,-366)|
+10,17,Time to Average Price Gas,1816,-320,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,18,17,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,19,Average Price Coal,1670,-223,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,20,48,1835,-227,10,8,0,131,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,21,23,19,4,0,0,22,0,0,0,-1--1--1,,1|(1735,-227)|
+1,22,23,20,100,0,0,22,0,0,0,-1--1--1,,1|(1799,-227)|
+11,23,0,1767,-227,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,24,Change in Price Coal,1767,-203,40,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,25,19,24,1,0,0,0,0,64,0,-1--1--1,,1|(1723,-190)|
+10,26,Time to Average Price Coal,1816,-147,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,27,26,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,28,Change in Market Share Oil,859,-581,43,24,3,131,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+12,29,48,1052,-584,10,8,0,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,30,32,28,4,0,0,22,0,0,0,-1--1--1,,1|(936,-584)|
+1,31,32,29,100,0,0,22,0,0,0,-1--1--1,,1|(1012,-584)|
+11,32,0,977,-584,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,33,Change Rate Due to Price Oil,977,-560,66,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Effect of Price on Market Share Oil,1173,-560,57,16,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,35,34,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,36,Change in Market Share Gas,859,-423,43,24,3,131,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+12,37,48,1052,-426,10,8,0,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,38,40,36,4,0,0,22,0,0,0,-1--1--1,,1|(936,-426)|
+1,39,40,37,100,0,0,22,0,0,0,-1--1--1,,1|(1012,-426)|
+11,40,0,977,-426,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,41,Change Rate Due to Price Gas,977,-402,59,16,40,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+10,42,Effect of Price on Market Share Gas,1173,-402,60,16,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,43,42,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,44,Change in Market Share Coal,859,-244,43,24,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,45,48,1052,-246,10,8,0,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,46,48,44,4,0,0,22,0,0,0,-1--1--1,,1|(936,-246)|
+1,47,48,45,100,0,0,22,0,0,0,-1--1--1,,1|(1012,-246)|
+11,48,0,977,-246,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,49,Change Rate Due to Price Coal,977,-222,66,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,50,Effect of Price on Market Share Coal,1173,-223,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,51,50,49,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,52,Average Energy Price,1555,-153,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,53,1,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,54,10,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,55,19,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,56,Price Competitiveness Factor Oil,1385,-560,55,24,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+10,57,Price Competitiveness Factor Gas,1385,-402,55,24,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+10,58,Price Competitiveness Factor Coal,1385,-223,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,59,1,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,60,52,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,61,10,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,62,52,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,63,19,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,64,52,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,65,Reference Change in Total Market Share,686,-153,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,66,28,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,67,36,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,68,44,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,69,Price Elasticity of Demand Oil,1283,-512,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,70,69,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,71,Price Elasticity of Demand Gas,1280,-354,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,72,Price Elasticity of Demand Coal,1294,-172,64,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,73,72,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,74,71,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,75,Number of Energy Sources,1677,-153,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,76,Time to Adjust Market Share,1128,-153,48,16,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+10,77,Average Price Wind,1670,104,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,78,48,1835,99,10,8,0,131,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,79,81,77,4,0,0,22,0,0,0,-1--1--1,,1|(1735,99)|
+1,80,81,78,100,0,0,22,0,0,0,-1--1--1,,1|(1799,99)|
+11,81,0,1767,99,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,82,Change in Price Wind,1767,123,41,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,83,77,82,1,0,0,0,0,64,0,-1--1--1,,1|(1698,136)|
+10,84,Time to Average Price Wind,1816,179,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,85,84,82,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,86,Change in Market Share Wind,859,81,43,24,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,87,48,1052,79,10,8,0,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,88,90,86,4,0,0,22,0,0,0,-1--1--1,,1|(936,79)|
+1,89,90,87,100,0,0,22,0,0,0,-1--1--1,,1|(1012,79)|
+11,90,0,977,79,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,91,Change Rate Due to Price Wind,977,103,66,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,92,Effect of Price on Market Share Wind,1173,104,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,93,92,91,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,94,Price Competitiveness Factor Wind,1385,104,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,95,77,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,96,52,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,97,56,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,98,57,42,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,99,58,50,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,100,94,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,101,Reference Change in Market Share Oil,910,-504,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,102,101,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,103,28,33,1,0,0,0,0,64,0,-1--1--1,,1|(887,-551)|
+10,104,Reference Change in Market Share Gas,896,-332,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,105,Reference Change in Market Share Coal,874,-175,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,106,Reference Change in Market Share Wind,894,163,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,107,106,91,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,108,105,49,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,109,104,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,110,36,41,1,0,0,0,0,64,0,-1--1--1,,1|(897,-390)|
+1,111,44,49,1,0,0,0,0,64,0,-1--1--1,,1|(892,-211)|
+1,112,86,91,1,0,0,0,0,64,0,-1--1--1,,1|(886,109)|
+1,113,76,33,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,114,76,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,115,76,49,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,116,76,90,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,117,Market Share Oil,686,-581,56,9,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+10,118,Market Share Gas,600,-423,59,9,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+10,119,Market Share Coal,515,-244,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,120,Market Share Wind,600,81,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,121,28,117,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,36,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,123,44,119,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,124,86,120,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,125,Total Energy Market,275,-153,46,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,126,117,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,127,118,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,128,119,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,129,65,117,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,130,65,118,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,131,65,119,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,132,65,120,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,133,75,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,134,Energy Demand,912,575,59,10,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,135,Average Price Solar,1670,-54,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,136,48,1835,-58,10,8,0,131,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,137,139,135,4,0,0,22,0,0,0,-1--1--1,,1|(1735,-58)|
+1,138,139,136,100,0,0,22,0,0,0,-1--1--1,,1|(1799,-58)|
+11,139,0,1767,-58,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,140,Change in Price Solar,1767,-34,42,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,135,140,1,0,0,0,0,64,0,-1--1--1,,1|(1698,-21)|
+10,142,Time to Average Price Solar,1816,22,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,143,142,140,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,144,Change in Market Share Solar,859,-76,43,24,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,145,48,1052,-78,10,8,0,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,146,148,144,4,0,0,22,0,0,0,-1--1--1,,1|(936,-78)|
+1,147,148,145,100,0,0,22,0,0,0,-1--1--1,,1|(1012,-78)|
+11,148,0,977,-78,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,149,Change Rate Due to Price Solar,977,-54,66,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,150,Effect of Price on Market Share Solar,1173,-54,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,151,150,149,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,152,Price Competitiveness Factor Solar,1385,-54,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,153,135,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,154,152,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,155,Reference Change in Market Share Solar,894,6,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,156,155,149,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,144,149,1,0,0,0,0,64,0,-1--1--1,,1|(886,-48)|
+10,158,Market Share Solar,515,-76,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,159,144,158,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,160,52,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,161,76,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,162,65,158,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,163,101,28,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,164,34,28,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,165,104,36,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,166,42,36,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,167,105,44,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,168,50,44,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,169,106,86,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,170,92,86,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,171,155,144,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,172,150,144,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,173,INIT APO,1666,-622,34,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,174,INIT APG,1670,-457,34,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,175,INIT APC,1668,-274,34,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,176,INIT APS,1673,-103,34,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,177,135,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,178,144,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,179,158,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,180,INIT APW,1672,64,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,181,86,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,182,77,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,183,Average Price Biomass,1670,270,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,184,48,1835,266,10,8,0,131,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,185,187,183,4,0,0,22,0,0,0,-1--1--1,,1|(1735,266)|
+1,186,187,184,100,0,0,22,0,0,0,-1--1--1,,1|(1799,266)|
+11,187,0,1767,266,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,188,Change in Price Biomass,1767,290,59,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,189,183,188,1,0,0,0,0,64,0,-1--1--1,,1|(1698,303)|
+10,190,Time to Average Price Biomass,1816,346,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,191,190,188,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,192,Change in Market Share Biomass,859,248,43,24,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,193,48,1052,246,10,8,0,3,0,56,-1,0,0,0,0-0-0,0-0-0,Arial|10|B|0-0-0,0,0,0,0,0,0
+1,194,196,192,4,0,0,22,0,0,0,-1--1--1,,1|(936,246)|
+1,195,196,193,100,0,0,22,0,0,0,-1--1--1,,1|(1012,246)|
+11,196,0,977,246,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,197,Change Rate Due to Price Biomass,977,270,66,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,198,Effect of Price on Market Share Biomass,1173,270,63,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,199,198,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,200,Price Competitiveness Factor Biomass,1385,270,62,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,201,183,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,202,Price Elasticity of Demand Biomass,1284,324,67,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,203,202,198,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,204,200,198,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,205,Reference Change in Market Share Biomass,894,330,84,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,206,205,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,207,192,197,1,0,0,0,0,64,0,-1--1--1,,1|(886,276)|
+10,208,Market Share Biomass,686,248,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,209,192,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,210,205,192,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,211,198,192,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,212,INIT APB,1673,221,34,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,213,212,183,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,214,76,196,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,215,65,208,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,216,120,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,217,173,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,218,174,10,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,219,175,19,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,220,176,135,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,221,180,77,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,222,Market Share Biomass Forest,411,170,59,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,223,Market Share Biomass Crops,411,331,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,224,208,222,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,225,208,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,226,Market Share Biomass Allocation,432,248,71,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,227,226,222,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,228,226,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,229,52,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,230,208,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,231,183,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,232,192,65,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,233,Oil Price toe,1944,-541,45,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,234,Gas Price toe,1944,-380,50,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,235,Coal Price toe,1944,-204,52,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,236,Solar Price toe,1944,-35,54,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,237,Wind Price toe,1944,123,54,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,238,Biomass Price toe,1944,290,34,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,239,233,6,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,240,234,15,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,241,235,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,242,236,140,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,243,237,82,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,244,238,188,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,245,Energy Production,1243,599,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,246,Energy Demand Fulfillment Ratio,1089,599,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,247,245,246,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,248,134,246,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,249,Price Elasticity of Demand Solar,1282,-8,64,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,250,Price Elasticity of Demand Wind,1286,150,64,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,251,250,92,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,252,249,150,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,253,Carbon Price Change,1535,-650,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,254,253,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,255,253,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,256,253,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,257,SCENARIO BioenergyPlus,1535,-752,54,18,8,3,0,36,0,0,0,0,-1--1--1,128-192-0,Arial|||0-0-0,0,0,0,0,0,0
+1,258,257,253,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,259,Factor of Carbon Price Change,1659,-716,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,260,259,253,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,261,Impact of GWP per Capita on Energy Demand Inflection,357,526,70,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,262,Impact of GWP per Capita on Energy Demand Steepness,357,732,73,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,263,Impact of GWP on Energy Demand per Capita,557,620,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,264,Reference GWP per Capita for Energy Demand,357,665,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,265,261,263,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,266,262,263,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,267,264,263,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,268,Energy Demand per Capita,752,680,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,269,Max Energy Demand per Capita,574,704,73,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,270,269,268,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,271,263,268,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,272,Energy Demand 1900 Calibration,745,599,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,273,Market Share Renewables,258,97,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,274,120,273,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,275,208,273,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,276,158,273,1,0,0,0,0,64,0,-1--1--1,,1|(261,84)|
+10,277,Energy Demand EJ,920,699,44,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,278,Reference Change in Fossil Fuel Market Share Variation,1082,-513,92,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,279,278,101,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,280,Reference Change in Fossil Fuel Market Share Variation,1101,-336,92,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,281,280,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,282,Reference Change in Fossil Fuel Market Share Variation,1005,-130,92,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+10,283,Max Energy Demand per Capita Variation,673,796,77,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,284,Price Elasticity of Demand Oil Variation,1286,-448,79,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,285,Price Elasticity of Demand Gas Variation,1313,-275,64,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,286,Price Elasticity of Demand Coal Variation,1341,-105,64,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,287,Price Elasticity of Demand Wind and Solar Variation,1348,55,69,27,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,288,284,69,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,289,285,71,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,290,286,72,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,291,287,249,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,292,287,250,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,293,Price Elasticity of Demand Biomass Variation,1341,402,67,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,294,293,202,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,295,SSP Energy Demand Variation Time,1398,-473,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,296,295,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,297,SSP Energy Demand Variation Time,1398,-315,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,298,297,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,299,SSP Energy Demand Variation Time,1430,-141,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,300,299,72,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,301,SSP Energy Demand Variation Time,767,-457,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,302,301,101,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,303,SSP Energy Demand Variation Time,1428,361,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,304,303,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,305,SSP Energy Demand Variation Time,1476,5,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,306,305,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,307,SSP Energy Demand Variation Time,1363,202,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,308,307,250,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,309,SSP Energy Demand Variation Time,518,1001,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,310,SSP Energy Demand Variation Time,799,-285,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,311,SSP Energy Demand Variation Time,819,-124,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,312,310,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,313,RCF S,726,-536,26,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,314,RCF Var S,802,-528,41,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,315,313,314,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,316,314,101,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,317,E Var T,964,-458,29,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,318,317,101,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,319,RCF Var S,741,-351,50,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,320,E Var T,933,-283,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,321,RCF Var S,768,-206,50,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,322,E Var T,906,-116,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,323,319,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,324,320,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,325,PEO S,1145,-456,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,326,PEO Var S,1203,-483,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,327,E Var T,1194,-512,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,328,E Var T,1188,-317,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,329,E Var T,1205,-163,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,330,E Var T,1159,15,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,331,E Var T,1172,167,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,332,E Var T,1142,354,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,333,E Var T,413,1029,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,334,332,202,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,335,331,250,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,336,330,249,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,337,329,72,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,338,328,71,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,339,327,69,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,340,PEG S,1159,-265,27,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,341,PEG Var S,1189,-285,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,342,PEC S,1165,-99,27,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,343,PEC Var S,1243,-129,41,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,344,PEW Var S,1217,61,43,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,345,PEW S,1140,59,28,10,8,3,0,34,-1,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,346,PEB S,1150,437,26,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,347,PEB Var S,1222,385,41,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,348,ME S,826,794,22,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,349,ME Var S,723,744,36,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,350,325,326,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,351,326,69,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,352,340,341,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,353,341,71,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,354,342,343,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,355,343,72,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,356,345,344,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,357,344,249,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,358,346,347,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,359,347,202,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,360,348,349,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,361,344,250,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,362,321,105,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,363,311,105,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,364,322,105,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,365,282,105,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,366,Reference Change in Market Share Biomass Variation,960,409,84,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,367,Reference Change in Market Share Wind Variation,1050,205,78,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,368,Reference Change in Market Share Solar Variation,1031,46,78,27,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,369,SSP Energy Demand Variation Time,723,127,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,370,E Var T,731,179,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,371,369,155,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,372,369,106,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,373,369,205,1,0,0,0,0,128,0,-1--1--1,,1|(786,248)|
+1,374,370,205,1,0,0,0,0,128,0,-1--1--1,,1|(769,274)|
+1,375,370,106,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,376,370,155,1,0,0,0,0,128,0,-1--1--1,,1|(735,48)|
+1,377,368,155,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,378,367,106,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,379,366,205,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,380,RCBI S,782,416,28,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,381,RCBI Var S,818,385,43,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,382,380,381,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,383,381,205,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,384,RCMW S,1103,146,35,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,385,RCMW Var S,1016,149,50,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,386,384,385,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,387,385,106,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,388,RCMS S,1108,-11,33,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,389,RCMS Var S,1028,-3,48,10,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,390,388,389,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,391,389,155,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,392,Market Share Renewables Indicator,126,153,50,27,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,393,273,392,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,394,0,2201,852,446,301,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Energy Demand,Graph
+12,395,0,955,1034,305,200,8,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+#ME Var S>SMOOTH#,Graph
+1,396,268,134,1,0,0,0,0,192,0,-1--1--1,,1|(875,609)|
+1,397,134,277,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,398,317,269,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,399,283,269,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,400,349,269,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,401,SSP Energy Demand Variation Time,498,798,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,402,401,269,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,403,INIT APO per bbl,1760,-655,48,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,404,173,403,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,405,Biomass Energy Production,1410,631,66,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,406,405,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,407,Coal Production,1410,534,45,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,408,407,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,409,Gas Production,1410,586,45,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,410,409,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,411,Oil Production,1410,472,45,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,412,411,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,413,Solar Energy Production,1410,688,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,414,413,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,415,Wind Energy Production,1410,755,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,416,415,245,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,417,Population,912,509,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,418,417,134,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,419,Smoothed GWP per Capita,348,593,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,420,419,263,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,421,Biomass Energy Price,1944,224,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,422,421,238,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,423,Wind Energy Price,1944,67,52,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,424,423,237,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,425,Solar Energy Price,1944,-84,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,426,425,236,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,427,Coal Price,1944,-244,48,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,428,427,235,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,429,Gas Price,1944,-426,46,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,430,429,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,431,Oil Price,1944,-580,41,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,432,431,233,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,433,Mtoe per Barrel,1895,-679,38,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,434,433,403,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,435,toe per Mtoe,2184,-117,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,436,435,234,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,437,435,235,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,438,435,236,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,439,435,237,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,440,435,238,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,441,435,233,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,442,Mtoe into EJ,1079,698,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,443,442,277,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+4:Time
+5:GWP per Capita
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:67,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

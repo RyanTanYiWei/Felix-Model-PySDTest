@@ -1,0 +1,312 @@
+{UTF-8}
+J per W Year=
+	365*24*60*60/1e+22
+	~	Je22/Watt/Year
+	~	Convertion from watts*year to Joules*1e22.
+	|
+
+TonCO2 to Million ton CO2=
+	1/1e+06
+	~	Million ton CO2/TonCO2
+	~		|
+
+USD to billionUSD=
+	1 / 1e+09
+	~	B$/$
+	~		|
+
+"$ into $thousand"=
+	1/1000
+	~	Thousand
+	~		|
+
+"100 percent"=
+	100
+	~	percent
+	~		|
+
+ton to 1000ton=
+	1/1000
+	~	Thousonds ton/Ton
+	~		|
+
+ton to billion ton=
+	1/1e+09
+	~	Billion ton/Ton
+	~		|
+
+ton to kg=
+	1000
+	~	kg/Ton
+	~		|
+
+kcal to Mkcal=
+	1e-06
+	~	Mkcal/kcal
+	~		|
+
+Sqr m to ha=
+	0.0001
+	~	ha/(m*m)
+	~		|
+
+Ton C to kg CO2=
+	3670
+	~	kgCO2/TonC
+	~	Conversion from TonC to kgCO2.
+	|
+
+Biomass ton into Biomass million ton=
+	1/1e+06
+	~	Biomass million ton/Biomass ton
+	~		|
+
+CO2 to C=
+	3.664
+	~	TonCO2/TonC
+	~		|
+
+Days in Year=
+	365
+	~	Days/Year
+	~	The number of days per year.
+	|
+
+GtC to TonC=
+	1e+09
+	~	TonC/GtC
+	~	1 GtC equals 1000000000 tons of carbon
+	|
+
+ha into million ha=
+	1/1e+06
+	~	Million ha/ha
+	~		|
+
+Hours per Year=
+	8760
+	~	Hour/Year
+	~	Assumed total number of hours per year.
+	|
+
+kW into GW=
+	1e+06
+	~	kW/GW
+	~	Coefficient to convert kilowatts into gigawatts.
+	|
+
+kW into TW=
+	1e+10
+	~	kW/TW
+	~	Coefficient to convert kilowatts into terawatts.
+	|
+
+kWh into Mtoe=
+	8.6e-11
+	~	Mtoe/(kW*Hour)
+	~	Coefficient to convert kWh into Mtoe.
+	|
+
+kWh into Mtoe peak hour=
+	8.6e-11
+	~	Mtoe/kW
+	~	Coefficient to convert kWh into Mtoe peak hour.
+	|
+
+Mtoe into EJ=
+	1/23.8846
+	~	EJ/Mtoe
+	~		|
+
+Mtoe per Barrel=
+	1.364e-07
+	~	Mtoe/Barrel
+	~	Coefficient to convert million tons of oil equivalent unit (Mtoe) into \
+		barrels.
+	|
+
+Mtoe per Billion Cubic meter=
+	0.86
+	~	Mtoe/Billion Cubic Meters
+	~	Unit conversion: \
+		https://www.bp.com/content/dam/bp/business-sites/en/global/corporate/pdfs/e\
+		nergy-economics/statistical-review/bp-stats-review-2019-approximate-convers\
+		ion-factors.pdf
+	|
+
+Mtoe per Btu=
+	2.5e-08
+	~	Mtoe/MBtu
+	~	Coefficient to convert million tons of oil equivalent unit (Mtoe) into \
+		British thermal unit (Btu).
+	|
+
+Mtoe per Ton=
+	4.9e-07
+	~	Mtoe/Ton
+	~	Coefficient to convert million tons of oil equivalent unit (Mtoe) into \
+		coal tons (Ton).
+	|
+
+toe per Mtoe=
+	1e+06
+	~	toe/Mtoe
+	~	Conversion from Mtoe to toe.
+	|
+
+Mtoe to MJ=
+	4.1868e+10
+	~	MJ/Mtoe
+	~	https://www.unitjuggler.com/convert-energy-from-Mtoe-to-MJ.html
+	|
+
+ppm to GtC=
+	2.13
+	~	GtC/ppm
+	~	1 ppm by volume of atmosphere CO2 equals 2.13 GtC
+	|
+
+W into GW=
+	1e+09
+	~	W/GW
+	~	Coefficient to convert watts into gigawatts
+	|
+
+tDM to Million tDM=
+	1/1e+06
+	~	Million tDM/tDM
+	~		|
+
+Ton to Million ton=
+	1/1e+06
+	~	Million ton/Ton
+	~		|
+
+TonCO2 to Billion TonCO2=
+	1/1e+09
+	~	Billion ton CO2/TonCO2
+	~		|
+
+sec per Year=
+	3.1536e+07
+	~	sec/Year
+	~	Conversion from year to sec.
+	|
+
+Watt per J s=
+	1
+	~	W/(J/sec)
+	~	Conversion from J/s to watts.
+	|
+
+Mtoe to GJ=
+	4.1868e+07
+	~	GJ/Mtoe
+	~	Conversion from Mtoe to GJ.
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Constants_UnitConversion
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,83,0
+10,1,Mtoe to GJ,335,481,40,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,2,Watt per J s,489,409,44,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,3,sec per Year,49,147,46,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,4,CO2 to C,190,195,35,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,5,ppm to GtC,185,504,42,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,6,GtC to TonC,190,146,46,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,7,TonCO2 to Billion TonCO2,185,334,56,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,8,kWh into Mtoe,489,257,52,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,9,kWh into Mtoe peak hour,489,332,53,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,10,kW into GW,489,200,44,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,11,Mtoe per Ton,335,152,48,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,12,Mtoe per Btu,335,223,47,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,13,Mtoe per Barrel,335,284,56,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,14,Mtoe per Billion Cubic meter,335,362,57,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,15,Mtoe to MJ,335,434,41,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,16,toe per Mtoe,335,547,46,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,17,Mtoe into EJ,336,612,46,10,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,18,kW into TW,489,145,42,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,19,Hours per Year,49,214,54,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,20,Days in Year,49,272,46,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,21,Biomass ton into Biomass million ton,640,430,71,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,22,W into GW,489,471,40,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,23,tDM to Million tDM,-263,155,53,23,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,24,Ton to Million ton,640,286,48,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,25,ha into million ha,785,187,60,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,26,Ton C to kg CO2,185,422,43,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,27,kcal to Mkcal,-93,155,62,23,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,28,Sqr m to ha,785,150,53,23,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,29,"$ into $thousand",-389,155,44,23,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,30,ton to 1000ton,640,198,52,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,31,ton to kg,640,147,32,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,32,ton to billion ton,640,356,56,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,33,"100 percent",945,160,53,23,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|0-0-0,0,0,0,0,0,0
+10,34,USD to billionUSD,-390,238,49,23,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,35,TonCO2 to Million ton CO2,200,262,53,25,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,36,J per W Year,486,535,58,23,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+///---\\\
+:L<%^E!@
+5:J per W Year
+19:83,0
+24:0
+25:0
+26:0
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:0
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1

@@ -1,0 +1,3243 @@
+{UTF-8}
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Desired Investment in Gas Production=
+	MIN(Potential Gas Production from Resources,Total Gas Demand)/Productivity of Investment in Gas Production\
+		*toe per Mtoe
+	~	$/Year
+	~	Desired Investment in Gas Production due to Total Gas Demand and \
+		Productivity of Investment in Gas Production.
+	|
+
+Unit Cost of Gas Production=
+	1/Productivity of Investment in Gas Production*toe per Mtoe+Climate Policy Scenario*\
+		CO2 Intensity of Fuels[Gas]*Carbon Price
+	~	$/Mtoe
+	~	Unit cost of gas production.
+	|
+
+Gas Production Indicator=
+	Gas Production*Mtoe into EJ
+	~	EJ/Year
+	~		|
+
+Unit Cost of Gas Exploration=
+	MIN(Max Unit Cost of Gas Exploration, IF THEN ELSE(Productivity of Investment in Gas Exploration\
+		=0,0,1/Productivity of Investment in Gas Exploration
+	*toe per Mtoe))
+	~	$/Mtoe
+	~	Unit cost of gas exploration. Depends on remaining undiscovered gas \
+		resources and advances in exploration technologies.
+	|
+
+Potential Gas Production from Investment=
+	Productivity of Investment in Gas Production*Effective Investment in Gas Production/\
+		toe per Mtoe
+	~	Mtoe/Year
+	~	Potential Gas Production due to available investments in gas resources \
+		recovery.
+	|
+
+Potential Gas Exploration=
+	Effective Investment in Gas Exploration*Productivity of Investment in Gas Exploration\
+		/toe per Mtoe
+	~	Mtoe/Year
+	~	Potential Gas exploration due to available investments in gas resources \
+		discovery.
+	|
+
+Rate of New Discovery Gas=
+	Annual Growth in Gas Reserves*Mtoe per Billion Cubic meter
+	~	Mtoe/Year
+	~		|
+
+INIT UGRN=
+	Initial World Stock of Gas Billion Cubic meter*Mtoe per Billion Cubic meter
+	~	Mtoe
+	~	Initial amount of Undiscovered Gas Resources.
+	|
+
+Gas Price per MBtu=
+	Gas Price*Mtoe per Btu
+	~	$/MBtu
+	~	Actual Gas Price per Barrel.
+	|
+
+Total Gas Demand=
+	Energy Demand*Market Share Gas
+	~	Mtoe/Year
+	~	Total demand for gas resources.
+	|
+
+Max Unit Cost of Gas Exploration=
+	MFC Var S+SMOOTH(STEP(Max Unit Cost of Fossil Fuel Exploration Variation-MFC Var S, \
+		2020+E Var T),SSP Energy Production Variation Time
+	)
+	~	$/Mtoe
+	~	Upper level limit for unit cost of gas exploration.
+	|
+
+Adjustment for Identified Gas Resource=
+	(Required Identified Gas Resources-Identified Gas Resources)/Identified Gas Resources Adjustment Time
+	~	Mtoe/Year
+	~	Adjustment of Identified Gas Resource to the desired level over a \
+		specified adjustment time.
+	|
+
+Annual Growth in Gas Reserves=
+	STEP(URG Var S+SMOOTH(STEP(Annual Growth in Gas Reserves Variation-URG Var S, 2020+E Var T\
+		),SSP Energy Production Variation Time), 2010)
+	~	Billion Cubic Meters/Year
+	~	We asssumed the gas boost equal to the average annual growth in the total \
+		proved gas reserves is 2.2 Trillion cubic meters in the last 20 years \
+		(1999-2019).
+	|
+
+Annual Growth in Gas Reserves Variation=
+	5000
+	~	Billion Cubic Meters/Year
+	~		|
+
+Average Gas Production= INTEG (
+	Change in Average Gas Production,
+		INIT Average Gas Production
+		)
+	~	Mtoe/Year
+	~	Average total gas production per year.
+	|
+
+Change in Average Gas Production=
+	(Gas Production-Average Gas Production)/Time to Average Gas Production
+	~	Mtoe/(Year*Year)
+	~	Change in Average Gas Production.
+	|
+
+Change in Effective Investment in Gas Exploration=
+	(Investment in Gas Exploration-Effective Investment in Gas Exploration)/Investment in Gas Exploration Delay
+	~	$/(Year*Year)
+	~	Change in Effective Investment in Gas Exploration.
+	|
+
+Change in Effective Investment in Gas Production=
+	(Investment in Gas Production-Effective Investment in Gas Production)/Investment in Gas Production Delay
+	~	$/(Year*Year)
+	~	Change in Effective Investment in Gas Production.
+	|
+
+Change in Gas Productivity of Investment=
+	(Productivity of Investment in Gas Exploration-Gas Productivity of Investment)/Gas Production Coverage
+	~	toe/(Year*$)
+	~	Change in Gas Productivity of Investment.
+	|
+
+Cumulative Additions to Gas Production=
+	Identified Gas Resources+Cumulative Gas Production
+	~	Mtoe
+	~	Identified and already produced gas resources.
+	|
+
+Cumulative Gas Production= INTEG (
+	Gas Production,
+		INIT CGPN)
+	~	Mtoe
+	~	Cumulative Gas resources that has been produced.
+	|
+
+Delay Time IRGFDU=
+	Gas Discovery Technology Development Time/3
+	~	Year
+	~		|
+
+Delay Time IRGFRU=
+	Gas Recovery Technology Development Time/3
+	~	Year
+	~		|
+
+Desired Gas Exploration Rate=
+	MAX(0,Adjustment for Identified Gas Resource+Gas Production)
+	~	Mtoe/Year
+	~	Desired Gas exploration rate due to Total Gas Demand and Identified Gas \
+		Resources safety coverage.
+	|
+
+Desired Gas Gross Margin=
+	0.2
+	~	Dmnl
+	~	Desired Gross Margin per unit gas resources.
+	|
+
+Desired Investment in Gas Exploration=
+	Desired Gas Exploration Rate*Unit Cost of Gas Exploration
+	~	$/Year
+	~	Desired amount of resources that need to be invested in order to secure \
+		desired gas exploration.
+	|
+
+Effect of Gas Demand and Supply on Price=
+	SG Init*(Total Gas Demand/Potential Gas Production)^Sensitivity of Gas Price to Supply and Demand
+	~	Dmnl
+	~	Effect of Gas Demand and Supply ratio on actual gas price.
+	|
+
+Effect of Technology on Gas Discoveries=
+	Total Gas Discoverable Resources/INIT UGRN
+	~	Dmnl
+	~	Impact of technology development on gas exploration taking into account \
+		remaining undiscovered gas resources (the less remaining undiscovered gas \
+		resources the more expensive it is to discover them).
+	|
+
+Effective Investment in Gas Exploration= INTEG (
+	Change in Effective Investment in Gas Exploration,
+		INIT EIGE
+		
+		)
+	~	$/Year
+	~	Effective investments dedicated for gas resources exploration.
+	|
+
+Effective Investment in Gas Production= INTEG (
+	Change in Effective Investment in Gas Production,
+		INIT EIGP
+		)
+	~	$/Year
+	~	Effective investments dedicated for gas resources production.
+	|
+
+Effectiveness IRGFDU=
+	Investment in Gas Discovery Technology*Effectiveness of Investment in Gas Discovery Technology
+	~	1/Year
+	~		|
+
+Effectiveness IRGFRU=
+	Investment in Gas Recovery Technology*Effectiveness of Investment in Gas Recovery Technology
+	~	1/Year
+	~		|
+
+Effectiveness of Investment in Gas Discovery Technology=
+	1.86e-09+STEP(Effectiveness of Investment in Gas Discovery Technology Variation-1.86e-09\
+		, 2020)
+	~	1/$
+	~	Effectiveness of resources dedicated to gas discovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Gas Discovery Technology Variation=
+	1.86e-09
+	~	1/$
+	~	Effectiveness of resources dedicated to gas discovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Gas Recovery Technology=
+	EIGR Var S+SMOOTH(STEP(Effectiveness of Investment in Gas Recovery Technology Variation\
+		-EIGR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	1/$
+	~	Effectiveness of resources dedicated to gas recovery technology \
+		development.
+	|
+
+Effectiveness of Investment in Gas Recovery Technology Variation=
+	3e-11
+	~	1/$
+	~	Effectiveness of resources dedicated to gas recovery technology \
+		development.
+	|
+
+EIGR S=
+	3e-11
+	~	1/$
+	~	Effectiveness of resources dedicated to gas recovery technology \
+		development.
+	|
+
+EIGR Var S=
+	3e-11+SMOOTH(STEP(EIGR S-3e-11, 2020),1
+	)
+	~	1/$
+	~	Effectiveness of resources dedicated to gas recovery technology \
+		development.
+	|
+
+FG S=
+	0.4
+	~	Dmnl [0,0.6]
+	~	Percentage of total gas sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+FG Var S=
+	0.4+SMOOTH(STEP(FG S-0.4, 2020),1)
+	~	Dmnl
+	~	Percentage of total gas sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Fraction Invested in Gas Discovery Technology=
+	Table for FIGDT(Gas Fraction Discoverable)
+	~	Dmnl
+	~	Fraction of investments in gas technology dedicated to discovery \
+		technology.
+	|
+
+Fraction of Gas Revenues Invested in Technology=
+	FG Var S+SMOOTH(STEP(Fraction of Gas Revenues Invested in Technology Variation-FG Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Dmnl
+	~	Percentage of total gas sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Fraction of Gas Revenues Invested in Technology Variation=
+	0.4
+	~	Dmnl
+	~	Percentage of total gas sector revenue dedicated to exploration and \
+		production technology development.
+	|
+
+Gas Cost=
+	Unit Cost of Gas Exploration+Unit Cost of Gas Production
+	~	$/Mtoe
+	~	Cost of unit gas resources as a sum of unit exploration and production \
+		costs.
+	|
+
+Gas Demand to Supply Ratio=
+	Total Gas Demand/Potential Gas Production
+	~	Dmnl
+	~	Gas Demand to Supply Ratio.
+	|
+
+Gas Discovery and Recovery Technology Development Time Variation=
+	6
+	~	Year
+	~		|
+
+Gas Discovery Technology Development Time=
+	GDR Var S+SMOOTH(STEP(Gas Discovery and Recovery Technology Development Time Variation\
+		-GDR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Average time required to turn investments into concrete gas discovery \
+		developments.
+	|
+
+Gas Exploration=
+	MAX(0,Gas Exploration Rate)
+	~	Mtoe/Year
+	~	Gas resources discovery rate.
+	|
+
+Gas Exploration Rate=
+	MIN(Desired Gas Exploration Rate,Potential Gas Exploration)
+	~	Mtoe/Year
+	~	Gas Exploration Rate accounting for potential and desired gas exploration \
+		rates.
+	|
+
+Gas Fraction Discoverable=
+	MINGFD+(MAXGFD-MINGFD)*(Ratio of Gas Fraction Discoverable to Undiscoverable/(Ratio of Gas Fraction Discoverable to Undiscoverable\
+		+1))
+	~	Dmnl
+	~	Percentage of gas resources that can be still explored due to current \
+		state of discovery technology.
+	|
+
+Gas Fraction Recoverable=
+	MINGFR+(MAXGFR-MINGFR)*(Ratio of Gas Fraction Recoverable to Unrecoverable/(Ratio of Gas Fraction Recoverable to Unrecoverable\
+		+1))
+	~	Dmnl
+	~	Percentage of gas resources that can be produced due to current state of \
+		recovery technology.
+	|
+
+Gas Gross Margin=
+	(Gas Price-Gas Cost)/Gas Cost
+	~	Dmnl
+	~	Actual gas gross margin.
+	|
+
+Gas Price=
+	Indicated Gas Price*Effect of Gas Demand and Supply on Price
+	~	$/Mtoe
+	~	Actual gas price accounting for indicated gas price and effect of demand \
+		and supply.
+	|
+
+Gas Production=
+	Gas Production Rate
+	~	Mtoe/Year
+	~	Total gas energy production per year. Source of historical data: \
+		International Energy Agency – Key World Energy Statistics 2007; BP \
+		Statistical Review of World Energy June 2008
+	|
+
+Gas Production Coverage=
+	Identified Gas Resources/Average Gas Production
+	~	Year
+	~	Ratio indicating gas coverage in years for discovered resources and at the \
+		current average gas production.
+	|
+
+Gas Production Rate=
+	MIN(Total Gas Demand,Potential Gas Production)
+	~	Mtoe/Year
+	~	Total gas energy production per year due to available resources, \
+		developments in production technology and gas energy demand.
+	|
+
+Gas Productivity of Investment= INTEG (
+	Change in Gas Productivity of Investment,
+		INIT GPI
+		)
+	~	toe/$
+	~	Factor indicating productivity of investments in gas production.
+	|
+
+Gas Recovery Technology Development Time=
+	GDR Var S+SMOOTH(STEP(Gas Discovery and Recovery Technology Development Time Variation\
+		-GDR Var S, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Average time required to turn investments into concrete gas recovery \
+		developments.
+	|
+
+Gas Revenue=
+	Gas Price*Average Gas Production
+	~	$/Year
+	~	Total revenue in gas market.
+	|
+
+Gas Shortage=
+	Total Gas Demand-Gas Production
+	~	Mtoe/Year
+	~	Difference between demand and the gas production rate.
+	|
+
+GDR S=
+	6
+	~	Year
+	~		|
+
+GDR Var S=
+	6+SMOOTH(STEP(GDR S-6, 2020),1)
+	~	$
+	~		|
+
+Identified Gas Resources= INTEG (
+	Gas Exploration-Gas Production,
+		(Total Gas Demand*Normal Gas Production Ratio+Cumulative Gas Production*(1-Gas Fraction Recoverable\
+		))/Gas Fraction Recoverable)
+	~	Mtoe
+	~	Gas Resources discovered thanks to developments in exploration technology.
+	|
+
+Identified Gas Resources Adjustment Time=
+	5
+	~	Year [0,?]
+	~	Time to adjust Identified Gas Resource to the desired level.
+	|
+
+IG S=
+	5
+	~	Year
+	~		|
+
+IG Var S=
+	5+SMOOTH(STEP(IG S-5, 2020),1)
+	~	Year
+	~		|
+
+Increase in Ratio of Gas Fraction Discoverable to Undiscoverable=
+	Outflow IRGFDULV3
+	~	1/Year
+	~	Increase in Ratio of Gas Fraction Discoverable to Undiscoverable due to \
+		investments in discovery technology and their productivity.
+	|
+
+Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV1= INTEG (
+	Inflow IRGFDULV1-Outflow IRGFDULV1,
+		Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV2= INTEG (
+	Inflow IRGFDULV2-Outflow IRGFDULV2,
+		Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV3= INTEG (
+	Inflow IRGFDULV3-Outflow IRGFDULV3,
+		Effectiveness IRGFDU*Delay Time IRGFDU)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Gas Fraction Recoverable to Unrecoverable=
+	Outflow IRGFRULV3
+	~	1/Year
+	~	Increase in Ratio of Gas Fraction Recoverable to Unrecoverable due to \
+		investments in recovery technology and their productivity.
+	|
+
+Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV1= INTEG (
+	Inflow IRGFRULV1-Outflow IRGFRULV1,
+		Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV2= INTEG (
+	Inflow IRGFRULV2-Outflow IRGFRULV2,
+		Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV3)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV3= INTEG (
+	Inflow IRGFRULV3-Outflow IRGFRULV3,
+		Effectiveness IRGFRU*Delay Time IRGFRU)
+	~	1
+	~	For coverting DELAY3 function only. Added by Q Ye in July 2024
+	|
+
+Indicated Gas Price=
+	Gas Cost*(1+Desired Gas Gross Margin)
+	~	$/Mtoe
+	~	Indicated gas price accounting for exploration and production cost and \
+		gross margin.
+	|
+
+Inflow IRGFDULV1=
+	Effectiveness IRGFDU
+	~	1/Year
+	~		|
+
+Inflow IRGFDULV2=
+	Outflow IRGFDULV1
+	~	1/Year
+	~		|
+
+Inflow IRGFDULV3=
+	Outflow IRGFDULV2
+	~	1/Year
+	~		|
+
+Inflow IRGFRULV1=
+	Effectiveness IRGFRU
+	~	1/Year
+	~		|
+
+Inflow IRGFRULV2=
+	Outflow IRGFRULV1
+	~	1/Year
+	~		|
+
+Inflow IRGFRULV3=
+	Outflow IRGFRULV2
+	~	1/Year
+	~		|
+
+INIT Average Gas Production=
+	1.87028
+	~	
+	~		|
+
+INIT CGPN=
+	0
+	~	Mtoe
+	~	Cumulative Gas Production
+	|
+
+INIT EIGE=
+	9.08164e+07
+	~	
+	~	Effective Investment in Gas Exploration
+	|
+
+INIT EIGP=
+	9.08165e+06
+	~	
+	~	Effective Investment in Gas Production
+	|
+
+INIT GPI=
+	0.0205941
+	~	
+	~	Gas Productivity of Investment
+	|
+
+INIT RGDU=
+	0.15
+	~	Dmnl [0,0.2]
+	~	Initial Ratio of Gas Fraction Discoverable to Undiscoverable.
+	|
+
+INIT RGRU=
+	0
+	~	Dmnl
+	~	Initial Ratio of Gas Fraction Recoverable to Unrecoverable.
+	|
+
+Initial World Stock of Gas Billion Cubic meter=
+	849505
+	~	Billion Cubic Meters
+	~		|
+
+Investment in Gas Discovery Technology=
+	Investment in Gas Technology*Fraction Invested in Gas Discovery Technology
+	~	$/Year
+	~	Total investments in gas exploration technology.
+	|
+
+Investment in Gas Exploration=
+	Desired Investment in Gas Exploration
+	~	$/Year
+	~	Amount of resources dedicated to gas exploration.
+	|
+
+Investment in Gas Exploration and Production Delay Variation=
+	5
+	~	Year
+	~		|
+
+Investment in Gas Exploration Delay=
+	IG Var S+SMOOTH(STEP(Investment in Gas Exploration and Production Delay Variation-IG Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Time delay to make investments in gas exploration effective.
+	|
+
+Investment in Gas Production=
+	Desired Investment in Gas Production
+	~	$/Year
+	~	Amount of resources dedicated to gas production.
+	|
+
+Investment in Gas Production Delay=
+	IG Var S+SMOOTH(STEP(Investment in Gas Exploration and Production Delay Variation-IG Var S\
+		, 2020+E Var T),SSP Energy Technology Variation Time
+	)
+	~	Year
+	~	Time delay to make investments in gas production effective.
+	|
+
+Investment in Gas Recovery Technology=
+	Investment in Gas Technology*(1-Fraction Invested in Gas Discovery Technology)
+	~	$/Year
+	~	Total investments in gas production technology.
+	|
+
+Investment in Gas Technology=
+	Fraction of Gas Revenues Invested in Technology*Gas Revenue
+	~	$/Year
+	~	Investments in development of gas exploration and production technology.
+	|
+
+MINGFD=
+	0.02
+	~	Dmnl
+	~	Initial and minimal possible percentage of gas resources to be discovered.
+	|
+
+MINGFR=
+	0.008
+	~	Dmnl
+	~	Initial and minimal possible percentage of gas resources to be recovered.
+	|
+
+Normal Gas Production Ratio=
+	5
+	~	Year [0,?]
+	~	Safety stock coverage as a number of years of the total gas demand the gas \
+		sector would like to maintain in identified gas resources. It secures the \
+		market against possibility of unforeseen variations in demand. It is also \
+		a stimulus for gas exploration.
+	|
+
+Outflow IRGFDULV1=
+	Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV1/Delay Time IRGFDU
+	~	1/Year
+	~		|
+
+Outflow IRGFDULV2=
+	Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV2/Delay Time IRGFDU
+	~	1/Year
+	~		|
+
+Outflow IRGFDULV3=
+	Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV3/Delay Time IRGFDU
+	~	1/Year
+	~		|
+
+Outflow IRGFRULV1=
+	Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV1/Delay Time IRGFRU
+	~	1/Year
+	~		|
+
+Outflow IRGFRULV2=
+	Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV2/Delay Time IRGFRU
+	~	1/Year
+	~		|
+
+Outflow IRGFRULV3=
+	Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV3/Delay Time IRGFRU
+	~	1/Year
+	~		|
+
+Potential Gas Production=
+	MIN(Potential Gas Production from Investment,Potential Gas Production from Resources\
+		)
+	~	Mtoe/Year
+	~	Potential Gas Production due to available investments in gas resources \
+		recovery and recovery technology.
+	|
+
+Potential Gas Production from Resources=
+	Total Gas Recoverable Resource Remaining/Normal Gas Production Ratio
+	~	Mtoe/Year
+	~	Potential Gas Production rate due to Total Oil Recoverable Resource \
+		Remaining adjusted by oil production safety coverage.
+	|
+
+Productivity of Investment in Gas Exploration=
+	MAX(0,Relative Productivity of Investment in Gas Exploration*Effect of Technology on Gas Discoveries\
+		)
+	~	toe/$
+	~	Parameter indicating the amount of gas resources possible to be explored \
+		per unit investment spent.
+	|
+
+Productivity of Investment in Gas Production=
+	Relative Productivity of Investment in Gas Production to Exploration*Gas Productivity of Investment
+	~	toe/$
+	~	Parameter indicating the amount of gas resources possible to be recovered \
+		per unit investment spent.
+	|
+
+Ratio of Gas Fraction Discoverable to Undiscoverable= INTEG (
+	Increase in Ratio of Gas Fraction Discoverable to Undiscoverable,
+		INIT RGDU)
+	~	Dmnl
+	~	Ratio of Gas Fraction Discoverable to Undiscoverable increased due to \
+		investments in discovery technology and their productivity.
+	|
+
+Ratio of Gas Fraction Recoverable to Unrecoverable= INTEG (
+	Increase in Ratio of Gas Fraction Recoverable to Unrecoverable,
+		INIT RGRU)
+	~	Dmnl
+	~	Ratio of Gas Fraction Recoverable to Unrecoverable increased due to \
+		investments in recovery technology and their productivity.
+	|
+
+Relative Productivity of Investment in Gas Exploration=
+	0.1+STEP(Relative Productivity of Investment in Gas Exploration Variation-0.1, 2020)
+	~	toe/$
+	~	Relative Productivity of Investment in Gas Exploration without taking into \
+		account remaining undiscovered gas resources and advances in exploration \
+		technologies.
+	|
+
+Relative Productivity of Investment in Gas Exploration Variation=
+	0.1
+	~	toe/$ [0,?]
+	~	Relative Productivity of Investment in Gas Exploration without taking into \
+		account remaining undiscovered gas resources and advances in exploration \
+		technologies.
+	|
+
+Relative Productivity of Investment in Gas Production Compared to Exploration Variation\
+		=
+	0.3
+	~	Dmnl
+	~		|
+
+Relative Productivity of Investment in Gas Production to Exploration=
+	RPGPE Var S+SMOOTH(STEP(Relative Productivity of Investment in Gas Production Compared to Exploration Variation\
+		-RPGPE Var S, 2020+E Var T
+	),SSP Energy Technology Variation Time)
+	~	Dmnl
+	~	Relative Productivity of Investment in Gas Production as a multiplier of \
+		Productivity of Investment in Gas Exploration.
+	|
+
+Required Identified Gas Resources=
+	(Identified Gas Resources/Total Gas Recoverable Resource Remaining)*(Normal Gas Production Ratio\
+		*Total Gas Demand)
+	~	Mtoe
+	~	The desired Identified Gas Resources level sought by the gas sector.
+	|
+
+RPGPE S=
+	0.3
+	~	Dmnl
+	~		|
+
+RPGPE Var S=
+	0.3+SMOOTH(STEP(RPGPE S-0.3, 2020),1)
+	~	Dmnl
+	~		|
+
+Sensitivity of Gas Price to Supply and Demand=
+	SG Var S+SMOOTH(STEP(Sensitivity of Gas Price to Supply and Demand Variation-SG Var S\
+		, 2020+E Var T),SSP Energy Demand Variation Time
+	)
+	~	Dmnl
+	~	Sensitivity of Gas Price to Supply and Demand ratio.
+	|
+
+Sensitivity of Gas Price to Supply and Demand Variation=
+	1.11429
+	~	Dmnl
+	~		|
+
+SG Init=
+	0.05
+	~	Dmnl [0,1]
+	~	A CONSTANT
+	|
+
+SG S=
+	1.11429
+	~	Dmnl [0,3]
+	~		|
+
+SG Var S=
+	1.11429+SMOOTH(STEP(SG S-1.11429, 2020),1)
+	~	Dmnl
+	~		|
+
+Share of Investment in Revenue Gas=
+	Total Investment in Gas/Gas Revenue
+	~	Dmnl
+	~		|
+
+Share of Upstream Investment in Total Investment Gas=
+	0.9
+	~	Dmnl
+	~	Data from World Energy Investment 2023
+	|
+
+Table for FIGDT(
+	[(0,0)-(1,1)],(0,0.8),(0.2,0.8),(0.4,0.7),(0.6,0.5),(0.8,0.2),(1,0))
+	~	Dmnl
+	~	Table determining order by which technology investments are dedicated to \
+		gas exploration and production technologies. For small Gas Fraction \
+		Discoverable, in order to make sufficient resources available to be \
+		produced, more investments are directed to exploration technologies. Once \
+		the Gas Fraction Discoverable increases the investments are redirected to \
+		production technologies.
+	|
+
+Time to Average Gas Production=
+	1
+	~	Year
+	~	Time to average total gas production per year.
+	|
+
+Total Gas Discoverable Resources=
+	Total Gas Resources*Gas Fraction Discoverable-Cumulative Additions to Gas Production
+	~	Mtoe
+	~	Total Gas Discoverable Resources as a percentage of Total Gas Resources. \
+		It excludes identified and already produced resources. The percentage is \
+		determined by exploration technology developments.
+	|
+
+Total Gas Recoverable Resource Remaining=
+	Cumulative Additions to Gas Production*Gas Fraction Recoverable-Cumulative Gas Production
+	~	Mtoe
+	~	Total Gas Recoverable Resources Remaining as a percentage of Cumulative \
+		Additions to Gas Production. It excludes already produced resources. The \
+		percentage is determined by production technology developments.
+	|
+
+Total Gas Resources=
+	Undiscovered Gas Resources+Cumulative Additions to Gas Production
+	~	Mtoe
+	~	Total gas resources including Undiscovered Gas Resources, Identified Gas \
+		Resources and resources already produced i.e. Cumulative Gas Production.
+	|
+
+Total Investment in Gas=
+	(Investment in Gas Exploration+Investment in Gas Production+Investment in Gas Technology\
+		)/Share of Upstream Investment in Total Investment Gas
+	~	$/Year
+	~		|
+
+Undiscovered Gas Resources= INTEG (
+	Rate of New Discovery Gas-Gas Exploration,
+		INIT UGRN)
+	~	Mtoe
+	~	Existing Gas Resources but not discovered yet.
+	|
+
+URG S=
+	3400
+	~	Billion Cubic Meters/Year
+	~		|
+
+URG Var S=
+	3400+SMOOTH(STEP(URG S-3400, 2020),1)
+	~	Billion Cubic Meters/Year
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.scenarios
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+CO2 Intensity of Fuels[Coal]=
+	220*(0.000453592/0.025)*1e+06 ~~|
+CO2 Intensity of Fuels[Gas]=
+	117*(0.000453592/0.025)*1e+06 ~~|
+CO2 Intensity of Fuels[Oil]=
+	160*(0.000453592/0.025)*1e+06
+	~	tCO2/Mtoe
+	~	Coal: 220 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		Gas: 117 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		Oil: 160 (Pounds of CO2 emitted per million British thermal units for coal) * \
+		0.000453592 (pound to ton) / 0.025 (milltion British thermal units to toe) \
+		* 1e+6 (toe to Mtoe)
+		
+		Data from EIA: https://www.eia.gov/tools/faqs/faq.php?id=73&t=11
+	|
+
+Max Unit Cost of Fossil Fuel Exploration Variation=
+	1e+09
+	~	$/Mtoe [0,?]
+	~		|
+
+SSP Energy Demand Variation Time=
+	5
+	~	Year
+	~		|
+
+SSP Energy Technology Variation Time=
+	5
+	~	Year
+	~		|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+MAXGFD=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of gas resources to be discovered.
+	|
+
+MAXGFR=
+	1
+	~	Dmnl
+	~	Maximal possible percentage of gas resources to be recovered.
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+Climate Policy Scenario=
+	0
+	~	Dmnl
+	~	0: No climate policy
+		1: Climate policy
+	|
+
+E Var T=
+	0
+	~	Year
+	~		|
+
+SSP Energy Production Variation Time=
+	5
+	~	Year
+	~		|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_Energy_Gas
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,41,0
+10,1,Identified Gas Resources,1246,268,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Cumulative Gas Production,1708,268,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(1571,266)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(1391,266)|
+11,5,0,1485,266,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Gas Production,1485,283,56,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,7,Potential Gas Production,1706,19,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,8,Cumulative Additions to Gas Production,1952,647,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,9,Gas Production Rate,1484,107,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,10,7,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,11,9,5,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,12,Potential Gas Production from Resources,1952,236,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,13,Normal Gas Production Ratio,1729,363,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,14,13,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,15,12,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,16,Potential Gas Production from Investment,1706,-43,58,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,17,16,7,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,18,Productivity of Investment in Gas Production,1507,-194,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,19,Effective Investment in Gas Production,1514,-44,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,20,18,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,21,19,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,22,Investment in Gas Production Delay,1400,-145,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,23,22,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,24,Desired Investment in Gas Production,1237,-193,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,25,18,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,26,12,24,1,0,0,0,0,64,0,-1--1--1,,1|(1587,-340)|
+10,27,Gas Shortage,1368,139,51,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,28,Undiscovered Gas Resources,703,267,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,29,31,1,4,0,0,22,0,0,0,-1--1--1,,1|(1102,266)|
+1,30,31,28,100,0,0,22,0,0,0,-1--1--1,,1|(882,266)|
+11,31,0,1010,266,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,32,Gas Exploration,1010,283,58,10,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,33,INIT UGRN,715,202,40,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,34,Total Gas Resources,1952,807,40,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,35,Total Gas Recoverable Resource Remaining,1952,480,77,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,36,8,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,37,35,12,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,38,8,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,39,Undiscovered Gas Resources,1729,807,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,40,39,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,41,Total Gas Discoverable Resources,2112,731,49,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,42,34,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,43,8,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,44,Effect of Technology on Gas Discoveries,1363,999,74,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,45,Effective Investment in Gas Exploration,933,713,57,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,46,Investment in Gas Exploration Delay,940,546,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,47,46,209,1,0,0,0,0,64,0,-1--1--1,,1|(996,631)|
+10,48,Potential Gas Exploration,685,631,50,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,49,45,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,50,44,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,51,Investment in Gas Exploration,1119,579,65,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,52,51,209,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,53,48,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,54,Desired Investment in Gas Exploration,1302,634,70,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,55,Gas Fraction Discoverable,2297,731,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,56,Gas Fraction Recoverable,2276,480,48,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,57,MINGFD,2381,795,33,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,58,MAXGFD,2381,663,37,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,59,Ratio of Gas Fraction Discoverable to Undiscoverable,2482,731,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,60,57,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,61,58,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,62,59,55,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,63,48,2719,730,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,64,66,59,4,0,0,22,0,0,0,-1--1--1,,1|(2583,730)|
+1,65,66,63,100,0,0,22,0,0,0,-1--1--1,,1|(2674,730)|
+11,66,0,2633,730,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,67,Increase in Ratio of Gas Fraction Discoverable to Undiscoverable,2633,762,90,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,68,INIT RGDU,2482,784,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,69,Investment in Gas Discovery Technology,3079,789,80,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,Gas Discovery Technology Development Time,2871,838,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,71,MINGFR,2381,537,32,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,72,MAXGFR,2381,409,36,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,73,Ratio of Gas Fraction Recoverable to Unrecoverable,2474,479,58,35,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,74,48,2711,475,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,75,77,73,4,0,0,22,0,0,0,-1--1--1,,1|(2575,475)|
+1,76,77,74,100,0,0,22,0,0,0,-1--1--1,,1|(2666,475)|
+11,77,0,2625,475,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,78,Increase in Ratio of Gas Fraction Recoverable to Unrecoverable,2625,507,87,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,INIT RGRU,2474,529,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,80,Investment in Gas Recovery Technology,3059,534,78,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,81,Gas Recovery Technology Development Time,2850,616,69,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,82,71,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,83,72,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,84,73,56,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,85,Investment in Gas Technology,3217,645,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,86,Fraction Invested in Gas Discovery Technology,3234,855,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,87,85,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,88,86,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,89,85,80,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,90,86,80,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,91,55,86,1,0,0,0,0,64,0,-1--1--1,,1|(2696,1015)|
+10,92,Table for FIGDT,3295,944,58,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,93,92,86,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,94,Gas Revenue,2488,163,49,10,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,95,Fraction of Gas Revenues Invested in Technology,3396,648,77,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,96,Average Gas Production,1144,167,48,26,3,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,97,Gas Price,2487,60,37,10,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,98,97,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,99,INIT CGPN,1709,196,40,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,100,Productivity of Investment in Gas Exploration,818,1004,65,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,101,100,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,102,Relative Productivity of Investment in Gas Exploration,996,1071,83,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,103,Gas Production Coverage,992,217,57,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,104,5,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,105,1,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,106,Unit Cost of Gas Exploration,1153,795,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,107,100,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,108,Productivity of Investment in Gas Exploration,1996,-220,65,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,109,Gas Production Coverage,2041,-165,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,110,108,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,111,109,217,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,112,Unit Cost of Gas Production,1508,-276,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,113,18,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,114,Gas Exploration Rate,1010,434,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,115,114,32,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,116,Required Identified Gas Resources,1343,363,69,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,117,1,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,118,13,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,119,Adjustment for Identified Gas Resource,1246,432,53,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,120,Identified Gas Resources Adjustment Time,1157,352,61,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,121,1,119,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,122,116,119,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,123,120,119,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,124,Desired Gas Exploration Rate,1246,537,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,125,124,114,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,126,119,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,127,6,124,1,0,0,0,0,64,0,-1--1--1,,1|(1462,461)|
+1,128,124,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,129,106,54,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,130,Gas Cost,2487,-105,35,10,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,131,Unit Cost of Gas Exploration,2402,-191,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,132,Unit Cost of Gas Production,2577,-191,65,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,133,131,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,134,132,130,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,135,Indicated Gas Price,2402,-27,51,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,136,130,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,137,Desired Gas Gross Margin,2319,-105,50,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,138,137,135,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,139,Relative Productivity of Investment in Gas Production to Exploration,1762,-196,92,27,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,140,Effect of Gas Demand and Supply on Price,2764,58,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,135,97,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,142,140,97,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,143,Potential Gas Production,2932,93,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,144,Sensitivity of Gas Price to Supply and Demand,2764,-29,71,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,145,143,140,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,146,Gas Demand to Supply Ratio,3089,57,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,147,143,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,148,Gas Gross Margin,2578,-27,40,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,149,97,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,150,130,148,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,151,Total Gas Demand,1237,19,36,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,152,151,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,153,151,9,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,154,151,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,155,Total Gas Demand,2932,22,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,156,155,140,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,157,155,146,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,158,54,51,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,159,Total Gas Demand,1406,308,41,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,160,159,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,161,Gas Revenue,3233,558,58,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,162,161,85,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,163,Time to Average Gas Production,1186,111,61,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,164,163,203,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,165,Identified Gas Resources,1729,647,56,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+10,166,Cumulative Gas Production,1729,480,63,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,167,165,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,168,166,8,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,169,166,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,170,Total Gas Discoverable Resources,1564,951,49,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,171,170,44,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Total Gas Recoverable Resource Remaining,1392,429,84,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,173,172,116,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,174,55,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,175,56,35,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,176,Investment in Gas Production,1316,-103,65,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,177,24,176,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,178,176,197,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,179,Average Gas Production,2666,162,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,180,179,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,181,5,204,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,182,96,103,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,183,INIT UGRN,1566,1019,49,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial||B|128-128-128,0,0,0,0,0,0
+1,184,183,44,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,185,56,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,186,2,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,187,13,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,188,99,2,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,189,68,59,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,190,79,73,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,191,151,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,192,Gas Price per MBtu,2267,61,52,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,193,97,192,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,194,48,1314,-53,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,195,197,19,4,0,0,22,0,0,0,-1--1--1,,1|(1426,-53)|
+1,196,197,194,100,0,0,22,0,0,0,-1--1--1,,1|(1353,-53)|
+11,197,0,1389,-53,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,198,Change in Effective Investment in Gas Production,1389,-21,71,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,199,19,198,1,0,0,0,0,64,0,-1--1--1,,1|(1451,15)|
+12,200,48,1346,166,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,201,203,96,4,0,0,22,0,0,0,-1--1--1,,1|(1229,166)|
+1,202,203,200,100,0,0,22,0,0,0,-1--1--1,,1|(1307,166)|
+11,203,0,1272,166,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,204,Change in Average Gas Production,1272,190,71,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,205,96,204,1,0,0,0,0,64,0,-1--1--1,,1|(1194,206)|
+12,206,48,1155,709,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,207,209,45,4,0,0,22,0,0,0,-1--1--1,,1|(1032,709)|
+1,208,209,206,100,0,0,22,0,0,0,-1--1--1,,1|(1115,709)|
+11,209,0,1080,709,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,210,Change in Effective Investment in Gas Exploration,1080,741,71,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,211,45,210,1,0,0,0,0,64,0,-1--1--1,,1|(993,759)|
+10,212,Gas Productivity of Investment,1813,-113,40,20,3,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,213,212,18,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,214,48,1982,-124,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,215,217,212,4,0,0,22,0,0,0,-1--1--1,,1|(1879,-124)|
+1,216,217,214,100,0,0,22,0,0,0,-1--1--1,,1|(1945,-124)|
+11,217,0,1912,-124,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,218,Change in Gas Productivity of Investment,1912,-92,55,27,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,219,212,218,1,0,0,0,0,64,0,-1--1--1,,1|(1838,-74)|
+10,220,Max Unit Cost of Gas Exploration,1306,782,60,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,221,220,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,222,Effectiveness of Investment in Gas Recovery Technology,2524,602,78,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,223,Effectiveness of Investment in Gas Discovery Technology,2535,851,80,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,224,Gas Production Indicator,1562,443,57,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,225,6,224,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,226,Max Unit Cost of Fossil Fuel Exploration Variation,1484,739,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,227,226,220,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,228,Relative Productivity of Investment in Gas Exploration Variation,1181,1070,83,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,229,Effectiveness of Investment in Gas Recovery Technology Variation,2305,628,98,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,230,Effectiveness of Investment in Gas Discovery Technology Variation,2300,837,98,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,231,228,102,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,232,230,223,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,233,229,222,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,234,Fraction of Gas Revenues Invested in Technology Variation,3506,734,77,27,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,235,234,95,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,236,INIT Average Gas Production,1035,124,65,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,237,236,96,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,238,INIT EIGE,922,781,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,239,238,45,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,240,INIT EIGP,1535,34,36,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,241,240,19,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,242,INIT GPI,1810,-44,30,10,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,243,242,212,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,244,Annual Growth in Gas Reserves Variation,621,549,79,18,8,131,0,34,0,0,0,0,-1--1--1,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,245,SSP Energy Technology Variation Time,1238,-297,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,246,245,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,247,SSP Energy Technology Variation Time,1008,494,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,248,247,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,249,SSP Energy Technology Variation Time,2965,653,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,250,249,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,251,SSP Energy Technology Variation Time,2745,679,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,252,251,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,253,SSP Energy Technology Variation Time,3341,718,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,254,253,95,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,255,SSP Energy Technology Variation Time,1890,-269,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,256,255,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,257,SSP Energy Demand Variation Time,2921,-62,67,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,258,257,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,259,SSP Energy Production Variation Time,1341,871,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,260,259,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,261,SSP Energy Technology Variation Time,2496,658,77,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,262,261,222,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,263,E Var T,1741,-148,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,264,263,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,265,E Var T,2599,675,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,266,EIGR Var S,2336,582,43,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,267,EIGR S,2208,567,28,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,268,267,266,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,269,266,222,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,270,265,222,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,271,E Var T,2951,943,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,272,271,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,273,E Var T,2980,618,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,274,273,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,275,E Var T,3438,581,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,276,FG Var S,3538,659,35,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+10,277,FG S,3613,658,21,10,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-255,0,0,0,0,0,0
+1,278,275,95,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,279,276,95,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,280,277,276,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,281,E Var T,1029,605,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,282,281,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,283,E Var T,1431,-175,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,284,283,22,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,285,E Var T,1261,847,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,286,285,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,287,48,696,453,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,288,290,28,4,0,0,22,0,0,0,-1--1--1,,1|(696,334)|
+1,289,290,287,100,0,0,22,0,0,0,-1--1--1,,1|(696,412)|
+11,290,0,696,373,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,291,Rate of New Discovery Gas,751,373,54,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,292,Initial World Stock of Gas Billion Cubic meter,660,141,74,27,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,293,292,33,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,294,Annual Growth in Gas Reserves,749,455,61,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,295,294,291,1,0,0,0,0,128,0,-1--1--1,,1|(757,408)|
+1,296,244,294,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,297,URG S,525,454,27,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,298,URG Var S,608,480,41,10,8,3,0,34,0,0,0,0,-1--1--1,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,299,E Var T,847,387,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,300,SSP Energy Production Variation Time,881,430,75,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,301,299,294,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,302,300,294,1,0,0,0,0,128,0,-1--1--1,,1|(820,468)|
+1,303,297,298,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,304,298,294,1,0,0,0,0,128,0,-1--1--1,,1|(683,480)|
+1,305,33,28,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,306,CO2 Intensity of Fuels,1404,-373,54,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,307,Climate Policy Scenario,1614,-394,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,308,307,112,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,309,306,112,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,310,Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV3,2890,236,118,21,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,311,Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV2,2890,322,116,23,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,312,Increase in Ratio of Gas Fraction Recoverable to Unrecoverable LV1,2890,406,116,22,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,313,48,3143,228,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,314,316,313,100,16,0,22,0,192,0,-1--1--1,,1|(3104,228)|
+1,315,316,310,4,16,0,22,0,192,0,-1--1--1,,1|(3036,228)|
+11,316,0,3070,228,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,317,Inflow IRGFRULV3,3070,258,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,318,48,2659,236,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,319,321,310,100,16,0,22,0,192,0,-1--1--1,,1|(2749,236)|
+1,320,321,318,4,16,0,22,0,192,0,-1--1--1,,1|(2691,236)|
+11,321,0,2720,236,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,322,Outflow IRGFRULV3,2720,266,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,323,48,3150,320,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,324,326,323,100,16,0,22,0,192,0,-1--1--1,,1|(3109,320)|
+1,325,326,311,4,16,0,22,0,192,0,-1--1--1,,1|(3036,320)|
+11,326,0,3073,320,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,327,Inflow IRGFRULV2,3073,350,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,328,48,2655,322,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,329,331,311,100,16,0,22,0,192,0,-1--1--1,,1|(2749,322)|
+1,330,331,328,4,16,0,22,0,192,0,-1--1--1,,1|(2689,322)|
+11,331,0,2719,322,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,332,Outflow IRGFRULV2,2719,352,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,333,48,3166,407,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,334,336,333,100,16,0,22,0,192,0,-1--1--1,,1|(3121,407)|
+1,335,336,312,4,16,0,22,0,192,0,-1--1--1,,1|(3040,407)|
+11,336,0,3081,407,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,337,Inflow IRGFRULV1,3081,437,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,338,48,2659,406,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,339,341,312,100,16,0,22,0,192,0,-1--1--1,,1|(2750,406)|
+1,340,341,338,4,16,0,22,0,192,0,-1--1--1,,1|(2692,406)|
+11,341,0,2721,406,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,342,Outflow IRGFRULV1,2721,436,46,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,343,Delay Time IRGFRU,2576,377,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,344,Effectiveness IRGFRU,3277,321,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,345,Investment in Gas Recovery Technology,3438,293,83,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,346,Effectiveness of Investment in Gas Recovery Technology,3423,383,83,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,347,81,343,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,348,345,344,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,349,346,344,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,350,332,317,1,16,0,0,0,192,0,-1--1--1,,1|(2855,275)|
+1,351,342,327,1,16,0,0,0,192,0,-1--1--1,,1|(2823,379)|
+1,352,311,332,1,16,0,0,0,192,0,-1--1--1,,1|(2787,361)|
+1,353,310,322,1,16,0,0,0,192,0,-1--1--1,,1|(2795,280)|
+1,354,312,342,1,16,0,0,0,192,0,-1--1--1,,1|(2824,449)|
+1,355,343,322,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,356,343,332,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,357,343,342,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,358,343,310,1,16,0,0,0,192,1,-1--1--1,,1|(2802,212)|
+1,359,310,311,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,360,310,312,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,361,344,337,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,362,344,310,1,16,0,0,0,192,1,-1--1--1,,1|(3219,229)|
+1,363,322,78,1,16,0,0,0,192,0,-1--1--1,,1|(2544,332)|
+10,364,Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV3,2339,1035,114,16,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,365,Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV2,2336,1125,114,17,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+10,366,Increase in Ratio of Gas Fraction Discoverable to Undiscoverable LV1,2339,1211,114,19,3,3,16,38,-1,0,0,0,0-0-0,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+12,367,48,2101,1035,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,368,370,367,100,16,0,22,0,192,0,-1--1--1,,1|(2136,1035)|
+1,369,370,364,4,16,0,22,0,192,0,-1--1--1,,1|(2199,1035)|
+11,370,0,2168,1035,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,371,Inflow IRGFDULV3,2168,1065,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,372,48,2583,1035,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,373,375,364,100,16,0,22,0,192,0,-1--1--1,,1|(2480,1035)|
+1,374,375,372,4,16,0,22,0,192,0,-1--1--1,,1|(2546,1035)|
+11,375,0,2513,1035,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,376,Outflow IRGFDULV3,2513,1065,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,377,48,2089,1124,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,378,380,377,100,16,0,22,0,192,0,-1--1--1,,1|(2126,1124)|
+1,379,380,365,4,16,0,22,0,192,0,-1--1--1,,1|(2194,1124)|
+11,380,0,2160,1124,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,381,Inflow IRGFDULV2,2160,1154,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,382,48,2587,1125,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,383,385,365,100,16,0,22,0,192,0,-1--1--1,,1|(2478,1125)|
+1,384,385,382,4,16,0,22,0,192,0,-1--1--1,,1|(2548,1125)|
+11,385,0,2513,1125,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,386,Outflow IRGFDULV2,2513,1155,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,387,48,2087,1212,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,388,390,387,100,16,0,22,0,192,0,-1--1--1,,1|(2126,1212)|
+1,389,390,366,4,16,0,22,0,192,0,-1--1--1,,1|(2196,1212)|
+11,390,0,2161,1212,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,391,Inflow IRGFDULV1,2161,1242,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,392,48,2599,1211,10,8,0,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,393,395,366,100,16,0,22,0,192,0,-1--1--1,,1|(2484,1211)|
+1,394,395,392,4,16,0,22,0,192,0,-1--1--1,,1|(2558,1211)|
+11,395,0,2521,1211,6,8,34,3,16,0,1,0,0,0,0,0,0,0,0,0
+10,396,Outflow IRGFDULV1,2521,1241,47,18,40,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,397,Effectiveness IRGFDU,1983,1173,49,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,398,Delay Time IRGFDU,2772,1115,42,18,8,3,16,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,399,Investment in Gas Discovery Technology,1797,1100,85,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,400,Effectiveness of Investment in Gas Discovery Technology,1798,1195,85,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,401,399,397,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,402,400,397,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,403,397,391,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,404,397,364,1,16,0,0,0,192,1,-1--1--1,,1|(2131,1014)|
+1,405,70,398,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,406,398,376,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,407,398,386,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,408,398,396,0,16,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,409,398,364,1,16,0,0,0,192,1,-1--1--1,,1|(2500,980)|
+1,410,364,376,1,16,0,0,0,192,0,-1--1--1,,1|(2456,1075)|
+1,411,365,386,1,16,0,0,0,192,0,-1--1--1,,1|(2428,1163)|
+1,412,366,396,1,16,0,0,0,192,0,-1--1--1,,1|(2421,1255)|
+1,413,396,381,1,16,0,0,0,192,0,-1--1--1,,1|(2331,1164)|
+1,414,386,371,1,16,0,0,0,192,0,-1--1--1,,1|(2327,1079)|
+1,415,364,365,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,416,364,366,0,16,0,0,0,192,1,-1--1--1,,1|(0,0)|
+1,417,376,67,1,16,0,0,0,192,0,-1--1--1,,1|(2644,839)|
+10,418,Total Investment in Gas,3078,-148,59,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,419,Investment in Gas Exploration,3371,-172,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,420,Investment in Gas Production,3376,-84,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,421,Investment in Gas Technology,3378,-20,69,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,422,Share of Upstream Investment in Total Investment Gas,3243,-26,69,27,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,423,Share of Investment in Revenue Gas,3219,-227,72,18,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,424,419,418,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,425,420,418,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,426,421,418,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,427,422,418,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,428,418,423,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,429,Gas Revenue,3272,-326,58,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,430,429,423,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,431,Investment in Gas Exploration and Production Delay Variation,900,635,98,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,432,IG Var S,840,581,32,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,433,IG S,779,619,17,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,434,433,432,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,435,432,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,436,431,46,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,437,IG Var S,1458,-100,41,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,438,Investment in Gas Exploration and Production Delay Variation,1555,-129,103,27,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||255-128-192,0,0,0,0,0,0
+1,439,437,22,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,440,438,22,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,441,Relative Productivity of Investment in Gas Production Compared to Exploration Variation,1836,-338,106,36,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,442,RPGPE S,1704,-343,38,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,443,RPGPE Var S,1723,-273,52,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,444,442,443,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,445,441,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,446,443,139,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,447,Sensitivity of Gas Price to Supply and Demand Variation,2718,-142,85,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,448,SG S,2899,-131,21,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,449,SG Var S,2832,-102,36,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,450,448,449,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,451,447,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,452,E Var T,2660,-84,38,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,453,452,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,454,449,144,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,455,Gas Discovery and Recovery Technology Development Time Variation,2980,741,104,27,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,456,GDR Var S,2795,765,42,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+10,457,GDR S,2732,832,27,10,8,3,0,34,-1,0,0,0,0-0-0,0-0-0,Arial|||255-0-255,0,0,0,0,0,0
+1,458,457,456,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,459,455,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,460,456,81,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,461,455,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,462,456,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,463,0,3771,39,300,200,0,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Total Investment in Gas,Graph
+12,464,0,3961,458,300,200,0,15,0,32,2,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+Gas Production,Graph
+10,465,SG Init,2771,113,30,11,3,3,0,39,-1,0,0,0,9-81-45,9-81-45,Arial|||255-255-255,0,0,0,0,0,0
+1,466,465,140,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,467,102,100,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,468,95,85,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,469,144,140,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,470,139,18,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,471,MFC Var S,1469,841,51,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,472,471,220,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,473,Energy Demand,1042,18,37,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,474,473,151,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,475,Market Share Gas,1064,-103,55,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,476,475,151,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,477,Carbon Price,1495,-410,58,10,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,478,477,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,479,Mtoe per Billion Cubic meter,565,302,62,18,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,480,479,33,1,0,0,0,0,64,0,-1--1--1,,1|(599,227)|
+1,481,479,291,1,0,0,0,0,192,0,-1--1--1,,1|(638,359)|
+10,482,Mtoe per Btu,2267,132,56,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,483,482,192,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,484,toe per Mtoe,1064,-193,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,485,484,24,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,486,toe per Mtoe,1570,-441,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,487,486,112,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,488,toe per Mtoe,1149,860,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,489,488,106,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,490,Mtoe into EJ,1562,500,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,491,490,224,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,492,toe per Mtoe,1850,24,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,493,492,16,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,494,toe per Mtoe,625,699,55,10,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,495,494,48,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+1:felix_gwp_convert_v25_2014.vdfx
+1:x.vdfx
+4:Time
+5:Mtoe into EJ
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:41,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:FertilizerUse.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl

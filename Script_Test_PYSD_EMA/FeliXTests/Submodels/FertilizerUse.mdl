@@ -1,0 +1,3200 @@
+{UTF-8}
+********************************************************
+	.fertilizeruse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+		
+	|
+
+Commercial Phosphorus Application per ha=
+	Commercial P2O5 application for agriculture/Agricultural Land
+	~	Ton/(ha*Year)
+	~		|
+
+Cropland Yield=
+	sum(Area harvested[PlantFood!]*Crop yield for each category[PlantFood!])/sum(Area harvested\
+		[PlantFood!])
+	~	Ton/(Year*ha)
+	~		|
+
+Delayed area harvested[PlantFood]= DELAY FIXED (
+	 Area harvested[PlantFood] , 1, Initial Area harvested[PlantFood])
+	~	ha
+	~		|
+
+Effect of Income on Fertilizer Use=
+	L gwp fert / 
+	(1 + 
+	EXP(-k gwp fert * (Relative GWP per Capita - x0 gwp fert))
+	)
+	~	Dmnl
+	~	L gwp fert / 
+		(1 + 
+		EXP(-k gwp fert * (Relative GWP per Capita - x0 gwp fert))
+		)
+	|
+
+Inflow AHA[PlantFood]=
+	Area harvested[PlantFood]
+	~	ha
+	~		|
+
+Smoothed Demand Supply Ratio Agr Land=
+	SMOOTH(Demand Supply ratio of Agricultural Land, 10)
+	~	Dmnl
+	~		|
+
+Total area harvested=
+	sum(Area harvested[PlantFood!])
+	~	ha
+	~		|
+
+Initial Area harvested[PlantFood]= INITIAL(
+	Area harvested[PlantFood])
+	~	ha
+	~		|
+
+"N produced in the manure of crop-based animals"=
+	Unit N production via manure crop based*
+	(Production rate of animal food[CropMeat] + Production rate of animal food[Eggs])
+	~	Ton/Year
+	~		|
+
+"N produced in the manure of pasture-based animals"=
+	Unit N production via manure pasture based * 
+	(Production rate of animal food[PasMeat]+Production rate of animal food[Dairy])
+	~	Ton/Year
+	~		|
+
+"P produced in the manure of crop-based animals"=
+	Unit P production via manure crop based*
+	(Production rate of animal food[CropMeat] + Production rate of animal food[Eggs])
+	~	Ton/Year
+	~		|
+
+"P produced in the manure of pasture-based animals"=
+	Unit P production via manure pasture based * 
+	(Production rate of animal food[PasMeat]+Production rate of animal food[Dairy])
+	~	Ton/Year
+	~		|
+
+N Uptake for crop type[PlantFood]=
+	Average N content[PlantFood]*Food production rate[PlantFood] ~~|
+N Uptake for crop type[PasMeat]=
+	Food production rate[PasMeat]*Average N content[PasMeat]
+	~	Ton/Year
+	~		|
+
+Commercial Nitrogen Application per ha=
+	Commercial N application for agriculture/Agricultural Land
+	~	Ton/(ha*Year)
+	~		|
+
+P application per ha[PlantFood]=
+	Commercial P application for each category[PlantFood]/Area harvested[PlantFood] ~~|
+P application per ha[PasMeat]=
+	Commercial P application for each category[PasMeat]/Grassland Allocated for Food Production
+	~	Ton/(Year*ha)
+	~		|
+
+P Uptake for each crop type[PlantFood]=
+	Average P content[PlantFood]*Food production rate[PlantFood] ~~|
+P Uptake for each crop type[PasMeat]=
+	Average P content[PasMeat]*Food production rate[PasMeat]
+	~	Ton/Year
+	~		|
+
+N application per ha[PlantFood]=
+	Commercial N application for each category[PlantFood]/Delayed area harvested[PlantFood\
+		] ~~|
+N application per ha[PasMeat]=
+	Commercial N application for each category[PasMeat]/Grassland Allocated for Food Production
+	~	Ton/(Year*ha)
+	~		|
+
+a price=
+	2
+	~	Dmnl
+	~	Calibrated
+	|
+
+a price sensitivity=
+	1.5
+	~	Dmnl
+	~		|
+
+a reserve=
+	3
+	~	Dmnl
+	~		|
+
+a reserve sensitivity=
+	10
+	~	Dmnl
+	~		|
+
+Area Harvested Accumulative[PlantFood]= INTEG (
+	Inflow AHA[PlantFood]-Outflow AHA[PlantFood],
+		Init AHA[PlantFood])
+	~	ha
+	~		|
+
+Average N content[FoodCategories]=
+	0.0289,
+	0.0148,
+	0.0051,
+	0.0201,
+	0.036,
+	0.0155,
+	0.0021,
+	0.0113
+	~	Dmnl
+	~		|
+
+Average P content[FoodCategories]=
+	0.0016,
+	0.0009,
+	0.0009,
+	0.002,
+	0.0037,
+	0.0023,
+	0.0004,
+	0.0016
+	~	Dmnl
+	~		|
+
+Average P demand rate=
+	SMOOTHI(Desired phosphate rock production rate, 5, 3.035e+07)
+	~	Ton/Year
+	~		|
+
+b price=
+	0.35
+	~	Dmnl
+	~	Calibrated, 0.09
+	|
+
+b price sensitivity=
+	0.5
+	~	Dmnl
+	~		|
+
+b reserve=
+	1.5
+	~	Dmnl
+	~		|
+
+b reserve sensitivity=
+	2
+	~	Dmnl
+	~		|
+
+Commercial N application for agriculture=
+	Reference nitrogen consumption 2010*
+	Effect of Income on Fertilizer Use*
+	Effect of Technology on Fertilizer Consumption*
+	Effect of Land Availability on Fertilizer Use
+	~	Ton/Year
+	~	Application of N fertilizers, aligning with the "agricultural use" of \
+		"total nutrient nitrogen" in the FAO database.
+	|
+
+Commercial N application for each category[PlantFood]=
+	Commercial N application for agriculture*N fertilizer shares normalized[PlantFood] ~~|
+Commercial N application for each category[PasMeat]=
+	Commercial N application for agriculture*N fertilizer shares normalized[PasMeat]
+	~	Ton/Year
+	~		|
+
+Commercial P application for agriculture=
+	Commercial P2O5 application for agriculture*P2O5 to P conversion factor
+	~	Ton/Year
+	~	The amount of elemental P in the applied P2O5 fertilizers
+	|
+
+Commercial P application for each category[PlantFood]=
+	Commercial P application for agriculture*P fertilizer shares normalized[PlantFood] ~~|
+Commercial P application for each category[PasMeat]=
+	Commercial P application for agriculture*P fertilizer shares normalized[PasMeat]
+	~	Ton/Year
+	~		|
+
+Commercial P2O5 application for agriculture=
+	MIN(P2O5 demand from agriculture, P2O5 supply for agriculture)
+	~	Ton/Year
+	~		|
+
+Denitrification fraction=
+	0.087
+	~	1/Year
+	~	Denitrification rate is the rate of nitrate that is released back to the \
+		atmosphere. Ammonium also vaporizes. In this case, this flow covers both! \
+		The value is calibrated according to the "Denitrification Rate" data and \
+		estimates in Reay et al. 2012 and Mosier 2000. BASE:0.087
+	|
+
+Denitrification Rate=
+	Nitrogen*Denitrification fraction
+	~	Ton/Year
+	~		|
+
+deposition=
+	0
+	~	Ton/(Year*ha)
+	~	Depositing atmosheric N in the soil, e.g. by legumes. Excluded for now.
+	|
+
+Desired P205 production rate=
+	Effect of price on P production*Total P205 demand
+	~	Ton/Year
+	~		|
+
+Desired phosphate rock production rate=
+	Desired P205 production rate/P2O5 content in phosphate rock
+	~	Ton/Year
+	~		|
+
+Discovery amount=
+	4.5e+10
+	~	Ton
+	~	4.5e+010
+	|
+
+Discovery amount sensitivity=
+	2e+10
+	~	Ton
+	~		|
+
+Discovery year=
+	2010
+	~	Year
+	~		|
+
+Effect of fertilizer on yield[PlantFood]=
+	MIN(Effect of N on Yield 2[PlantFood], Effect of P on Yield 2[PlantFood]) ~~|
+Effect of fertilizer on yield[PasMeat]=
+	MIN(Effect of N on Yield 2[PasMeat],Effect of P on Yield 2[PasMeat])
+	~	Dmnl
+	~		|
+
+Effect of Income on Fertilizer Use LOOKUP(
+	[(0,0)-(10,2)],(0,0),(0.4,0.1),(1,0.5),(1.88,1),(2,1.05),(3,1.25),(4,1.35),(5,1.42),\
+		(6,1.47),(7,1.5),(8,1.5),(9,1.5),(10,1.5))
+	~	Dmnl
+	~		|
+
+Effect of Land Availability on Fertilizer Use=
+	L land fert / 
+	(
+	1 + EXP(-k land fert * (Relative DemSupply Ratio AgrLand - x0 land fert))
+	)
+	~	Dmnl
+	~	L land fert / 
+		(
+		1 + EXP(-k land fert * (Relative DemSupply Ratio AgrLand - x0 land fert))
+		)
+	|
+
+Effect of Land Availability on Fertilizer UseLOOKUP(
+	[(0,0)-(2,2)],(0,0),(0.25,0.2),(0.5,0.45),(0.75,0.75),(1,1),(1.25,1.25),(1.5,1.4),(1.75\
+		,1.45),(2,1.5))
+	~	Dmnl
+	~		|
+
+Effect of N on Yield 2[PlantFood]=
+	L fertilizer[PlantFood] / 
+	(1 + 
+	EXP(-k fertilizer[PlantFood] * (N ratio applied to reference[PlantFood] - x0 fertilizer\
+		[PlantFood]))
+	) ~~|
+Effect of N on Yield 2[PasMeat]=
+	L fertilizer[PasMeat] / 
+	(1 + 
+	EXP(-k fertilizer[PasMeat] * (N ratio applied to reference[PasMeat] - x0 fertilizer[\
+		PasMeat]))
+	)
+	~	Dmnl
+	~		|
+
+Effect of P on Yield 2[PlantFood]=
+	L fertilizer[PlantFood] / 
+	(1 + 
+	EXP(-k fertilizer[PlantFood] * (P ratio applied to reference[PlantFood] - x0 fertilizer\
+		[PlantFood]))
+	) ~~|
+Effect of P on Yield 2[PasMeat]=
+	L fertilizer[PasMeat] / 
+	(1 + 
+	EXP(-k fertilizer[PasMeat] * (P ratio applied to reference[PasMeat] - x0 fertilizer[\
+		PasMeat]))
+	)
+	~	Dmnl
+	~		|
+
+Effect of price on P production=
+	a price*EXP(-b price*Relative P price)
+	~	Dmnl
+	~		|
+
+Effect of reserves on P price=
+	a reserve*EXP(-b reserve*(Reserve demand ratio/Initial P reserve production ratio))
+	~	Dmnl
+	~		|
+
+Effect of scarcity on P production= WITH LOOKUP (
+	Phosphate Rock Proven Reserves/Desired phosphate rock production rate,
+		([(0,0)-(2,1)],(0,0),(0.5,0.5),(1,0.9),(1.5,0.95),(2,1) ))
+	~	Dmnl
+	~		|
+
+Effect of Technology on Fertilizer Consumption=
+	IF THEN ELSE(Time<2020, 1, 
+	L tech fert/ (1 + EXP(-k tech fert * ((Time-2020) - x0 tech fert))))
+	~	Dmnl
+	~	MAKE IT 1+ (L / ....)
+	|
+
+Init AHA[PlantFood]=
+	2.1983e+07,
+	2.83354e+08,
+	4.06016e+07,
+	6.32654e+07
+	~	ha
+	~		|
+
+INIT P proven reserves=
+	1.6e+10
+	~	Ton
+	~		|
+
+Initial Mobile Nitrogen=
+	0
+	~	Ton
+	~		|
+
+Initial P reserve production ratio=
+	527
+	~	Year
+	~	265, 527
+	|
+
+Initial Phosphorus=
+	500000
+	~	Ton
+	~		|
+
+k fertilizer[Pulses]=
+	0.2 + STEP(SA k fertilizer[Pulses]-0.2, 2020) ~~|
+k fertilizer[PasMeat]=
+	1 ~~|
+k fertilizer[Grains]=
+	0.8 + STEP(SA k fertilizer[Grains]-0.8, 2020) ~~|
+k fertilizer[VegFruits]=
+	0.25 + STEP(SA k fertilizer[VegFruits]-0.25, 2020) ~~|
+k fertilizer[OtherCrops]=
+	1 + STEP(SA k fertilizer[OtherCrops]-1, 2020)
+	~	Dmnl
+	~		|
+
+k gwp fert=
+	3.85
+	~	Dmnl
+	~	1.5
+		3 + STEP(SA k gwp fert-3, 2020)
+	|
+
+k land fert=
+	1.6 + STEP(SA k land fert-1.6, 2020)
+	~	Dmnl
+	~		|
+
+k tech fert=
+	0
+	~	Dmnl
+	~		|
+
+L fertilizer[Pulses]=
+	1.56+STEP(SA L fertilizer[Pulses]-1.56, 2020) ~~|
+L fertilizer[PasMeat]=
+	1.8 ~~|
+L fertilizer[Grains]=
+	1.6+STEP(SA L fertilizer[Grains]-1.6, 2020) ~~|
+L fertilizer[VegFruits]=
+	1.5+STEP(SA L fertilizer[VegFruits]-1.5, 2020) ~~|
+L fertilizer[OtherCrops]=
+	2.5+STEP(SA L fertilizer[OtherCrops]-2.5, 2020)
+	~	Dmnl
+	~		|
+
+L gwp fert=
+	1.25206
+	~	Dmnl
+	~	Calibrated simultaneously for Eff of GWP and Eff of Land. See \
+		FertilizerLookups.xlsx/Calibration...
+		1.25 + STEP(SA L gwp fert-1.25, 2020)
+	|
+
+L land fert=
+	2.2 + STEP(SA L land fert-2.2, 2020)
+	~	Dmnl
+	~		|
+
+L tech fert=
+	2
+	~	Dmnl
+	~		|
+
+mineralization=
+	0
+	~	Ton/(Year*ha)
+	~	with the degradation of organic matter in soil. Excluded from this model \
+		for now.
+	|
+
+N fertilizer shares[PlantFood]=
+	N fertilizer shares Data[PlantFood]*(1+STEP(SA N fertilizer shares[PlantFood]-1, 2020\
+		)) ~~|
+N fertilizer shares[PasMeat]=
+	0.047
+	~	Dmnl
+	~		|
+
+N fertilizer shares Data[PlantFood]=
+	0.083, 0.559, 0.155, 0.155 ~~|
+N fertilizer shares Data[PasMeat]=
+	0.047
+	~	Dmnl
+	~		|
+
+N fertilizer shares normalized[PlantFood]=
+	N fertilizer shares[PlantFood]/(sum(N fertilizer shares[PlantFood!]) + N fertilizer shares\
+		[PasMeat]) ~~|
+N fertilizer shares normalized[PasMeat]=
+	N fertilizer shares[PasMeat]/ (sum(N fertilizer shares[PlantFood!]) + N fertilizer shares\
+		[PasMeat])
+	~	Dmnl
+	~		|
+
+N fertilizer shares2[Grains]=
+	N fertilizer shares Data[Grains]*(1+STEP(SA N fertilizer shares[Grains]-1, 2020)) ~~|
+N fertilizer shares2[PasMeat]=
+	0.047 ~~|
+N fertilizer shares2[OtherCrops]=
+	N fertilizer shares Data[OtherCrops]*(1+ STEP(SA N fertilizer shares[OtherCrops]-1, \
+		2020)) ~~|
+N fertilizer shares2[VegFruits]=
+	1 - (N fertilizer shares2[Grains]+N fertilizer shares2[Pulses]+N fertilizer shares2[\
+		OtherCrops]+N fertilizer shares2[PasMeat]) ~~|
+N fertilizer shares2[Pulses]=
+	N fertilizer shares Data[Pulses]
+	~	Dmnl
+	~		|
+
+N leaching and runoff fraction=
+	0.8 + STEP(SA N leaching and runoff fraction-0.8, 2020)
+	~	1/Year
+	~	Nitrate washed away. Especially going to the rivers and lakes. Runoff is \
+		23% of "applied" N, not the stock as I use her. Leaching is around 12-15 M \
+		ton/year. In total,  46 M ton/year. The fraction is calibrated accordingly.
+	|
+
+n per ha=
+	Commercial N application for agriculture/Total area harvested
+	~	Ton/(ha*Year)
+	~		|
+
+N ratio applied to reference[PlantFood]=
+	N application per ha[PlantFood]/Reference N uptake per ha[PlantFood] ~~|
+N ratio applied to reference[PasMeat]=
+	N application per ha[PasMeat]/Reference N uptake per ha[PasMeat]
+	~	Dmnl
+	~		|
+
+N use efficiency=
+	0* Total N uptake rate
+	~	Dmnl
+	~		|
+
+Nitrogen= INTEG (
+	Commercial N application for agriculture+deposition+mineralization+Nitrogen application with manure\
+		-Denitrification Rate-Nitrogen Leaching and Runoff Rate-Total N uptake rate,
+		Initial Mobile Nitrogen)
+	~	Ton
+	~	"Mobile" elemental nitrogen in soil.
+	|
+
+Nitrogen application with manure=
+	Recoverable N generated in crop based manure+Recoverable N generated in pasture based manure
+	~	Ton/Year
+	~		|
+
+Nitrogen Leaching and Runoff Rate=
+	Nitrogen*N leaching and runoff fraction
+	~	Ton/Year
+	~		|
+
+NTotal P produced in manure=
+	"N produced in the manure of crop-based animals"+"N produced in the manure of pasture-based animals"
+	~	Ton/Year
+	~		|
+
+Outflow AHA[PlantFood]=
+	IF THEN ELSE( Time =1900 , Inflow AHA[PlantFood],Area Harvested Accumulative[PlantFood\
+		] )
+	~	
+	~		|
+
+P budget=
+	Commercial P application for agriculture+Phosphorus application with manure-Phosphorus erosion leaching and runoff rate
+	-Total P uptake rate
+	~	Ton/Year
+	~		|
+
+P cost=
+	60
+	~	$/Ton
+	~		|
+
+P discovery rate=
+	SMOOTH(Discovery amount*PULSE(Discovery year, 1), 2)
+	~	Ton/Year
+	~		|
+
+P fertilizer shares[PlantFood]=
+	P fertilizer shares Data[PlantFood]*(1+STEP(SA P fertilizer shares[PlantFood]-1, 2020\
+		)) ~~|
+P fertilizer shares[PasMeat]=
+	0.04
+	~	Dmnl
+	~		|
+
+P fertilizer shares Data[PlantFood]=
+	0.067, 0.446, 0.212, 0.235 ~~|
+P fertilizer shares Data[PasMeat]=
+	0.04
+	~	Dmnl
+	~		|
+
+P fertilizer shares normalized[PlantFood]=
+	P fertilizer shares[PlantFood]/(sum(P fertilizer shares[PlantFood!]) + P fertilizer shares\
+		[PasMeat]) ~~|
+P fertilizer shares normalized[PasMeat]=
+	P fertilizer shares[PasMeat]/(sum(P fertilizer shares[PlantFood!]) + P fertilizer shares\
+		[PasMeat])
+	~	Dmnl
+	~		|
+
+P leaching fraction=
+	0.3 + STEP(SA P leaching fraction-0.3, 2020)
+	~	1/Year
+	~	When parameter: 0.25
+		Calibrated: 0.06
+	|
+
+P loss to inputs=
+	Phosphorus erosion leaching and runoff rate/(Phosphorus application with manure+Commercial P application for agriculture\
+		)
+	~	Dmnl
+	~		|
+
+P price=
+	P cost*P price margin*SMOOTH(Effect of reserves on P price, 3)
+	~	$/Ton
+	~		|
+
+P price margin=
+	1.1
+	~	Dmnl
+	~		|
+
+P production rate FAO=
+	P rock production rate
+	~	Ton/Year
+	~		|
+
+P ratio applied to reference[PlantFood]=
+	P application per ha[PlantFood]/Reference P uptake rate per ha[PlantFood] ~~|
+P ratio applied to reference[PasMeat]=
+	P application per ha[PasMeat]/Reference P uptake rate per ha[PasMeat]
+	~	Dmnl
+	~		|
+
+P rock production rate=
+	Desired phosphate rock production rate*Effect of scarcity on P production
+	~	Ton/Year
+	~		|
+
+P Supply Scenario Switch=
+	1
+	~	Dmnl
+	~	0: Intended Amount
+		1: Intended amount is limited by the reserve availability
+		2: Supply shocks, therefore a timeseries exogenous application
+	|
+
+P use efficiency=
+	Total P uptake rate/(Commercial P application for agriculture+Phosphorus application with manure\
+		)
+	~	Dmnl
+	~		|
+
+P2O5 agriculture fraction=
+	0.9
+	~	Dmnl
+	~	Based on the FAO consumption andproduction data, on average (2002-2015) \
+		10% of production is for other uses, 90% for agriculture. See \
+		P_Prod_Cons_FAOSTAT_data_5-3-2018.csv
+	|
+
+P2O5 content in phosphate rock=
+	0.306
+	~	Dmnl
+	~	This is the average ratio of P205 content in the total global phosphate \
+		rock produced between 2011 and 2015. Based on USGS data. See \
+		USGS_p_ROCKmyb1-2015-phosp.xlx
+	|
+
+P2O5 demand from agriculture=
+	Reference phosphate consumption 2010*
+	Effect of Income on Fertilizer Use*
+	Effect of Technology on Fertilizer Consumption*
+	Effect of Land Availability on Fertilizer Use
+	~	Ton/Year
+	~		|
+
+P2O5 production rate=
+	P rock production rate*P2O5 content in phosphate rock
+	~	Ton/Year
+	~	P205 content
+	|
+
+P2O5 supply for agriculture=
+	P2O5 agriculture fraction*P2O5 production rate
+	~	Ton/Year
+	~		|
+
+P2O5 to P conversion factor=
+	0.4364
+	~	Dmnl
+	~	Found on Researchgate. Check with Lei! 
+		(https://www.researchgate.net/post/How_to_calculate_phosphorous_from_P2O5_w\
+		hich_has_been_recommended_at_the_standard_dose_of_45_kg_ha)
+	|
+
+Phosphate Rock Proven Reserves= INTEG (
+	P discovery rate-P rock production rate,
+		INIT P proven reserves)
+	~	Ton
+	~		|
+
+Phosphorus= INTEG (
+	-Phosphorus erosion leaching and runoff rate-Total P uptake rate+Commercial P application for agriculture\
+		+Phosphorus application with manure,
+		Initial Phosphorus)
+	~	Ton
+	~	This is the total global amount of elemental phosphorus accumulating in \
+		the soil.
+	|
+
+Phosphorus application with manure=
+	Recoverable P generated in pasture based manure+Recoverable P generated in crop based manure
+	~	Ton/Year
+	~		|
+
+Phosphorus erosion leaching and runoff rate=
+	P leaching fraction*Phosphorus
+	~	Ton/Year
+	~	Agricultural topsoil erosion rate*Agricultural topsoil P concentration
+	|
+
+PlantFood:
+	Pulses,Grains,VegFruits,OtherCrops
+	~	
+	~		|
+
+Recoverable manure fraction crop based=
+	0.78 + STEP(SA Recoverable manure fraction crop based-0.78, 2020)
+	~	Dmnl
+	~	Estimated based on FAO data and Scheldrick et al. 2003. See \
+		FAO...ProducingAnimals.xlsx
+	|
+
+Recoverable manure fraction pasture based=
+	0.24 + STEP(SA Recoverable manure fraction pasture based-0.24, 2020)
+	~	Dmnl
+	~	Estimated based on FAO data and Scheldrick et al. 2003. See \
+		FAO...ProducingAnimals.xlsx
+	|
+
+Recoverable N generated in crop based manure=
+	"N produced in the manure of crop-based animals"*Recoverable manure fraction crop based
+	~	Ton/Year
+	~		|
+
+Recoverable N generated in pasture based manure=
+	"N produced in the manure of pasture-based animals"*Recoverable manure fraction pasture based
+	~	Ton/Year
+	~		|
+
+Recoverable P generated in crop based manure=
+	"P produced in the manure of crop-based animals"*Recoverable manure fraction crop based
+	~	Ton/Year
+	~		|
+
+Recoverable P generated in pasture based manure=
+	"P produced in the manure of pasture-based animals"*Recoverable manure fraction pasture based
+	~	Ton/Year
+	~		|
+
+Reference crop yield 2016[FoodCategories]=
+	1.28,
+	0.65,
+	6.42,
+	0.8,
+	0.99,
+	3.97,
+	15.13,
+	9.03
+	~	Ton/(Year*ha)
+	~	2016 values for each food category, based on FAO data
+	|
+
+Reference Dem Suppyl Ratio Agr Land 2010=
+	0.53
+	~	Dmnl
+	~		|
+
+Reference meat yield=
+	0.1877
+	~	Ton/ha
+	~	MY Var S+SMOOTH(STEP(Reference meat yield Variation-MY Var S, 2020+L Var \
+		T),SSP Land Use Change Variation Time)
+	|
+
+Reference N uptake per ha[PlantFood]=
+	Reference crop yield 2016[PlantFood]*Average N content[PlantFood] ~~|
+Reference N uptake per ha[PasMeat]=
+	Average N content[PasMeat]*Reference meat yield
+	~	Ton/(Year*ha)
+	~		|
+
+Reference nitrogen consumption 2010=
+	1e+08
+	~	Ton/Year
+	~	Calibrated parameter value
+	|
+
+Reference P price=
+	87
+	~	$/Ton
+	~	Calibrated
+	|
+
+Reference P uptake rate per ha[PlantFood]=
+	Reference crop yield 2016[PlantFood]*Average P content[PlantFood] ~~|
+Reference P uptake rate per ha[PasMeat]=
+	Reference meat yield*Average P content[PasMeat]
+	~	Ton/(Year*ha)
+	~		|
+
+Reference phosphate consumption 2010=
+	4.29e+07
+	~	Ton/Year
+	~	Historical 2010 value
+	|
+
+Relative DemSupply Ratio AgrLand=
+	Smoothed Demand Supply Ratio Agr Land/Reference Dem Suppyl Ratio Agr Land 2010
+	~	Dmnl
+	~		|
+
+Relative P price=
+	P price/Reference P price
+	~	Dmnl
+	~		|
+
+Reserve demand ratio=
+	Phosphate Rock Proven Reserves/Average P demand rate
+	~	Year
+	~		|
+
+SA k fertilizer[PlantFood]=
+	0.2, 0.8, 0.25, 1 ~~|
+SA k fertilizer[PasMeat]=
+	1
+	~	Dmnl
+	~		|
+
+SA k gwp fert=
+	3
+	~	Dmnl
+	~	1.5
+	|
+
+SA k land fert=
+	1.6
+	~	Dmnl
+	~		|
+
+SA L fertilizer[PlantFood]=
+	1.56, 1.6, 1.5, 2.5 ~~|
+SA L fertilizer[PasMeat]=
+	1.8
+	~	Dmnl
+	~		|
+
+SA L gwp fert=
+	1.25
+	~	Dmnl
+	~	Calibrated simultaneously for Eff of GWP and Eff of Land. See \
+		FertilizerLookups.xlsx/Calibration...
+	|
+
+SA L land fert=
+	2.2
+	~	Dmnl
+	~		|
+
+SA N fertilizer shares[PlantFood]=
+	1, 1, 1, 1
+	~	Dmnl
+	~		|
+
+SA N leaching and runoff fraction=
+	0.8
+	~	1/Year
+	~	Nitrate washed away. Especially going to the rivers and lakes. Runoff is \
+		23% of "applied" N, not the stock as I use her. Leaching is around 12-15 M \
+		ton/year. In total,  46 M ton/year. The fraction is calibrated accordingly.
+	|
+
+SA P fertilizer shares[PlantFood]=
+	1, 1, 1, 1 ~~|
+SA P fertilizer shares[PasMeat]=
+	0.04
+	~	Dmnl
+	~		|
+
+SA P leaching fraction=
+	0.3
+	~	1/Year
+	~	When parameter: 0.25
+		Calibrated: 0.06
+	|
+
+SA Recoverable manure fraction crop based=
+	0.78
+	~	Dmnl
+	~	Estimated based on FAO data and Scheldrick et al. 2003. See \
+		FAO...ProducingAnimals.xlsx
+	|
+
+SA Recoverable manure fraction pasture based=
+	0.24
+	~	Dmnl
+	~	Estimated based on FAO data and Scheldrick et al. 2003. See \
+		FAO...ProducingAnimals.xlsx
+	|
+
+SA x0 fertilizer[PlantFood]=
+	1,1,1,1 ~~|
+SA x0 fertilizer[PasMeat]=
+	1
+	~	Dmnl
+	~		|
+
+SA x0 gwp fert=
+	1.44
+	~	Dmnl
+	~		|
+
+SA x0 land fert=
+	1.13
+	~	Dmnl
+	~		|
+
+Total N Emissions=
+	Denitrification Rate+Nitrogen Leaching and Runoff Rate
+	~	Ton/Year
+	~		|
+
+Total N uptake rate=
+	MIN(
+	sum(N Uptake for crop type[PlantFood!]) + N Uptake for crop type[PasMeat],
+	Nitrogen/TIME STEP)
+	~	Ton/Year
+	~		|
+
+Total P produced in manure=
+	"P produced in the manure of crop-based animals"+"P produced in the manure of pasture-based animals"
+	~	Ton/Year
+	~		|
+
+Total P uptake rate=
+	MIN(
+	sum(P Uptake for each crop type[PlantFood!]) + P Uptake for each crop type[PasMeat],
+	Phosphorus/TIME STEP)
+	~	Ton/Year
+	~		|
+
+Total P205 demand=
+	P2O5 demand from agriculture/P2O5 agriculture fraction
+	~	Ton/Year
+	~		|
+
+Unit N production via manure crop based=
+	0.0702
+	~	Dmnl
+	~	See FAO...ProducingAnimals.xls - Estimated based on FAO data on food \
+		production and number of livestock; and Shildrick et al 2003 for unit N \
+		manure production values. It is ton/ton, so dimensionless.
+	|
+
+Unit N production via manure pasture based=
+	0.0334
+	~	Dmnl
+	~	See FAO...ProducingAnimals.xls - Estimated based on FAO data on animal \
+		calorie supply and number of livestock; and Shildrick et al 2003 for unit \
+		N manure production values. [Ton/ton]
+	|
+
+Unit P production via manure crop based=
+	0.0553
+	~	Dmnl
+	~	See FAO...ProducingAnimals.xls - Estimated based on FAO data on food \
+		production and number of livestock; and Shildrick et al 2003 for unit P \
+		manure production values. It is ton/ton, so dimensionless.
+	|
+
+Unit P production via manure pasture based=
+	0.0067
+	~	Dmnl
+	~	See FAO...ProducingAnimals.xls - Estimated based on FAO data on animal \
+		calorie supply and number of livestock; and Shildrick et al 2003 for unit \
+		P manure production values. [Ton/ton]
+	|
+
+x0 fertilizer[PlantFood]=
+	1 + STEP(SA x0 fertilizer[PlantFood]-1, 2020) ~~|
+x0 fertilizer[PasMeat]=
+	1
+	~	Dmnl
+	~		|
+
+x0 gwp fert=
+	1.164
+	~	Dmnl
+	~	1.44 + STEP(SA x0 gwp fert-1.44, 2020)
+	|
+
+x0 land fert=
+	1.13 + STEP(SA x0 land fert-1.13, 2020)
+	~	Dmnl
+	~		|
+
+x0 tech fert=
+	30
+	~	Dmnl
+	~		|
+
+********************************************************
+	.yogl
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2100
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1900
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 1
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+********************************************************
+	.Water
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Population
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.landuse
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.health
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.extremeevents
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energywind
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v22
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.felix3 yogl v11
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+FoodCategories:
+	PasMeat, CropMeat, Dairy, Eggs, Pulses, Grains, VegFruits, OtherCrops
+	~	
+	~		|
+
+********************************************************
+	.biodiversity
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Indexes
+********************************************************~
+	|
+
+********************************************************
+	.Carbon
+********************************************************~
+	|
+
+********************************************************
+	.Energy Coal
+********************************************************~
+	|
+
+********************************************************
+	.Energy Wind
+********************************************************~
+	|
+
+********************************************************
+	.Land
+********************************************************~
+	|
+
+********************************************************
+	.Energy Solar
+********************************************************~
+	|
+
+********************************************************
+	.Energy Biomass
+********************************************************~
+	|
+
+********************************************************
+	.Climate
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.Energy
+********************************************************~
+	|
+
+********************************************************
+	.Economy
+********************************************************~
+	|
+
+********************************************************
+	.Energy Gas
+********************************************************~
+	|
+
+********************************************************
+	.Energy Oil
+********************************************************~
+	|
+
+********************************************************
+	.energysolar
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energyoil
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energymarketshare
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energygas
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energycoal
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.energybiomass
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economyindex
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.economygdp
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.dietchange
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+AnimalFood:
+	PasMeat,CropMeat,Dairy,Eggs
+	~	
+	~		|
+
+Reference GWP per Capita=
+	4000
+	~	$/(Year*Person)
+	~	GWP per capita in 1961. (Felix model, matches the historical data 1980-2010 well.) \
+		3342.7
+		Calibrated: 4000
+	|
+
+********************************************************
+	.climatedamage
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+********************************************************
+	.carboncycle
+********************************************************~
+		<?xml version="1.0" encoding="UTF-8"?>
+		<richtext version="1.0.0.0" xmlns="http://www.wxwidgets.org">
+		  <paragraphlayout textcolor="#000000" fontpointsize="9" fontfamily="70" \
+		fontstyle="90" fontweight="400" fontunderlined="0" fontface="Segoe UI" \
+		alignment="1" parspacingafter="10" parspacingbefore="0" linespacing="10" \
+		margin-left="5,4098" margin-right="5,4098" margin-top="5,4098" \
+		margin-bottom="5,4098">
+		    <paragraph>
+		      <text></text>
+		    </paragraph>
+		  </paragraphlayout>
+		</richtext>
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*sub_LandUse_FertilizerUse
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,62,0
+10,1,Nitrogen,795,233,97,60,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,2,Initial Mobile Nitrogen,726,151,40,25,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+12,3,48,468,228,10,8,0,3,0,35,-1,0,0,0,160-160-160,0-0-0,Arial|||160-160-160,0,0,0,0,0,0
+1,4,6,1,4,0,0,22,3,0,0,160-160-160,|||0-0-0,1|(640,228)|
+1,5,6,3,100,0,0,22,3,0,0,160-160-160,|||0-0-0,1|(524,228)|
+11,6,0,576,228,6,8,34,3,0,1,1,0,0,0,160-160-160,0-0-0,|||0-0-0,0,0,0,0,0,0
+10,7,mineralization,576,247,67,11,40,3,0,35,-1,0,0,0,160-160-160,0-0-0,Arial|||160-160-160,0,0,0,0,0,0
+12,8,48,468,263,10,8,0,3,0,35,-1,0,0,0,160-160-160,0-0-0,Arial|||160-160-160,0,0,0,0,0,0
+1,9,11,1,4,0,0,22,3,0,0,160-160-160,|||0-0-0,1|(638,263)|
+1,10,11,8,100,0,0,22,3,0,0,160-160-160,|||0-0-0,1|(522,263)|
+11,11,0,573,263,6,8,34,3,0,1,1,0,0,0,160-160-160,0-0-0,|||0-0-0,0,0,0,0,0,0
+10,12,deposition,573,282,49,11,40,3,0,35,-1,0,0,0,160-160-160,0-0-0,Arial|||160-160-160,0,0,0,0,0,0
+12,13,48,804,-2,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,14,16,1,4,0,0,22,0,0,0,-1--1--1,,1|(804,138)|
+1,15,16,13,100,0,0,22,0,0,0,-1--1--1,,1|(804,48)|
+11,16,0,804,97,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,17,Commercial N application for agriculture,870,97,58,32,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,18,19,1,100,0,0,22,0,0,0,-1--1--1,,1|(947,237)|
+11,19,0,1009,237,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,20,Total N uptake rate,1009,263,53,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,21,48,767,464,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,22,24,21,4,0,0,22,0,0,0,-1--1--1,,1|(767,416)|
+1,23,24,1,100,0,0,22,0,0,0,-1--1--1,,1|(767,328)|
+11,24,0,767,370,8,6,33,3,0,0,2,0,0,0,0,0,0,0,0,0
+10,25,Denitrification Rate,688,370,71,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,26,Denitrification fraction,709,466,71,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-128-0,0,0,0,0,0,0
+10,27,N leaching and runoff fraction,889,464,49,25,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,28,26,25,1,0,0,0,0,64,0,-1--1--1,,1|(699,425)|
+1,29,1,25,1,0,0,0,0,64,0,-1--1--1,,1|(706,333)|
+12,30,48,818,466,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,31,33,30,4,0,0,22,0,0,0,-1--1--1,,1|(818,417)|
+1,32,33,1,100,0,0,22,0,0,0,-1--1--1,,1|(818,328)|
+11,33,0,818,370,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,34,Nitrogen Leaching and Runoff Rate,884,370,58,25,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,35,27,34,1,0,0,0,0,64,0,-1--1--1,,1|(889,418)|
+10,36,Effect of Income on Fertilizer Use,1475,-369,49,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,37,Effect of Land Availability on Fertilizer Use,1777,-362,71,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,38,Reference nitrogen consumption 2010,877,-10,53,32,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+12,39,48,1116,237,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,40,19,39,4,0,0,22,0,0,0,-1--1--1,,1|(1060,237)|
+10,41,Reference N uptake per ha,1518,80,62,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,42,Phosphorus,2479,234,97,60,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,43,48,2479,27,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,44,46,42,4,0,0,22,0,0,0,-1--1--1,,1|(2479,142)|
+1,45,46,43,100,0,0,22,0,0,0,-1--1--1,,1|(2479,66)|
+11,46,0,2479,104,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,47,Commercial P application for agriculture,2545,104,58,32,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,48,48,2180,241,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,49,51,48,4,0,0,22,0,0,0,-1--1--1,,1|(2244,241)|
+1,50,51,42,100,0,0,22,0,0,0,-1--1--1,,1|(2346,241)|
+11,51,0,2304,241,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,52,Total P uptake rate,2304,267,53,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,53,48,2485,467,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,54,56,53,4,0,0,22,0,0,0,-1--1--1,,1|(2485,420)|
+1,55,56,42,100,0,0,22,0,0,0,-1--1--1,,1|(2485,332)|
+11,56,0,2485,376,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,57,Phosphorus erosion leaching and runoff rate,2551,376,58,32,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,58,P leaching fraction,2700,383,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,59,Initial Phosphorus,2371,153,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,60,Reference phosphate consumption 2010,2334,-285,53,32,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+10,61,Reference P uptake rate per ha,1958,165,53,25,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+11,62,0,1312,-620,6,8,38,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,63,Commercial Nitrogen Application per ha,1371,-620,53,32,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,64,Commercial Phosphorus Application per ha,1991,-618,53,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,65,1,34,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,66,L gwp fert,1403,-421,49,11,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,67,k gwp fert,1505,-434,54,11,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-0,0,0,0,0,0,0
+10,68,x0 gwp fert,1599,-425,53,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,69,L land fert,1968,-449,53,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,70,k land fert,1865,-444,59,11,8,3,0,48,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-0,0,0,0,0,0,0
+10,71,x0 land fert,1777,-445,58,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,72,k fertilizer,1531,426,58,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,73,L fertilizer,1427,440,58,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,74,x0 fertilizer,1283,415,62,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,75,N use efficiency,1038,154,84,24,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|16|B|0-0-0,0,0,0,0,0,0
+1,76,20,75,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,77,P use efficiency,3066,540,84,24,8,3,0,56,0,0,0,0,0-0-0,0-0-0,Arial|16|B|0-0-0,0,0,0,0,0,0
+10,78,Effect of Technology on Fertilizer Consumption,1070,-403,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,79,k tech fert,1072,-478,53,11,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,80,L tech fert,950,-443,53,11,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,81,x0 tech fert,1173,-442,58,11,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,82,Total N Emissions,519,429,44,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,83,25,82,1,0,0,0,0,64,0,-1--1--1,,1|(521,426)|
+1,84,34,82,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,85,80,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,86,79,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,87,81,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,88,Time,1021,-333,31,11,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,89,88,78,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,90,48,2770,242,10,8,0,3,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,91,93,42,4,0,0,22,3,0,0,0-0-0,|||0-0-0,1|(2619,242)|
+1,92,93,90,100,0,0,22,3,0,0,0-0-0,|||0-0-0,1|(2717,242)|
+11,93,0,2668,242,6,8,34,3,0,1,1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+10,94,Phosphorus application with manure,2668,275,53,25,40,3,0,33,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,95,59,42,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,96,P Supply Scenario Switch,2555,-266,64,25,3,131,0,37,0,0,0,0,64-160-98,64-160-98,Arial|||0-0-0,0,0,0,0,0,0
+1,97,60,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,98,P2O5 demand from agriculture,2356,-191,53,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,99,98,200,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,100,Phosphate Rock Proven Reserves,3362,-389,62,38,3,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,101,48,3109,-388,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,102,104,101,4,0,0,22,0,0,0,-1--1--1,,1|(3161,-388)|
+1,103,104,100,100,0,0,22,0,0,0,-1--1--1,,1|(3257,-388)|
+11,104,0,3209,-388,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,105,P rock production rate,3209,-355,49,25,40,131,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,106,48,3355,-535,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,107,109,100,4,0,0,22,0,0,0,-1--1--1,,1|(3355,-449)|
+1,108,109,106,100,0,0,22,0,0,0,-1--1--1,,1|(3355,-505)|
+11,109,0,3355,-477,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,110,P discovery rate,3416,-477,53,18,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,111,Total P205 demand,2589,-180,49,18,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,112,111,119,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,113,Reserve demand ratio,3407,-293,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,114,100,113,1,0,0,0,0,64,0,-1--1--1,,1|(3393,-341)|
+10,115,INIT P proven reserves,3280,-482,62,18,8,3,0,36,0,0,0,0,-1--1--1,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,116,115,100,1,0,0,0,0,64,1,-1--1--1,,1|(3296,-450)|
+10,117,Effect of price on P production,3084,-137,49,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,118,117,119,1,0,0,0,0,64,0,-1--1--1,,1|(3050,-168)|
+10,119,Desired P205 production rate,3022,-210,58,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,120,Effect of scarcity on P production,3149,-477,62,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,121,100,120,1,0,0,0,0,64,0,-1--1--1,,1|(3264,-465)|
+1,122,120,105,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,123,Effect of reserves on P price,3411,-209,62,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,124,P price,3341,-111,35,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,125,Relative P price,3206,-86,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,126,113,123,1,0,0,0,0,64,0,-1--1--1,,1|(3418,-258)|
+1,127,123,124,1,0,0,0,0,64,0,-1--1--1,,1|(3396,-157)|
+1,128,124,125,1,0,0,0,0,64,0,-1--1--1,,1|(3278,-94)|
+1,129,125,117,1,0,0,0,0,64,0,-1--1--1,,1|(3134,-103)|
+10,130,Initial P reserve production ratio,3523,-292,49,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,131,a reserve,3481,-123,44,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,132,b reserve,3524,-214,44,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,133,130,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,134,132,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,135,131,123,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,136,P cost,3388,-49,31,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,137,P price margin,3324,-27,35,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,138,136,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,139,137,124,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,140,Reference P price,3177,-21,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,141,140,125,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,142,a price,2931,-133,35,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,143,b price,2997,-84,35,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,144,142,117,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,145,143,117,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,146,98,111,1,0,0,0,0,64,0,-1--1--1,,1|(2467,-205)|
+10,147,P2O5 supply for agriculture,2819,-8,53,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,148,105,189,1,0,0,0,0,64,0,-1--1--1,,1|(2918,-476)|
+1,149,147,200,1,0,0,0,0,64,0,-1--1--1,,1|(2729,-38)|
+10,150,P2O5 agriculture fraction,2698,-98,53,25,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,151,150,147,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,152,Recoverable manure fraction crop based,3069,60,62,32,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,153,"P produced in the manure of crop-based animals",3302,152,62,32,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,154,"P produced in the manure of pasture-based animals",3303,254,62,32,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,155,Recoverable manure fraction pasture based,3077,331,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,156,Recoverable P generated in crop based manure,3074,142,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,157,Recoverable P generated in pasture based manure,3079,248,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,158,Unit P production via manure crop based,3450,72,49,32,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+10,159,Unit P production via manure pasture based,3444,343,62,32,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+1,160,158,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,161,159,154,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,162,153,156,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,163,152,156,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,164,154,157,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,165,155,157,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,166,156,94,1,0,0,0,0,64,0,-1--1--1,,1|(2899,169)|
+1,167,157,94,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,168,P production rate FAO,2552,-322,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,169,105,168,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,170,Average P demand rate,3240,-240,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,171,170,113,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,172,Discovery year,3548,-476,44,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,173,Discovery amount,3547,-418,44,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,174,172,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,175,173,110,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,176,a price sensitivity,2922,-102,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,177,b price sensitivity,3008,-52,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,178,a reserve sensitivity,3585,-104,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,179,b reserve sensitivity,3610,-193,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,180,Discovery amount sensitivity,3568,-361,53,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,181,P2O5 to P conversion factor,2759,99,49,25,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,182,Desired phosphate rock production rate,3007,-315,71,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,183,119,182,1,0,0,0,0,64,0,-1--1--1,,1|(3007,-259)|
+10,184,P2O5 content in phosphate rock,2937,-380,58,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,185,184,182,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,186,182,170,1,0,0,0,0,64,0,-1--1--1,,1|(3115,-261)|
+1,187,182,105,1,0,0,0,0,64,0,-1--1--1,,1|(3100,-365)|
+1,188,182,120,1,0,0,0,0,64,0,-1--1--1,,1|(3042,-408)|
+10,189,P2O5 production rate,2837,-450,49,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,190,184,189,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,191,189,147,1,0,0,0,0,64,0,-1--1--1,,1|(2764,-242)|
+1,192,58,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,193,42,57,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,194,150,111,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,195,P loss to inputs,2680,163,44,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,196,57,195,1,0,0,0,0,64,0,-1--1--1,,1|(2593,262)|
+1,197,94,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,198,47,195,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,199,181,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,200,Commercial P2O5 application for agriculture,2564,-48,71,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,201,200,47,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,202,P budget,3064,635,40,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,203,36,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,204,Commercial N application for agriculture,1132,-621,62,32,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,205,204,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,206,Commercial P2O5 application for agriculture,2221,-632,76,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,207,206,64,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,208,Average P content,1926,442,44,18,8,131,0,36,0,0,0,0,0-0-0,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,209,Commercial P application for agriculture,2891,455,62,32,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,210,Phosphorus application with manure,2894,532,58,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,211,Total P uptake rate,2893,600,58,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,212,Phosphorus erosion leaching and runoff rate,2891,650,58,32,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,213,209,77,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,214,210,77,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,215,211,77,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,216,209,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,217,210,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,218,211,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,219,212,202,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,220,Average N content,1111,620,44,18,8,131,0,36,0,0,0,0,0-0-0,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,221,Time,2565,154,31,11,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,222,Time,2565,154,31,11,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,223,N Uptake for crop type,1067,442,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,224,220,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,225,Commercial N application for each category,1181,59,58,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,226,17,225,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,227,N fertilizer shares,1205,181,58,18,8,131,0,37,0,0,0,0,192-255-192,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,228,227,357,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,229,N application per ha,1347,57,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,230,225,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,231,Average N content,1632,30,49,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,232,231,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,233,N ratio applied to reference,1416,166,49,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,234,229,233,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,235,41,233,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,236,Effect of N on Yield 2,1389,301,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,237,72,236,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,238,73,236,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,239,74,236,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,240,233,236,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,241,Reference crop yield 2016,1678,124,49,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,242,241,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,243,Reference meat yield,1592,183,53,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,244,243,41,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,245,223,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,246,Commercial P application for each category,2231,8,58,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,247,P fertilizer shares,2088,-103,58,18,8,3,0,36,0,0,0,0,0-0-0,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,248,47,246,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,249,P application per ha,2120,80,62,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,250,246,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,251,241,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,252,208,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,253,243,61,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,254,P ratio applied to reference,2093,236,49,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,255,249,254,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,256,61,254,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,257,Effect of P on Yield 2,1662,297,53,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,258,72,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,259,73,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,260,74,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,261,254,257,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,262,P Uptake for each crop type,2145,442,58,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,263,208,262,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,264,262,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,265,1,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,266,42,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,267,Effect of fertilizer on yield,1692,491,62,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,268,236,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,269,257,267,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,270,38,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,271,78,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,272,36,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,273,78,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,274,37,17,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,275,Relative DemSupply Ratio AgrLand,1973,-363,62,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,276,275,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,277,Smoothed Demand Supply Ratio Agr Land,2164,-400,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,278,277,275,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,279,Total area harvested,1524,-131,49,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,280,n per ha,1348,-66,40,11,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,281,17,280,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,282,279,280,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,283,Delayed area harvested,1509,-53,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,284,283,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,285,Initial Area harvested,1646,-150,58,18,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,286,37,98,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,287,Total P produced in manure,3626,261,53,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,288,154,287,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,289,153,287,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+12,290,48,471,180,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,291,293,1,4,0,0,22,0,0,0,-1--1--1,,1|(647,180)|
+1,292,293,290,100,0,0,22,0,0,0,-1--1--1,,1|(532,180)|
+11,293,0,590,180,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,294,Nitrogen application with manure,590,213,53,25,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,295,"N produced in the manure of crop-based animals",354,-6,62,32,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,296,"N produced in the manure of pasture-based animals",526,-9,62,32,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,297,Recoverable N generated in crop based manure,353,86,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,298,Recoverable N generated in pasture based manure,529,92,62,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,299,Unit N production via manure crop based,313,-98,49,32,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+10,300,Unit N production via manure pasture based,598,-96,62,32,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-160-0,0,0,0,0,0,0
+1,301,299,295,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,302,300,296,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,303,295,297,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,304,296,298,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,305,NTotal P produced in manure,465,-219,53,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,306,296,305,1,0,0,0,0,64,0,-1--1--1,,1|(505,-129)|
+1,307,295,305,1,0,0,0,0,64,0,-1--1--1,,1|(398,-119)|
+10,308,Recoverable manure fraction crop based,330,196,62,32,8,130,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,309,Recoverable manure fraction pasture based,701,49,71,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,310,309,298,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,311,308,297,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,312,297,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,313,298,294,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,314,2,1,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,315,Reference Dem Suppyl Ratio Agr Land 2010,2159,-311,62,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,316,315,275,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,317,Effect of Income on Fertilizer Use LOOKUP,1210,-316,49,32,8,131,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,318,Effect of Land Availability on Fertilizer UseLOOKUP,1797,-246,71,32,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,319,66,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,320,67,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,321,68,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,322,71,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,323,70,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,324,69,37,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,325,SA N fertilizer shares,1157,277,49,25,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,326,N fertilizer shares Data,1288,247,58,18,8,131,0,37,0,0,0,0,192-255-192,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,327,326,227,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,328,325,227,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,329,P fertilizer shares Data,2101,-180,58,18,8,3,0,36,0,0,0,0,0-0-0,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+10,330,SA P fertilizer shares,1954,-130,49,25,8,3,0,34,0,0,0,0,0-0-0,192-255-192,Arial|||255-0-0,0,0,0,0,0,0
+1,331,329,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,332,330,247,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,333,SA N leaching and runoff fraction,878,579,62,25,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,334,333,27,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,335,SA P leaching fraction,2685,455,62,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,336,335,58,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,337,SA Recoverable manure fraction crop based,3214,60,71,25,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,338,SA Recoverable manure fraction pasture based,3222,331,71,25,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,339,337,152,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,340,338,155,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,341,SA L gwp fert,1403,-492,62,11,8,131,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,342,SA k gwp fert,1505,-505,44,18,8,3,0,50,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-0,0,0,0,0,0,0
+10,343,SA x0 gwp fert,1599,-496,44,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,344,SA L land fert,1967,-509,44,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,345,SA k land fert,1864,-504,49,18,8,3,0,50,0,0,0,0,0-0-0,0-0-0,Arial||B|255-0-0,0,0,0,0,0,0
+10,346,SA x0 land fert,1776,-505,49,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,347,346,71,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,348,345,70,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,349,344,69,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,350,SA k fertilizer,1546,468,49,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,351,SA L fertilizer,1429,506,49,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+10,352,SA x0 fertilizer,1285,481,49,18,8,3,0,34,0,0,0,0,0-0-0,0-0-0,Arial|||255-0-0,0,0,0,0,0,0
+1,353,352,74,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,354,351,73,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,355,350,72,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,356,Cropland Yield,1825,671,44,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,357,N fertilizer shares normalized,1234,122,58,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,358,N fertilizer shares2,1213,357,58,18,8,131,0,37,0,0,0,0,192-255-192,192-255-192,Arial|||0-0-0,0,0,0,0,0,0
+1,359,357,225,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,360,326,358,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,361,325,358,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,362,P fertilizer shares normalized,2257,-110,58,25,8,3,0,32,0,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,363,247,362,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,364,362,246,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,365,TIME STEP,2304,306,53,11,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,366,365,52,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,367,TIME STEP,1009,302,53,11,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,368,367,20,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,369,Reference GWP per Capita,1279,-474,49,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+10,370,Area Harvested Accumulative,740,-655,59,23,3,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,371,48,893,-656,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,372,374,371,100,0,0,22,0,192,0,-1--1--1,,1|(865,-656)|
+1,373,374,370,4,0,0,22,0,192,0,-1--1--1,,1|(817,-656)|
+11,374,0,841,-656,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,375,Inflow AHA,841,-637,49,11,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+10,376,Init AHA,740,-732,40,11,8,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+12,377,48,583,-655,10,8,0,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,378,380,370,100,0,0,22,0,192,0,-1--1--1,,1|(662,-655)|
+1,379,380,377,4,0,0,22,0,192,0,-1--1--1,,1|(612,-655)|
+11,380,0,637,-655,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,381,Outflow AHA,637,-636,53,11,40,3,0,32,-1,0,0,0,0-0-0,0-0-0,Arial|||0-0-0,0,0,0,0,0,0
+1,382,370,381,1,0,0,0,0,192,0,-1--1--1,,1|(716,-606)|
+1,383,375,381,1,0,0,0,0,192,0,-1--1--1,,1|(783,-565)|
+10,384,Time,637,-584,31,11,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,385,384,381,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,386,376,370,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,387,Food production rate,1544,625,49,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,388,387,223,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,389,Area harvested,1834,-104,49,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,390,389,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,391,403,249,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,392,393,153,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,393,Production rate of animal food,3565,158,58,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,394,393,154,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,395,Demand Supply ratio of Agricultural Land,2398,-459,67,32,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,396,395,277,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,397,Relative GWP per Capita,1475,-333,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,398,397,36,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,399,389,285,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,400,389,283,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,401,285,283,0,0,0,0,0,64,1,-1--1--1,,1|(0,0)|
+1,402,389,279,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,403,Grassland Allocated for Food Production,1826,-37,62,32,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,404,403,229,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,405,Production rate of animal food,446,-89,58,25,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,406,405,295,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,407,408,63,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,408,Agricultural Land,1677,-618,62,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,409,408,64,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,410,Area harvested,913,-552,49,18,8,2,0,35,-1,0,0,0,128-128-128,0-0-0,Arial|||128-128-128,0,0,0,0,0,0
+1,411,410,375,0,0,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,412,Production rate of animal food,526,41,70,18,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,413,412,296,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+1,414,405,296,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,415,387,262,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH POP_Population
+:TITLE Population
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Population
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Population
+:DATASET *3
+:VAR Population
+:DATASET *4
+
+:GRAPH POP_Population_by_age_group
+:TITLE Population by Age
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR "Population 0-19"
+:Y-MAX 1e+10
+:LINE-WIDTH 2
+:VAR "Population 20-39"
+:LINE-WIDTH 2
+:VAR "Population 40-64"
+:VAR "Population 65+"
+
+:GRAPH POP_Impact_of_Educ
+:TITLE Impact of Education on Fertility
+:X-AXIS Mean Years of Schooling
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of Education on Fertility
+:LINE-WIDTH 2
+:VAR Impact of Education on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_TotalFertility
+:TITLE Total Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Fertility
+:Y-MAX 6
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Fertility
+:DATASET *3
+
+:GRAPH POP_TotalBirth
+:TITLE Birth rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Total Birth Rate
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Total Birth Rate
+:DATASET *3
+
+:GRAPH POP_Impact_of_GDP
+:TITLE Impact of Wealth on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:LINE-WIDTH 2
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH POP_Age-specific-fertility
+:TITLE Age-Specific Fertility Rate
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Age Specific Fertility Rate["15-19"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["20-24"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["35-39"]
+:LINE-WIDTH 2
+:VAR Age Specific Fertility Rate["45-49"]
+:LINE-WIDTH 2
+
+:GRAPH EDU_MeanYearsSchooling
+:TITLE Mean Years of Schooling
+:X-MIN 1960
+:X-MAX 2100
+:SCALE
+:VAR Mean Years of Schooling
+:Y-MAX 18
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Mean Years of Schooling
+:DATASET *3
+:VAR Mean Years of Schooling
+:DATASET *4
+
+:GRAPH EDU_Population_by_education
+:TITLE Population by Education
+:X-MIN 1960
+:X-MAX 2100
+:STACK-FILL 0
+:SCALE
+:VAR Total Population with No or Incomplete Education
+:Y-MAX 1.2e+10
+:LINE-WIDTH 2
+:VAR Total Primary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Secondary Education Graduates
+:LINE-WIDTH 2
+:VAR Total Tertiary Education Graduates
+:LINE-WIDTH 2
+
+:GRAPH Gross_World_Product
+:TITLE Gross World Product
+:WIP
+:X-MAX 2010
+:SCALE
+:VAR Gross World Product
+:DATASET *
+:LINE-WIDTH 2
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH GWP_per_Capita
+:TITLE GWP per Capita (Maddison)
+:SCALE
+:VAR GWP per Capita
+:Y-MAX 40000
+:LINE-WIDTH 2
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Energy_Demand
+:TITLE Energy Demand
+:X-MAX 2010
+:SCALE
+:VAR Energy Demand
+:LINE-WIDTH 2
+:VAR Energy Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Oil_Production
+:TITLE Oil Production
+:X-MAX 2010
+:SCALE
+:VAR Oil Production
+:LINE-WIDTH 2
+:VAR Oil Production
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_CO2_Emission
+:TITLE Total CO2 Emission
+:X-MAX 2010
+:SCALE
+:VAR Total CO2 Emission
+:LINE-WIDTH 2
+:VAR Total CO2 Emission
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Agriculture_Land
+:TITLE Agriculture Land
+:X-MAX 2010
+:SCALE
+:VAR Agriculture Land
+:LINE-WIDTH 2
+:VAR Total Agricultural Land Demand
+:LINE-WIDTH 2
+:SCALE
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+
+:GRAPH Forest_Land
+:TITLE Forest Land
+:X-MAX 2010
+:SCALE
+:VAR Forest Land
+:LINE-WIDTH 2
+:VAR Forest Land
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Total_Water_Demand
+:TITLE Total Water Demand
+:X-MAX 2010
+:SCALE
+:VAR Total Water Demand
+:LINE-WIDTH 2
+:VAR Total Water Demand
+:DATASET *2
+:LINE-WIDTH 4
+
+:GRAPH Mean_Species_Abundance
+:TITLE Mean Species Abundance
+:SCALE
+:VAR Mean Species Abundance
+
+:GRAPH 02_GWP_per_Capita
+:TITLE GWP per Capita
+:SCALE
+:VAR GWP per Capita
+:LINE-WIDTH 1
+:VAR GWP per Capita
+:DATASET *2
+:LINE-WIDTH 4
+:VAR GWP per Capita|GWP per Capita : Angus Maddison
+:DATASET *3
+:LINE-WIDTH 4
+
+:GRAPH GRAPH
+:TITLE GRAPH
+:SCALE
+:VAR test
+:LINE-WIDTH 2
+:VAR Average Duration in Education
+:LINE-WIDTH 4
+
+:GRAPH GRAPH_Total_C_Emission
+:TITLE Total C Emission
+:SCALE
+:VAR Total C Emission
+:LINE-WIDTH 3
+:VAR Total C Emission
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_C_in_Atmosphere
+:TITLE C in Atmosphere
+:SCALE
+:VAR C in Atmosphere
+:LINE-WIDTH 3
+:VAR C in Atmosphere
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Temperature_Change_from_Preindustrial
+:TITLE Temperature Change from Preindustrial
+:SCALE
+:VAR Temperature Change from Preindustrial
+:LINE-WIDTH 3
+:VAR Temperature Change from Preindustrial
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Energy_Production_(Scenario)
+:TITLE Energy Production (Scenario)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:VAR Coal Production
+:VAR Gas Production
+:VAR Biomass Energy Production
+:VAR Solar Energy Production
+:VAR Wind Energy Production
+
+:GRAPH GRAPH_Energy_Production_(BAU)
+:TITLE Energy Production (BAU)
+:STACK-FILL 0
+:SCALE
+:VAR Oil Production
+:DATASET *2
+:VAR Coal Production
+:DATASET *2
+:VAR Gas Production
+:DATASET *2
+:VAR Biomass Energy Production
+:DATASET *2
+:VAR Solar Energy Production
+:DATASET *2
+:VAR Wind Energy Production
+:DATASET *2
+
+:GRAPH GAPH_Energy_Production
+:TITLE Energy Production
+:SCALE
+:VAR Energy Production
+:LINE-WIDTH 3
+:VAR Energy Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Quality_of_Domestic_Water
+:TITLE Quality of Domestic Water
+:SCALE
+:VAR Quality of Domestic Water
+:LINE-WIDTH 3
+:VAR Quality of Domestic Water
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Labor_Force
+:TITLE Labor Force
+:SCALE
+:VAR Labor Force input
+:LINE-WIDTH 3
+:VAR Labor Force input
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Vegetal_Food_Production
+:TITLE Vegetal Food Production
+:SCALE
+:VAR Vegetal Food Production
+:LINE-WIDTH 3
+:VAR Vegetal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Available_Water_Resources
+:TITLE Available Water Resources
+:SCALE
+:VAR Available Water Resources
+:LINE-WIDTH 3
+:VAR Available Water Resources
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Animal_Food_Production
+:TITLE Animal Food Production
+:SCALE
+:VAR Animal Food Production
+:LINE-WIDTH 3
+:VAR Animal Food Production
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Health_Index
+:TITLE Health Index
+:SCALE
+:VAR Health index
+:LINE-WIDTH 3
+:VAR Health index
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Gross_World_Product
+:TITLE Gross World Product
+:SCALE
+:VAR Gross World Product
+:LINE-WIDTH 3
+:VAR Gross World Product
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Population
+:TITLE Population
+:SCALE
+:VAR Population
+:LINE-WIDTH 3
+:VAR Population
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH GRAPH_Calories_Consumption_per_Capita_per_Day
+:TITLE Calories Consumption per Capita per Day
+:SCALE
+:VAR Calories Consumption per Capita per Day
+:LINE-WIDTH 3
+:VAR Calories Consumption per Capita per Day
+:DATASET *2
+:LINE-WIDTH 3
+
+:GRAPH Agricultural_Land
+:TITLE Agricultural Land
+:SCALE
+:VAR Agricultural Land
+:Y-MIN 0
+:Y-MAX 2e+14
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 1
+:SCALE
+:VAR Agricultural Land Demand m2
+:LINE-WIDTH 2
+
+:GRAPH Fertilizer_use
+:TITLE Fertilizer use
+:SCALE
+:VAR Total fertilizer consumption for arable land
+
+:GRAPH Fertilizer_use_per_ha
+:TITLE Fertilizer use per ha
+:SCALE
+:VAR Average fertilizer consumption per ha
+:VAR Average fertilizer consumption per ha
+:DATASET *2
+
+:GRAPH Crop_Yield_Fertility
+:TITLE Crop Yield Fertility
+:SCALE
+:VAR Cropland Land Fertility
+
+:GRAPH Food_Supply_Demand
+:TITLE Food Supply Demand
+:SCALE
+:VAR Total Global Calorie Demand
+:LINE-WIDTH 2
+:VAR Total Global Calorie Supply
+:LINE-WIDTH 2
+
+:GRAPH People_Affected_by_Food
+:TITLE People Affected by Food
+:SCALE
+:VAR Number of people affected by food supply shortage
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_0
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_1
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_2
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land
+:LINE-WIDTH 2
+:VAR Agricultural Land
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_3
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Agricultural_Land_4
+:TITLE Agricultural Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Agricultural Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 6e+09
+:LINE-WIDTH 2
+:VAR Agricultural Land|HistoricalData
+:Y-MIN 0
+:Y-MAX 6e+09
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_0
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Forest_Land_1
+:TITLE Forest Land
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Forest Land|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 4.5e+09
+:LINE-WIDTH 2
+:VAR Forest Land|HistoricalData(FAO)
+:Y-MAX 4.5e+09
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Forest Land|GLOBIOM
+:Y-MAX 4.5e+09
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Average_Daily_
+:TITLE Graph for Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_0
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|GLOBIOM
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_1
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MIN 0
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MIN 0
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_2
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita
+:DATASET *3
+
+:GRAPH Average_Daily_Calorie_Su_3
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3000
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3000
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Average_Daily_Calorie_Su_4
+:TITLE Average Daily Calorie Supply per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Average Daily Calorie Supply per Capita|ReferenceSimulation
+:Y-MAX 3500
+:LINE-WIDTH 2
+:VAR Average Daily Calorie Supply per Capita|HistoricalData(FAO)
+:Y-MAX 3500
+:DATASET *2
+:LINE-WIDTH 2
+
+:GRAPH Food_production_rate
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Food_productio
+:TITLE Graph for Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]
+:VAR Food production rate[FoodCategories]
+:DATASET *2
+:VAR Food production rate[FoodCategories]
+:DATASET *3
+
+:GRAPH Food_production_rate_0
+:TITLE Food production rate
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Food production rate[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Food production rate[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_0
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]|ReferenceSimulation
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|HistoricalData(FAO)
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]|GLOBIOM
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Crop_yield_for_each_cate_1
+:TITLE Crop yield for each category
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Crop yield for each category[FoodCategories]
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *2
+:LINE-WIDTH 2
+:VAR Crop yield for each category[FoodCategories]
+:DATASET *3
+:LINE-WIDTH 2
+
+:GRAPH Graph_for_Life_Expectanc
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_GWP_per_Capita
+:TITLE Graph for GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR GWP per Capita
+:VAR GWP per Capita
+:DATASET *2
+:VAR GWP per Capita
+:DATASET *3
+:VAR GWP per Capita
+:DATASET *4
+
+:GRAPH Graph_for_Life_Expectanc_0
+:TITLE Graph for Life Expectancy at Birth
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Life Expectancy at Birth
+:VAR Life Expectancy at Birth
+:DATASET *2
+:VAR Life Expectancy at Birth
+:DATASET *3
+:VAR Life Expectancy at Birth
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP_
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+
+:GRAPH Graph_for_Healthy_life_e
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__0
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:SCALE
+:VAR Effect of GDP pc on HLE
+
+:GRAPH Graph_for_Healthy_life_e_0
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Healthy_life_e_1
+:TITLE Graph for Healthy life expectancy at birth
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Healthy life expectancy at birth[Gender]
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *2
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *3
+:VAR Healthy life expectancy at birth[Gender]
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_GDP__1
+:TITLE Graph for Effect of GDP pc on HLE
+:X-AXIS Ratio of GDP pc to the reference
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GDP pc on HLE
+:VAR Effect of GDP pc on HLE
+:DATASET *2
+:VAR Effect of GDP pc on HLE
+:DATASET *3
+:VAR Effect of GDP pc on HLE
+:DATASET *4
+
+:GRAPH YoGL_MALE_ages
+:TITLE Years of Good Life (males)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[male,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[male,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[male,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH YoGL_FEMALE_ages
+:TITLE Years of Good Life (females)
+:X-DIV 11
+:X-MIN 2000
+:X-MAX 2100
+:SCALE
+:VAR YoGL[female,"20-24"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"80-84"]
+:Y-MIN 0
+:Y-MAX 70
+:LINE-WIDTH 2
+:VAR YoGL[female,"20-24"]
+:DATASET BAU
+:LINE-WIDTH 1
+:VAR YoGL[female,"80-84"]
+:DATASET BAU
+:LINE-WIDTH 1
+
+:GRAPH Total_CO2_Emissions_Indi
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+:VAR Total CO2 Emissions Indicator
+:DATASET *4
+:VAR Total CO2 Emissions Indicator
+:DATASET *5
+:VAR Total CO2 Emissions Indicator
+:DATASET *6
+
+:GRAPH Total_CO2_Emissions_Indi_0
+:TITLE Total CO2 Emissions Indicator
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Total CO2 Emissions Indicator
+:Y-MIN 0
+:VAR Total CO2 Emissions Indicator
+:DATASET *2
+:VAR Total CO2 Emissions Indicator
+:DATASET *3
+
+:GRAPH Graph_for_Climate_Damag
+:TITLE Climate Damage on Economy
+:X-AXIS Temperature Change from Preindustrial
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Climate Damage Percentage
+:VAR Nordhaus Damage
+:VAR Burke Damage short term pooled
+
+:GRAPH Effect_of_GDP_per_capita
+:TITLE Effect of GDP per capita on school enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[Gender]|Primary
+:VAR Effect of GWP per capita on secondary enrollment|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment|Tertirary
+
+:GRAPH EEffect_of_GDP_per_capit
+:TITLE EEffect of GDP per capita on school enrollment (female)
+:X-AXIS GWP per capita ratio for enrollment
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:SCALE
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Effect_of_GWP_per_capita
+:TITLE Effect of GWP per capita on school enrollment (female)
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of GWP per capita on primary enrollment[female]|Primary
+:VAR Effect of GWP per capita on secondary enrollment[female]|Secondary
+:VAR Effect of GWP per capita on tertiary enrollment[female]|Tertiary
+
+:GRAPH Graph_for_Effect_of_Inpu
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_fert
+:TITLE Graph for Effect of fertilizer on yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of fertilizer on yield[FoodCategories]
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *2
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *3
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *4
+:VAR Effect of fertilizer on yield[FoodCategories]
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_0
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Relative_GWP_p
+:TITLE Graph for Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Relative GWP per Capita
+:VAR Relative GWP per Capita
+:DATASET *2
+:VAR Relative GWP per Capita
+:DATASET *3
+:VAR Relative GWP per Capita
+:DATASET *4
+:VAR Relative GWP per Capita
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_1
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_2
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gdp
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Effect_of_Inpu_3
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Cropland_Yield
+:TITLE Graph for Cropland Yield
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Cropland Yield
+:VAR Cropland Yield
+:DATASET *2
+:VAR Cropland Yield
+:DATASET *3
+:VAR Cropland Yield
+:DATASET *4
+:VAR Cropland Yield
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_4
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 15
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MIN 0
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_5
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS relative gwo
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_6
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MIN 0
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+
+:GRAPH Graph_for_Effect_of_Inpu_7
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *5
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *6
+
+:GRAPH Graph_for_Effect_of_Inpu_8
+:TITLE Graph for Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:X-AXIS Relative GWP per Capita
+:X-MAX 10
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:Y-MAX 2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *2
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *3
+:VAR Effect of Input Neutral Technology Change on Agricultural Land Fertility
+:DATASET *4
+
+:GRAPH Graph_for_Impact_of_GDP_
+:TITLE Graph for Impact of GDP on Fertility
+:X-AXIS GWP per Capita
+:WIDTH 6
+:HEIGHT 4
+:SCALE
+:VAR Impact of GDP on Fertility
+:VAR Impact of GDP on Fertility
+:DATASET *2
+:VAR Impact of GDP on Fertility
+:DATASET *3
+:VAR Impact of GDP on Fertility
+:DATASET *4
+
+:GRAPH Graph_for_oil_price
+:TITLE oil price (usd/bbl)
+:X-AXIS Time
+:SCALE
+:VAR Oil Price per Barrel
+:Y-MAX 120
+:VAR Oil Price per Barrel
+:DATASET *2
+:VAR Oil Price per Barrel
+:DATASET *3
+:VAR Oil Price per Barrel
+:DATASET *4
+:VAR Oil Price per Barrel
+:DATASET *5
+:VAR Oil Price per Barrel
+:DATASET *6
+:L<%^E!@
+4:Time
+5:"$ into $thousand"
+6:"0-4"
+6:Coal
+6:male
+6:noEd
+6:PasMeat
+6:skill
+9:x
+19:62,0
+24:1900
+25:2100
+26:2100
+57:1
+54:0
+55:0
+82:0
+86:0
+59:0
+56:0
+58:0
+71:0
+110:0
+111:0
+44:65001
+46:1
+45:7
+49:0
+50:0
+51:2000
+52:2000
+53:
+43:felix_gas_v25_2014.xlsx
+47:
+48:
+60:
+61:0
+62:0
+63:0
+64:0
+65:0
+66:0
+67:0
+68:0
+69:0
+70:1
+22:$,Dollar,Dollars,$s
+22:Day,Days
+22:Hour,Hours
+22:Meter,m
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:W,Watt
+22:Week,Weeks
+22:Year,Years
+11:gwp.voc
+12:gwp.vpd
+13:Data.vdfx
+23:0
+18:Uncertainty_v2.vsc
+20:uncertainty_v2.lst
+15:1,0,0,0,0,0
+27:2,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:1900
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:felix_gas_v25_2014.xlsx
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Arial|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
+83:Biodiversity.mdl
+83:CarbonCycle.mdl
+83:Climate.mdl
+83:ClimateDamage.mdl
+83:DietChange.mdl
+83:EconomyGDP.mdl
+83:EconomyIndex.mdl
+83:EnergyBiomass.mdl
+83:EnergyCoal.mdl
+83:EnergyGas.mdl
+83:EnergyMarketShare.mdl
+83:EnergyOil.mdl
+83:EnergySolar.mdl
+83:EnergyWind.mdl
+83:ExtremeEvents.mdl
+83:Health.mdl
+83:LandUse.mdl
+83:Population.mdl
+83:Scenarios.mdl
+83:Water.mdl
+83:YoGL.mdl
+83:UnitConversion.mdl
